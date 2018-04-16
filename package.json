@@ -1,0 +1,129 @@
+{
+  "name": "gothamjs",
+  "version": "0.0.1",
+  "description": "Platform",
+  "license": "MIT",
+  "main": "index.js",
+  "types": "./lib/index.d.ts",
+  "keywords": [
+    "gothamjs",
+    "flux",
+    "immutable",
+    "nitrogenlabs",
+    "react"
+  ],
+  "author": "Giraldo Rosales <giraldo@nitrogenlabs.com> (http://nitrogenlabs.com/)",
+  "repository": {
+    "type": "git",
+    "url": "nitrogenlabs/gothamjs.git"
+  },
+  "homepage": "http://www.gothamjs.io",
+  "bugs": {
+    "url": "nitrogenlabs/gothamjs/issues"
+  },
+  "scripts": {
+    "compile": "tsc",
+    "development": "NODE_ENV=development webpack-dev-server --mode development --open",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "pretest": "npm run lint",
+    "production": "NODE_ENV=production yarn test && webpack --mode production",
+    "start": "yarn development",
+    "reset": "rm -rf node_modules yarn.lock && yarn",
+    "test": "NODE_ENV=test jest",
+    "update": "yarn upgrade-interactive --latest"
+  },
+  "typings": "dist/index",
+  "dependencies": {
+    "@nlabs/arkhamjs-middleware-logger": "^1.0.2",
+    "@nlabs/arkhamjs-storage-browser": "^1.0.5",
+    "@nlabs/arkhamjs-views-react": "^1.2.2",
+    "arkhamjs": "3.3.3",
+    "lodash": "^4.17.5",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/history": "^4.6.2",
+    "@types/jest": "^22.1.3",
+    "@types/node": "^9.4.6",
+    "@types/prop-types": "^15.5.2",
+    "@types/react": "^16.0.38",
+    "@types/react-dom": "^16.0.4",
+    "@types/react-router-dom": "^4.2.4",
+    "@types/webpack": "^4.1.3",
+    "awesome-typescript-loader": "^5.0.0",
+    "css-loader": "^0.28.11",
+    "exports-loader": "^0.7.0",
+    "fs": "0.0.2",
+    "html-webpack-plugin": "^3.1.0",
+    "imports-loader": "^0.8.0",
+    "isparta": "^4.0.0",
+    "isparta-loader": "^2.0.0",
+    "istanbul-instrumenter-loader": "^3.0.0",
+    "jest": "^22.4.1",
+    "json-d-ts": "^1.0.1",
+    "node-sass": "^4.7.2",
+    "nodemon": "^1.15.1",
+    "postcss": "^6.0.21",
+    "postcss-browser-reporter": "^0.5.0",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-import": "^11.1.0",
+    "postcss-loader": "^2.1.4",
+    "postcss-reporter": "^5.0.0",
+    "postcss-url": "^7.3.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0",
+    "react-transform-catch-errors": "^1.0.2",
+    "react-transform-hmr": "^1.0.4",
+    "redbox-react": "^1.5.0",
+    "regenerator-runtime": "^0.11.1",
+    "source-map-loader": "^0.2.3",
+    "source-map-support": "^0.5.3",
+    "style-loader": "^0.20.3",
+    "ts-jest": "^22.0.4",
+    "ts-node": "^5.0.0",
+    "tslint": "^5.9.1",
+    "tslint-eslint-rules": "^5.0.0",
+    "tslint-react": "^3.5.1",
+    "typescript": "^2.7.2",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13",
+    "webpack-dev-middleware": "^3.1.0",
+    "webpack-dev-server": "^3.1.3",
+    "webpack-hot-middleware": "^2.21.0",
+    "webpack-svgstore-plugin": "^4.0.1"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.6.0",
+    "react": ">=16",
+    "react-dom": ">=16"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "setupFiles": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "testURL": "http://localhost",
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testMatch": [
+      "<rootDir>/src/**/*test.ts?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
+    "verbose": false
+  },
+  "directories": {
+    "doc": "docs"
+  }
+}
