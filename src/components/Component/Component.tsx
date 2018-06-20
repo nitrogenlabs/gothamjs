@@ -1,23 +1,18 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-export interface ComponentProps {
+export interface ComponentProps extends React.Props<any> {
   readonly className?: string;
 }
 
-export class Component<P extends ComponentProps> extends React.Component<P, {}> {
-  readonly name: string;
-  
-  static propTypes: object = {
-    className: PropTypes.string
-  };
-
+export class Component<P extends ComponentProps> extends React.Component<P & ComponentProps, {}> {
   static defaultProps: object = {
     className: ''
   };
 
-  constructor(props, name) {
-    super(props);
+  readonly name: string;
+
+  constructor(props: ComponentProps, name: string) {
+    super(props as any);
 
     // Component Name
     if(typeof name === 'string') {

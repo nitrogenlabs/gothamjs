@@ -1,3 +1,5 @@
+import {FluxAction} from 'arkhamjs';
+
 import {AppConstants} from '../../constants/AppConstants';
 import {AppActions} from './AppActions';
 
@@ -6,10 +8,10 @@ describe('AppActions', () => {
   const content: string = 'test';
 
   describe('#goto', () => {
-    it('should go to a route', () => {
+    it('should go to a route', async () => {
       // Method
-      const history = AppActions.goto(path);
-      return expect(history.location.pathname).toBe(`/${path}`);
+      const action: FluxAction = await AppActions.goto(path);
+      return expect(action.path).toBe(`/${path}`);
     });
   });
 
@@ -38,9 +40,7 @@ describe('AppActions', () => {
       action = await AppActions.updateView(path);
     });
 
-    it('should dispatch AppConstants.UPDATE_VIEW', () => {
-      return expect(action.type).toBe(AppConstants.UPDATE_VIEW);
-    });
+    it('should dispatch AppConstants.UPDATE_VIEW', () => expect(action.type).toBe(AppConstants.UPDATE_VIEW));
 
     it('should contain content in action', () => {
       expect(action.path).toBe(path);
