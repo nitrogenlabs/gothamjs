@@ -1,16 +1,18 @@
-import {createMuiTheme, MuiThemeProvider, StyleRulesCallback, WithStyles, withStyles} from '@material-ui/core/styles';
+import {createMuiTheme, MuiThemeProvider, StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {Flux} from 'arkhamjs';
 import {createBrowserHistory, History} from 'history';
 import * as React from 'react';
+import {hot} from 'react-hot-loader';
 import {Router} from 'react-router-dom';
 
-import {GothamRoute} from '../../components/GothamRoute/GothamRoute';
 import {Config} from '../../config/properties';
 import {defaultTheme} from '../../config/theme';
 import {AppConstants} from '../../constants/AppConstants';
 import {AppStore} from '../../stores';
+import {GothamProps, GothamState} from '../../types/views/gotham';
+import {renderRoutes} from '../../utils/routes';
 
 const styles: StyleRulesCallback = () => ({
   root: {
@@ -22,22 +24,12 @@ const styles: StyleRulesCallback = () => ({
   }
 });
 
-interface Props {
-  readonly routes?: any[];
-  readonly title: string;
-}
-
-export type AppViewProps = Props & WithStyles<typeof styles>;
-
-export interface AppViewState {
-  readonly isLoaded: boolean;
-}
-
-export class AppViewBase extends React.Component<AppViewProps, AppViewState> {
+export class GothamBase extends React.Component<GothamProps, GothamState> {
   history: History;
+  state: any = {};
   theme;
 
-  constructor(props: AppViewProps) {
+  constructor(props: GothamProps) {
     super(props);
 
     // Methods
@@ -124,7 +116,7 @@ export class AppViewBase extends React.Component<AppViewProps, AppViewState> {
         <div className={classes.root}>
           <Router history={this.history}>
             <React.Fragment>
-              {routes.map((route) => <GothamRoute key={route.path} siteTitle={title} {...route} />)}
+              {renderRoutes(routes, title)}
             </React.Fragment>
           </Router>
         </div>
@@ -133,4 +125,4 @@ export class AppViewBase extends React.Component<AppViewProps, AppViewState> {
   }
 }
 
-export const AppView = withStyles(styles, {withTheme: true})(AppViewBase);
+export const Gotham = hot(module)(withStyles(styles, {withTheme: true})(GothamBase));

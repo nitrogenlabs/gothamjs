@@ -17,7 +17,6 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noStrictGenericChecks": true,
-    "noUnusedLocals": true,
     "outDir": "./dist",
     "pretty": true,
     "skipLibCheck": true,

@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography/Typography';
 import {Flux} from 'arkhamjs';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
+import {NavLink} from 'react-router-dom';
 
 import {AppConstants} from '../../constants/AppConstants';
 
@@ -102,8 +103,10 @@ export class TopBarBase extends React.Component<TopBarProps> {
               {open ? <BackburgerIcon /> : <MenuIcon />}
             </IconButton>
           </Hidden>
-          {logo}
-          {this.renderTitle(title)}
+          <NavLink to="/">
+            {logo}
+            {this.renderTitle(title)}
+          </NavLink>
           <div style={{flex: 1}} />
           {this.renderMenu(user)}
         </Toolbar>

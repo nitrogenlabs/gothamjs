@@ -1,36 +1,28 @@
+import SvgIcon from '@material-ui/core/SvgIcon/SvgIcon';
 import * as React from 'react';
 
-import {Component, ComponentProps} from '../Component/Component';
+import {styledComponent} from '../../utils/styles';
 
-export interface IconProps extends ComponentProps {
+export interface IconProps {
+  readonly height?: number;
   readonly name: string;
-  readonly size?: string;
+  readonly width?: number;
 }
 
-export class Icon extends Component<IconProps> {
+export class Icon extends React.Component<IconProps, {}> {
   static defaultProps: object = {
-    ...Component.defaultProps,
-    size: ''
+    height: 32,
+    width: 32
   };
 
-  constructor(props) {
-    super(props, 'icon');
-  }
-
-  addStyles(): string[] {
-    const styleClasses: string[] = [];
-    const {size: propSize} = this.props;
-    const size = propSize.toLowerCase();
-
-    if(size !== '') {
-      styleClasses.push(`icon-${size}`);
-    }
-
-    return styleClasses;
-  }
-
   render(): JSX.Element {
-    const useTag: string = `<use xlink:href="#${this.props.name}" />`;
-    return <svg className={this.getStyles()} dangerouslySetInnerHTML={{__html: useTag}} />;
+    const {height, name, width} = this.props;
+    const StyledIcon = styledComponent(SvgIcon)({height, width});
+
+    return (
+      <StyledIcon color="primary" viewBox={`0 0 ${width} ${height}`}>
+        <use href={`./icons/icons.svg#${name}`} />
+      </StyledIcon>
+    );
   }
 }

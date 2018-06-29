@@ -1,14 +1,14 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 
-import {AppView} from './AppView';
+import {Gotham} from './Gotham';
 
-describe('AppView', () => {
+describe('Gotham', () => {
   let rendered;
 
   beforeAll(() => {
     // Render
-    rendered = renderer.create(<AppView />);
+    rendered = renderer.create(<Gotham />);
   });
 
   it('should render', () => expect(rendered).toBeDefined());

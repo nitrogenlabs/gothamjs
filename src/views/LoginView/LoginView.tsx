@@ -1,6 +1,8 @@
 import Button from '@material-ui/core/Button/Button';
+import Card from '@material-ui/core/Card/Card';
+import CardContent from '@material-ui/core/CardContent/CardContent';
 import Grid from '@material-ui/core/Grid/Grid';
-import {StyleRulesCallback, WithStyles, withStyles} from '@material-ui/core/styles';
+import {StyleRulesCallback, WithStyles} from '@material-ui/core/styles';
 import {Flux} from 'arkhamjs';
 import * as React from 'react';
 
@@ -8,12 +10,38 @@ import {Form} from '../../components/Form/Form';
 import {PageHeader} from '../../components/PageHeader/PageHeader';
 import {TextField} from '../../components/TextField/TextField';
 import {UserConstants} from '../../constants/UserConstants';
+import {initComponent} from '../../utils/components';
 import {PageView} from '../PageView/PageView';
 
-const styles: StyleRulesCallback = () => ({
+const styles: StyleRulesCallback = (theme) => ({
+  buttons: {
+    marginBottom: 15,
+    marginTop: 30
+  },
+  card: {
+    borderRadius: 10,
+    maxWidth: 500
+  },
+  forgot: {
+    color: theme.palette.grey['400'],
+    fontSize: 12,
+    marginTop: 5
+  },
+  logo: {
+    alignItems: 'center',
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    marginBottom: 50,
+    marginTop: 30
+  }
 });
 
-export type LoginViewProps = WithStyles<typeof styles>;
+interface Props {
+  readonly logo: JSX.Element;
+}
+
+export type LoginViewProps = Props & WithStyles<typeof styles>;
 
 export interface LoginViewState {
   readonly authentication: object;
@@ -21,6 +49,8 @@ export interface LoginViewState {
 }
 
 export class LoginViewBase extends React.Component<LoginViewProps, LoginViewState> {
+  state: any = {};
+
   constructor(props) {
     super(props);
 
@@ -60,31 +90,65 @@ export class LoginViewBase extends React.Component<LoginViewProps, LoginViewStat
     this.setState({authentication: values});
   }
 
+  renderLogo(logo: JSX.Element, classes): JSX.Element {
+    if(logo) {
+      return (
+        <div className={classes.logo}>
+          {logo}
+        </div>
+      );
+    }
+
+    return null;
+  }
+
   render(): JSX.Element {
+    const {classes, logo} = this.props;
+
     return (
-      <PageView name="login">
+      <PageView name="login" title="Login">
         <Grid item sm={12}>
           <PageHeader title="Welcome Back">
             Welcome back sign-in now there is lot of new stuff waiting for you.
           </PageHeader>
         </Grid>
 
-        <Form onSubmit={this.onSubmit}>
-          <Grid item xs={12}>
-            <TextField name="email" type="text" label="Email Address" className="loginInput" />
+        <Grid item xs={12}>
+          <Grid container alignItems="center" justify="center">
+            <Card className={classes.card}>
+              <CardContent>
+                {this.renderLogo(logo, classes)}
+                <Form onSubmit={this.onSubmit}>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Username"
+                      name="username"
+                      type="text" />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Password"
+                      name="password"
+                      type="password" />
+                  </Grid>
+                  <Grid className={classes.forgot} container justify="flex-end">
+                    <p className="forgetPass">Forgot password???</p>
+                  </Grid>
+                  <Grid className={classes.buttons} container alignItems="flex-end" justify="flex-end">
+                    <Button color="default" size="large" type="submit" value="" variant="text">New Account</Button>
+                    <Button color="primary" size="large" type="submit" value="" variant="contained">Sign in</Button>
+                  </Grid>
+                </Form>
+              </CardContent>
+            </Card>
           </Grid>
-          <Grid item xs={12}>
-            <TextField name="password" type="text" label="Password" className="loginInput" />
-          </Grid>
-          <Grid item xs={12}>
-            <Button color="default" size="large" type="submit" value="" variant="text">New Account</Button>
-            <Button color="primary" size="large" type="submit" value="" variant="contained">Signin</Button>
-            <p className="forgetPass">Have you forgot your username or password?</p>
-          </Grid>
-        </Form>
+        </Grid>
       </PageView>
     );
   }
 }
 
-export const LoginView = withStyles(styles, {withTheme: true})(LoginViewBase);
+export const LoginView = initComponent(module, LoginViewBase, styles);
+export default LoginView;

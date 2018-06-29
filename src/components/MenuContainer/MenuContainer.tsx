@@ -17,6 +17,7 @@ const styles: StyleRulesCallback = (theme) => ({
 });
 
 interface Props {
+  readonly logo: JSX.Element;
   readonly menu: any[];
   readonly routes: any[];
   readonly title: string;
@@ -70,12 +71,12 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
   }
 
   render(): JSX.Element {
-    const {classes, menu, routes, title} = this.props;
+    const {classes, logo, menu, routes, title} = this.props;
     const {isMenuOpen} = this.state;
 
     return (
       <React.Fragment>
-        <TopBar open={isMenuOpen} title={title} />
+        <TopBar logo={logo} open={isMenuOpen} title={title} />
         {this.renderMenu(menu, isMenuOpen)}
         <div className={classes.content}>
           {this.renderRoutes(routes)}

@@ -26,6 +26,6 @@ export const defaultTheme: ThemeOptions = {
   },
   typography: {
     fontFamily: ['Open Sans', 'sans-serif'].join(', '),
-    fontSize: 14
+    fontSize: 13
   }
 };

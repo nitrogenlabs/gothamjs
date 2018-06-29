@@ -1,19 +1,23 @@
 import {StyleRulesCallback, WithStyles, withStyles} from '@material-ui/core/styles';
 import * as React from 'react';
 
-import {GothamRoute} from '../GothamRoute/GothamRoute';
+import {renderRoutes} from '../../utils/routes';
 import {TopBar} from '../TopBar/TopBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   content: {
     backgroundColor: theme.palette.background.default,
+    flexDirection: 'column',
     flexGrow: 1,
     minWidth: 0,
-    padding: theme.spacing.unit * 3
+    paddingBottom: theme.spacing.unit * 3,
+    paddingLeft: theme.spacing.unit * 3,
+    paddingRight: theme.spacing.unit * 3
   }
 });
 
 interface Props {
+  readonly logo: JSX.Element;
   readonly routes: any[];
   readonly siteTitle: string;
   readonly title: string;
@@ -26,6 +30,8 @@ export interface DefaultContainerState {
 }
 
 export class DefaultContainerBase extends React.Component<DefaultContainerProps, DefaultContainerState> {
+  state: any;
+
   constructor(props: DefaultContainerProps) {
     super(props);
 
@@ -56,19 +62,15 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
     }
   }
 
-  renderRoutes(routes: any[], siteTitle: string): JSX.Element[] {
-    return routes.map((route) => <GothamRoute key={route.path} siteTitle={siteTitle} {...route} />);
-  }
-
   render(): JSX.Element {
-    const {classes, routes, siteTitle, title} = this.props;
+    const {classes, logo, routes, siteTitle, title} = this.props;
     const {isTopSolid} = this.state;
 
     return (
       <React.Fragment>
-        <TopBar transparent={!isTopSolid} title={title} />
+        <TopBar logo={logo} transparent={!isTopSolid} title={title} />
         <div className={classes.content}>
-          {this.renderRoutes(routes, siteTitle)}
+          {renderRoutes(routes, siteTitle)}
         </div>
       </React.Fragment>
     );

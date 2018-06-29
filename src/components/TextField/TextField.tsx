@@ -16,11 +16,6 @@ export class TextField extends React.Component<TextFieldProps, {}> {
 
   render(): JSX.Element {
     const {name} = this.props;
-
-    return (
-      <React.Fragment>
-        <Field name={name} render={this.renderField} />
-      </React.Fragment>
-    );
+    return <Field name={name} render={this.renderField} />;
   }
 }
