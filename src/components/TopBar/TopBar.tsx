@@ -1,4 +1,4 @@
-import {StyleRulesCallback, WithStyles, withStyles} from '@material-ui/core';
+import {StyleRulesCallback, withStyles} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Button from '@material-ui/core/Button/Button';
 import Hidden from '@material-ui/core/Hidden/Hidden';
@@ -8,9 +8,10 @@ import Typography from '@material-ui/core/Typography/Typography';
 import {Flux} from 'arkhamjs';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
-import {NavLink} from 'react-router-dom';
+import NavLink from 'react-router-dom/es/NavLink';
 
 import {AppConstants} from '../../constants/AppConstants';
+import {TopBarProps} from '../../types/components/topBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   appBar: {
@@ -37,16 +38,6 @@ const styles: StyleRulesCallback = (theme) => ({
     transition: 'all 0.3s ease-in-out'
   }
 });
-
-interface Props {
-  readonly logo?: JSX.Element;
-  readonly open?: boolean;
-  readonly title?: string;
-  readonly transparent?: boolean;
-  readonly user?: object;
-}
-
-export type TopBarProps = Props & WithStyles<typeof styles>;
 
 export class TopBarBase extends React.Component<TopBarProps> {
   constructor(props: TopBarProps) {

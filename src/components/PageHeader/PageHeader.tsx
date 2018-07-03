@@ -1,19 +1,9 @@
 import * as React from 'react';
 
-import {Component, ComponentProps} from '../Component/Component';
+import {PageHeaderProps} from '../../types/components/pageHeader';
 import {Icon} from '../Icon/Icon';
 
-export interface PageHeaderProps extends ComponentProps {
-  readonly children?: string;
-  readonly icon?: string;
-  readonly title?: string;
-}
-
-export class PageHeader extends Component<PageHeaderProps> {
-  constructor(props: PageHeaderProps) {
-    super(props, 'pageHeader');
-  }
-
+export class PageHeader extends React.Component<PageHeaderProps> {
   renderIcon(icon: string) {
     if(icon) {
       return (

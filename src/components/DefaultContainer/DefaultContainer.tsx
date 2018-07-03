@@ -1,33 +1,19 @@
-import {StyleRulesCallback, WithStyles, withStyles} from '@material-ui/core/styles';
+import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import * as React from 'react';
 
-import {renderRoutes} from '../../utils/routes';
+import {DefaultContainerProps, DefaultContainerState} from '../../types/components/defaultContainer';
+import {renderTransition} from '../../utils/routes';
 import {TopBar} from '../TopBar/TopBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   content: {
     backgroundColor: theme.palette.background.default,
-    flexDirection: 'column',
-    flexGrow: 1,
     minWidth: 0,
-    paddingBottom: theme.spacing.unit * 3,
+    overflowY: 'auto',
     paddingLeft: theme.spacing.unit * 3,
     paddingRight: theme.spacing.unit * 3
   }
 });
-
-interface Props {
-  readonly logo: JSX.Element;
-  readonly routes: any[];
-  readonly siteTitle: string;
-  readonly title: string;
-}
-
-export type DefaultContainerProps = Props & WithStyles<typeof styles>;
-
-export interface DefaultContainerState {
-  readonly isTopSolid: boolean;
-}
 
 export class DefaultContainerBase extends React.Component<DefaultContainerProps, DefaultContainerState> {
   state: any;
@@ -44,18 +30,19 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
     };
   }
 
-  componentDidMount(): void {
-    window.addEventListener('scroll', this.onScroll);
+  shouldComponentUpdate(nextProps, nextState) {
+    const {location: {pathname}} = this.props;
+    const {location: {pathname: nextPath}} = nextProps;
+    const {isTopSolid} = this.state;
+    const {isTopSolid: nextSolid} = nextState;
+
+    return pathname !== nextPath || isTopSolid !== nextSolid;
   }
 
-  componentWillUnmount(): void {
-    window.removeEventListener('scroll', this.onScroll);
-  }
-
-  onScroll(event) {
+  onScroll(event: React.SyntheticEvent) {
     const {theme} = this.props;
 
-    if(event.pageY > theme.mixins.toolbar.minHeight) {
+    if(event.currentTarget.scrollTop > theme.mixins.toolbar.minHeight) {
       this.setState({isTopSolid: true});
     } else {
       this.setState({isTopSolid: false});
@@ -69,8 +56,8 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
     return (
       <React.Fragment>
         <TopBar logo={logo} transparent={!isTopSolid} title={title} />
-        <div className={classes.content}>
-          {renderRoutes(routes, siteTitle)}
+        <div className={classes.content} onScroll={this.onScroll}>
+          {renderTransition(routes, siteTitle)}
         </div>
       </React.Fragment>
     );

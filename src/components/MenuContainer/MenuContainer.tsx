@@ -1,9 +1,10 @@
-import {StyleRulesCallback, WithStyles, withStyles} from '@material-ui/core/styles';
+import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from 'arkhamjs';
 import * as React from 'react';
-import {Route} from 'react-router-dom';
 
 import {AppConstants} from '../../constants/AppConstants';
+import {MenuContainerProps, MenuContainerState} from '../../types/components/menuContainer';
+import {renderTransition} from '../../utils/routes';
 import {SideMenu} from '../SideMenu/SideMenu';
 import {TopBar} from '../TopBar/TopBar';
 
@@ -15,19 +16,6 @@ const styles: StyleRulesCallback = (theme) => ({
     padding: theme.spacing.unit * 3
   }
 });
-
-interface Props {
-  readonly logo: JSX.Element;
-  readonly menu: any[];
-  readonly routes: any[];
-  readonly title: string;
-}
-
-export type MenuContainerProps = Props & WithStyles<typeof styles>;
-
-export interface MenuContainerState {
-  readonly isMenuOpen: boolean;
-}
 
 export class MenuContainerBase extends React.Component<MenuContainerProps, MenuContainerState> {
   constructor(props) {
@@ -63,13 +51,6 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
     return null;
   }
 
-  renderRoutes(routes: any[]): JSX.Element[] {
-    return routes.map((route) => {
-      const {path, component} = route;
-      return <Route component={component} key={path} path={path} />;
-    });
-  }
-
   render(): JSX.Element {
     const {classes, logo, menu, routes, title} = this.props;
     const {isMenuOpen} = this.state;
@@ -79,7 +60,7 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
         <TopBar logo={logo} open={isMenuOpen} title={title} />
         {this.renderMenu(menu, isMenuOpen)}
         <div className={classes.content}>
-          {this.renderRoutes(routes)}
+          {renderTransition(routes, title)}
         </div>
       </React.Fragment>
     );

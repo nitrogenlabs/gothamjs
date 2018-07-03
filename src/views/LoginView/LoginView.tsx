@@ -2,7 +2,7 @@ import Button from '@material-ui/core/Button/Button';
 import Card from '@material-ui/core/Card/Card';
 import CardContent from '@material-ui/core/CardContent/CardContent';
 import Grid from '@material-ui/core/Grid/Grid';
-import {StyleRulesCallback, WithStyles} from '@material-ui/core/styles';
+import {StyleRulesCallback} from '@material-ui/core/styles';
 import {Flux} from 'arkhamjs';
 import * as React from 'react';
 
@@ -10,6 +10,7 @@ import {Form} from '../../components/Form/Form';
 import {PageHeader} from '../../components/PageHeader/PageHeader';
 import {TextField} from '../../components/TextField/TextField';
 import {UserConstants} from '../../constants/UserConstants';
+import {LoginViewProps, LoginViewState} from '../../types/views/login';
 import {initComponent} from '../../utils/components';
 import {PageView} from '../PageView/PageView';
 
@@ -36,17 +37,6 @@ const styles: StyleRulesCallback = (theme) => ({
     marginTop: 30
   }
 });
-
-interface Props {
-  readonly logo: JSX.Element;
-}
-
-export type LoginViewProps = Props & WithStyles<typeof styles>;
-
-export interface LoginViewState {
-  readonly authentication: object;
-  readonly session: object;
-}
 
 export class LoginViewBase extends React.Component<LoginViewProps, LoginViewState> {
   state: any = {};

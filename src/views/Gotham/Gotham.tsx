@@ -5,14 +5,30 @@ import {Flux} from 'arkhamjs';
 import {createBrowserHistory, History} from 'history';
 import * as React from 'react';
 import {hot} from 'react-hot-loader';
-import {Router} from 'react-router-dom';
+import Router from 'react-router-dom/es/Router';
+import {injectGlobal} from 'styled-components';
 
 import {Config} from '../../config/properties';
 import {defaultTheme} from '../../config/theme';
 import {AppConstants} from '../../constants/AppConstants';
 import {AppStore} from '../../stores';
 import {GothamProps, GothamState} from '../../types/views/gotham';
-import {renderRoutes} from '../../utils/routes';
+import {renderTransition} from '../../utils/routes';
+
+injectGlobal`
+.routeWrapper {
+  display: flex;
+  flex: 1;
+  height: 100vh;
+  position: relative;
+}
+
+.routeWrapper > div {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+`;
 
 const styles: StyleRulesCallback = () => ({
   root: {
@@ -115,9 +131,7 @@ export class GothamBase extends React.Component<GothamProps, GothamState> {
       <MuiThemeProvider theme={this.theme}>
         <div className={classes.root}>
           <Router history={this.history}>
-            <React.Fragment>
-              {renderRoutes(routes, title)}
-            </React.Fragment>
+            {renderTransition(routes, title)}
           </Router>
         </div>
       </MuiThemeProvider >

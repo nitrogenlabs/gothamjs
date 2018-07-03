@@ -1,11 +1,8 @@
 import * as React from 'react';
 
-import {Component, ComponentProps} from '../Component/Component';
+import {NavTabsProps} from '../../types/components/header';
 
-export interface NavTabsProps extends ComponentProps {
-}
-
-export class NavTabs extends Component<NavTabsProps> {
+export class NavTabs extends React.Component<NavTabsProps> {
   readonly name: string;
 
   constructor(props: NavTabsProps) {

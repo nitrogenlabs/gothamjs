@@ -1,14 +1,9 @@
 import * as React from 'react';
 
-import {Component, ComponentProps} from '../Component/Component';
+import {HeaderProps} from '../../types/components/header';
 import {LogoPanel} from './LogoPanel';
 
-export interface HeaderProps extends ComponentProps {
-  readonly appLogo: string;
-  readonly appName: string;
-}
-
-export class Header extends Component<HeaderProps> {
+export class Header extends React.Component<HeaderProps> {
   readonly name: string;
 
   constructor(props: HeaderProps) {

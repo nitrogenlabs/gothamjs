@@ -5,11 +5,12 @@ import List from '@material-ui/core/List/List';
 import ListItem from '@material-ui/core/ListItem/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
-import {StyleRulesCallback, WithStyles, withStyles} from '@material-ui/core/styles';
+import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from 'arkhamjs';
 import React from 'react';
 
 import {AppConstants} from '../../constants/AppConstants';
+import {SideMenuProps, SideMenuState} from '../../types/components/sideMenu';
 
 const styles: StyleRulesCallback = (theme) => ({
   drawerPaper: {
@@ -25,19 +26,6 @@ const styles: StyleRulesCallback = (theme) => ({
   },
   toolbar: theme.mixins.toolbar
 });
-
-interface Props {
-  readonly classes?: any;
-  readonly menu?: any[];
-  readonly open?: boolean;
-  readonly theme?: boolean;
-}
-
-export type SideMenuProps = Props & WithStyles<typeof styles>;
-
-export interface SideMenuState {
-  readonly isOpen: boolean;
-}
 
 export class SideMenuBase extends React.Component<SideMenuProps, SideMenuState> {
   constructor(props: SideMenuProps) {

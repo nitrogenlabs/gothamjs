@@ -3,11 +3,7 @@ import './form.css';
 import * as React from 'react';
 import {Form as FinalForm} from 'react-final-form';
 
-export interface FormProps {
-  readonly children?: any;
-  readonly onSubmit?: any;
-  readonly validate?: any;
-}
+import {FormProps} from '../../types/components/form';
 
 export class Form extends React.Component<FormProps, {}> {
   constructor(props: FormProps) {

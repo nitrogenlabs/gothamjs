@@ -1,13 +1,8 @@
 import SvgIcon from '@material-ui/core/SvgIcon/SvgIcon';
 import * as React from 'react';
 
+import {IconProps} from '../../types/components/icon';
 import {styledComponent} from '../../utils/styles';
-
-export interface IconProps {
-  readonly height?: number;
-  readonly name: string;
-  readonly width?: number;
-}
 
 export class Icon extends React.Component<IconProps, {}> {
   static defaultProps: object = {

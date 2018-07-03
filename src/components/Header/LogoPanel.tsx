@@ -1,14 +1,9 @@
 import * as React from 'react';
 
-import {Component, ComponentProps} from '../Component/Component';
+import {LogoPanelProps} from '../../types/components/header';
 import {Icon} from '../Icon/Icon';
 
-export interface LogoPanelProps extends ComponentProps {
-  readonly logo: string;
-  readonly name: string;
-}
-
-export class LogoPanel extends Component<LogoPanelProps> {
+export class LogoPanel extends React.Component<LogoPanelProps> {
   readonly name: string;
 
   constructor(props: LogoPanelProps) {

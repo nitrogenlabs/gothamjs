@@ -1,15 +1,11 @@
 import * as React from 'react';
 
-import {Component, ComponentProps} from '../Component/Component';
+import {HeaderBarProps} from '../../types/components/header';
 import {NavTabs} from './NavTabs';
 import {SearchPanel} from './SearchPanel';
 import {TabPanes} from './TabPanes';
 
-export interface HeaderBarProps extends ComponentProps {
-  readonly appLogo: string;
-}
-
-export class HeaderBar extends Component<HeaderBarProps> {
+export class HeaderBar extends React.Component<HeaderBarProps> {
   readonly name: string;
 
   constructor(props: HeaderBarProps) {

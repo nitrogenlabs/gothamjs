@@ -1,11 +1,8 @@
 import * as React from 'react';
 
-import {Component, ComponentProps} from '../Component/Component';
+import {SearchPanelProps} from '../../types/components/header';
 
-export interface SearchPanelProps extends ComponentProps {
-}
-
-export class SearchPanel extends Component<SearchPanelProps> {
+export class SearchPanel extends React.Component<SearchPanelProps> {
   readonly name: string;
 
   constructor(props: SearchPanelProps) {

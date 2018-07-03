@@ -85,9 +85,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@material-ui/core@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.npmjs.org/@material-ui/core/-/core-1.3.0.tgz#cc06d2ddc594c5563e73c0364763b8502dbc260e"
+"@material-ui/core@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.npmjs.org/@material-ui/core/-/core-1.3.1.tgz#8b4e6db9ed4536e8ccbea0eeff3da0d524e6af2c"
   dependencies:
     "@babel/runtime" "^7.0.0-beta.42"
     "@types/jss" "^9.5.3"
@@ -123,23 +123,23 @@
   dependencies:
     recompose "^0.26.0 || ^0.27.0"
 
-"@nlabs/arkhamjs-middleware-logger@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/@nlabs/arkhamjs-middleware-logger/-/arkhamjs-middleware-logger-1.0.3.tgz#442fe6d203301381a8e55ddb76b9723b9794b55b"
+"@nlabs/arkhamjs-middleware-logger@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/@nlabs/arkhamjs-middleware-logger/-/arkhamjs-middleware-logger-1.0.5.tgz#c62c4c9287132b874ca779ad0cf502d1db096afc"
   dependencies:
-    arkhamjs "^3.5.6"
+    arkhamjs "^3.5.8"
 
-"@nlabs/arkhamjs-storage-browser@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/@nlabs/arkhamjs-storage-browser/-/arkhamjs-storage-browser-1.0.7.tgz#e82062548d661742410f5c3fb277753c9ddac2b0"
+"@nlabs/arkhamjs-storage-browser@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/@nlabs/arkhamjs-storage-browser/-/arkhamjs-storage-browser-1.0.8.tgz#91ef4a678c69813ab35a66a716350c2b7968ba0f"
 
 "@types/history@*", "@types/history@^4.6.2":
   version "4.6.2"
   resolved "https://registry.npmjs.org/@types/history/-/history-4.6.2.tgz#12cfaba693ba20f114ed5765467ff25fdf67ddb0"
 
-"@types/jest@^23.1.3":
-  version "23.1.3"
-  resolved "https://registry.npmjs.org/@types/jest/-/jest-23.1.3.tgz#4db19b2e7627dc254bbed5781b5609c621b5ad8e"
+"@types/jest@^23.1.4":
+  version "23.1.4"
+  resolved "https://registry.npmjs.org/@types/jest/-/jest-23.1.4.tgz#71e1e2d08b1db742f479ee2795536ebc999a2419"
 
 "@types/jss@^9.5.3":
   version "9.5.3"
@@ -203,9 +203,9 @@
   dependencies:
     csstype "^2.2.0"
 
-"@types/react@^16.4.5":
-  version "16.4.5"
-  resolved "https://registry.npmjs.org/@types/react/-/react-16.4.5.tgz#98a00fdd2c512ed5d7399d3f2660ce9d6152bce6"
+"@types/react@^16.4.6":
+  version "16.4.6"
+  resolved "https://registry.npmjs.org/@types/react/-/react-16.4.6.tgz#5024957c6bcef4f02823accf5974faba2e54fada"
   dependencies:
     csstype "^2.2.0"
 
@@ -279,16 +279,9 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
-arkhamjs@3.5.7:
-  version "3.5.7"
-  resolved "https://registry.npmjs.org/arkhamjs/-/arkhamjs-3.5.7.tgz#802b46cc8d469a1384d662eba56ff60d844cad70"
-  dependencies:
-    error-stack-parser "^2.0.2"
-    lodash "^4.17.5"
-
-arkhamjs@^3.5.6:
-  version "3.5.6"
-  resolved "https://registry.npmjs.org/arkhamjs/-/arkhamjs-3.5.6.tgz#bedbe389db570bd332c1a0b4347ac54c4daee832"
+arkhamjs@3.5.8, arkhamjs@^3.5.8:
+  version "3.5.8"
+  resolved "https://registry.npmjs.org/arkhamjs/-/arkhamjs-3.5.8.tgz#60d2533dcb9c7ecbf0010bbaeca82893cdbb86ba"
   dependencies:
     error-stack-parser "^2.0.2"
     lodash "^4.17.5"
@@ -356,6 +349,10 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
+base64-js@^1.0.2:
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/base64-js/-/base64-js-1.3.0.tgz#cab1e6118f051095e58b5281aea8c1cd22bfc0e3"
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
@@ -366,6 +363,13 @@ brace-expansion@^1.1.7:
 brcast@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/brcast/-/brcast-3.0.1.tgz#6256a8349b20de9eed44257a9b24d71493cd48dd"
+
+buffer@^5.0.3:
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/buffer/-/buffer-5.1.0.tgz#c913e43678c7cb7c8bd16afbcddb6c5505e8f9fe"
+  dependencies:
+    base64-js "^1.0.2"
+    ieee754 "^1.1.4"
 
 builtin-modules@^1.0.0:
   version "1.1.1"
@@ -464,6 +468,18 @@ cross-spawn@^6.0.5:
     semver "^5.5.0"
     shebang-command "^1.2.0"
     which "^1.2.9"
+
+css-color-keywords@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/css-color-keywords/-/css-color-keywords-1.0.0.tgz#fea2616dc676b2962686b3af8dbdbe180b244e05"
+
+css-to-react-native@^2.0.3:
+  version "2.2.1"
+  resolved "https://registry.npmjs.org/css-to-react-native/-/css-to-react-native-2.2.1.tgz#7f3f4c95de65501b8720c87bf0caf1f39073b88e"
+  dependencies:
+    css-color-keywords "^1.0.0"
+    fbjs "^0.8.5"
+    postcss-value-parser "^3.3.0"
 
 css-vendor@^0.3.8:
   version "0.3.8"
@@ -779,7 +795,7 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.npmjs.org/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
 
-fbjs@^0.8.1, fbjs@^0.8.16:
+fbjs@^0.8.1, fbjs@^0.8.16, fbjs@^0.8.5:
   version "0.8.17"
   resolved "https://registry.npmjs.org/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   dependencies:
@@ -893,6 +909,10 @@ has-ansi@^2.0.0:
   dependencies:
     ansi-regex "^2.0.0"
 
+has-flag@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/has-flag/-/has-flag-1.0.0.tgz#9d9e793165ce017a00f00418c43f942a7b1d11fa"
+
 has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/has-flag/-/has-flag-3.0.0.tgz#b5d454dc2199ae225699f3467e5a07f3b955bafd"
@@ -934,6 +954,10 @@ iconv-lite@^0.4.17, iconv-lite@~0.4.13:
   resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.23.tgz#297871f63be507adcfbfca715d0cd0eed84e9a63"
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
+
+ieee754@^1.1.4:
+  version "1.1.12"
+  resolved "https://registry.npmjs.org/ieee754/-/ieee754-1.1.12.tgz#50bf24e5b9c8bb98af4964c941cdb0918da7b60b"
 
 ignore@^3.3.3:
   version "3.3.8"
@@ -1394,6 +1418,14 @@ path-type@^2.0.0:
   dependencies:
     pify "^2.0.0"
 
+performance-now@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/performance-now/-/performance-now-0.2.0.tgz#33ef30c5c77d4ea21c5a53869d91b56d8f2555e5"
+
+performance-now@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
+
 pify@^2.0.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
@@ -1422,6 +1454,10 @@ popper.js@^1.14.1:
   version "1.14.3"
   resolved "https://registry.npmjs.org/popper.js/-/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
 
+postcss-value-parser@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-3.3.0.tgz#87f38f9f18f774a4ab4c8a232f5c5ce8872a9d15"
+
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -1440,7 +1476,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.0:
+prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.4:
   version "15.6.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -1458,6 +1494,12 @@ prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
 punycode@^2.1.0:
   version "2.1.1"
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
+
+raf@^3.1.0:
+  version "3.4.0"
+  resolved "https://registry.npmjs.org/raf/-/raf-3.4.0.tgz#a28876881b4bc2ca9117d4138163ddb80f781575"
+  dependencies:
+    performance-now "^2.1.0"
 
 rafl@~1.2.1:
   version "1.2.2"
@@ -1507,7 +1549,7 @@ react-hot-loader@^4.3.3:
     react-lifecycles-compat "^3.0.4"
     shallowequal "^1.0.2"
 
-react-is@^16.4.1:
+react-is@^16.3.1, react-is@^16.4.1:
   version "16.4.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.4.1.tgz#d624c4650d2c65dbd52c72622bbf389435d9776e"
 
@@ -1531,6 +1573,14 @@ react-loadable@^5.4.0:
   dependencies:
     prop-types "^15.5.0"
 
+react-motion@^0.5.0:
+  version "0.5.2"
+  resolved "https://registry.npmjs.org/react-motion/-/react-motion-0.5.2.tgz#0dd3a69e411316567927917c6626551ba0607316"
+  dependencies:
+    performance-now "^0.2.0"
+    prop-types "^15.5.8"
+    raf "^3.1.0"
+
 react-popper@^0.10.0:
   version "0.10.4"
   resolved "https://registry.npmjs.org/react-popper/-/react-popper-0.10.4.tgz#af2a415ea22291edd504678d7afda8a6ee3295aa"
@@ -1538,7 +1588,7 @@ react-popper@^0.10.0:
     popper.js "^1.14.1"
     prop-types "^15.6.1"
 
-react-router-dom@^4.2.2:
+react-router-dom@^4.1.1, react-router-dom@^4.2.2:
   version "4.3.1"
   resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"
   dependencies:
@@ -1548,6 +1598,14 @@ react-router-dom@^4.2.2:
     prop-types "^15.6.1"
     react-router "^4.3.1"
     warning "^4.0.1"
+
+react-router-transition@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/react-router-transition/-/react-router-transition-1.2.1.tgz#167702d122ca6de339cdd005b95d74707e1c7e77"
+  dependencies:
+    prop-types "^15.5.10"
+    react-motion "^0.5.0"
+    react-router-dom "^4.1.1"
 
 react-router@^4.3.1:
   version "4.3.1"
@@ -1804,9 +1862,38 @@ strip-json-comments@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
+styled-components@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.npmjs.org/styled-components/-/styled-components-3.3.3.tgz#09e702055ab11f7a8eab8229b1c0d0b855095686"
+  dependencies:
+    buffer "^5.0.3"
+    css-to-react-native "^2.0.3"
+    fbjs "^0.8.16"
+    hoist-non-react-statics "^2.5.0"
+    is-plain-object "^2.0.1"
+    prop-types "^15.5.4"
+    react-is "^16.3.1"
+    stylis "^3.5.0"
+    stylis-rule-sheet "^0.0.10"
+    supports-color "^3.2.3"
+
+stylis-rule-sheet@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.npmjs.org/stylis-rule-sheet/-/stylis-rule-sheet-0.0.10.tgz#44e64a2b076643f4b52e5ff71efc04d8c3c4a430"
+
+stylis@^3.5.0:
+  version "3.5.1"
+  resolved "https://registry.npmjs.org/stylis/-/stylis-3.5.1.tgz#fd341d59f57f9aeb412bc14c9d8a8670b438e03b"
+
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
+
+supports-color@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.npmjs.org/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
+  dependencies:
+    has-flag "^1.0.0"
 
 supports-color@^5.3.0:
   version "5.4.0"

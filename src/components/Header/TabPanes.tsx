@@ -1,11 +1,8 @@
 import * as React from 'react';
 
-import {Component, ComponentProps} from '../Component/Component';
+import {TabPanesProps} from '../../types/components/header';
 
-export interface TabPanesProps extends ComponentProps {
-}
-
-export class TabPanes extends Component<TabPanesProps> {
+export class TabPanes extends React.Component<TabPanesProps> {
   readonly name: string;
 
   constructor(props: TabPanesProps) {

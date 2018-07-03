@@ -1,8 +1,9 @@
-import {StyleRulesCallback, WithStyles, withStyles} from '@material-ui/core';
+import {StyleRulesCallback, withStyles} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid/Grid';
 import Typography from '@material-ui/core/Typography/Typography';
-import isEmpty from 'lodash/isEmpty';
 import * as React from 'react';
+
+import {PageViewProps, PageViewState} from '../../types/views/page';
 
 const styles: StyleRulesCallback = (theme) => ({
   title: {
@@ -13,31 +14,17 @@ const styles: StyleRulesCallback = (theme) => ({
     justifyContent: 'flex-end',
     paddingRight: 10
   },
-  toolbar: theme.mixins.toolbar
+  toolbar: theme.mixins.toolbar,
+  view: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    paddingBottom: 30
+  }
 });
-
-export interface Props {
-  readonly name: string;
-  readonly title?: string;
-}
-
-export type PageViewProps = Props & WithStyles<typeof styles>;
-
-export interface PageViewState {
-}
 
 export class PageViewBase extends React.Component<PageViewProps, PageViewState> {
   state: any;
-
-  getClassNames(name: string): string {
-    const classNames: string[] = ['view'];
-
-    if(!isEmpty(name)) {
-      classNames.push(`view-${name}`);
-    }
-
-    return classNames.join(' ');
-  }
 
   renderTitle(title: string, classes) {
     if(title) {
@@ -55,13 +42,13 @@ export class PageViewBase extends React.Component<PageViewProps, PageViewState> 
     const {children, classes, title} = this.props;
 
     return (
-      <React.Fragment>
+      <div className={classes.view}>
         <div className={classes.toolbar} />
         <Grid container direction="column">
           {this.renderTitle(title, classes)}
           {children}
         </Grid>
-      </React.Fragment>
+      </div>
     );
   }
 }
