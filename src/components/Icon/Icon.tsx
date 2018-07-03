@@ -1,23 +1,14 @@
 import SvgIcon from '@material-ui/core/SvgIcon/SvgIcon';
 import * as React from 'react';
 
-import {IconProps} from '../../types/components/icon';
 import {styledComponent} from '../../utils/styles';
 
-export class Icon extends React.Component<IconProps, {}> {
-  static defaultProps: object = {
-    height: 32,
-    width: 32
-  };
+export const Icon = ({height = 32, name, width = 32}) => {
+  const StyledIcon = styledComponent(SvgIcon)({height, width});
 
-  render(): JSX.Element {
-    const {height, name, width} = this.props;
-    const StyledIcon = styledComponent(SvgIcon)({height, width});
-
-    return (
-      <StyledIcon color="primary" viewBox={`0 0 ${width} ${height}`}>
-        <use href={`./icons/icons.svg#${name}`} />
-      </StyledIcon>
-    );
-  }
-}
+  return (
+    <StyledIcon color="primary" viewBox={`0 0 ${width} ${height}`}>
+      <use href={`./icons/icons.svg#${name}`} />
+    </StyledIcon>
+  );
+};

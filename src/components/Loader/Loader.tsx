@@ -1,13 +1,32 @@
+import {StyleRulesCallback} from '@material-ui/core/styles';
 import React from 'react';
 
-export class Loader extends React.Component {
-  render(): JSX.Element {
-    return (
-      <div id="loader" className="loader">
-        <div className="bgContainer">
-          <div className="l-s-2 blink">LOADING</div>
-        </div>
-      </div>
-    );
+import {initStyle} from '../../utils/components';
+
+const styles: StyleRulesCallback = (theme) => ({
+  loader: {
+    backgroundColor: theme.palette.background.default,
+    height: '100%',
+    left: 0,
+    position: 'fixed',
+    textAlign: 'center',
+    top: 0,
+    width: '100%',
+    zIndex: theme.zIndex.tooltip + 1
+  },
+  loaderBackground: {
+    left: '50%',
+    position: 'absolute',
+    top: '50%'
   }
-}
+});
+
+export const LoaderBase = ({classes}) => (
+  <div id="loader" className={classes.loader}>
+    <div className={classes.loaderBackground}>
+      <div className="l-s-2 blink">LOADING</div>
+    </div >
+  </div >
+);
+
+export const Loader = initStyle(LoaderBase, styles);

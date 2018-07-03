@@ -1,11 +1,20 @@
-import './form.css';
-
+import {StyleRulesCallback} from '@material-ui/core/styles';
 import * as React from 'react';
 import {Form as FinalForm} from 'react-final-form';
 
 import {FormProps} from '../../types/components/form';
+import {initStyle} from '../../utils/components';
 
-export class Form extends React.Component<FormProps, {}> {
+const styles: StyleRulesCallback = () => ({
+  form: {
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '100%'
+  }
+});
+
+export class FormBase extends React.Component<FormProps, {}> {
   constructor(props: FormProps) {
     super(props);
 
@@ -14,10 +23,10 @@ export class Form extends React.Component<FormProps, {}> {
   }
 
   renderForm({handleSubmit}) {
-    const {children} = this.props;
+    const {children, classes} = this.props;
 
     return (
-      <form className="form" onSubmit={handleSubmit}>{children}</form>
+      <form className={classes.form} onSubmit={handleSubmit}>{children}</form>
     );
   }
 
@@ -34,3 +43,5 @@ export class Form extends React.Component<FormProps, {}> {
     );
   }
 }
+
+export const Form = initStyle(FormBase, styles);

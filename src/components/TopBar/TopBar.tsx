@@ -43,6 +43,7 @@ export class TopBarBase extends React.Component<TopBarProps> {
   constructor(props: TopBarProps) {
     super(props);
 
+    // Methods
     this.onToggleDrawer = this.onToggleDrawer.bind(this);
   }
 
