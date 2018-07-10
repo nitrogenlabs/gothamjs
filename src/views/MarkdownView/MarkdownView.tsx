@@ -6,7 +6,7 @@ import remarkReact from 'remark-react';
 
 import {AppActions} from '../../actions/AppActions/AppActions';
 import {AppConstants} from '../../constants/AppConstants';
-import {MarkdownViewProps, MarkdownViewState} from '../../types/views/home';
+import {MarkdownViewProps, MarkdownViewState} from '../../types/views/markdown';
 import {initComponent} from '../../utils/components';
 import {PageView} from '../PageView/PageView';
 
@@ -39,7 +39,6 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
     const {external} = this.props;
     const {content = ''} = this.state;
 
-    console.log('componentDidMount::content', content);
     if(content === '') {
       AppActions.getExternal(external);
     }

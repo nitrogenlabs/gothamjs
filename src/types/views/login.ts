@@ -1,6 +1,6 @@
-import {WithStyles} from '@material-ui/core/styles';
+import {PageViewProps} from './page';
 
-export interface LoginViewProps extends WithStyles<any> {
+export interface LoginViewProps extends PageViewProps {
   readonly logo: JSX.Element;
 }
 

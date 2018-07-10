@@ -1,6 +1,8 @@
 import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
+import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
+import {AppConstants} from '../../constants/AppConstants';
 import {DefaultContainerProps, DefaultContainerState} from '../../types/components/defaultContainer';
 import {renderTransition} from '../../utils/routes';
 import {TopBar} from '../TopBar/TopBar';
@@ -16,46 +18,42 @@ const styles: StyleRulesCallback = (theme) => ({
 });
 
 export class DefaultContainerBase extends React.Component<DefaultContainerProps, DefaultContainerState> {
-  state: any;
+  isTopSolid: boolean = false;
 
   constructor(props: DefaultContainerProps) {
     super(props);
 
     // Methods
     this.onScroll = this.onScroll.bind(this);
-
-    // Initial state
-    this.state = {
-      isTopSolid: false
-    };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     const {location: {pathname}} = this.props;
     const {location: {pathname: nextPath}} = nextProps;
-    const {isTopSolid} = this.state;
-    const {isTopSolid: nextSolid} = nextState;
 
-    return pathname !== nextPath || isTopSolid !== nextSolid;
+    return pathname !== nextPath;
   }
 
   onScroll(event: React.SyntheticEvent) {
     const {theme} = this.props;
+    let changeSolid: boolean = false;
 
     if(event.currentTarget.scrollTop > theme.mixins.toolbar.minHeight) {
-      this.setState({isTopSolid: true});
-    } else {
-      this.setState({isTopSolid: false});
+      changeSolid = true;
+    }
+
+    if(this.isTopSolid !== changeSolid) {
+      this.isTopSolid = changeSolid;
+      Flux.dispatch({isTransparent: !changeSolid, type: AppConstants.TOPBAR_SOLID});
     }
   }
 
   render(): JSX.Element {
     const {classes, logo, routes, siteTitle, title} = this.props;
-    const {isTopSolid} = this.state;
 
     return (
       <React.Fragment>
-        <TopBar logo={logo} transparent={!isTopSolid} title={title} />
+        <TopBar logo={logo} title={title} />
         <div className={classes.content} onScroll={this.onScroll}>
           {renderTransition(routes, siteTitle)}
         </div>

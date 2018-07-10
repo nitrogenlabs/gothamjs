@@ -1,6 +1,6 @@
-import {WithStyles} from '@material-ui/core/styles';
+import {PageViewProps} from './page';
 
-export interface MarkdownViewProps extends WithStyles<any> {
+export interface MarkdownViewProps extends PageViewProps {
   readonly external: string;
 }
 

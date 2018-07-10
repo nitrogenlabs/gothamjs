@@ -5,8 +5,6 @@ import * as ReactDOM from 'react-dom';
 
 import {Icon} from './components/Icon/Icon';
 import {Gotham} from './views/Gotham/Gotham';
-import {HomeView} from './views/HomeView/HomeView';
-import {LoginView} from './views/LoginView/LoginView';
 
 const target = document.getElementById('app');
 
@@ -23,13 +21,11 @@ const routes = [
     routes: [
       {
         asyncComponent: () => import('./views/HomeView/HomeView'),
-        component: HomeView,
         path: '/',
         title: 'Welcome'
       },
       {
         asyncComponent: () => import('./views/LoginView/LoginView'),
-        component: LoginView,
         logo: <Icon name="gotham-logo" width={130} height={130} />,
         path: '/login',
         title: 'Login'
@@ -38,6 +34,12 @@ const routes = [
         asyncComponent: () => import('./views/MarkdownView/MarkdownView'),
         external: 'https://raw.githubusercontent.com/nitrogenlabs/arkhamjs/master/README.md',
         path: '/markdown',
+        title: 'Markdown'
+      },
+      {
+        asyncComponent: () => import('./views/MarkdownView/MarkdownView'),
+        external: './docs/demo.md',
+        path: '/markdownDemo',
         title: 'Markdown'
       }
     ]

@@ -45,6 +45,24 @@ export class TopBarBase extends React.PureComponent<TopBarProps> {
 
     // Methods
     this.onToggleDrawer = this.onToggleDrawer.bind(this);
+    this.onUpdateBackground = this.onUpdateBackground.bind(this);
+
+    this.state = {
+      isTransparent: false
+    };
+  }
+
+  componentDidMount() {
+    Flux.on(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
+  }
+
+  componentWillUnmount() {
+    Flux.off(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
+  }
+
+  onUpdateBackground(data) {
+    const {isTransparent} = data;
+    this.setState({isTransparent});
   }
 
   onToggleDrawer() {
@@ -77,14 +95,15 @@ export class TopBarBase extends React.PureComponent<TopBarProps> {
   }
 
   render(): JSX.Element {
-    const {classes, logo, open, title, transparent, user} = this.props;
+    const {classes, logo, open, title, user} = this.props;
+    const {isTransparent} = this.state;
     const appBarSolid = `${classes.appBar} ${classes.appBarSolid}`;
     const appBarTransparent = `${classes.appBar} ${classes.appBarTransparent}`;
-    const titleText = transparent ? classes.titleTextTransparent : classes.titleTextSolid;
+    const titleText = isTransparent ? classes.titleTextTransparent : classes.titleTextSolid;
 
     return (
       <AppBar
-        className={transparent ? appBarTransparent : appBarSolid}
+        className={isTransparent ? appBarTransparent : appBarSolid}
         position="fixed">
         <Toolbar classes={{root: titleText}}>
           <Hidden mdUp>

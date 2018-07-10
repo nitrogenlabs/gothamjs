@@ -1,4 +1,4 @@
-import {WithStyles} from '@material-ui/core/styles';
+import {PageViewProps} from './page';
 
-export interface HomeViewProps extends WithStyles<any> {}
+export interface HomeViewProps extends PageViewProps {}
 export interface HomeViewState {}
