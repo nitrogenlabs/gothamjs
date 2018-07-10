@@ -5,7 +5,7 @@ import Hidden from '@material-ui/core/Hidden/Hidden';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Typography from '@material-ui/core/Typography/Typography';
-import {Flux} from 'arkhamjs';
+import {Flux} from '@nlabs/arkhamjs';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
 import NavLink from 'react-router-dom/es/NavLink';
@@ -39,7 +39,7 @@ const styles: StyleRulesCallback = (theme) => ({
   }
 });
 
-export class TopBarBase extends React.Component<TopBarProps> {
+export class TopBarBase extends React.PureComponent<TopBarProps> {
   constructor(props: TopBarProps) {
     super(props);
 

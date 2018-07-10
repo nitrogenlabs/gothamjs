@@ -1,5 +1,5 @@
 import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
-import {Flux} from 'arkhamjs';
+import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
 import {AppConstants} from '../../constants/AppConstants';
@@ -17,7 +17,7 @@ const styles: StyleRulesCallback = (theme) => ({
   }
 });
 
-export class MenuContainerBase extends React.Component<MenuContainerProps, MenuContainerState> {
+export class MenuContainerBase extends React.PureComponent<MenuContainerProps, MenuContainerState> {
   constructor(props) {
     super(props);
 

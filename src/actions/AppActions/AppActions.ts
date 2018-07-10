@@ -1,8 +1,13 @@
-import {Flux, FluxAction} from 'arkhamjs';
+import {Flux, FluxAction} from '@nlabs/arkhamjs';
+import {Hunter} from 'rip-hunter';
 
 import {AppConstants} from '../../constants/AppConstants';
 
 export class AppActions {
+  static getExternal(url: string): Promise<FluxAction> {
+    return Hunter.get(url).then((content) => Flux.dispatch({content, type: AppConstants.GET_EXTERNAL}));
+  }
+
   static navBack(): Promise<FluxAction> {
     return Flux.dispatch({type: AppConstants.NAV_BACK});
   }

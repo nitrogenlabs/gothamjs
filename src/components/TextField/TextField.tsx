@@ -2,7 +2,7 @@ import MaterialTextField, {TextFieldProps} from '@material-ui/core/TextField/Tex
 import * as React from 'react';
 import {Field} from 'react-final-form';
 
-export class TextField extends React.Component<TextFieldProps, {}> {
+export class TextField extends React.PureComponent<TextFieldProps, {}> {
   constructor(props: TextFieldProps) {
     super(props);
 

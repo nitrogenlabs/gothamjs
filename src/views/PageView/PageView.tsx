@@ -23,7 +23,7 @@ const styles: StyleRulesCallback = (theme) => ({
   }
 });
 
-export class PageViewBase extends React.Component<PageViewProps, PageViewState> {
+export class PageViewBase extends React.PureComponent<PageViewProps, PageViewState> {
   state: any;
 
   renderTitle(title: string, classes) {

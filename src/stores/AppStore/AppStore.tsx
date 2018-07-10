@@ -1,4 +1,4 @@
-import {Store} from 'arkhamjs';
+import {Store} from '@nlabs/arkhamjs';
 import {set} from 'lodash';
 
 import {AppConstants} from '../../constants/AppConstants';

@@ -18,6 +18,7 @@ const routes = [
   {
     isContainer: true,
     logo: <Icon name="gotham" width={175} height={50} />,
+    menu: [],
     path: '/',
     routes: [
       {
@@ -32,6 +33,12 @@ const routes = [
         logo: <Icon name="gotham-logo" width={130} height={130} />,
         path: '/login',
         title: 'Login'
+      },
+      {
+        asyncComponent: () => import('./views/MarkdownView/MarkdownView'),
+        external: 'https://raw.githubusercontent.com/nitrogenlabs/arkhamjs/master/README.md',
+        path: '/markdown',
+        title: 'Markdown'
       }
     ]
   }

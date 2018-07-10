@@ -1,7 +1,7 @@
 import {createMuiTheme, MuiThemeProvider, StyleRulesCallback, withStyles} from '@material-ui/core/styles';
+import {Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
-import {Flux} from 'arkhamjs';
 import {createBrowserHistory, History} from 'history';
 import * as React from 'react';
 import {hot} from 'react-hot-loader';
@@ -40,7 +40,7 @@ const styles: StyleRulesCallback = () => ({
   }
 });
 
-export class GothamBase extends React.Component<GothamProps, GothamState> {
+export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   history: History;
   state: any = {};
   theme;

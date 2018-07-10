@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
-import {Flux} from 'arkhamjs';
+import {Flux} from '@nlabs/arkhamjs';
 import React from 'react';
 
 import {AppConstants} from '../../constants/AppConstants';
@@ -27,7 +27,7 @@ const styles: StyleRulesCallback = (theme) => ({
   toolbar: theme.mixins.toolbar
 });
 
-export class SideMenuBase extends React.Component<SideMenuProps, SideMenuState> {
+export class SideMenuBase extends React.PureComponent<SideMenuProps, SideMenuState> {
   constructor(props: SideMenuProps) {
     super(props);
 

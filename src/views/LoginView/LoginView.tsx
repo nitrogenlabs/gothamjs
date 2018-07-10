@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card/Card';
 import CardContent from '@material-ui/core/CardContent/CardContent';
 import Grid from '@material-ui/core/Grid/Grid';
 import {StyleRulesCallback} from '@material-ui/core/styles';
-import {Flux} from 'arkhamjs';
+import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
 import {Form} from '../../components/Form/Form';
@@ -38,7 +38,7 @@ const styles: StyleRulesCallback = (theme) => ({
   }
 });
 
-export class LoginViewBase extends React.Component<LoginViewProps, LoginViewState> {
+export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginViewState> {
   state: any = {};
 
   constructor(props) {
@@ -93,10 +93,10 @@ export class LoginViewBase extends React.Component<LoginViewProps, LoginViewStat
   }
 
   render(): JSX.Element {
-    const {classes, logo} = this.props;
+    const {classes, logo, name = 'login', title = 'Login'} = this.props;
 
     return (
-      <PageView name="login" title="Login">
+      <PageView name={name} title={title}>
         <Grid item sm={12}>
           <PageHeader title="Welcome Back">
             Welcome back sign-in now there is lot of new stuff waiting for you.

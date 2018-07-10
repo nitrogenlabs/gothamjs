@@ -9,10 +9,11 @@ import {PageView} from '../PageView/PageView';
 const styles: StyleRulesCallback = () => ({
 });
 
-export class HomeViewBase extends React.Component<HomeViewProps, HomeViewState> {
+export class HomeViewBase extends React.PureComponent<HomeViewProps, HomeViewState> {
   render(): JSX.Element {
+    const {name = 'home', title = 'Home'} = this.props;
     return (
-      <PageView name="home" title="Home">
+      <PageView name={name} title={title}>
         <div>Home!</div>
         <Link to="/login">Goto Login!</Link>
         <div><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
