@@ -2,8 +2,8 @@ import {Location} from 'history';
 import loadable from 'loadable-components';
 import React from 'react';
 import {RouteProps} from 'react-router-dom';
-import Route from 'react-router-dom/es/Route';
-import Switch from 'react-router-dom/es/Switch';
+import Route from 'react-router-dom/Route';
+import Switch from 'react-router-dom/Switch';
 import {AnimatedSwitch, spring} from 'react-router-transition';
 
 import {DefaultContainer} from '../components/DefaultContainer/DefaultContainer';

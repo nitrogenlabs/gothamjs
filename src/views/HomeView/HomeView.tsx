@@ -1,6 +1,6 @@
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import * as React from 'react';
-import Link from 'react-router-dom/es/Link';
+import Link from 'react-router-dom/Link';
 
 import {HomeViewProps, HomeViewState} from '../../types/views/home';
 import {initComponent} from '../../utils/components';

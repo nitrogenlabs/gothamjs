@@ -4,14 +4,14 @@ import {AppConstants} from '../../constants/AppConstants';
 import {AppActions} from './AppActions';
 
 describe('AppActions', () => {
-  const path: string = 'test';
+  const path: string = '/test';
   const content: string = 'test';
 
-  describe('#goto', () => {
+  describe('#navGoto', () => {
     it('should go to a route', async () => {
       // Method
-      const action: FluxAction = await AppActions.goto(path);
-      return expect(action.path).toBe(`/${path}`);
+      const action: FluxAction = await AppActions.navGoto(path);
+      return expect(action.path).toBe(path);
     });
   });
 

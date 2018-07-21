@@ -5,7 +5,7 @@ import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {createBrowserHistory, History} from 'history';
 import * as React from 'react';
 import {hot} from 'react-hot-loader';
-import Router from 'react-router-dom/es/Router';
+import Router from 'react-router-dom/Router';
 import {injectGlobal} from 'styled-components';
 
 import {Config} from '../../config/properties';

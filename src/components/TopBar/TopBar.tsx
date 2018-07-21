@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography/Typography';
 import {Flux} from '@nlabs/arkhamjs';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
-import NavLink from 'react-router-dom/es/NavLink';
+import NavLink from 'react-router-dom/NavLink';
 
 import {AppConstants} from '../../constants/AppConstants';
 import {TopBarProps} from '../../types/components/topBar';
