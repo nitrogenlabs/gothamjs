@@ -6,13 +6,13 @@ import {StyleRulesCallback} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
-import {Form} from '../../components/Form/Form';
-import {PageHeader} from '../../components/PageHeader/PageHeader';
-import {TextField} from '../../components/TextField/TextField';
-import {UserConstants} from '../../constants/UserConstants';
-import {LoginViewProps, LoginViewState} from '../../types/views/login';
-import {initComponent} from '../../utils/components';
-import {PageView} from '../PageView/PageView';
+import {PageHeader} from '../components/Containers/PageHeader';
+import {Form} from '../components/Form/Form';
+import {TextField} from '../components/Form/TextField';
+import {UserConstants} from '../constants/UserConstants';
+import {LoginViewProps, LoginViewState} from '../types/views/login';
+import {initComponent} from '../utils/components';
+import {PageView} from './PageView';
 
 const styles: StyleRulesCallback = (theme) => ({
   buttons: {

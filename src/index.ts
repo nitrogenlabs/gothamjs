@@ -1,8 +1,9 @@
-import {AppActions} from './actions/AppActions/AppActions';
+import {AppActions} from './actions/AppActions';
 import {AppConstants} from './constants/AppConstants';
 import {UserConstants} from './constants/UserConstants';
-import {Gotham} from './views/Gotham/Gotham';
 
+export * from './components';
+export * from './views';
 export * from './types/views/gotham';
 export * from './types/views/home';
 export * from './types/routes';
@@ -10,6 +11,5 @@ export * from './types/styles';
 export {
   AppActions,
   AppConstants,
-  Gotham,
   UserConstants
 };

@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Platform",
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "types": "./lib/index.d.ts",
   "keywords": [
     "gothamjs",
@@ -26,7 +26,7 @@
     "url": "nitrogenlabs/gothamjs/issues"
   },
   "scripts": {
-    "compile": "lex compile -r",
+    "build": "lex compile -r",
     "dev": "lex dev -r",
     "lint": "eslint ./src --ext .ts,.tsx",
     "pretest": "yarn lint",

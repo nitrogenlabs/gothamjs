@@ -6,9 +6,9 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import {AnimatedSwitch, spring} from 'react-router-transition';
 
-import {DefaultContainer} from '../components/DefaultContainer/DefaultContainer';
-import {Loader} from '../components/Loader/Loader';
-import {MenuContainer} from '../components/MenuContainer/MenuContainer';
+import {DefaultContainer} from '../components/Containers/DefaultContainer';
+import {MenuContainer} from '../components/Containers/MenuContainer';
+import {Loader} from '../components/Loader';
 import {GothamRouteType} from '../types/routes';
 
 const updateTitle = (title: string = '', siteTitle: string = '') => {

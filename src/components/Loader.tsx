@@ -1,7 +1,7 @@
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import React from 'react';
 
-import {initStyle} from '../../utils/components';
+import {initStyle} from '../utils/components';
 
 const styles: StyleRulesCallback = (theme) => ({
   loader: {

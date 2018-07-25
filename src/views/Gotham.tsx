@@ -8,21 +8,24 @@ import {hot} from 'react-hot-loader';
 import Router from 'react-router-dom/Router';
 import {injectGlobal} from 'styled-components';
 
-import {Config} from '../../config/properties';
-import {defaultTheme} from '../../config/theme';
-import {AppConstants} from '../../constants/AppConstants';
-import {AppStore} from '../../stores';
-import {GothamProps, GothamState} from '../../types/views/gotham';
-import {renderTransition} from '../../utils/routes';
+import {Config} from '../config/properties';
+import {defaultTheme} from '../config/theme';
+import {AppConstants} from '../constants/AppConstants';
+import {AppStore} from '../stores/AppStore';
+import {GothamProps, GothamState} from '../types/views/gotham';
+import {renderTransition} from '../utils/routes';
 
 injectGlobal`
+body {
+  margin: 0;
+  padding: 0;
+}
 .routeWrapper {
   display: flex;
   flex: 1;
   height: 100vh;
   position: relative;
 }
-
 .routeWrapper > div {
   height: 100%;
   position: absolute;

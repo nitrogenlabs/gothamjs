@@ -1,7 +1,7 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import {Hunter} from 'rip-hunter';
 
-import {AppConstants} from '../../constants/AppConstants';
+import {AppConstants} from '../constants/AppConstants';
 
 export class AppActions {
   static getExternal(url: string): Promise<FluxAction> {

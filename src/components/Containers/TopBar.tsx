@@ -11,7 +11,7 @@ import * as React from 'react';
 import NavLink from 'react-router-dom/NavLink';
 
 import {AppConstants} from '../../constants/AppConstants';
-import {TopBarProps} from '../../types/components/topBar';
+import {TopBarProps, TopBarState} from '../../types/components/topBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   appBar: {
@@ -39,7 +39,11 @@ const styles: StyleRulesCallback = (theme) => ({
   }
 });
 
-export class TopBarBase extends React.PureComponent<TopBarProps> {
+export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
+  static defaultProps: object = {
+    transparent: false
+  };
+
   constructor(props: TopBarProps) {
     super(props);
 
@@ -48,7 +52,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps> {
     this.onUpdateBackground = this.onUpdateBackground.bind(this);
 
     this.state = {
-      isTransparent: false
+      isTransparent: props.transparent
     };
   }
 
@@ -71,11 +75,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps> {
 
   renderMenu(user) {
     if(user) {
-      return (
-        <React.Fragment>
-          <Button color="inherit">Logout</Button>
-        </React.Fragment>
-      );
+      return <Button color="inherit">Logout</Button>;
     }
 
     return (

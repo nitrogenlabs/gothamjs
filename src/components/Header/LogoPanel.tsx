@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {Icon} from '../Icon/Icon';
+import {Icon} from '../Icon';
 
 export const LogoPanel = ({logo, name}) => (
   <React.Fragment>

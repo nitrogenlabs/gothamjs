@@ -5,8 +5,8 @@ import * as React from 'react';
 import {AppConstants} from '../../constants/AppConstants';
 import {MenuContainerProps, MenuContainerState} from '../../types/components/menuContainer';
 import {renderTransition} from '../../utils/routes';
-import {SideMenu} from '../SideMenu/SideMenu';
-import {TopBar} from '../TopBar/TopBar';
+import {SideMenu} from './SideMenu';
+import {TopBar} from './TopBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   content: {

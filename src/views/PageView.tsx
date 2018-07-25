@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid/Grid';
 import Typography from '@material-ui/core/Typography/Typography';
 import * as React from 'react';
 
-import {PageViewProps, PageViewState} from '../../types/views/page';
+import {PageViewProps, PageViewState} from '../types/views/page';
 
 const styles: StyleRulesCallback = (theme) => ({
   title: {

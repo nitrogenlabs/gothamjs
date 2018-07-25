@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {PageHeaderProps} from '../../types/components/pageHeader';
-import {Icon} from '../Icon/Icon';
+import {Icon} from '../Icon';
 
 export class PageHeader extends React.PureComponent<PageHeaderProps> {
   renderIcon(icon: string) {
@@ -28,4 +28,3 @@ export class PageHeader extends React.PureComponent<PageHeaderProps> {
     );
   }
 }
-

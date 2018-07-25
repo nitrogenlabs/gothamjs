@@ -4,11 +4,11 @@ import * as React from 'react';
 import remark from 'remark';
 import remarkReact from 'remark-react';
 
-import {AppActions} from '../../actions/AppActions/AppActions';
-import {AppConstants} from '../../constants/AppConstants';
-import {MarkdownViewProps, MarkdownViewState} from '../../types/views/markdown';
-import {initComponent} from '../../utils/components';
-import {PageView} from '../PageView/PageView';
+import {AppActions} from '../actions/AppActions';
+import {AppConstants} from '../constants/AppConstants';
+import {MarkdownViewProps, MarkdownViewState} from '../types/views/markdown';
+import {initComponent} from '../utils/components';
+import {PageView} from './PageView';
 
 const styles: StyleRulesCallback = () => ({
 });

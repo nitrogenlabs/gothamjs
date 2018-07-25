@@ -5,7 +5,7 @@ import * as React from 'react';
 import {AppConstants} from '../../constants/AppConstants';
 import {DefaultContainerProps, DefaultContainerState} from '../../types/components/defaultContainer';
 import {renderTransition} from '../../utils/routes';
-import {TopBar} from '../TopBar/TopBar';
+import {TopBar} from './TopBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   content: {
@@ -53,7 +53,7 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
 
     return (
       <React.Fragment>
-        <TopBar logo={logo} title={title} />
+        <TopBar logo={logo} title={title} transparent />
         <div className={classes.content} onScroll={this.onScroll}>
           {renderTransition(routes, siteTitle)}
         </div>

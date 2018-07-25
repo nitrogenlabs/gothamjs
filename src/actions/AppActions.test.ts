@@ -1,6 +1,6 @@
 import {FluxAction} from '@nlabs/arkhamjs';
 
-import {AppConstants} from '../../constants/AppConstants';
+import {AppConstants} from '../constants/AppConstants';
 import {AppActions} from './AppActions';
 
 describe('AppActions', () => {

@@ -7,3 +7,7 @@ export interface TopBarProps extends WithStyles<any> {
   readonly transparent?: boolean;
   readonly user?: object;
 }
+
+export interface TopBarState {
+  readonly isTransparent: boolean;
+}
