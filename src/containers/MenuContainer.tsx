@@ -5,7 +5,7 @@ import * as React from 'react';
 import {AppConstants} from '../constants/AppConstants';
 import {MenuContainerProps, MenuContainerState} from '../types/components/menuContainer';
 import {renderTransition} from '../utils/routes';
-import {SideMenu} from './SideMenu';
+import {SideBar} from './SideBar';
 import {TopBar} from './TopBar';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -45,7 +45,7 @@ export class MenuContainerBase extends React.PureComponent<MenuContainerProps, M
 
   renderMenu(menu: any[], isOpen: boolean): JSX.Element {
     if(menu && menu.length) {
-      return <SideMenu menu={menu} open={isOpen} />;
+      return <SideBar menu={menu} open={isOpen} />;
     }
 
     return null;

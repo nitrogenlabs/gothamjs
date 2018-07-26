@@ -1,5 +1,8 @@
 import {Location} from 'history';
 
+import {SideBarProps} from './components/sideBar';
+import {TopBarProps} from './components/topBar';
+
 export interface GothamRouteType {
   readonly asyncComponent: any;
   readonly component: any;
@@ -10,8 +13,9 @@ export interface GothamRouteType {
   readonly path: string;
   readonly routes: GothamRouteType[];
   readonly sensitive: boolean;
-  readonly siteTitle: string;
+  readonly sideBar?: SideBarProps;
   readonly strict: boolean;
   readonly title: string;
+  readonly topBar?: TopBarProps;
   readonly view: string;
 }

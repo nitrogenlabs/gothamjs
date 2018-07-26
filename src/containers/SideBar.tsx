@@ -10,7 +10,7 @@ import {Flux} from '@nlabs/arkhamjs';
 import React from 'react';
 
 import {AppConstants} from '../constants/AppConstants';
-import {SideMenuProps, SideMenuState} from '../types/components/sideMenu';
+import {SideBarProps, SideBarState} from '../types/components/sideBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   drawerPaper: {
@@ -27,8 +27,8 @@ const styles: StyleRulesCallback = (theme) => ({
   toolbar: theme.mixins.toolbar
 });
 
-export class SideMenuBase extends React.PureComponent<SideMenuProps, SideMenuState> {
-  constructor(props: SideMenuProps) {
+export class SideBarBase extends React.PureComponent<SideBarProps, SideBarState> {
+  constructor(props: SideBarProps) {
     super(props);
 
     // Methods
@@ -117,4 +117,4 @@ export class SideMenuBase extends React.PureComponent<SideMenuProps, SideMenuSta
   }
 }
 
-export const SideMenu = withStyles(styles, {withTheme: true})(SideMenuBase);
+export const SideBar = withStyles(styles, {withTheme: true})(SideBarBase);
