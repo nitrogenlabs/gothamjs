@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import {PageHeaderProps} from '../../types/components/pageHeader';
-import {Icon} from '../Icon';
+import {Icon} from '../components/Icon';
+import {PageHeaderProps} from '../types/components/pageHeader';
 
 export class PageHeader extends React.PureComponent<PageHeaderProps> {
   renderIcon(icon: string) {

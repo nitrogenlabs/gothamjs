@@ -1,9 +1,14 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import {Hunter} from 'rip-hunter';
+import {GothamConfiguration} from 'types/views/gotham';
 
 import {AppConstants} from '../constants/AppConstants';
 
 export class AppActions {
+  static setConfig(config: GothamConfiguration): Promise<FluxAction> {
+    return Flux.dispatch({config, type: AppConstants.SET_CONFIG});
+  }
+
   static getExternal(url: string): Promise<FluxAction> {
     return Hunter.get(url).then((content) => Flux.dispatch({content, type: AppConstants.GET_EXTERNAL}));
   }
@@ -24,11 +29,15 @@ export class AppActions {
     return Flux.dispatch({path, type: AppConstants.NAV_REPLACE}); '1 1';
   }
 
-  static updateContent(content: string): Promise<FluxAction> {
-    return Flux.dispatch({content, type: AppConstants.UPDATE_CONTENT});
-  }
+  static updateTitle(title: string): Promise<FluxAction> {
+    const siteTitle: string = Flux.getState('app.config.title');
 
-  static updateView(path: string): Promise<FluxAction> {
-    return Flux.dispatch({path, type: AppConstants.UPDATE_VIEW});
+    if(title !== '' && siteTitle !== title) {
+      document.title = `${title} :: ${siteTitle}`;
+    } else {
+      document.title = `${siteTitle}`;
+    }
+
+    return Flux.dispatch({title, type: AppConstants.UPDATE_TITLE});
   }
 }

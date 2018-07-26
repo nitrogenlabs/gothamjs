@@ -10,8 +10,8 @@ import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
 import NavLink from 'react-router-dom/NavLink';
 
-import {AppConstants} from '../../constants/AppConstants';
-import {TopBarProps, TopBarState} from '../../types/components/topBar';
+import {AppConstants} from '../constants/AppConstants';
+import {TopBarProps, TopBarState} from '../types/components/topBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   appBar: {

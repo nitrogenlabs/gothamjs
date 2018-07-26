@@ -12,7 +12,7 @@ import {Config} from '../config/properties';
 import {defaultTheme} from '../config/theme';
 import {AppConstants} from '../constants/AppConstants';
 import {AppStore} from '../stores/AppStore';
-import {GothamProps, GothamState} from '../types/views/gotham';
+import {GothamConfiguration, GothamProps, GothamState} from '../types/views/gotham';
 import {renderTransition} from '../utils/routes';
 
 injectGlobal`
@@ -44,6 +44,7 @@ const styles: StyleRulesCallback = () => ({
 });
 
 export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
+  config: GothamConfiguration;
   history: History;
   state: any = {};
   theme;
@@ -58,6 +59,16 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     this.navGoto = this.navGoto.bind(this);
     this.navReplace = this.navReplace.bind(this);
 
+    // Configuration
+    const {config: appConfig = {}} = props;
+    const defaultConfig: GothamConfiguration = {
+      middleware: [],
+      routes: [],
+      stores: [],
+      title: ''
+    };
+    this.config = {...defaultConfig, ...appConfig};
+
     // ArkhamJS Middleware
     const env: string = Config.get('environment');
     const logger: Logger = new Logger({
@@ -65,12 +76,13 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     });
 
     // ArkhamJS Configuration
+    const {middleware, stores} = this.config;
     const storage: BrowserStorage = new BrowserStorage({type: 'session'});
 
     Flux.init({
-      middleware: [logger],
+      middleware: [logger, ...middleware],
       storage,
-      stores: [AppStore]
+      stores: [AppStore, ...stores]
     });
 
     // Create browser history
@@ -123,8 +135,9 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   }
 
   render(): JSX.Element {
-    const {classes, routes, title} = this.props;
+    const {classes} = this.props;
     const {isLoaded} = this.state;
+    const {routes} = this.config;
 
     if(!isLoaded) {
       return null;
@@ -134,7 +147,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       <MuiThemeProvider theme={this.theme}>
         <div className={classes.root}>
           <Router history={this.history}>
-            {renderTransition(routes, title)}
+            {renderTransition(routes)}
           </Router>
         </div>
       </MuiThemeProvider >

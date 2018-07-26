@@ -6,10 +6,10 @@ import {StyleRulesCallback} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
-import {PageHeader} from '../components/Containers/PageHeader';
 import {Form} from '../components/Form/Form';
 import {TextField} from '../components/Form/TextField';
 import {UserConstants} from '../constants/UserConstants';
+import {PageHeader} from '../containers/PageHeader';
 import {LoginViewProps, LoginViewState} from '../types/views/login';
 import {initComponent} from '../utils/components';
 import {PageView} from './PageView';

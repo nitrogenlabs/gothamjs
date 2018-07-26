@@ -4,47 +4,48 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import {Icon} from './components/Icon';
+import {GothamConfiguration} from './types/views/gotham';
 import {Gotham} from './views/Gotham';
 
 const target = document.getElementById('app');
 
-// CUSTOM PARAMETERS
-const siteTitle: string = 'GothamJS';
-
-// Route Example
-const routes = [
-  {
-    isContainer: true,
-    logo: <Icon name="gotham" width={175} height={50} />,
-    menu: [],
-    path: '/',
-    routes: [
-      {
-        asyncComponent: () => import('./views/HomeView'),
-        path: '/',
-        title: 'Welcome'
-      },
-      {
-        asyncComponent: () => import('./views/LoginView'),
-        logo: <Icon name="gotham-logo" width={130} height={130} />,
-        path: '/login',
-        title: 'Login'
-      },
-      {
-        asyncComponent: () => import('./views/MarkdownView'),
-        external: 'https://raw.githubusercontent.com/nitrogenlabs/arkhamjs/master/README.md',
-        path: '/markdown',
-        title: 'Markdown'
-      },
-      {
-        asyncComponent: () => import('./views/MarkdownView'),
-        external: './docs/demo.md',
-        path: '/markdownDemo',
-        title: 'Markdown'
-      }
-    ]
-  }
-];
+// CONFIGURATION
+const config: GothamConfiguration = {
+  routes: [
+    {
+      container: 'default',
+      logo: <Icon name="gotham" width={175} height={50} />,
+      menu: [],
+      path: '/',
+      routes: [
+        {
+          path: '/',
+          title: 'Welcome',
+          view: 'home'
+        },
+        {
+          logo: <Icon name="gotham-logo" width={130} height={130} />,
+          path: '/login',
+          title: 'Login',
+          view: 'login'
+        },
+        {
+          external: 'https://raw.githubusercontent.com/nitrogenlabs/arkhamjs/master/README.md',
+          path: '/markdown',
+          title: 'Markdown',
+          view: 'markdown'
+        },
+        {
+          external: './docs/demo.md',
+          path: '/markdownDemo',
+          title: 'Markdown',
+          view: 'markdown'
+        }
+      ]
+    }
+  ],
+  title: 'GothamJS'
+};
 
 // Render initial ReactJS code
-ReactDOM.render(<Gotham routes={routes} title={siteTitle} />, target);
+ReactDOM.render(<Gotham config={config} />, target);

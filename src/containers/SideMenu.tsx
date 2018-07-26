@@ -9,8 +9,8 @@ import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import React from 'react';
 
-import {AppConstants} from '../../constants/AppConstants';
-import {SideMenuProps, SideMenuState} from '../../types/components/sideMenu';
+import {AppConstants} from '../constants/AppConstants';
+import {SideMenuProps, SideMenuState} from '../types/components/sideMenu';
 
 const styles: StyleRulesCallback = (theme) => ({
   drawerPaper: {

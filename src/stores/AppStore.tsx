@@ -10,14 +10,17 @@ export class AppStore extends Store {
 
   initialState(): object {
     return {
-      content: 'Hello World'
+      config: {},
+      currentTitle: ''
     };
   }
 
   onAction(type: string, data, state): object {
     switch(type) {
-      case AppConstants.UPDATE_CONTENT:
-        return set(state, 'content', data.content);
+      case AppConstants.SET_CONFIG:
+        return set(state, 'config', data.config);
+      case AppConstants.UPDATE_TITLE:
+        return set(state, 'currentTitle', data.title);
       default:
         return state;
     }

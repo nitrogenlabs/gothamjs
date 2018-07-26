@@ -3,6 +3,7 @@ import {AppConstants} from './constants/AppConstants';
 import {UserConstants} from './constants/UserConstants';
 
 export * from './components';
+export * from './containers';
 export * from './views';
 export * from './types/views/gotham';
 export * from './types/views/home';

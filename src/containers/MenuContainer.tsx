@@ -2,9 +2,9 @@ import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
-import {AppConstants} from '../../constants/AppConstants';
-import {MenuContainerProps, MenuContainerState} from '../../types/components/menuContainer';
-import {renderTransition} from '../../utils/routes';
+import {AppConstants} from '../constants/AppConstants';
+import {MenuContainerProps, MenuContainerState} from '../types/components/menuContainer';
+import {renderTransition} from '../utils/routes';
 import {SideMenu} from './SideMenu';
 import {TopBar} from './TopBar';
 
@@ -60,7 +60,7 @@ export class MenuContainerBase extends React.PureComponent<MenuContainerProps, M
         <TopBar logo={logo} open={isMenuOpen} title={title} />
         {this.renderMenu(menu, isMenuOpen)}
         <div className={classes.content}>
-          {renderTransition(routes, title)}
+          {renderTransition(routes)}
         </div>
       </React.Fragment>
     );
@@ -68,3 +68,4 @@ export class MenuContainerBase extends React.PureComponent<MenuContainerProps, M
 }
 
 export const MenuContainer = withStyles(styles, {withTheme: true})(MenuContainerBase);
+export default MenuContainer;

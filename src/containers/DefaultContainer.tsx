@@ -2,9 +2,9 @@ import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
-import {AppConstants} from '../../constants/AppConstants';
-import {DefaultContainerProps, DefaultContainerState} from '../../types/components/defaultContainer';
-import {renderTransition} from '../../utils/routes';
+import {AppConstants} from '../constants/AppConstants';
+import {DefaultContainerProps, DefaultContainerState} from '../types/components/defaultContainer';
+import {renderTransition} from '../utils/routes';
 import {TopBar} from './TopBar';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -49,13 +49,13 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
   }
 
   render(): JSX.Element {
-    const {classes, logo, routes, siteTitle, title} = this.props;
+    const {classes, logo, routes, title} = this.props;
 
     return (
       <React.Fragment>
         <TopBar logo={logo} title={title} transparent />
         <div className={classes.content} onScroll={this.onScroll}>
-          {renderTransition(routes, siteTitle)}
+          {renderTransition(routes)}
         </div>
       </React.Fragment>
     );
@@ -63,3 +63,4 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
 }
 
 export const DefaultContainer = withStyles(styles, {withTheme: true})(DefaultContainerBase);
+export default DefaultContainer;
