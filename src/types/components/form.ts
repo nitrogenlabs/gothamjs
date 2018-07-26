@@ -5,3 +5,9 @@ export interface FormProps extends WithStyles<any> {
   readonly onSubmit?: any;
   readonly validate?: any;
 }
+
+export interface ButtonProps extends WithStyles<any> {
+  readonly children?: any;
+  readonly href?: string;
+  readonly type?: string;
+}

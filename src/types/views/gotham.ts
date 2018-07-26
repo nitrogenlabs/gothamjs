@@ -10,6 +10,7 @@ export interface GothamState {
 }
 
 export interface GothamConfiguration {
+  readonly name?: string;
   readonly routes?: object[];
   readonly stores?: Store[];
   readonly title?: string;

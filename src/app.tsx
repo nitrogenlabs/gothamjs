@@ -11,11 +11,11 @@ const target = document.getElementById('app');
 
 // CONFIGURATION
 const config: GothamConfiguration = {
+  name: 'gothamjs',
   routes: [
     {
       container: 'default',
       logo: <Icon name="gotham" width={175} height={50} />,
-      menu: [],
       path: '/',
       routes: [
         {
@@ -41,7 +41,13 @@ const config: GothamConfiguration = {
           title: 'Markdown',
           view: 'markdown'
         }
-      ]
+      ],
+      topBar: {
+        menu: [
+          {name: 'Login', url: '/login'},
+          {name: 'Signup', url: '/signup'}
+        ]
+      }
     }
   ],
   title: 'GothamJS'

@@ -1,21 +1,11 @@
-import MaterialTextField, {TextFieldProps} from '@material-ui/core/TextField/TextField';
+import MaterialButton from '@material-ui/core/Button/Button';
 import * as React from 'react';
-import {Field} from 'react-final-form';
 
-export class Button extends React.PureComponent<TextFieldProps, {}> {
-  constructor(props: TextFieldProps) {
-    super(props);
+import {ButtonProps} from '../../types/components/form';
 
-    // Methods
-    this.renderField = this.renderField.bind(this);
-  }
-
-  renderField({input}): JSX.Element {
-    return <MaterialTextField {...this.props} {...input} />;
-  }
-
+export class Button extends React.PureComponent<ButtonProps, {}> {
   render(): JSX.Element {
-    const {name} = this.props;
-    return <Field name={name} render={this.renderField} />;
+    const {children, href, type} = this.props;
+    return <MaterialButton href={href} type={type}>{children}</MaterialButton>;
   }
 }

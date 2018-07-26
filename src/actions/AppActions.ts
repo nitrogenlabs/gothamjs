@@ -30,7 +30,7 @@ export class AppActions {
   }
 
   static updateTitle(title: string): Promise<FluxAction> {
-    const siteTitle: string = Flux.getState('app.config.title');
+    const siteTitle: string = Flux.getState('app.title');
 
     if(title !== '' && siteTitle !== title) {
       document.title = `${title} :: ${siteTitle}`;

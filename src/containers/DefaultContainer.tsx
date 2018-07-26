@@ -3,7 +3,7 @@ import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
 import {AppConstants} from '../constants/AppConstants';
-import {DefaultContainerProps, DefaultContainerState} from '../types/components/defaultContainer';
+import {DefaultContainerProps, DefaultContainerState} from '../types/containers/defaultContainer';
 import {renderTransition} from '../utils/routes';
 import {TopBar} from './TopBar';
 
@@ -49,11 +49,12 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
   }
 
   render(): JSX.Element {
-    const {classes, logo, routes, title} = this.props;
+    const {classes, logo, topBar = {}, routes, title} = this.props;
+    const {menu = []} = topBar;
 
     return (
       <React.Fragment>
-        <TopBar logo={logo} title={title} transparent />
+        <TopBar logo={logo} menu={menu} title={title} transparent />
         <div className={classes.content} onScroll={this.onScroll}>
           {renderTransition(routes)}
         </div>

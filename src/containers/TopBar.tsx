@@ -1,6 +1,5 @@
 import {StyleRulesCallback, withStyles} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar/AppBar';
-import Button from '@material-ui/core/Button/Button';
 import Hidden from '@material-ui/core/Hidden/Hidden';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
@@ -10,8 +9,10 @@ import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
 import NavLink from 'react-router-dom/NavLink';
 
+import {Button} from '../components/Form/Button';
 import {AppConstants} from '../constants/AppConstants';
 import {TopBarProps, TopBarState} from '../types/components/topBar';
+import {GothamMenuItem} from '../types/menu';
 
 const styles: StyleRulesCallback = (theme) => ({
   appBar: {
@@ -41,6 +42,7 @@ const styles: StyleRulesCallback = (theme) => ({
 
 export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   static defaultProps: object = {
+    menu: [],
     transparent: false
   };
 
@@ -73,17 +75,14 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
     Flux.dispatch({type: AppConstants.TOGGLE_MENU});
   }
 
-  renderMenu(user) {
-    if(user) {
-      return <Button color="inherit">Logout</Button>;
-    }
+  renderMenuItem(menuItem: GothamMenuItem) {
+    const {name = '', url = ''} = menuItem;
+    return <Button href={url} key={`${name}:${url}`}>{name}</Button>;
+  }
 
-    return (
-      <React.Fragment>
-        <Button color="inherit">Signup</Button>
-        <Button color="inherit">Login</Button>
-      </React.Fragment>
-    );
+
+  renderMenu(menu) {
+    return menu.map((menuItem) => this.renderMenuItem(menuItem));
   }
 
   renderTitle(title: string = ''): JSX.Element {
@@ -95,7 +94,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   render(): JSX.Element {
-    const {classes, logo, open, title, user} = this.props;
+    const {classes, logo, menu, open, title} = this.props;
     const {isTransparent} = this.state;
     const appBarSolid = `${classes.appBar} ${classes.appBarSolid}`;
     const appBarTransparent = `${classes.appBar} ${classes.appBarTransparent}`;
@@ -119,7 +118,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
             {this.renderTitle(title)}
           </NavLink>
           <div style={{flex: 1}} />
-          {this.renderMenu(user)}
+          {this.renderMenu(menu)}
         </Toolbar>
       </AppBar>
     );

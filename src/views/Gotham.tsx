@@ -76,11 +76,13 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     });
 
     // ArkhamJS Configuration
-    const {middleware, stores} = this.config;
+    const {middleware, name, stores, title} = this.config;
     const storage: BrowserStorage = new BrowserStorage({type: 'session'});
 
     Flux.init({
       middleware: [logger, ...middleware],
+      name,
+      state: {app: {title}},
       storage,
       stores: [AppStore, ...stores]
     });
@@ -156,3 +158,4 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
 }
 
 export const Gotham = hot(module)(withStyles(styles, {withTheme: true})(GothamBase));
+export default Gotham;
