@@ -15,7 +15,6 @@ export interface MenuContainerState {
 }
 
 export interface MenuContainerConfig {
-  readonly logo?: JSX.Element;
   readonly menu?: any[];
   readonly sideBar?: SideBarProps;
   readonly topBar?: TopBarProps;

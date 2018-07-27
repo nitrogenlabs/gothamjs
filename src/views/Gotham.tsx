@@ -1,3 +1,5 @@
+import '../styles/app.css';
+
 import {createMuiTheme, MuiThemeProvider, StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';

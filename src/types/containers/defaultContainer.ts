@@ -14,6 +14,5 @@ export interface DefaultContainerState {
 }
 
 export interface DefaultContainerConfig {
-  readonly logo?: JSX.Element;
   readonly topBar?: TopBarProps;
 }

@@ -34,7 +34,8 @@
     "start": "lex dev -r -o",
     "reset": "lex clean && yarn",
     "test": "lex test",
-    "update": "lex update -i"
+    "update": "lex update -i",
+    "watch": "lex compile -w"
   },
   "dependencies": {
     "@material-ui/core": "^1.4.1",

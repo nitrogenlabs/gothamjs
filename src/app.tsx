@@ -1,5 +1,3 @@
-import './styles/app.css';
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
@@ -17,8 +15,8 @@ const config: GothamConfiguration = {
       container: 'default',
       path: '/',
       props: {
-        logo: <Icon name="gotham" width={175} height={50} />,
         topBar: {
+          logo: <Icon name="gotham" width={175} height={50} />,
           menu: [
             {name: 'Login', url: '/login'},
             {name: 'Signup', url: '/signup'}

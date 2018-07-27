@@ -50,7 +50,7 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
 
   render(): JSX.Element {
     const {classes, props: containerProps = {}, routes = [], title = ''} = this.props;
-    const {logo, topBar: {menu = []} = {}} = containerProps;
+    const {topBar: {logo = null, menu = []} = {}} = containerProps;
 
     return (
       <React.Fragment>
