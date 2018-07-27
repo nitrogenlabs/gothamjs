@@ -1,16 +1,19 @@
 import {WithStyles} from '@material-ui/core/styles';
 
-import {TopBarProps} from '../components/topBar';
+import {TopBarProps} from '../containers/topBar';
 
 export interface DefaultContainerProps extends WithStyles<any> {
-  readonly location: Location;
-  readonly logo: JSX.Element;
-  readonly routes: any[];
-  readonly siteTitle: string;
-  readonly title: string;
-  readonly topBar: TopBarProps;
+  readonly location?: Location;
+  readonly routes?: any[];
+  readonly props?: DefaultContainerConfig;
+  readonly title?: string;
 }
 
 export interface DefaultContainerState {
-  readonly isTopSolid: boolean;
+  readonly isTopSolid?: boolean;
+}
+
+export interface DefaultContainerConfig {
+  readonly logo?: JSX.Element;
+  readonly topBar?: TopBarProps;
 }

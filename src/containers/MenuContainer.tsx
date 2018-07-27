@@ -3,7 +3,7 @@ import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
 import {AppConstants} from '../constants/AppConstants';
-import {MenuContainerProps, MenuContainerState} from '../types/components/menuContainer';
+import {MenuContainerProps, MenuContainerState} from '../types/containers/menuContainer';
 import {renderTransition} from '../utils/routes';
 import {SideBar} from './SideBar';
 import {TopBar} from './TopBar';
@@ -52,7 +52,8 @@ export class MenuContainerBase extends React.PureComponent<MenuContainerProps, M
   }
 
   render(): JSX.Element {
-    const {classes, logo, menu, routes, title} = this.props;
+    const {classes, props: containerProps = {}, routes = [], title = ''} = this.props;
+    const {logo, menu} = containerProps;
     const {isMenuOpen} = this.state;
 
     return (

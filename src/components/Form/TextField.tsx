@@ -1,6 +1,8 @@
-import MaterialTextField, {TextFieldProps} from '@material-ui/core/TextField/TextField';
+import MaterialTextField from '@material-ui/core/TextField/TextField';
 import * as React from 'react';
 import {Field} from 'react-final-form';
+
+import {TextFieldProps} from '../../types/components/form';
 
 export class TextField extends React.PureComponent<TextFieldProps, {}> {
   constructor(props: TextFieldProps) {

@@ -15,8 +15,16 @@ const config: GothamConfiguration = {
   routes: [
     {
       container: 'default',
-      logo: <Icon name="gotham" width={175} height={50} />,
       path: '/',
+      props: {
+        logo: <Icon name="gotham" width={175} height={50} />,
+        topBar: {
+          menu: [
+            {name: 'Login', url: '/login'},
+            {name: 'Signup', url: '/signup'}
+          ]
+        }
+      },
       routes: [
         {
           path: '/',
@@ -24,30 +32,30 @@ const config: GothamConfiguration = {
           view: 'home'
         },
         {
-          logo: <Icon name="gotham-logo" width={130} height={130} />,
           path: '/login',
+          props: {
+            logo: <Icon name="gotham-logo" width={130} height={130} />
+          },
           title: 'Login',
           view: 'login'
         },
         {
-          external: 'https://raw.githubusercontent.com/nitrogenlabs/arkhamjs/master/README.md',
           path: '/markdown',
+          props: {
+            external: 'https://raw.githubusercontent.com/nitrogenlabs/arkhamjs/master/README.md'
+          },
           title: 'Markdown',
           view: 'markdown'
         },
         {
-          external: './docs/demo.md',
           path: '/markdownDemo',
+          props: {
+            external: './docs/demo.md'
+          },
           title: 'Markdown',
           view: 'markdown'
         }
-      ],
-      topBar: {
-        menu: [
-          {name: 'Login', url: '/login'},
-          {name: 'Signup', url: '/signup'}
-        ]
-      }
+      ]
     }
   ],
   title: 'GothamJS'

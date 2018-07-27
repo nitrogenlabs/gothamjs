@@ -1,18 +1,22 @@
 import {WithStyles} from '@material-ui/core/styles';
 
-import {SideBarProps} from '../components/sideBar';
-import {TopBarProps} from '../components/topBar';
+import {SideBarProps} from '../containers/sideBar';
+import {TopBarProps} from '../containers/topBar';
 
 export interface MenuContainerProps extends WithStyles<any> {
   readonly location: Location;
-  readonly logo: JSX.Element;
-  readonly menu: any[];
   readonly routes: any[];
-  readonly sideBar: SideBarProps;
+  readonly props: MenuContainerConfig;
   readonly title: string;
-  readonly topBar: TopBarProps;
 }
 
 export interface MenuContainerState {
   readonly isMenuOpen: boolean;
+}
+
+export interface MenuContainerConfig {
+  readonly logo?: JSX.Element;
+  readonly menu?: any[];
+  readonly sideBar?: SideBarProps;
+  readonly topBar?: TopBarProps;
 }

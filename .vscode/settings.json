@@ -60,15 +60,11 @@
   "javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
   "javascript.validate.enable": false,
+  "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
   "typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
   "typescriptHero.imports.insertSpaceBeforeAndAfterImportBraces": false,
   "typescriptHero.imports.multiLineTrailingComma": false,
   "typescriptHero.imports.multiLineWrapThreshold": 120,
-  "typescriptHero.imports.organizeOnSave": true,
-  "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-  "tslint.enable": true,
-  "tslint.packageManager": "yarn",
-  "tslint.autoFixOnSave": true,
-  "tslint.configFile": "./tslint.json"
+  "typescriptHero.imports.organizeOnSave": true
 }

@@ -36,7 +36,8 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
     Flux.on(AppConstants.GET_EXTERNAL, this.onUpdate);
 
     // Get external content
-    const {external} = this.props;
+    const {props: viewProps} = this.props;
+    const {external} = viewProps;
     const {content = ''} = this.state;
 
     if(content === '') {
