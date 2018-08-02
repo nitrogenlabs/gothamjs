@@ -52,8 +52,7 @@ export class MenuContainerBase extends React.PureComponent<MenuContainerProps, M
   }
 
   render(): JSX.Element {
-    const {classes, props: containerProps = {}, routes = [], title = ''} = this.props;
-    const {sideBar: {logo, menu}} = containerProps;
+    const {classes, sideBar: {logo = null, menu = []} = {}, routes = [], title = ''} = this.props;
     const {isMenuOpen} = this.state;
 
     return (

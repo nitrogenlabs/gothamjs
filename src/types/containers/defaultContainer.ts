@@ -5,14 +5,10 @@ import {TopBarProps} from '../containers/topBar';
 export interface DefaultContainerProps extends WithStyles<any> {
   readonly location?: Location;
   readonly routes?: any[];
-  readonly props?: DefaultContainerConfig;
   readonly title?: string;
+  readonly topBar?: TopBarProps;
 }
 
 export interface DefaultContainerState {
   readonly isTopSolid?: boolean;
-}
-
-export interface DefaultContainerConfig {
-  readonly topBar?: TopBarProps;
 }

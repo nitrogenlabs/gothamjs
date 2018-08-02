@@ -141,7 +141,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   render(): JSX.Element {
     const {classes} = this.props;
     const {isLoaded} = this.state;
-    const {routes} = this.config;
+    const {routes = []} = this.config;
 
     if(!isLoaded) {
       return null;

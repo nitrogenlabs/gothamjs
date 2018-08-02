@@ -5,17 +5,13 @@ import {TopBarProps} from '../containers/topBar';
 
 export interface MenuContainerProps extends WithStyles<any> {
   readonly location: Location;
+  readonly menu?: any[];
   readonly routes: any[];
-  readonly props: MenuContainerConfig;
+  readonly sideBar?: SideBarProps;
   readonly title: string;
+  readonly topBar?: TopBarProps;
 }
 
 export interface MenuContainerState {
   readonly isMenuOpen: boolean;
-}
-
-export interface MenuContainerConfig {
-  readonly menu?: any[];
-  readonly sideBar?: SideBarProps;
-  readonly topBar?: TopBarProps;
 }

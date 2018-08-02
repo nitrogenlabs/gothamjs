@@ -35,6 +35,8 @@ export const parseRoute = (route: GothamRouteType) => {
         return createAsyncComponent(() => import('../views/LoginView'));
       case 'markdown':
         return createAsyncComponent(() => import('../views/MarkdownView'));
+      case 'notfound':
+        return createAsyncComponent(() => import('../views/NotFoundView'));
       default:
         return null;
     }
@@ -49,26 +51,57 @@ export const parseRoute = (route: GothamRouteType) => {
   throw new Error(`Gotham Error: Route "${path}" is missing "component" property.`);
 };
 
-export const renderRoutes = (routes: GothamRouteType[] = []): JSX.Element[] =>
-  routes.map((route: GothamRouteType) => {
-    const LoadComponent = parseRoute(route);
-    const {exact = true, container, path, strict, location, sensitive} = route;
+export const renderRoute = (route: GothamRouteType = {}): JSX.Element => {
+  const LoadComponent = parseRoute(route);
+  const {exact = true, container, path, strict, location, sensitive} = route;
 
-    return (
-      <Route
-        exact={isEmpty(container) && exact}
-        key={path}
-        location={location}
-        path={path}
-        render={(props: RouteProps) => {
-          const {title} = route;
-          AppActions.updateTitle(title);
-          return <LoadComponent {...props} {...route} />;
-        }}
-        sensitive={sensitive}
-        strict={strict} />
-    );
-  });
+  return (
+    <Route
+      exact={isEmpty(container) && exact}
+      key={path}
+      location={location}
+      path={path}
+      render={(props: RouteProps) => {
+        const {props: componentProps, title, ...routeProps} = route;
+        AppActions.updateTitle(title);
+        return <LoadComponent title={title} {...props} {...routeProps} {...componentProps} />;
+      }}
+      sensitive={sensitive}
+      strict={strict} />
+  );
+};
+
+export const renderRoutes = (routes: GothamRouteType[] = []): JSX.Element[] => {
+  const gothamRoutes: JSX.Element[] = routes.reduce((renderedRoutes: JSX.Element[], route: GothamRouteType) => {
+    const {path} = route;
+
+    // Only render routes that have a path and are not a custom error page.
+    if(!isEmpty(path) && isNaN(+(path))) {
+      renderedRoutes.push(renderRoute(route));
+    }
+
+    return renderedRoutes;
+  }, []);
+
+  // See if the user has provided a view for no matches
+  const notFound: GothamRouteType = routes.find((route: GothamRouteType = {}) => route.path === '404') || {};
+
+  // If not, load the default view
+  const notFoundRoute: GothamRouteType = {title: 'Not Found', ...notFound, view: 'notfound'};
+  const LoadComponent = parseRoute(notFoundRoute);
+  const render404: JSX.Element = (
+    <Route
+      key="notFound"
+      render={(props: RouteProps) => {
+        const {title} = notFoundRoute;
+        AppActions.updateTitle(title);
+        return <LoadComponent title={title} {...props} />;
+      }} />
+  );
+
+  gothamRoutes.push(render404);
+  return gothamRoutes;
+};
 
 export const renderSwitch = (routes: GothamRouteType[] = [], siteTitle: string, location: Location): JSX.Element =>
   <Switch location={location}>{renderRoutes(routes)}</Switch>;

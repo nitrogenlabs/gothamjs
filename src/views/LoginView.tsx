@@ -93,8 +93,7 @@ export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginView
   }
 
   render(): JSX.Element {
-    const {classes, props: viewProps = {}, name = 'login', title = 'Login'} = this.props;
-    const {logo} = viewProps;
+    const {classes, logo, name = 'login', title = 'Login'} = this.props;
 
     return (
       <PageView name={name} title={title}>
