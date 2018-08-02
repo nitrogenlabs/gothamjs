@@ -162,7 +162,7 @@
 
 "@types/history@^4.7.0":
   version "4.7.0"
-  resolved "https://registry.npmjs.org/@types/history/-/history-4.7.0.tgz#2fac51050c68f7d6f96c5aafc631132522f4aa3f"
+  resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.0.tgz#2fac51050c68f7d6f96c5aafc631132522f4aa3f"
 
 "@types/jest@^23.3.1":
   version "23.3.1"
@@ -188,7 +188,7 @@
 
 "@types/node@^10.5.5":
   version "10.5.5"
-  resolved "https://registry.npmjs.org/@types/node/-/node-10.5.5.tgz#8e84d24e896cd77b0d4f73df274027e3149ec2ba"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.5.tgz#8e84d24e896cd77b0d4f73df274027e3149ec2ba"
 
 "@types/react-addons-linked-state-mixin@*":
   version "0.14.19"
@@ -246,9 +246,9 @@
   dependencies:
     source-map "^0.6.1"
 
-"@types/webpack@^4.4.8":
-  version "4.4.8"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.8.tgz#3af86780489a355e05f3de26b553537afc026acb"
+"@types/webpack@^4.4.9":
+  version "4.4.9"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.9.tgz#814721fb4cfaebe553ffdf2ae2c504494ec6613b"
   dependencies:
     "@types/node" "*"
     "@types/tapable" "*"
@@ -665,7 +665,7 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
 
 eslint-config-styleguidejs@^0.7.7:
   version "0.7.7"
-  resolved "https://registry.npmjs.org/eslint-config-styleguidejs/-/eslint-config-styleguidejs-0.7.7.tgz#5cc366fdc616a812ab64f0bd8f3d0ec23ed438ef"
+  resolved "https://registry.yarnpkg.com/eslint-config-styleguidejs/-/eslint-config-styleguidejs-0.7.7.tgz#5cc366fdc616a812ab64f0bd8f3d0ec23ed438ef"
   dependencies:
     babel-eslint "^8.2.6"
     eslint-plugin-babel "^5.1.0"
@@ -910,7 +910,7 @@ file-entry-cache@^2.0.0:
 
 final-form@^4.9.1:
   version "4.9.1"
-  resolved "https://registry.npmjs.org/final-form/-/final-form-4.9.1.tgz#1afd6c61b4946b153b592c07eba7440979f257ed"
+  resolved "https://registry.yarnpkg.com/final-form/-/final-form-4.9.1.tgz#1afd6c61b4946b153b592c07eba7440979f257ed"
 
 find-up@^1.0.0:
   version "1.1.2"
@@ -1675,7 +1675,7 @@ pluralize@^7.0.0:
 
 popper.js@^1.14.1:
   version "1.14.3"
-  resolved "https://registry.npmjs.org/popper.js/-/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
 
 postcss-value-parser@^3.3.0:
   version "3.3.0"
@@ -1730,9 +1730,9 @@ react-addons-test-utils@^15.6.2:
   version "15.6.2"
   resolved "https://registry.npmjs.org/react-addons-test-utils/-/react-addons-test-utils-15.6.2.tgz#c12b6efdc2247c10da7b8770d185080a7b047156"
 
-react-dom@^16.4.1:
-  version "16.4.1"
-  resolved "https://registry.npmjs.org/react-dom/-/react-dom-16.4.1.tgz#7f8b0223b3a5fbe205116c56deb85de32685dad6"
+react-dom@^16.4.2:
+  version "16.4.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.4.2.tgz#4afed569689f2c561d2b8da0b819669c38a0bda4"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -1762,9 +1762,13 @@ react-hot-loader@^4.3.4:
     react-lifecycles-compat "^3.0.4"
     shallowequal "^1.0.2"
 
-react-is@^16.3.1, react-is@^16.4.1:
+react-is@^16.3.1:
   version "16.4.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.4.1.tgz#d624c4650d2c65dbd52c72622bbf389435d9776e"
+
+react-is@^16.4.2:
+  version "16.4.2"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
 
 react-jss@^8.1.0:
   version "8.6.1"
@@ -1825,14 +1829,14 @@ react-router@^4.3.1:
     prop-types "^15.6.1"
     warning "^4.0.1"
 
-react-test-renderer@^16.4.1:
-  version "16.4.1"
-  resolved "https://registry.npmjs.org/react-test-renderer/-/react-test-renderer-16.4.1.tgz#f2fb30c2c7b517db6e5b10ed20bb6b0a7ccd8d70"
+react-test-renderer@^16.4.2:
+  version "16.4.2"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.4.2.tgz#4e03eca9359bb3210d4373f7547d1364218ef74e"
   dependencies:
     fbjs "^0.8.16"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
-    react-is "^16.4.1"
+    react-is "^16.4.2"
 
 react-transition-group@2.4.0, react-transition-group@^2.2.1:
   version "2.4.0"
@@ -1853,9 +1857,9 @@ react-transition-group@^1.2.0:
     prop-types "^15.5.6"
     warning "^3.0.0"
 
-react@^16.4.1:
-  version "16.4.1"
-  resolved "https://registry.npmjs.org/react/-/react-16.4.1.tgz#de51ba5764b5dbcd1f9079037b862bd26b82fe32"
+react@^16.4.2:
+  version "16.4.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.4.2.tgz#2cd90154e3a9d9dd8da2991149fdca3c260e129f"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -2277,14 +2281,14 @@ type-check@~0.3.2:
 
 typescript-eslint-parser@^17.0.1:
   version "17.0.1"
-  resolved "https://registry.npmjs.org/typescript-eslint-parser/-/typescript-eslint-parser-17.0.1.tgz#ddc681a3afa51a9baa6746a001eb5f29fb1365d3"
+  resolved "https://registry.yarnpkg.com/typescript-eslint-parser/-/typescript-eslint-parser-17.0.1.tgz#ddc681a3afa51a9baa6746a001eb5f29fb1365d3"
   dependencies:
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
 typescript@^3.0.1:
   version "3.0.1"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-3.0.1.tgz#43738f29585d3a87575520a4b93ab6026ef11fdb"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.1.tgz#43738f29585d3a87575520a4b93ab6026ef11fdb"
 
 ua-parser-js@^0.7.18:
   version "0.7.18"
