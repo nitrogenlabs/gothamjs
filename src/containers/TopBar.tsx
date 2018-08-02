@@ -30,6 +30,14 @@ const styles: StyleRulesCallback = (theme) => ({
     boxShadow: '0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0)',
     transition: 'all 0.3s ease-in-out'
   },
+  buttonSolid: {
+    color: theme.palette.primary.light,
+    transition: 'all 0.3s ease-in-out'
+  },
+  buttonTransparent: {
+    color: theme.palette.primary.dark,
+    transition: 'all 0.3s ease-in-out'
+  },
   titleTextSolid: {
     color: theme.palette.primary.light,
     transition: 'all 0.3s ease-in-out'
@@ -76,8 +84,11 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   renderMenuItem(menuItem: GothamMenuItem) {
+    const {classes} = this.props;
+    const {isTransparent} = this.state;
+    const buttonStyle: string = isTransparent ? classes.buttonTransparent : classes.buttonSolid;
     const {name = '', url = ''} = menuItem;
-    return <Button href={url} key={`${name}:${url}`}>{name}</Button>;
+    return <Button className={buttonStyle} href={url} key={`${name}:${url}`}>{name}</Button>;
   }
 
 
@@ -94,12 +105,12 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   render(): JSX.Element {
-    const {classes, logo, menu, open, title} = this.props;
+    const {classes, logoAlt, logoDefault, menu, open, title} = this.props;
     const {isTransparent} = this.state;
     const appBarSolid = `${classes.appBar} ${classes.appBarSolid}`;
     const appBarTransparent = `${classes.appBar} ${classes.appBarTransparent}`;
     const titleText = isTransparent ? classes.titleTextTransparent : classes.titleTextSolid;
-
+    console.log('isTransparent', isTransparent);
     return (
       <AppBar
         className={isTransparent ? appBarTransparent : appBarSolid}
@@ -114,7 +125,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
             </IconButton>
           </Hidden>
           <NavLink to="/">
-            {logo}
+            {isTransparent ? (logoAlt || logoDefault) : logoDefault}
             {this.renderTitle(title)}
           </NavLink>
           <div style={{flex: 1}} />
