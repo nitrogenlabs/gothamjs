@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import {Icon} from '../components/Icon';
+import {Svg} from '../components/Svg';
 import {PageHeaderProps} from '../types/containers/pageHeader';
 
 export class PageHeader extends React.PureComponent<PageHeaderProps> {
   renderIcon(icon: string) {
     if(icon) {
       return (
-        <Icon name={icon} />
+        <Svg name={icon} />
       );
     }
 

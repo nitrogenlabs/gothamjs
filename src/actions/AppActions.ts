@@ -1,4 +1,5 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
+import isEmpty from 'lodash/isEmpty';
 import {Hunter} from 'rip-hunter';
 import {GothamConfiguration} from 'types/views/gotham';
 
@@ -32,7 +33,7 @@ export class AppActions {
   static updateTitle(title: string): Promise<FluxAction> {
     const siteTitle: string = Flux.getState('app.title');
 
-    if(title !== '' && siteTitle !== title) {
+    if(!isEmpty(title) && siteTitle !== title) {
       document.title = `${title} :: ${siteTitle}`;
     } else {
       document.title = `${siteTitle}`;

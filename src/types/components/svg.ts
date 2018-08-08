@@ -1,4 +1,4 @@
-export interface IconProps {
+export interface SvgProps {
   readonly height?: number;
   readonly name: string;
   readonly width?: number;

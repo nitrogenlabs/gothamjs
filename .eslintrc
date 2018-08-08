@@ -1,9 +1,5 @@
 {
   "extends": [
     "styleguidejs/typescript"
-  ],
-  "rules": {
-    "no-unused-vars": 1,
-    "typescript/no-unused-vars": 1
-  }
+  ]
 }

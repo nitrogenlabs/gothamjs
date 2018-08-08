@@ -22,6 +22,11 @@ body {
   margin: 0;
   padding: 0;
 }
+img {
+  align-self: flex-start;
+  max-height: 100%;
+  max-width: 100%;
+}
 .routeWrapper {
   display: flex;
   flex: 1;

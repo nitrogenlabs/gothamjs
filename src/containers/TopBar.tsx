@@ -9,7 +9,7 @@ import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
 import NavLink from 'react-router-dom/NavLink';
 
-import {Button} from '../components/Form/Button';
+import {Button} from '../components/Button';
 import {AppConstants} from '../constants/AppConstants';
 import {TopBarProps, TopBarState} from '../types/containers/topBar';
 import {GothamMenuItem} from '../types/menu';
@@ -30,14 +30,6 @@ const styles: StyleRulesCallback = (theme) => ({
     boxShadow: '0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0)',
     transition: 'all 0.3s ease-in-out'
   },
-  buttonSolid: {
-    color: theme.palette.primary.light,
-    transition: 'all 0.3s ease-in-out'
-  },
-  buttonTransparent: {
-    color: theme.palette.primary.dark,
-    transition: 'all 0.3s ease-in-out'
-  },
   titleTextSolid: {
     color: theme.palette.primary.light,
     transition: 'all 0.3s ease-in-out'
@@ -51,7 +43,9 @@ const styles: StyleRulesCallback = (theme) => ({
 export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   static defaultProps: object = {
     menu: [],
-    transparent: false
+    solidTextColor: '#fff',
+    transparent: false,
+    transparentTextColor: '#fff'
   };
 
   constructor(props: TopBarProps) {
@@ -84,11 +78,11 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   renderMenuItem(menuItem: GothamMenuItem) {
-    const {classes} = this.props;
+    const {solidTextColor, transparentTextColor} = this.props;
     const {isTransparent} = this.state;
-    const buttonStyle: string = isTransparent ? classes.buttonTransparent : classes.buttonSolid;
     const {name = '', url = ''} = menuItem;
-    return <Button className={buttonStyle} href={url} key={`${name}:${url}`}>{name}</Button>;
+    const color = isTransparent ? transparentTextColor : solidTextColor;
+    return <Button href={url} key={`${name}:${url}`} color="inherit" style={{color}}>{name}</Button>;
   }
 
 
@@ -110,7 +104,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
     const appBarSolid = `${classes.appBar} ${classes.appBarSolid}`;
     const appBarTransparent = `${classes.appBar} ${classes.appBarTransparent}`;
     const titleText = isTransparent ? classes.titleTextTransparent : classes.titleTextSolid;
-    console.log('isTransparent', isTransparent);
+
     return (
       <AppBar
         className={isTransparent ? appBarTransparent : appBarSolid}

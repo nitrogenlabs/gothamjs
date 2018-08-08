@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import {styledComponent} from '../utils/styles';
 
-export const Icon = ({height = 32, name, width = 32}) => {
+export const Svg = ({height = 32, name, width = 32}) => {
   const StyledIcon = styledComponent(SvgIcon)({height, width});
 
   return (

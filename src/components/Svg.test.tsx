@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 
-import {Icon} from './Icon';
+import {Svg} from './Svg';
 
-describe('Icon', () => {
+describe('Svg', () => {
   let rendered;
 
   beforeAll(() => {
-    rendered = renderer.create(<Icon name="pencil" />);
+    rendered = renderer.create(<Svg name="pencil" />);
   });
 
   it('should render', () => expect(rendered).toBeDefined());
