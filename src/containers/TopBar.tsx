@@ -12,7 +12,7 @@ import NavLink from 'react-router-dom/NavLink';
 import {Button} from '../components/Button';
 import {AppConstants} from '../constants/AppConstants';
 import {TopBarProps, TopBarState} from '../types/containers/topBar';
-import {GothamMenuItem} from '../types/menu';
+import {GothamMenuItem} from '../types/gotham';
 
 const styles: StyleRulesCallback = (theme) => ({
   appBar: {
@@ -80,9 +80,9 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   renderMenuItem(menuItem: GothamMenuItem) {
     const {solidTextColor, transparentTextColor} = this.props;
     const {isTransparent} = this.state;
-    const {name = '', url = ''} = menuItem;
+    const {label = '', url = ''} = menuItem;
     const color = isTransparent ? transparentTextColor : solidTextColor;
-    return <Button href={url} key={`${name}:${url}`} color="inherit" style={{color}}>{name}</Button>;
+    return <Button href={url} key={`${label}:${url}`} color="inherit" style={{color}}>{label}</Button>;
   }
 
 

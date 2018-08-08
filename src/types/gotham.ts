@@ -16,3 +16,14 @@ export interface GothamConfiguration {
   readonly title?: string;
   readonly middleware?: FluxMiddlewareType[];
 }
+
+export interface GothamMenuItem {
+  readonly label?: string;
+  readonly url?: string;
+  readonly menu?: GothamMenuItem[];
+}
+
+export interface GothamButtonItem {
+  readonly label?: string;
+  readonly url?: string;
+}

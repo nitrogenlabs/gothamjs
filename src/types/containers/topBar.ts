@@ -1,6 +1,6 @@
 import {WithStyles} from '@material-ui/core/styles';
 
-import {GothamMenuItem} from '../menu';
+import {GothamMenuItem} from '../gotham';
 
 export interface TopBarProps extends WithStyles<any> {
   readonly logoAlt?: JSX.Element;

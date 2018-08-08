@@ -1,9 +1,9 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 import {Hunter} from 'rip-hunter';
-import {GothamConfiguration} from 'types/views/gotham';
 
 import {AppConstants} from '../constants/AppConstants';
+import {GothamConfiguration} from '../types/gotham';
 
 export class AppActions {
   static setConfig(config: GothamConfiguration): Promise<FluxAction> {

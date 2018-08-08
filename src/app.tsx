@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import {Svg} from './components/Svg';
-import {GothamConfiguration} from './types/views/gotham';
+import {GothamConfiguration} from './types/gotham';
 import {Gotham} from './views/Gotham';
 
 const target = document.getElementById('app');
@@ -18,8 +18,8 @@ const config: GothamConfiguration = {
         topBar: {
           logo: <Svg name="gotham" width={175} height={50} />,
           menu: [
-            {name: 'Login', url: '/login'},
-            {name: 'Signup', url: '/signup'}
+            {label: 'Login', url: '/login'},
+            {label: 'Signup', url: '/signup'}
           ],
           solidTextColor: '#fff',
           transparentTextColor: '#fff'
@@ -42,29 +42,29 @@ const config: GothamConfiguration = {
               logo: <Svg name="gotham-logo" width={30} height={30} />,
               menu: [
                 {
+                  label: 'Documentation',
                   menu: [
-                    {name: 'About', url: '/about'},
-                    {name: 'Getting Started', url: '/gettingStarted'},
-                    {name: 'Configuration', url: '/config'},
-                    {name: 'Setup', url: '/setup'},
-                    {name: 'API Reference', url: '/api'}
-                  ],
-                  name: 'Documentation'
+                    {label: 'About', url: '/about'},
+                    {label: 'Getting Started', url: '/gettingStarted'},
+                    {label: 'Configuration', url: '/config'},
+                    {label: 'Setup', url: '/setup'},
+                    {label: 'API Reference', url: '/api'}
+                  ]
                 },
                 {
+                  label: 'Community',
                   menu: [
-                    {name: 'StackOverflow', url: 'http://stackoverflow.com/questions/tagged/lexjs'},
-                    {name: 'Chat', url: 'https://discord.gg/Ttgev58'},
-                    {name: 'Facebook', url: 'https://www.facebook.com/nitrogenlabs'}
-                  ],
-                  name: 'Community'
+                    {label: 'StackOverflow', url: 'http://stackoverflow.com/questions/tagged/lexjs'},
+                    {label: 'Chat', url: 'https://discord.gg/Ttgev58'},
+                    {label: 'Facebook', url: 'https://www.facebook.com/nitrogenlabs'}
+                  ]
                 },
                 {
+                  label: 'More',
                   menu: [
-                    {name: 'NPM', url: 'https://npmjs.com/@nlabs/gothamjs'},
-                    {name: 'Git', url: 'https://github.com/nitrogenlabs/gotham'}
-                  ],
-                  name: 'More'
+                    {label: 'NPM', url: 'https://npmjs.com/@nlabs/gothamjs'},
+                    {label: 'Git', url: 'https://github.com/nitrogenlabs/gotham'}
+                  ]
                 }
               ]
             },

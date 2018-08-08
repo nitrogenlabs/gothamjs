@@ -7,9 +7,10 @@ import {FeatureItem} from '../components/FeatureItem';
 import {Footer} from '../components/Footer';
 import {PromoRow} from '../components/PromoRow';
 import {SplashIntro} from '../components/SplashIntro';
+import {FeatureItemProps} from '../types/components/featureItem';
+import {FooterProps} from '../types/components/footer';
 import {PromoRowProps} from '../types/components/promoRow';
 import {SplashIntroProps} from '../types/components/splashIntro';
-import {FooterProps} from '../types/footer';
 import {HomeViewProps, HomeViewState} from '../types/views/home';
 import {initComponent} from '../utils/components';
 
@@ -64,7 +65,7 @@ export class HomeViewBase extends React.PureComponent<HomeViewProps, HomeViewSta
       });
   }
 
-  renderFeatures(list: FeatureItemProps[]): JSX.Element {
+  renderFeatures(list: FeatureItemProps[]): JSX.Element[] {
     return list.map((feature: FeatureItemProps) => <FeatureItem key={feature.title} {...feature} />);
   }
 
@@ -105,7 +106,6 @@ export class HomeViewBase extends React.PureComponent<HomeViewProps, HomeViewSta
       features,
       footer,
       promoRow,
-      name = 'home',
       splash
     } = this.props;
 

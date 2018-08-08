@@ -14,7 +14,7 @@ import {Config} from '../config/properties';
 import {defaultTheme} from '../config/theme';
 import {AppConstants} from '../constants/AppConstants';
 import {AppStore} from '../stores/AppStore';
-import {GothamConfiguration, GothamProps, GothamState} from '../types/views/gotham';
+import {GothamConfiguration, GothamProps, GothamState} from '../types/gotham';
 import {renderTransition} from '../utils/routes';
 
 injectGlobal`

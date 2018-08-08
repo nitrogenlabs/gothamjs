@@ -6,9 +6,11 @@
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
   "keywords": [
-    "gothamjs",
+    "arkhamjs",
+    "documentation",
     "flux",
-    "immutable",
+    "gothamjs",
+    "markdown",
     "nitrogenlabs",
     "react"
   ],

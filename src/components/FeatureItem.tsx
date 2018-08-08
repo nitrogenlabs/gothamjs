@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import React from 'react';
 
-import {FeatureItemProps} from '../types/featureItem';
+import {FeatureItemProps} from '../types/components/featureItem';
 import {initStyle} from '../utils/components';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -44,12 +44,12 @@ const styles: StyleRulesCallback = (theme) => ({
   },
   featureTitle: {
     fontSize: 24,
-    fontWeight: '100'
+    fontWeight: 100
   }
 });
 
-export const featureLeft = (feature: FeatureItemProps, classes): JSX.Element => {
-  const {details, image, title} = feature;
+export const featureLeft = (feature: FeatureItemProps): JSX.Element => {
+  const {classes, details, image, title} = feature;
 
   return (
     <React.Fragment>
@@ -64,8 +64,8 @@ export const featureLeft = (feature: FeatureItemProps, classes): JSX.Element => 
   );
 };
 
-export const featureRight = (feature: FeatureItemProps, classes): JSX.Element => {
-  const {details, image, title} = feature;
+export const featureRight = (feature: FeatureItemProps): JSX.Element => {
+  const {classes, details, image, title} = feature;
 
   return (
     <React.Fragment>
@@ -80,14 +80,14 @@ export const featureRight = (feature: FeatureItemProps, classes): JSX.Element =>
   );
 };
 
-export const FeatureItemBase = (props: PromoRowProps): JSX.Element => {
-  const {align = 'left', classes, ...feature} = props;
+export const FeatureItemBase = (props: FeatureItemProps): JSX.Element => {
+  const {align = 'left', classes} = props;
   let featureRow: JSX.Element;
 
   if(align === 'left') {
-    featureRow = featureLeft(feature, classes);
+    featureRow = featureLeft(props);
   } else {
-    featureRow = featureRight(feature, classes);
+    featureRow = featureRight(props);
   }
 
   return <Grid className={classes.featureRow} container justify="center">{featureRow}</Grid>;

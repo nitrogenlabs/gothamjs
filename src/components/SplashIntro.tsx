@@ -2,7 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import React from 'react';
 
-import {SplashIntroProps} from '../types/splashIntro';
+import {SplashIntroProps} from '../types/components/splashIntro';
 import {initStyle} from '../utils/components';
 
 const styles: StyleRulesCallback = (theme) => ({

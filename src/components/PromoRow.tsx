@@ -1,8 +1,8 @@
-import Grid from '@material-ui/core/Grid';
+import Grid, {GridSize} from '@material-ui/core/Grid';
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import React from 'react';
 
-import {PromoItemProps, PromoRowProps} from '../types/promoRow';
+import {PromoItemProps, PromoRowProps} from '../types/components/promoRow';
 import {initStyle} from '../utils/components';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -36,15 +36,16 @@ const styles: StyleRulesCallback = (theme) => ({
   },
   promoTitle: {
     fontSize: 16,
-    fontWeight: '700'
+    fontWeight: 700
   }
 });
 
-export const promoItems = (list: PromoItemProps[], classes): JSX.Element => list.map((item: PromoItemProps) => {
+export const promoItems = (list: PromoItemProps[], classes): JSX.Element[] => list.map((item: PromoItemProps) => {
   const {details, image, title} = item;
+  const gridSize: GridSize = (12 / list.length) as GridSize;
 
   return (
-    <Grid key={title} item md={12 / list.length} className={classes.promoItem}>
+    <Grid key={title} item md={gridSize} className={classes.promoItem}>
       <div className={classes.promoImage}>{image}</div>
       <div className={classes.promoTitle}>{title}</div>
       <div className={classes.promoDetails}>{details}</div>

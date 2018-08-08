@@ -2,8 +2,8 @@ import Grid from '@material-ui/core/Grid';
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import React from 'react';
 
-import {FooterProps} from '../types/footer';
-import {GothamMenuItem} from '../types/menu';
+import {FooterProps} from '../types/components/footer';
+import {GothamMenuItem} from '../types/gotham';
 import {initStyle} from '../utils/components';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -50,25 +50,25 @@ const styles: StyleRulesCallback = (theme) => ({
   },
   footerTitle: {
     fontSize: 14,
-    fontWeight: '700'
+    fontWeight: 700
   }
 });
 
-export const footerMenu = (menu: GothamMenuItem[], classes): JSX.Element => menu.map((item: GothamMenuItem) => {
-  const {menu = [], name, url} = item;
+export const footerMenu = (menu: GothamMenuItem[], classes): JSX.Element[] => menu.map((item: GothamMenuItem) => {
+  const {menu = [], label, url} = item;
   let renderedMenu: JSX.Element;
 
   if(menu) {
     const menuItems: JSX.Element[] = menu.map((menuItem) => {
-      const {name: itemName, url: itemUrl} = menuItem;
-      return <li key={itemName}><a href={itemUrl}>{itemName}</a></li>;
+      const {label: itemLabel, url: itemUrl} = menuItem;
+      return <li key={itemLabel}><a href={itemUrl}>{itemLabel}</a></li>;
     });
     renderedMenu = (<ul className={classes.footerList}>{menuItems}</ul>);
   }
 
   return (
-    <Grid key={name} item className={classes.footerItem}>
-      <div className={classes.footerTitle}>{name}</div>
+    <Grid key={label} item className={classes.footerItem}>
+      <div className={classes.footerTitle}>{url ? <a href="url">label</a> : label}</div>
       {renderedMenu}
     </Grid>
   );

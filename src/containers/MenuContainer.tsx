@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import {AppConstants} from '../constants/AppConstants';
 import {MenuContainerProps, MenuContainerState} from '../types/containers/menuContainer';
+import {SideBarProps} from '../types/containers/sideBar';
 import {renderTransition} from '../utils/routes';
 import {SideBar} from './SideBar';
 import {TopBar} from './TopBar';
@@ -43,22 +44,22 @@ export class MenuContainerBase extends React.PureComponent<MenuContainerProps, M
     this.setState({isMenuOpen: !isMenuOpen});
   }
 
-  renderMenu(menu: any[], isOpen: boolean): JSX.Element {
-    if(menu && menu.length) {
-      return <SideBar menu={menu} open={isOpen} />;
+  renderMenu(props: SideBarProps, isOpen: boolean): JSX.Element {
+    if(props) {
+      return <SideBar {...props} open={isOpen} />;
     }
 
     return null;
   }
 
   render(): JSX.Element {
-    const {classes, sideBar: {logo = null, menu = []} = {}, routes = [], title = ''} = this.props;
+    const {classes, sideBar, routes = [], topBar} = this.props;
     const {isMenuOpen} = this.state;
 
     return (
       <React.Fragment>
-        <TopBar logo={logo} open={isMenuOpen} title={title} />
-        {this.renderMenu(menu, isMenuOpen)}
+        <TopBar {...topBar} open={isMenuOpen} />
+        {this.renderMenu(sideBar, isMenuOpen)}
         <div className={classes.content}>
           {renderTransition(routes)}
         </div>

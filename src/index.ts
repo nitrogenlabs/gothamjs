@@ -5,7 +5,7 @@ import {UserConstants} from './constants/UserConstants';
 export * from './components';
 export * from './containers';
 export * from './views';
-export * from './types/views/gotham';
+export * from './types/gotham';
 export * from './types/views/home';
 export * from './types/routes';
 export * from './types/styles';
