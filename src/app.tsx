@@ -5,8 +5,6 @@ import {Svg} from './components/Svg';
 import {GothamConfiguration} from './types/gotham';
 import {Gotham} from './views/Gotham';
 
-const target = document.getElementById('app');
-
 // CONFIGURATION
 const config: GothamConfiguration = {
   name: 'gothamjs',
@@ -131,4 +129,4 @@ const config: GothamConfiguration = {
 };
 
 // Render initial ReactJS code
-ReactDOM.render(<Gotham config={config} />, target);
+ReactDOM.render(<Gotham config={config} />, document.getElementById('app'));

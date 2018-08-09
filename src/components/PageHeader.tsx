@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {Svg} from '../components/Svg';
-import {PageHeaderProps} from '../types/containers/pageHeader';
+import {PageHeaderProps} from '../types/components/pageHeader';
 
 export class PageHeader extends React.PureComponent<PageHeaderProps> {
   renderIcon(icon: string) {

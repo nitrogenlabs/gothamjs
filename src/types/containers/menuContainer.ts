@@ -1,7 +1,7 @@
 import {WithStyles} from '@material-ui/core/styles';
 
-import {SideBarProps} from '../containers/sideBar';
-import {TopBarProps} from '../containers/topBar';
+import {SideBarProps} from '../components/sideBar';
+import {TopBarProps} from '../components/topBar';
 
 export interface MenuContainerProps extends WithStyles<any> {
   readonly location: Location;

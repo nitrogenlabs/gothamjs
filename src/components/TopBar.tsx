@@ -11,7 +11,7 @@ import NavLink from 'react-router-dom/NavLink';
 
 import {Button} from '../components/Button';
 import {AppConstants} from '../constants/AppConstants';
-import {TopBarProps, TopBarState} from '../types/containers/topBar';
+import {TopBarProps, TopBarState} from '../types/components/topBar';
 import {GothamMenuItem} from '../types/gotham';
 
 const styles: StyleRulesCallback = (theme) => ({

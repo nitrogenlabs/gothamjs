@@ -27,7 +27,7 @@ export const parseRoute = (route: GothamRouteType) => {
         return DefaultContainer;
     }
   } else if(!isEmpty(view)) {
-    // Built-in containers
+    // Built-in views
     switch(view) {
       case 'home':
         return createAsyncComponent(() => import('../views/HomeView'));

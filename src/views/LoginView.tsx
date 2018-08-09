@@ -8,8 +8,8 @@ import * as React from 'react';
 
 import {Form} from '../components/Form/Form';
 import {TextField} from '../components/Form/TextField';
+import {PageHeader} from '../components/PageHeader';
 import {UserConstants} from '../constants/UserConstants';
-import {PageHeader} from '../containers/PageHeader';
 import {LoginViewProps, LoginViewState} from '../types/views/login';
 import {initComponent} from '../utils/components';
 import {PageView} from './PageView';

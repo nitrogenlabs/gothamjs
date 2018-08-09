@@ -1,6 +1,6 @@
 import {WithStyles} from '@material-ui/core/styles';
 
-import {TopBarProps} from '../containers/topBar';
+import {TopBarProps} from '../components/topBar';
 
 export interface DefaultContainerProps extends WithStyles<any> {
   readonly location?: Location;

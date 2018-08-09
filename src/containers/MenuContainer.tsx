@@ -3,8 +3,8 @@ import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
 import {AppConstants} from '../constants/AppConstants';
+import {SideBarProps} from '../types/components/sideBar';
 import {MenuContainerProps, MenuContainerState} from '../types/containers/menuContainer';
-import {SideBarProps} from '../types/containers/sideBar';
 import {renderTransition} from '../utils/routes';
 import {SideBar} from './SideBar';
 import {TopBar} from './TopBar';

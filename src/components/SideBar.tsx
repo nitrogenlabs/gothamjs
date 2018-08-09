@@ -10,7 +10,7 @@ import {Flux} from '@nlabs/arkhamjs';
 import React from 'react';
 
 import {AppConstants} from '../constants/AppConstants';
-import {SideBarProps, SideBarState} from '../types/containers/sideBar';
+import {SideBarProps, SideBarState} from '../types/components/sideBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   drawerPaper: {
