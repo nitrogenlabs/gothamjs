@@ -41,8 +41,7 @@ const styles: StyleRulesCallback = (theme) => ({
   view: {
     display: 'flex',
     flex: 1,
-    flexDirection: 'column',
-    paddingBottom: 30
+    flexDirection: 'column'
   }
 });
 

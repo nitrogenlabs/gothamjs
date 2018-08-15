@@ -2,19 +2,18 @@ import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
+import {SideBar} from '../components/SideBar';
+import {TopBar} from '../components/TopBar';
 import {AppConstants} from '../constants/AppConstants';
 import {SideBarProps} from '../types/components/sideBar';
 import {MenuContainerProps, MenuContainerState} from '../types/containers/menuContainer';
 import {renderTransition} from '../utils/routes';
-import {SideBar} from './SideBar';
-import {TopBar} from './TopBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   content: {
     backgroundColor: theme.palette.background.default,
     flexGrow: 1,
-    minWidth: 0,
-    padding: theme.spacing.unit * 3
+    minWidth: 0
   }
 });
 

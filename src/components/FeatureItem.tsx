@@ -36,6 +36,7 @@ const styles: StyleRulesCallback = (theme) => ({
   },
   featureRow: {
     alignItems: 'flex-start',
+    backgroundColor: '#e9e9e9',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',

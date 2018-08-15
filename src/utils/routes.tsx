@@ -87,7 +87,7 @@ export const renderRoutes = (routes: GothamRouteType[] = []): JSX.Element[] => {
   const notFound: GothamRouteType = routes.find((route: GothamRouteType = {}) => route.path === '404') || {};
 
   // If not, load the default view
-  const notFoundRoute: GothamRouteType = {title: 'Not Found', ...notFound, view: 'notfound'};
+  const notFoundRoute: GothamRouteType = {title: 'Page Not Found', ...notFound, view: 'notfound'};
   const LoadComponent = parseRoute(notFoundRoute);
   const render404: JSX.Element = (
     <Route

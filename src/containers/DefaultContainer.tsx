@@ -2,18 +2,16 @@ import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
+import {TopBar} from '../components/TopBar';
 import {AppConstants} from '../constants/AppConstants';
 import {DefaultContainerProps, DefaultContainerState} from '../types/containers/defaultContainer';
 import {renderTransition} from '../utils/routes';
-import {TopBar} from './TopBar';
 
 const styles: StyleRulesCallback = (theme) => ({
   content: {
     backgroundColor: theme.palette.background.default,
     minWidth: 0,
-    overflowY: 'auto',
-    paddingLeft: theme.spacing.unit * 3,
-    paddingRight: theme.spacing.unit * 3
+    overflowY: 'auto'
   }
 });
 

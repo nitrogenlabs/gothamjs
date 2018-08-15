@@ -8,17 +8,21 @@ import {initStyle} from '../utils/components';
 
 const styles: StyleRulesCallback = (theme) => ({
   footer: {
+    backgroundColor: '#808080',
+    boxShadow: 'inset 0 10px 10px -5px rgba(0,0,0,.2)',
     flexDirection: 'column',
     paddingLeft: 50,
     paddingRight: 50
   },
   footerCopyright: {
     alignItems: 'center',
+    color: '#fff',
     display: 'flex',
     flexDirection: 'row',
     fontSize: 12,
     justifyContent: 'center',
-    opacity: 0.5
+    opacity: 0.5,
+    padding: 15
   },
   footerDetails: {
     fontSize: 14
@@ -42,11 +46,15 @@ const styles: StyleRulesCallback = (theme) => ({
   },
   footerRow: {
     alignItems: 'flex-start',
+    color: '#fff',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingBottom: 80,
     paddingTop: 60
+  },
+  footerText: {
+    color: '#fff'
   },
   footerTitle: {
     fontSize: 14,
@@ -61,14 +69,14 @@ export const footerMenu = (menu: GothamMenuItem[], classes): JSX.Element[] => me
   if(menu) {
     const menuItems: JSX.Element[] = menu.map((menuItem) => {
       const {label: itemLabel, url: itemUrl} = menuItem;
-      return <li key={itemLabel}><a href={itemUrl}>{itemLabel}</a></li>;
+      return <li key={itemLabel}><a href={itemUrl} className={classes.footerText}>{itemLabel}</a></li>;
     });
     renderedMenu = (<ul className={classes.footerList}>{menuItems}</ul>);
   }
 
   return (
     <Grid key={label} item className={classes.footerItem}>
-      <div className={classes.footerTitle}>{url ? <a href="url">label</a> : label}</div>
+      <div className={classes.footerTitle}>{url ? <a href="url" className={classes.footerText}>label</a> : label}</div>
       {renderedMenu}
     </Grid>
   );

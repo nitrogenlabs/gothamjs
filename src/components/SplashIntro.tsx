@@ -12,8 +12,6 @@ const styles: StyleRulesCallback = (theme) => ({
     backgroundPositionY: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    marginLeft: -(theme.spacing.unit * 3),
-    marginRight: -(theme.spacing.unit * 3),
     position: 'relative'
   },
   splashIntroContent: {
