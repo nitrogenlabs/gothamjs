@@ -30,6 +30,9 @@ const styles: StyleRulesCallback = (theme) => ({
     boxShadow: '0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0)',
     transition: 'all 0.3s ease-in-out'
   },
+  homeLink: {
+    display: 'flex'
+  },
   titleTextSolid: {
     color: theme.palette.primary.light,
     transition: 'all 0.3s ease-in-out'
@@ -99,7 +102,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   render(): JSX.Element {
-    const {classes, logoAlt, logoDefault, menu, open, title} = this.props;
+    const {classes, logoAlt, logo, menu, open, title} = this.props;
     const {isTransparent} = this.state;
     const appBarSolid = `${classes.appBar} ${classes.appBarSolid}`;
     const appBarTransparent = `${classes.appBar} ${classes.appBarTransparent}`;
@@ -118,8 +121,8 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
               {open ? <BackburgerIcon /> : <MenuIcon />}
             </IconButton>
           </Hidden>
-          <NavLink to="/">
-            {isTransparent ? (logoAlt || logoDefault) : logoDefault}
+          <NavLink to="/" className={classes.homeLink}>
+            {isTransparent ? (logoAlt || logo) : logo}
             {this.renderTitle(title)}
           </NavLink>
           <div style={{flex: 1}} />

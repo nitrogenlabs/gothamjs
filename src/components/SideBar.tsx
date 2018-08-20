@@ -5,14 +5,18 @@ import List from '@material-ui/core/List/List';
 import ListItem from '@material-ui/core/ListItem/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
-import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
+import {StyleRulesCallback} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import React from 'react';
 
 import {AppConstants} from '../constants/AppConstants';
 import {SideBarProps, SideBarState} from '../types/components/sideBar';
+import {initStyle} from '../utils/components';
 
 const styles: StyleRulesCallback = (theme) => ({
+  drawer: {
+    height: '100vh'
+  },
   drawerPaper: {
     position: 'relative'
   },
@@ -23,6 +27,11 @@ const styles: StyleRulesCallback = (theme) => ({
   },
   menuLabel: {
     paddingLeft: 10
+  },
+  sideBar: {
+    display: 'flex',
+    flexGrow: 0,
+    flexShrink: 0
   },
   toolbar: theme.mixins.toolbar
 });
@@ -89,11 +98,9 @@ export class SideBarBase extends React.PureComponent<SideBarProps, SideBarState>
     const {classes, menu, open} = this.props;
 
     return (
-      <React.Fragment>
+      <div className={classes.sideBar}>
         <Hidden mdUp>
-          <Drawer
-            open={open}
-            onClose={() => this.toggleDrawer()}>
+          <Drawer className={classes.drawer} open={open} onClose={() => this.toggleDrawer()}>
             <div
               tabIndex={0}
               role="button"
@@ -107,14 +114,15 @@ export class SideBarBase extends React.PureComponent<SideBarProps, SideBarState>
           <Drawer
             classes={{paper: classes.drawerPaper}}
             open
+            className={classes.drawer}
             transitionDuration={{enter: 0.3, exit: 0.3}}
             variant="permanent">
             {this.renderMenu(menu)}
           </Drawer>
         </Hidden>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-export const SideBar = withStyles(styles, {withTheme: true})(SideBarBase);
+export const SideBar = initStyle(SideBarBase, styles);

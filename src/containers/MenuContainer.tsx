@@ -10,14 +10,20 @@ import {MenuContainerProps, MenuContainerState} from '../types/containers/menuCo
 import {renderTransition} from '../utils/routes';
 
 const styles: StyleRulesCallback = (theme) => ({
+  container: {
+    display: 'flex',
+    flex: 1
+  },
   content: {
     backgroundColor: theme.palette.background.default,
     flexGrow: 1,
-    minWidth: 0
+    minWidth: 0,
+    paddingLeft: 15,
+    paddingRight: 15
   }
 });
 
-export class MenuContainerBase extends React.PureComponent<MenuContainerProps, MenuContainerState> {
+export class MenuContainerBase extends React.Component<MenuContainerProps, MenuContainerState> {
   constructor(props) {
     super(props);
 
@@ -31,11 +37,20 @@ export class MenuContainerBase extends React.PureComponent<MenuContainerProps, M
   }
 
   componentDidMount(): void {
+    // Add listener
     Flux.on(AppConstants.TOGGLE_MENU, this.toggleMenu);
   }
 
   componentWillUnmount(): void {
+    // Remove listener
     Flux.off(AppConstants.TOGGLE_MENU, this.toggleMenu);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {location: {pathname}} = this.props;
+    const {location: {pathname: nextPath}} = nextProps;
+
+    return pathname !== nextPath;
   }
 
   toggleMenu() {
@@ -52,15 +67,17 @@ export class MenuContainerBase extends React.PureComponent<MenuContainerProps, M
   }
 
   render(): JSX.Element {
-    const {classes, sideBar, routes = [], topBar} = this.props;
+    const {classes, sideBar, routes = [], topBar = {}} = this.props;
     const {isMenuOpen} = this.state;
 
     return (
       <React.Fragment>
-        <TopBar {...topBar} open={isMenuOpen} />
-        {this.renderMenu(sideBar, isMenuOpen)}
-        <div className={classes.content}>
-          {renderTransition(routes)}
+        <TopBar {...topBar} transparent open={isMenuOpen} />
+        <div className={classes.container}>
+          {this.renderMenu(sideBar, isMenuOpen)}
+          <div className={classes.content}>
+            {renderTransition(routes)}
+          </div>
         </div>
       </React.Fragment>
     );

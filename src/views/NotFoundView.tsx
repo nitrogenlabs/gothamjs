@@ -14,8 +14,7 @@ const styles: StyleRulesCallback = () => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100vh',
-    justifyContent: 'center',
-    width: '100vw'
+    justifyContent: 'center'
   },
   errorCode: {
     marginTop: -250
@@ -30,7 +29,7 @@ const styles: StyleRulesCallback = () => ({
     fontWeight: 700,
     letterSpacing: '-0.05em',
     position: 'relative',
-    textShadow: '-15px 5px 20px rgba(0, 0, 0, 0.05)',
+    textShadow: '-15px 5px 12px rgba(0, 0, 0, 0.1)',
     textTransform: 'uppercase',
     transition: 'all 0.25s ease-out',
     userSelect: 'none'

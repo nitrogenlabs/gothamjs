@@ -53,11 +53,11 @@ export const parseRoute = (route: GothamRouteType) => {
 
 export const renderRoute = (route: GothamRouteType = {}): JSX.Element => {
   const LoadComponent = parseRoute(route);
-  const {exact = true, container, path, strict, location, sensitive} = route;
+  const {exact = true, path, strict, location, sensitive} = route;
 
   return (
     <Route
-      exact={isEmpty(container) && exact}
+      exact={exact}
       key={path}
       location={location}
       path={path}

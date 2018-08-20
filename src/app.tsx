@@ -37,7 +37,7 @@ const config: GothamConfiguration = {
             ],
             footer: {
               copyright: 'Copyright &copy; 2018 Nitrogen Labs, Inc.',
-              logo: <Svg name="gotham-logo" width={30} height={30} />,
+              logo: <Svg name="gotham-logo" width={60} height={60} />,
               menu: [
                 {
                   label: 'Documentation',
@@ -105,24 +105,37 @@ const config: GothamConfiguration = {
           },
           title: 'Login',
           view: 'login'
-        },
-        {
-          path: '/markdown',
-          props: {
-            external: 'https://raw.githubusercontent.com/nitrogenlabs/arkhamjs/master/README.md'
-          },
-          title: 'Markdown',
-          view: 'markdown'
-        },
-        {
-          path: '/markdownDemo',
-          props: {
-            external: './docs/demo.md'
-          },
-          title: 'Markdown',
-          view: 'markdown'
         }
       ]
+    },
+    {
+      container: 'menu',
+      exact: false,
+      path: '/docs',
+      routes: [
+        {
+          path: '/docs',
+          props: {
+            external: './docs/gettingStarted.md'
+          },
+          title: 'Getting Started',
+          view: 'markdown'
+        },
+        {
+          path: '/docs/containers',
+          props: {
+            external: './containers.md'
+          },
+          title: 'Containers',
+          view: 'markdown'
+        }
+      ],
+      sideBar: {
+        menu: [
+          {label: 'Getting Started', url: '/docs/gettingStarted'},
+          {label: 'Containers', url: '/docs/containers'}
+        ]
+      }
     }
   ],
   title: 'GothamJS'

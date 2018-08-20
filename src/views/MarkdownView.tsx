@@ -8,9 +8,13 @@ import {AppActions} from '../actions/AppActions';
 import {AppConstants} from '../constants/AppConstants';
 import {MarkdownViewProps, MarkdownViewState} from '../types/views/markdown';
 import {initComponent} from '../utils/components';
-import {PageView} from './PageView';
 
-const styles: StyleRulesCallback = () => ({
+const styles: StyleRulesCallback = (theme) => ({
+  markdown: {
+    paddingLeft: 15,
+    paddingRight: 15
+  },
+  toolbar: theme.mixins.toolbar
 });
 
 export class MarkdownViewBase extends React.Component<MarkdownViewProps, MarkdownViewState> {
@@ -57,9 +61,14 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
   }
 
   render(): JSX.Element {
-    const {name = 'markdown', title = ''} = this.props;
+    const {classes} = this.props;
     const {content} = this.state;
-    return <PageView name={name} title={title}>{content}</PageView>;
+    return (
+      <div className={classes.markdown}>
+        <div className={classes.toolbar} />
+        {content}
+      </div>
+    );
   }
 }
 
