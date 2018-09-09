@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import React from 'react';
+import {NavLink} from 'react-router-dom';
 
 import {AppConstants} from '../constants/AppConstants';
 import {SideBarProps, SideBarState} from '../types/components/sideBar';
@@ -26,7 +27,12 @@ const styles: StyleRulesCallback = (theme) => ({
     width: 16
   },
   menuLabel: {
+    color: '#000',
     paddingLeft: 10
+  },
+  menuLink: {
+    cursor: 'pointer',
+    textDecoration: 'none'
   },
   sideBar: {
     display: 'flex',
@@ -36,7 +42,7 @@ const styles: StyleRulesCallback = (theme) => ({
   toolbar: theme.mixins.toolbar
 });
 
-export class SideBarBase extends React.PureComponent<SideBarProps, SideBarState> {
+export class SideBarBase extends React.Component<SideBarProps, SideBarState> {
   constructor(props: SideBarProps) {
     super(props);
 
@@ -70,17 +76,28 @@ export class SideBarBase extends React.PureComponent<SideBarProps, SideBarState>
   renderMenu(menu): JSX.Element {
     const {classes} = this.props;
     const menuItems = menu.map((item) => {
-      const {label, icon} = item;
+      const {divider, label, icon, url} = item;
 
       if(label === '|') {
         return <Divider />;
       }
 
       return (
-        <ListItem button key={label}>
-          {icon && <ListItemIcon classes={{root: classes.menuIcon}}>{icon}</ListItemIcon>}
-          <ListItemText classes={{root: classes.menuLabel}} primary={label} />
-        </ListItem>
+        <NavLink activeStyle={{fontWeight: 700}} className={classes.menuLink} to={url} exact>
+          <ListItem
+            button
+            disableRipple
+            disableTouchRipple
+            divider={divider}
+            focusRipple={false}
+            key={label}>
+            {icon && <ListItemIcon classes={{root: classes.menuIcon}}>{icon}</ListItemIcon>}
+            <ListItemText
+              classes={{root: classes.menuLabel}}
+              primary={label}
+              primaryTypographyProps={{variant: 'display4'}} />
+          </ListItem>
+        </NavLink>
       );
     });
 

@@ -1,16 +1,15 @@
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
-import remark from 'remark';
-import remarkReact from 'remark-react';
 
-import {AppActions} from '../actions/AppActions';
+import {MarkdownActions} from '../actions/MarkdownActions';
 import {AppConstants} from '../constants/AppConstants';
 import {MarkdownViewProps, MarkdownViewState} from '../types/views/markdown';
 import {initComponent} from '../utils/components';
 
 const styles: StyleRulesCallback = (theme) => ({
   markdown: {
+    marginBottom: 150,
     paddingLeft: 15,
     paddingRight: 15
   },
@@ -44,7 +43,7 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
     const {content = ''} = this.state;
 
     if(content === '') {
-      AppActions.getExternal(external);
+      MarkdownActions.getExternal(external);
     }
   }
 
@@ -55,9 +54,7 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
 
   onUpdate(data): void {
     const {content} = data;
-    const renderedContent = remark().use(remarkReact)
-      .processSync(content).contents;
-    this.setState({content: renderedContent});
+    this.setState({content});
   }
 
   render(): JSX.Element {

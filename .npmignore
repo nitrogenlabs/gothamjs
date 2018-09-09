@@ -1,5 +1,6 @@
 .vscode
 build
+changelog.tmp.md
 coverage
 node_modules
 src

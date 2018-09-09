@@ -125,13 +125,13 @@ const bounceTransition = {
   },
   atEnter: {
     opacity: 0,
-    scale: 1.05,
-    translateY: -20
+    scale: 1.01,
+    translateY: -5
   },
   atLeave: {
     opacity: bounce(0),
-    scale: bounce(0.8),
-    translateY: bounce(30)
+    scale: bounce(0),
+    translateY: bounce(10)
   }
 };
 

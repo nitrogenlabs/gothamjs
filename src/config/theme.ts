@@ -46,6 +46,13 @@ export const defaultTheme: ThemeOptions = {
     }
   },
   typography: {
+    display4: {
+      color: 'inherit',
+      fontFamily: 'inherit',
+      fontSize: 'inherit',
+      fontWeight: 'inherit',
+      lineHeight: 'inherit'
+    },
     fontFamily: ['Open Sans', 'sans-serif'].join(', '),
     fontSize: 13
   }

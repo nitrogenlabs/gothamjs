@@ -1,5 +1,4 @@
-import '../styles/app.css';
-
+import CssBaseline from '@material-ui/core/CssBaseline';
 import {createMuiTheme, MuiThemeProvider, StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
@@ -10,6 +9,7 @@ import {hot} from 'react-hot-loader';
 import Router from 'react-router-dom/Router';
 import {injectGlobal} from 'styled-components';
 
+import {AppActions} from '../actions/AppActions';
 import {Config} from '../config/properties';
 import {defaultTheme} from '../config/theme';
 import {AppConstants} from '../constants/AppConstants';
@@ -18,6 +18,42 @@ import {GothamConfiguration, GothamProps, GothamState} from '../types/gotham';
 import {renderTransition} from '../utils/routes';
 
 injectGlobal`
+body, p, h1, input {
+  font-family: 'Open Sans', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #606676;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+h1 {
+  font-size: 2.5rem;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+.text-center {
+  text-align: center;
+}
+.subtitle {
+  font-size: 22px;
+  font-weight: 100;
+  line-height: 32px;
+  color: #5e6977;
+  width: 55%;
+  margin: 20px auto 40px;
+}
+.view {
+  display: flex;
+  flex: 1;
+  height: 100vh;
+}
 body {
   margin: 0;
   padding: 0;
@@ -34,7 +70,6 @@ img {
   position: relative;
 }
 .routeWrapper > div {
-  height: 100%;
   position: absolute;
   width: 100%;
 }
@@ -106,14 +141,19 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   }
 
   componentDidMount(): void {
+    // Add event listeners
     Flux.onInit(this.init);
     Flux.on(AppConstants.NAV_BACK, this.navBack);
     Flux.on(AppConstants.NAV_FORWARD, this.navForward);
     Flux.on(AppConstants.NAV_GOTO, this.navGoto);
     Flux.on(AppConstants.NAV_REPLACE, this.navReplace);
+
+    // Initialize
+    AppActions.init();
   }
 
   componentWillUnmount(): void {
+    // Remove event listeners
     Flux.offInit(this.init);
     Flux.off(AppConstants.NAV_BACK, this.navBack);
     Flux.off(AppConstants.NAV_FORWARD, this.navForward);
@@ -154,6 +194,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
 
     return (
       <MuiThemeProvider theme={this.theme}>
+        <CssBaseline />
         <div className={classes.root}>
           <Router history={this.history}>
             {renderTransition(routes)}

@@ -17,7 +17,9 @@ const styles: StyleRulesCallback = (theme) => ({
   content: {
     backgroundColor: theme.palette.background.default,
     flexGrow: 1,
+    marginBottom: 50,
     minWidth: 0,
+    overflowY: 'auto',
     paddingLeft: 15,
     paddingRight: 15
   }

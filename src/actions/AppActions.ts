@@ -1,17 +1,16 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
-import {Hunter} from 'rip-hunter';
 
 import {AppConstants} from '../constants/AppConstants';
 import {GothamConfiguration} from '../types/gotham';
 
 export class AppActions {
-  static setConfig(config: GothamConfiguration): Promise<FluxAction> {
-    return Flux.dispatch({config, type: AppConstants.SET_CONFIG});
+  static init(): Promise<FluxAction> {
+    return Flux.dispatch({type: AppConstants.INITIALIZE});
   }
 
-  static getExternal(url: string): Promise<FluxAction> {
-    return Hunter.get(url).then((content) => Flux.dispatch({content, type: AppConstants.GET_EXTERNAL}));
+  static setConfig(config: GothamConfiguration): Promise<FluxAction> {
+    return Flux.dispatch({config, type: AppConstants.SET_CONFIG});
   }
 
   static navBack(): Promise<FluxAction> {

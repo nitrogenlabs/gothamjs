@@ -1,5 +1,7 @@
 export class AppConstants {
+  static readonly CLEAR_EXTERNAL: string = 'APP_CLEAR_EXTERNAL';
   static readonly GET_EXTERNAL: string = 'APP_GET_EXTERNAL';
+  static readonly INITIALIZE: string = 'APP_INITIALIZE';
   static readonly NAV_BACK: string = 'APP_NAV_BACK';
   static readonly NAV_FORWARD: string = 'APP_NAV_FORWARD';
   static readonly NAV_GOTO: string = 'APP_NAV_GOTO';
