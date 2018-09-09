@@ -102,7 +102,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   render(): JSX.Element {
-    const {classes, logoAlt, logo, menu, open, title} = this.props;
+    const {classes, logo, logoAlt, menu, open, title} = this.props;
     const {isTransparent} = this.state;
     const appBarSolid = `${classes.appBar} ${classes.appBarSolid}`;
     const appBarTransparent = `${classes.appBar} ${classes.appBarTransparent}`;
@@ -121,7 +121,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
               {open ? <BackburgerIcon /> : <MenuIcon />}
             </IconButton>
           </Hidden>
-          <NavLink to="/" className={classes.homeLink}>
+          <NavLink to="/">
             {isTransparent ? (logoAlt || logo) : logo}
             {this.renderTitle(title)}
           </NavLink>
