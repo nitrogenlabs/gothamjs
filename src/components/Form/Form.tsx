@@ -34,12 +34,10 @@ export class FormBase extends React.Component<FormProps, {}> {
     const {onSubmit, validate} = this.props;
 
     return (
-      <React.Fragment>
-        <FinalForm
-          onSubmit={onSubmit}
-          validate={validate}
-          render={this.renderForm} />
-      </React.Fragment>
+      <FinalForm
+        onSubmit={onSubmit}
+        validate={validate}
+        render={this.renderForm} />
     );
   }
 }

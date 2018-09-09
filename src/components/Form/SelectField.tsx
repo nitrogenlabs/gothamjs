@@ -1,21 +1,42 @@
-import MaterialTextField, {TextFieldProps} from '@material-ui/core/TextField/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MaterialNativeSelect from '@material-ui/core/NativeSelect/NativeSelect';
 import * as React from 'react';
 import {Field} from 'react-final-form';
 
-export class SelectField extends React.PureComponent<TextFieldProps, {}> {
-  constructor(props: TextFieldProps) {
+import {SelectFieldOption, SelectFieldProps} from '../../types/components/form';
+
+export class SelectField extends React.PureComponent<SelectFieldProps, {}> {
+  constructor(props: SelectFieldProps) {
     super(props);
 
     // Methods
-    this.renderField = this.renderField.bind(this);
+    this.renderOptions = this.renderOptions.bind(this);
+    this.renderSelect = this.renderSelect.bind(this);
   }
 
-  renderField({input}): JSX.Element {
-    return <MaterialTextField {...this.props} {...input} />;
+  renderSelect({input}): JSX.Element {
+    const {label, list, ...props} = this.props;
+    let labelElement: JSX.Element;
+
+    if(label) {
+      labelElement = <InputLabel shrink>{label}</InputLabel>;
+    }
+
+    return (
+      <FormControl>
+        {labelElement}
+        <MaterialNativeSelect {...props} {...input}>{this.renderOptions(list)}</MaterialNativeSelect>
+      </FormControl>
+    );
+  }
+
+  renderOptions(list: SelectFieldOption[] = []): JSX.Element[] {
+    return list.map(({label, value}) => <option key={`${label}${value}`} value={value}>{label}</option>);
   }
 
   render(): JSX.Element {
     const {name} = this.props;
-    return <Field name={name} render={this.renderField} />;
+    return <Field name={name} render={this.renderSelect} />;
   }
 }

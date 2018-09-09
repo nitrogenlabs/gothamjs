@@ -6,4 +6,5 @@ export interface SplashIntroProps extends WithStyles<any> {
   readonly children?: JSX.Element | JSX.Element[];
   readonly buttons?: string;
   readonly image?: JSX.Element;
+  readonly text?: string;
 }
