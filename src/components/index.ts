@@ -1,4 +1,3 @@
-export {Button} from './Button';
 export * from './Form';
 export * from './Header';
 
