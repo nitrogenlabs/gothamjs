@@ -16,7 +16,7 @@ export class SelectField extends React.PureComponent<SelectFieldProps, {}> {
   }
 
   renderSelect({input}): JSX.Element {
-    const {label, list, ...props} = this.props;
+    const {className, label, list, ...props} = this.props;
     let labelElement: JSX.Element;
 
     if(label) {
@@ -24,7 +24,7 @@ export class SelectField extends React.PureComponent<SelectFieldProps, {}> {
     }
 
     return (
-      <FormControl>
+      <FormControl className={className}>
         {labelElement}
         <MaterialNativeSelect {...props} {...input}>{this.renderOptions(list)}</MaterialNativeSelect>
       </FormControl>

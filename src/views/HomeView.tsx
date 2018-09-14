@@ -85,7 +85,6 @@ export class HomeViewBase extends React.PureComponent<HomeViewProps, HomeViewSta
   }
 
   renderSplashIntro(props: SplashIntroProps, classes): JSX.Element {
-    console.log('renderSplashIntro::props', props);
     if(props) {
       const {backgroundImage, backgroundTextColor, buttons = [], image, text} = props;
       const splashImage: JSX.Element = image ? <div className={classes.splashImage}>{image}</div> : null;
@@ -115,7 +114,6 @@ export class HomeViewBase extends React.PureComponent<HomeViewProps, HomeViewSta
       splash
     } = this.props;
 
-    console.log('HomeView::props', this.props);
     return (
       <div className={classes.view}>
         <Grid container direction="column">

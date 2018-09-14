@@ -32,6 +32,12 @@ export const defaultTheme: ThemeOptions = {
         width: 275
       }
     },
+    MuiGrid: {
+      container: {
+        flex: 1,
+        width: 'auto'
+      }
+    },
     MuiListItemText: {
       primary: {
         fontSize: 14
