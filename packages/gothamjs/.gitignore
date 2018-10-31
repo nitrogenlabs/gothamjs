@@ -1,0 +1,7 @@
+changelog.tmp.md
+coverage
+lib
+node_modules
+package-lock.json
+yarn-error.log
+

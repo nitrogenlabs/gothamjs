@@ -1,0 +1,10 @@
+{
+  "lerna": "3.4.1",
+  "packages": [
+    "packages/gothamjs",
+    "packages/gothamjs-aws"
+  ],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "1.0.0"
+}
