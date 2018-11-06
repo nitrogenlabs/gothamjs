@@ -41,13 +41,13 @@
     "@nlabs/arkhamjs": "~3.11.12",
     "@nlabs/arkhamjs-storage-browser": "~3.11.12",
     "amazon-cognito-identity-js": "^3.0.3",
-    "aws-amplify": "^1.1.7"
+    "aws-amplify": "~1.1.9"
   },
   "devDependencies": {
-    "@types/jest": "~23.3.8",
-    "@types/node": "~10.12.1",
+    "@types/jest": "~23.3.9",
+    "@types/node": "~10.12.2",
     "eslint": "~5.8.0",
     "eslint-config-styleguidejs": "~0.7.13",
-    "typescript": "~3.1.4"
+    "typescript": "~3.1.6"
   }
 }

@@ -30,7 +30,7 @@ const styles: StyleRulesCallback = (theme) => ({
   },
   card: {
     borderRadius: 10,
-    maxWidth: 500
+    maxWidth: 750
   },
   forgot: {
     color: theme.palette.grey['400'],
@@ -91,11 +91,7 @@ export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginView
 
   renderLogo(logo: JSX.Element, classes): JSX.Element {
     if(logo) {
-      return (
-        <div className={classes.logo}>
-          {logo}
-        </div>
-      );
+      return <div className={classes.logo}>{logo}</div>;
     }
 
     return null;
@@ -137,8 +133,8 @@ export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginView
                       <p className={classes.forgot}>Forgot password?</p>
                     </Grid>
                     <Grid item xs={12} className={classes.buttonRowRight}>
-                      <Button color="default" size="large" type="submit" value="" variant="text">New Account</Button>
-                      <Button color="primary" size="large" type="submit" value="" variant="contained">Sign in</Button>
+                      <Button color="default" size="large" type="submit" variant="text">New Account</Button>
+                      <Button color="primary" size="large" type="submit" variant="contained">Sign in</Button>
                     </Grid>
                   </Grid>
                 </Form>

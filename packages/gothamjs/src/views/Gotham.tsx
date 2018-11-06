@@ -194,8 +194,8 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
 
     return (
       <MuiThemeProvider theme={this.theme}>
-        <GlobalStyle />
         <CssBaseline />
+        <GlobalStyle />
         <div className={classes.root}>
           <Router history={this.history}>
             {renderTransition(routes)}

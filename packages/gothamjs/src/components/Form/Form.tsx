@@ -4,6 +4,7 @@ import {Form as FinalForm} from 'react-final-form';
 
 import {FormProps} from '../../types/components/form';
 import {initStyle} from '../../utils/components';
+import {AutoSave} from './AutoSave';
 
 const styles: StyleRulesCallback = () => ({
   form: {
@@ -23,10 +24,13 @@ export class FormBase extends React.Component<FormProps, {}> {
   }
 
   renderForm({handleSubmit}) {
-    const {children, classes} = this.props;
+    const {children, classes, onChange} = this.props;
 
     return (
-      <form className={classes.form} onSubmit={handleSubmit}>{children}</form>
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <AutoSave onChange={onChange} />
+        {children}
+      </form>
     );
   }
 

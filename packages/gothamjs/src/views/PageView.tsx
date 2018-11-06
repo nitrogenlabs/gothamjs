@@ -29,9 +29,11 @@ export class PageViewBase extends React.PureComponent<PageViewProps, PageViewSta
   renderTitle(title: string, classes) {
     if(title) {
       return (
-        <div className={classes.title}>
-          <Typography variant="h1">{title}</Typography>
-        </div>
+        <Grid item xs={12}>
+          <div className={classes.title}>
+            <Typography variant="h1">{title}</Typography>
+          </div>
+        </Grid>
       );
     }
 

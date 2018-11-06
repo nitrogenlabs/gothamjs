@@ -32,15 +32,61 @@ export const defaultTheme: ThemeOptions = {
         width: 275
       }
     },
+    MuiFormControl: {
+      root: {
+        display: 'flex'
+      }
+    },
     MuiGrid: {
       container: {
         flex: 1,
         width: 'auto'
+      },
+      'grid-xs-1': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-10': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-11': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-12': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-2': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-3': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-4': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-5': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-6': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-7': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-8': {
+        flexBasis: 'auto'
+      },
+      'grid-xs-9': {
+        flexBasis: 'auto'
       }
     },
     MuiListItemText: {
       primary: {
         fontSize: 14
+      }
+    },
+    MuiNativeSelect: {
+      select: {
+        height: 24
       }
     }
   },
@@ -48,6 +94,22 @@ export const defaultTheme: ThemeOptions = {
   props: {
     MuiButton: {
       disableFocusRipple: true,
+      disableRipple: true,
+      disableTouchRipple: true
+    },
+    MuiCheckbox: {
+      disableRipple: true
+    },
+    MuiIconButton: {
+      disableRipple: true
+    },
+    MuiRadio: {
+      disableRipple: true
+    },
+    MuiSwitch: {
+      disableRipple: true
+    },
+    MuiTouchRipple: {
       disableRipple: true
     }
   },
@@ -68,6 +130,6 @@ export const defaultTheme: ThemeOptions = {
       fontWeight: 'inherit',
       lineHeight: 'inherit'
     },
-    useNextVariants: false
+    useNextVariants: true
   }
 };

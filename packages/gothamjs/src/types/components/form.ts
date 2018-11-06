@@ -4,7 +4,8 @@ import {StandardTextFieldProps as MaterialTextFieldProps} from '@material-ui/cor
 
 export interface FormProps extends WithStyles<any> {
   readonly children?: any;
-  readonly onSubmit?: any;
+  readonly onChange?: any;
+  readonly onSubmit: any;
   readonly validate?: any;
 }
 

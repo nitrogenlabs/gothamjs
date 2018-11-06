@@ -11,7 +11,8 @@ import {SelectOption} from './SelectOption';
 
 const styles: StyleRulesCallback = () => ({
   field: {
-    display: 'flex'
+    display: 'flex',
+    flex: 1
   }
 });
 
