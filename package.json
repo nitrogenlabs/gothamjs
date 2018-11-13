@@ -11,7 +11,7 @@
     "update": "lex update -i"
   },
   "devDependencies": {
-    "@types/node": "^10.12.0",
+    "@types/node": "^10.12.7",
     "lerna": "^3.4.1"
   },
   "workspaces": [
