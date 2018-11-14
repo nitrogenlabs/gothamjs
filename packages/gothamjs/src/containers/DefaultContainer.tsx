@@ -10,6 +10,7 @@ import {renderTransition} from '../utils/routes';
 const styles: StyleRulesCallback = (theme) => ({
   content: {
     backgroundColor: theme.palette.background.default,
+    marginTop: -65,
     minWidth: 0,
     overflowY: 'auto'
   }
@@ -32,13 +33,13 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
     return pathname !== nextPath;
   }
 
-  onScroll(event: React.SyntheticEvent) {
-    const {theme} = this.props;
-    let changeSolid: boolean = false;
+  componentDidMount() {
+    window.addEventListener('scroll', this.onScroll);
+  }
 
-    if(event.currentTarget.scrollTop > theme.mixins.toolbar.minHeight) {
-      changeSolid = true;
-    }
+  onScroll(): void {
+    const {theme} = this.props;
+    const changeSolid: boolean = window.scrollY > theme.mixins.toolbar.minHeight;
 
     if(this.isTopSolid !== changeSolid) {
       this.isTopSolid = changeSolid;

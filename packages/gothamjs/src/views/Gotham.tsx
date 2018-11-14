@@ -1,4 +1,5 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid/Grid';
 import {createMuiTheme, MuiThemeProvider, StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
@@ -75,15 +76,7 @@ img {
 }
 `;
 
-const styles: StyleRulesCallback = () => ({
-  root: {
-    display: 'flex',
-    flexGrow: 1,
-    overflow: 'hidden',
-    position: 'relative',
-    zIndex: 1
-  }
-});
+const styles: StyleRulesCallback = () => ({});
 
 export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   config: GothamConfiguration;
@@ -184,7 +177,6 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   }
 
   render(): JSX.Element {
-    const {classes} = this.props;
     const {isLoaded} = this.state;
     const {routes = []} = this.config;
 
@@ -196,11 +188,11 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       <MuiThemeProvider theme={this.theme}>
         <CssBaseline />
         <GlobalStyle />
-        <div className={classes.root}>
+        <Grid container>
           <Router history={this.history}>
             {renderTransition(routes)}
           </Router>
-        </div>
+        </Grid>
       </MuiThemeProvider >
     );
   }

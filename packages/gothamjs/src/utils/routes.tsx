@@ -143,15 +143,14 @@ const bounceTransition = {
   }
 };
 
-export const renderTransition = (routes: GothamRouteType[] = []): JSX.Element =>
-  (
-    <AnimatedSwitch
-      atEnter={bounceTransition.atEnter}
-      atLeave={bounceTransition.atLeave}
-      atActive={bounceTransition.atActive}
-      mapStyles={mapStyles}
-      className="routeWrapper">
-      {renderRouteList(routes)}
-    </AnimatedSwitch>
-  );
+export const renderTransition = (routes: GothamRouteType[] = []): JSX.Element => (
+  <AnimatedSwitch
+    atEnter={bounceTransition.atEnter}
+    atLeave={bounceTransition.atLeave}
+    atActive={bounceTransition.atActive}
+    mapStyles={mapStyles}
+    className="routeWrapper">
+    {renderRouteList(routes)}
+  </AnimatedSwitch>
+);
 

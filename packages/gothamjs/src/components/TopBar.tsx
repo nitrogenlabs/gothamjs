@@ -73,6 +73,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
 
   onUpdateBackground(data) {
     const {isTransparent} = data;
+    console.log('onUpdateBackground::isTransparent', isTransparent);
     this.setState({isTransparent});
   }
 
@@ -111,7 +112,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
     return (
       <AppBar
         className={isTransparent ? appBarTransparent : appBarSolid}
-        position="fixed">
+        position="sticky">
         <Toolbar classes={{root: titleText}}>
           <Hidden mdUp>
             <IconButton
