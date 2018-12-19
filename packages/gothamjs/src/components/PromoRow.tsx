@@ -1,4 +1,7 @@
-import Grid, {GridSize} from '@material-ui/core/Grid';
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import React from 'react';
 
@@ -27,10 +30,6 @@ const styles: StyleRulesCallback = (theme) => ({
     }
   },
   promoRow: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
     paddingBottom: 80,
     paddingTop: 60
   },
@@ -42,14 +41,13 @@ const styles: StyleRulesCallback = (theme) => ({
 
 export const promoItems = (list: PromoItemProps[], classes): JSX.Element[] => list.map((item: PromoItemProps) => {
   const {details, image, title} = item;
-  const gridSize: GridSize = (12 / list.length) as GridSize;
 
   return (
-    <Grid key={title} item md={gridSize} className={classes.promoItem}>
+    <div key={title} className={`${classes.promoItem} col`}>
       <div className={classes.promoImage}>{image}</div>
       <div className={classes.promoTitle}>{title}</div>
       <div className={classes.promoDetails}>{details}</div>
-    </Grid>
+    </div>
   );
 });
 
@@ -57,9 +55,11 @@ export const PromoRowBase = (props: PromoRowProps): JSX.Element => {
   const {list, classes} = props;
 
   return (
-    <Grid className={classes.promoRow} container justify="center">
-      {promoItems(list, classes)}
-    </Grid>
+    <div className="container">
+      <div className={`${classes.promoRow} row justify-content-center`}>
+        {promoItems(list, classes)}
+      </div>
+    </div>
   );
 };
 

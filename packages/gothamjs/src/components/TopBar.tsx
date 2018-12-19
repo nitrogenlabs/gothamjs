@@ -1,10 +1,13 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback, withStyles} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Hidden from '@material-ui/core/Hidden/Hidden';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Typography from '@material-ui/core/Typography/Typography';
-import {Flux} from '@nlabs/arkhamjs';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
 import NavLink from 'react-router-dom/NavLink';
@@ -13,6 +16,7 @@ import {Button} from '../components/Button';
 import {AppConstants} from '../constants/AppConstants';
 import {TopBarProps, TopBarState} from '../types/components/topBar';
 import {GothamMenuItem} from '../types/gotham';
+import {ArkhamJS} from '../utils/flux';
 
 const styles: StyleRulesCallback = (theme) => ({
   appBar: {
@@ -64,21 +68,20 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   componentDidMount() {
-    Flux.on(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
+    ArkhamJS.flux.on(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
   }
 
   componentWillUnmount() {
-    Flux.off(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
+    ArkhamJS.flux.off(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
   }
 
   onUpdateBackground(data) {
     const {isTransparent} = data;
-    console.log('onUpdateBackground::isTransparent', isTransparent);
     this.setState({isTransparent});
   }
 
   onToggleDrawer() {
-    Flux.dispatch({type: AppConstants.TOGGLE_MENU});
+    ArkhamJS.flux.dispatch({type: AppConstants.TOGGLE_MENU});
   }
 
   renderMenuItem(menuItem: GothamMenuItem) {
@@ -88,7 +91,6 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
     const color = isTransparent ? transparentTextColor : solidTextColor;
     return <Button href={url} key={`${label}:${url}`} color="inherit" style={{color}}>{label}</Button>;
   }
-
 
   renderMenu(menu) {
     return menu.map((menuItem) => this.renderMenuItem(menuItem));

@@ -3,7 +3,7 @@ import {Flux} from '@nlabs/arkhamjs';
 export class Storage {
   // Set item with the key
   static setItem(key: string, value: string): string {
-    Flux.dispatch({type:});
+    Flux.dispatch({type: ''});
     return value;
   }
 

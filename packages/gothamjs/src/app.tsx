@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
@@ -112,6 +116,14 @@ const config: GothamConfiguration = {
       container: 'menu',
       exact: false,
       path: '/docs',
+      props: {
+        sideBar: {
+          menu: [
+            {label: 'Getting Started', url: '/docs/gettingStarted'},
+            {label: 'Containers', url: '/docs/containers'}
+          ]
+        }
+      },
       routes: [
         {
           path: '/docs',
@@ -129,13 +141,7 @@ const config: GothamConfiguration = {
           title: 'Containers',
           view: 'markdown'
         }
-      ],
-      sideBar: {
-        menu: [
-          {label: 'Getting Started', url: '/docs/gettingStarted'},
-          {label: 'Containers', url: '/docs/containers'}
-        ]
-      }
+      ]
     }
   ],
   title: 'GothamJS'

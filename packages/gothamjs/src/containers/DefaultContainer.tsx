@@ -1,10 +1,14 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
-import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
 import {TopBar} from '../components/TopBar';
 import {AppConstants} from '../constants/AppConstants';
 import {DefaultContainerProps, DefaultContainerState} from '../types/containers/defaultContainer';
+import {ArkhamJS} from '../utils/flux';
 import {renderTransition} from '../utils/routes';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -37,24 +41,28 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
     window.addEventListener('scroll', this.onScroll);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+  }
+
   onScroll(): void {
     const {theme} = this.props;
     const changeSolid: boolean = window.scrollY > theme.mixins.toolbar.minHeight;
 
     if(this.isTopSolid !== changeSolid) {
       this.isTopSolid = changeSolid;
-      Flux.dispatch({isTransparent: !changeSolid, type: AppConstants.TOPBAR_SOLID});
+      ArkhamJS.flux.dispatch({isTransparent: !changeSolid, type: AppConstants.TOPBAR_SOLID});
     }
   }
 
   render(): JSX.Element {
-    const {classes, routes = [], topBar = {}} = this.props;
+    const {baseProps, classes, routes = [], topBar = {}} = this.props;
 
     return (
       <React.Fragment>
         <TopBar {...topBar} transparent />
         <div className={classes.content} onScroll={this.onScroll}>
-          {renderTransition(routes)}
+          {renderTransition(routes, baseProps)}
         </div>
       </React.Fragment>
     );

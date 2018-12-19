@@ -6,6 +6,10 @@ import {FormProps} from '../../types/components/form';
 import {initStyle} from '../../utils/components';
 import {AutoSave} from './AutoSave';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 const styles: StyleRulesCallback = () => ({
   form: {
     boxSizing: 'border-box',
@@ -24,7 +28,7 @@ export class FormBase extends React.Component<FormProps, {}> {
   }
 
   renderForm({handleSubmit}) {
-    const {children, classes, onChange} = this.props;
+    const {children, classes, onChange = () => {}} = this.props;
 
     return (
       <form className={classes.form} onSubmit={handleSubmit}>
@@ -35,13 +39,28 @@ export class FormBase extends React.Component<FormProps, {}> {
   }
 
   render(): JSX.Element {
-    const {onSubmit, validate} = this.props;
+    const {
+      debug,
+      destroyOnUnregister,
+      initialValues,
+      keepDirtyOnReinitialize,
+      mutators,
+      onSubmit,
+      validate,
+      validateOnBlur
+    } = this.props;
 
     return (
       <FinalForm
+        debug={debug}
+        destroyOnUnregister={destroyOnUnregister}
+        initialValues={initialValues}
+        keepDirtyOnReinitialize={keepDirtyOnReinitialize}
+        mutators={mutators}
         onSubmit={onSubmit}
+        render={this.renderForm}
         validate={validate}
-        render={this.renderForm} />
+        validateOnBlur={validateOnBlur} />
     );
   }
 }

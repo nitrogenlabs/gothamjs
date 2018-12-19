@@ -3,6 +3,9 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "outDir": "./lib",
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "./src/**/*"
@@ -13,8 +16,5 @@
     "./website",
     "./node_modules",
     "./test"
-  ],
-  "types": [
-    "node"
   ]
 }

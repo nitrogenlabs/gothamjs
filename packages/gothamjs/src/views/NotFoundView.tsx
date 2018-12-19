@@ -1,4 +1,7 @@
-import Grid from '@material-ui/core/Grid/Grid';
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import * as React from 'react';
 
@@ -41,19 +44,19 @@ export class NotFoundViewBase extends React.PureComponent<NotFoundViewProps, Not
     const {classes} = this.props;
 
     return (
-      <Grid container direction="column">
-        <div className={classes.container}>
-          <div className={classes.errorCode}>
+      <div className="container">
+        <div className="row">
+          <div className={`col ${classes.errorCode}`}>
             <span className={classes.shadow}>4</span>
             <span className={classes.shadow}>0</span>
             <span className={classes.shadow}>4</span>
           </div>
-          <div className={classes.h1}>Page Not Found</div>
-          <div className={classes.body}>
+          <div className={`col ${classes.h1}`}>Page Not Found</div>
+          <div className={`col ${classes.body}`}>
             Could not find the page you were looking for. Please try again or contact support.
           </div>
         </div>
-      </Grid>
+      </div>
     );
   }
 }

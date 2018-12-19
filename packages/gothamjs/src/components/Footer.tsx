@@ -1,4 +1,3 @@
-import Grid from '@material-ui/core/Grid';
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import React from 'react';
 
@@ -6,37 +5,26 @@ import {FooterProps} from '../types/components/footer';
 import {GothamMenuItem} from '../types/gotham';
 import {initStyle} from '../utils/components';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 const styles: StyleRulesCallback = (theme) => ({
   footer: {
     backgroundColor: '#808080',
     boxShadow: 'inset 0 10px 10px -5px rgba(0,0,0,.2)',
-    flexDirection: 'column',
+    display: 'flex',
     paddingLeft: 50,
     paddingRight: 50
   },
   footerCopyright: {
-    alignItems: 'center',
     color: '#fff',
-    display: 'flex',
-    flexDirection: 'row',
     fontSize: 12,
-    justifyContent: 'center',
     opacity: 0.5,
     padding: 15
   },
   footerDetails: {
     fontSize: 14
-  },
-  footerItem: {
-    display: 'flex',
-    flexBasis: '0px',
-    flexDirection: 'column',
-    flexGrow: 1,
-    flexShrink: 0,
-    [theme.breakpoints.down('xs')]: {
-      flexBasis: '100%',
-      marginBottom: 30
-    }
   },
   footerList: {
     fontSize: 14,
@@ -45,11 +33,7 @@ const styles: StyleRulesCallback = (theme) => ({
     padding: 0
   },
   footerRow: {
-    alignItems: 'flex-start',
     color: '#fff',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingBottom: 80,
     paddingTop: 60
   },
@@ -75,10 +59,10 @@ export const footerMenu = (menu: GothamMenuItem[], classes): JSX.Element[] => me
   }
 
   return (
-    <Grid key={label} item className={classes.footerItem}>
+    <div key={label} className={`col ${classes.footerItem}`}>
       <div className={classes.footerTitle}>{url ? <a href="url" className={classes.footerText}>label</a> : label}</div>
       {renderedMenu}
-    </Grid>
+    </div>
   );
 });
 
@@ -86,17 +70,19 @@ export const FooterBase = (props: FooterProps): JSX.Element => {
   const {classes, copyright, logo, menu} = props;
 
   return (
-    <Grid className={classes.footer} container justify="center">
-      <Grid item xs={12} className={classes.footerItem}>
-        <Grid className={classes.footerRow} container justify="center">
-          <Grid item className={classes.footerItem}>{logo}</Grid>
+    <div className={classes.footer}>
+      <div className="container">
+        <div className={`row justify-content-between ${classes.footerRow}`}>
+          <div className="col">{logo}</div>
           {footerMenu(menu, classes)}
-        </Grid>
-      </Grid>
-      <Grid item xs={12} className={classes.footerCopyright}>
-        <div dangerouslySetInnerHTML={{__html: copyright}} />
-      </Grid>
-    </Grid>
+        </div>
+        <div className="row">
+          <div className={`${classes.footerCopyright} col`}>
+            <div dangerouslySetInnerHTML={{__html: copyright}} />
+          </div>
+        </div>v
+      </div>
+    </div>
   );
 };
 

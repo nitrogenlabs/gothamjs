@@ -1,10 +1,16 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
+import 'bootstrap/dist/css/bootstrap-grid.css';
+import 'bootstrap/dist/css/bootstrap-reboot.css';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid/Grid';
 import {createMuiTheme, MuiThemeProvider, StyleRulesCallback, withStyles} from '@material-ui/core/styles';
-import {Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {createBrowserHistory, History} from 'history';
+import merge from 'lodash/merge';
 import * as React from 'react';
 import {hot} from 'react-hot-loader';
 import Router from 'react-router-dom/Router';
@@ -14,8 +20,10 @@ import {AppActions} from '../actions/AppActions';
 import {Config} from '../config/properties';
 import {defaultTheme} from '../config/theme';
 import {AppConstants} from '../constants/AppConstants';
-import {AppStore} from '../stores/AppStore';
+import {AppStore} from '../stores/AppStore/AppStore';
+import {AuthStore} from '../stores/AuthStore/AuthStore';
 import {GothamConfiguration, GothamProps, GothamState} from '../types/gotham';
+import {ArkhamJS} from '../utils/flux';
 import {renderTransition} from '../utils/routes';
 
 const GlobalStyle = createGlobalStyle`
@@ -31,13 +39,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 h1 {
   font-size: 2.5rem;
-}
-.container {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  padding: 0 15px;
-  margin: 0 auto;
 }
 .text-center {
   text-align: center;
@@ -102,7 +103,11 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       stores: [],
       title: ''
     };
-    this.config = {...defaultConfig, ...appConfig};
+    this.config = merge(defaultConfig, appConfig);
+    const {base: {Flux}, middleware, name, stores, title} = this.config;
+
+    // Set Flux object
+    ArkhamJS.setFlux(Flux);
 
     // ArkhamJS Middleware
     const env: string = Config.get('environment');
@@ -111,16 +116,17 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     });
 
     // ArkhamJS Configuration
-    const {middleware, name, stores, title} = this.config;
     const storage: BrowserStorage = new BrowserStorage({type: 'session'});
 
-    Flux.init({
-      middleware: [logger, ...middleware],
-      name,
-      state: {app: {title}},
-      storage,
-      stores: [AppStore, ...stores]
-    });
+    if(ArkhamJS.flux) {
+      ArkhamJS.flux.init({
+        middleware: [logger, ...middleware],
+        name,
+        state: {app: {title}},
+        storage,
+        stores: [AppStore, AuthStore, ...stores]
+      });
+    }
 
     // Create browser history
     this.history = createBrowserHistory();
@@ -135,11 +141,11 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
 
   componentDidMount(): void {
     // Add event listeners
-    Flux.onInit(this.init);
-    Flux.on(AppConstants.NAV_BACK, this.navBack);
-    Flux.on(AppConstants.NAV_FORWARD, this.navForward);
-    Flux.on(AppConstants.NAV_GOTO, this.navGoto);
-    Flux.on(AppConstants.NAV_REPLACE, this.navReplace);
+    ArkhamJS.flux.onInit(this.init);
+    ArkhamJS.flux.on(AppConstants.NAV_BACK, this.navBack);
+    ArkhamJS.flux.on(AppConstants.NAV_FORWARD, this.navForward);
+    ArkhamJS.flux.on(AppConstants.NAV_GOTO, this.navGoto);
+    ArkhamJS.flux.on(AppConstants.NAV_REPLACE, this.navReplace);
 
     // Initialize
     AppActions.init();
@@ -147,11 +153,11 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
 
   componentWillUnmount(): void {
     // Remove event listeners
-    Flux.offInit(this.init);
-    Flux.off(AppConstants.NAV_BACK, this.navBack);
-    Flux.off(AppConstants.NAV_FORWARD, this.navForward);
-    Flux.off(AppConstants.NAV_GOTO, this.navGoto);
-    Flux.off(AppConstants.NAV_REPLACE, this.navReplace);
+    ArkhamJS.flux.offInit(this.init);
+    ArkhamJS.flux.off(AppConstants.NAV_BACK, this.navBack);
+    ArkhamJS.flux.off(AppConstants.NAV_FORWARD, this.navForward);
+    ArkhamJS.flux.off(AppConstants.NAV_GOTO, this.navGoto);
+    ArkhamJS.flux.off(AppConstants.NAV_REPLACE, this.navReplace);
   }
 
   init(): void {
@@ -178,7 +184,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
 
   render(): JSX.Element {
     const {isLoaded} = this.state;
-    const {routes = []} = this.config;
+    const {base, routes = []} = this.config;
 
     if(!isLoaded) {
       return null;
@@ -188,11 +194,9 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       <MuiThemeProvider theme={this.theme}>
         <CssBaseline />
         <GlobalStyle />
-        <Grid container>
-          <Router history={this.history}>
-            {renderTransition(routes)}
-          </Router>
-        </Grid>
+        <Router history={this.history}>
+          {renderTransition(routes, base)}
+        </Router>
       </MuiThemeProvider >
     );
   }

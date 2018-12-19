@@ -1,5 +1,8 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
-import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
 import {SideBar} from '../components/SideBar';
@@ -7,6 +10,7 @@ import {TopBar} from '../components/TopBar';
 import {AppConstants} from '../constants/AppConstants';
 import {SideBarProps} from '../types/components/sideBar';
 import {MenuContainerProps, MenuContainerState} from '../types/containers/menuContainer';
+import {ArkhamJS} from '../utils/flux';
 import {renderTransition} from '../utils/routes';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -40,12 +44,12 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
 
   componentDidMount(): void {
     // Add listener
-    Flux.on(AppConstants.TOGGLE_MENU, this.toggleMenu);
+    ArkhamJS.flux.on(AppConstants.TOGGLE_MENU, this.toggleMenu);
   }
 
   componentWillUnmount(): void {
     // Remove listener
-    Flux.off(AppConstants.TOGGLE_MENU, this.toggleMenu);
+    ArkhamJS.flux.off(AppConstants.TOGGLE_MENU, this.toggleMenu);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -69,7 +73,7 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
   }
 
   render(): JSX.Element {
-    const {classes, sideBar, routes = [], topBar = {}} = this.props;
+    const {baseProps, classes, sideBar, routes = [], topBar = {}} = this.props;
     const {isMenuOpen} = this.state;
 
     return (
@@ -78,7 +82,7 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
         <div className={classes.container}>
           {this.renderMenu(sideBar, isMenuOpen)}
           <div className={classes.content}>
-            {renderTransition(routes)}
+            {renderTransition(routes, baseProps)}
           </div>
         </div>
       </React.Fragment>

@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import Divider from '@material-ui/core/Divider/Divider';
 import Drawer from '@material-ui/core/Drawer/Drawer';
 import Hidden from '@material-ui/core/Hidden/Hidden';
@@ -6,13 +10,13 @@ import ListItem from '@material-ui/core/ListItem/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import {StyleRulesCallback} from '@material-ui/core/styles';
-import {Flux} from '@nlabs/arkhamjs';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
 import {AppConstants} from '../constants/AppConstants';
 import {SideBarProps, SideBarState} from '../types/components/sideBar';
 import {initStyle} from '../utils/components';
+import {ArkhamJS} from '../utils/flux';
 
 const styles: StyleRulesCallback = (theme) => ({
   drawer: {
@@ -57,11 +61,11 @@ export class SideBarBase extends React.Component<SideBarProps, SideBarState> {
   }
 
   // componentDidMount(): void {
-  //   Flux.on(AppConstants.TOGGLE_MENU, this.onToggle);
+  //   ArkhamJS.flux.on(AppConstants.TOGGLE_MENU, this.onToggle);
   // }
 
   // componentWillUnmount(): void {
-  //   Flux.off(AppConstants.TOGGLE_MENU, this.onToggle);
+  //   ArkhamJS.flux.off(AppConstants.TOGGLE_MENU, this.onToggle);
   // }
 
   // onToggle(): void {
@@ -70,7 +74,7 @@ export class SideBarBase extends React.Component<SideBarProps, SideBarState> {
   // }
 
   toggleDrawer(): void {
-    Flux.dispatch({type: AppConstants.TOGGLE_MENU});
+    ArkhamJS.flux.dispatch({type: AppConstants.TOGGLE_MENU});
   }
 
   renderMenu(menu): JSX.Element {
@@ -95,7 +99,7 @@ export class SideBarBase extends React.Component<SideBarProps, SideBarState> {
             <ListItemText
               classes={{root: classes.menuLabel}}
               primary={label}
-              primaryTypographyProps={{variant: 'h4'}} />
+              primaryTypographyProps={{variant: 'display1'}} />
           </ListItem>
         </NavLink>
       );

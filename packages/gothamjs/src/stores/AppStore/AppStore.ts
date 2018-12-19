@@ -1,8 +1,12 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {Store} from '@nlabs/arkhamjs';
 import {set} from 'lodash';
 
-import {AppConstants} from '../constants/AppConstants';
-import {MarkdownConstants} from '../constants/MarkdownConstants';
+import {AppConstants} from '../../constants/AppConstants';
+import {MarkdownConstants} from '../../constants/MarkdownConstants';
 
 export class AppStore extends Store {
   constructor() {

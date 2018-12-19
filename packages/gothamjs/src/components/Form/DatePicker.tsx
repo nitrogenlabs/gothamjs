@@ -1,4 +1,8 @@
-import {DateFormatInput} from 'material-ui-next-pickers';
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
+import {DateFormatInput} from '@nlabs/material-ui-pickers';
 import React from 'react';
 import {Field} from 'react-final-form';
 import {DatePickerProps, DatePickerState} from 'types/components/datePicker';

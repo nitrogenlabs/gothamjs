@@ -1,4 +1,8 @@
-import {Flux, FluxAction} from '@nlabs/arkhamjs';
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
+import {FluxAction} from '@nlabs/arkhamjs';
 import js from 'highlight.js/lib/languages/javascript';
 import remark from 'remark';
 import remarkReact from 'remark-react';
@@ -6,6 +10,7 @@ import RemarkLowlight from 'remark-react-lowlight';
 import {Hunter} from 'rip-hunter';
 
 import {MarkdownConstants} from '../constants/MarkdownConstants';
+import {ArkhamJS} from '../utils/flux';
 
 const githubSchema = require('hast-util-sanitize/lib/github.json');
 
@@ -22,14 +27,14 @@ const schema = {
 
 export class MarkdownActions {
   static clearExternal(): Promise<FluxAction> {
-    return Flux.dispatch({type: MarkdownConstants.CLEAR_EXTERNAL});
+    return ArkhamJS.flux.dispatch({type: MarkdownConstants.CLEAR_EXTERNAL});
   }
 
   static getExternal(url: string): Promise<FluxAction> {
-    const content = Flux.getState(['app', 'external', url]);
+    const content = ArkhamJS.flux.getState(['app', 'external', url]);
 
     if(content) {
-      return Flux.dispatch({content, type: MarkdownConstants.GET_EXTERNAL, url});
+      return ArkhamJS.flux.dispatch({content, type: MarkdownConstants.GET_EXTERNAL, url});
     }
 
     return Hunter.get(url).then((content) => {
@@ -40,7 +45,7 @@ export class MarkdownActions {
         sanitize: schema
       }).processSync(content).contents;
 
-      Flux.dispatch({content: renderedContent, type: MarkdownConstants.GET_EXTERNAL, url});
+      ArkhamJS.flux.dispatch({content: renderedContent, type: MarkdownConstants.GET_EXTERNAL, url});
     });
   }
 }

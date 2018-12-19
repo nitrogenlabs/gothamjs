@@ -1,4 +1,7 @@
-import Grid from '@material-ui/core/Grid';
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import React from 'react';
 
@@ -28,11 +31,13 @@ export const SplashIntroBase = (props: SplashIntroProps): JSX.Element => {
 
   return (
     <div className={classes.splashIntro} style={{backgroundImage: `url(${backgroundImage})`}}>
-      <Grid container justify="center">
-        <Grid item xs={12} className={classes.splashIntroContent}>
-          {children}
-        </Grid>
-      </Grid>
+      <div className="row justify-content-center">
+        <div className="col">
+          <div className={classes.splashIntroContent}>
+            {children}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

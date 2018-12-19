@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {FormHelperTextProps} from '@material-ui/core/FormHelperText';
 import {InputProps} from '@material-ui/core/Input';
 import {InputLabelProps} from '@material-ui/core/InputLabel';

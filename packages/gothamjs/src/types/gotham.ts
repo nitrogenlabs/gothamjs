@@ -1,5 +1,10 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {WithStyles} from '@material-ui/core/styles';
-import {FluxMiddlewareType, Store} from '@nlabs/arkhamjs';
+import {FluxFramework, FluxMiddlewareType, FluxOptions, Store} from '@nlabs/arkhamjs';
+import {Location} from 'history';
 
 export interface GothamProps extends WithStyles<any> {
   readonly config?: GothamConfiguration;
@@ -9,9 +14,32 @@ export interface GothamState {
   readonly isLoaded: boolean;
 }
 
-export interface GothamConfiguration {
+export interface GothamRoute {
+  readonly asyncComponent?: any;
+  readonly component?: any;
+  readonly container?: 'default' | 'menu';
+  readonly exact?: boolean;
+  readonly location?: Location;
   readonly name?: string;
-  readonly routes?: object[];
+  readonly path: string;
+  readonly props: any;
+  readonly routes?: GothamRoute[];
+  readonly sensitive?: boolean;
+  readonly strict?: boolean;
+  readonly title?: string;
+  readonly view?: 'home' | 'login' | 'markdown' | 'notfound';
+}
+
+export interface GothamAppProps {
+  readonly Flux?: FluxFramework;
+  readonly titleBarSeparator?: string;
+}
+
+export interface GothamConfiguration {
+  readonly base?: GothamAppProps;
+  readonly config?: FluxOptions;
+  readonly name?: string;
+  readonly routes?: GothamRoute[];
   readonly stores?: Store[];
   readonly title?: string;
   readonly middleware?: FluxMiddlewareType[];
@@ -19,7 +47,7 @@ export interface GothamConfiguration {
 
 export interface GothamMenuItem {
   readonly label?: string;
-  readonly url?: string;
+  readonly url: string;
   readonly menu?: GothamMenuItem[];
 }
 

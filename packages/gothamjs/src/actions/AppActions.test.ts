@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {FluxAction} from '@nlabs/arkhamjs';
 
 import {AppConstants} from '../constants/AppConstants';

@@ -1,4 +1,3 @@
-import Grid from '@material-ui/core/Grid/Grid';
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import * as React from 'react';
 
@@ -14,6 +13,10 @@ import {SplashIntroProps} from '../types/components/splashIntro';
 import {HomeViewProps, HomeViewState} from '../types/views/home';
 import {initComponent} from '../utils/components';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 const styles: StyleRulesCallback = (theme) => ({
   button: {
     marginLeft: 3,
@@ -34,6 +37,9 @@ const styles: StyleRulesCallback = (theme) => ({
       marginLeft: 30,
       marginRight: 30
     }
+  },
+  container: {
+
   },
   splashImage: {
     marginBottom: 15
@@ -84,9 +90,9 @@ export class HomeViewBase extends React.PureComponent<HomeViewProps, HomeViewSta
     return null;
   }
 
-  renderSplashIntro(props: SplashIntroProps, classes): JSX.Element {
-    if(props) {
-      const {backgroundImage, backgroundTextColor, buttons = [], image, text} = props;
+  renderSplashIntro(splashProps: SplashIntroProps, classes: any): JSX.Element {
+    if(splashProps) {
+      const {backgroundImage, backgroundTextColor, buttons = [], image, text} = splashProps;
       const splashImage: JSX.Element = image ? <div className={classes.splashImage}>{image}</div> : null;
       const splashText: JSX.Element = text ? <div className={classes.splashText}>{text}</div> : null;
       const splashButtons: JSX.Element = buttons.length
@@ -116,12 +122,10 @@ export class HomeViewBase extends React.PureComponent<HomeViewProps, HomeViewSta
 
     return (
       <div className={classes.view}>
-        <Grid container direction="column">
-          {this.renderSplashIntro(splash, classes)}
-          {this.renderPromoRow(promoRow)}
-          {this.renderFeatures(features)}
-          {this.renderFooter(footer)}
-        </Grid>
+        {this.renderSplashIntro(splash, classes)}
+        {this.renderPromoRow(promoRow)}
+        {this.renderFeatures(features)}
+        {this.renderFooter(footer)}
       </div>
     );
   }

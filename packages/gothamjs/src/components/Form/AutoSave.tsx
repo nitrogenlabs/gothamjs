@@ -1,10 +1,14 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import isEqual from 'lodash/isEqual';
 import reduce from 'lodash/reduce';
 import React from 'react';
 import {FormSpy} from 'react-final-form';
 
 export class AutoSaveBase extends React.Component<any, any> {
-  changing;
+  changing: Promise<any>;
 
   constructor(props) {
     super(props);
@@ -26,12 +30,12 @@ export class AutoSaveBase extends React.Component<any, any> {
     }
   }
 
-  update = async (blurredField) => {
+  async update(blurredField) {
     if(this.changing) {
       await this.changing;
     }
 
-    const {values: newValues, setFieldData, onChange} = this.props;
+    const {values: newValues, setFieldData = () => {}, onChange} = this.props;
     const {values: existingValues} = this.state;
 
     if(!isEqual(existingValues, newValues)) {
@@ -55,5 +59,9 @@ export class AutoSaveBase extends React.Component<any, any> {
 }
 
 export const AutoSave = (props) => (
-  <FormSpy {...props} subscription={{active: true, values: true}} component={AutoSaveBase} />
+  <FormSpy
+    {...props}
+    component={AutoSaveBase}
+    formatOnBlur
+    subscription={{active: true, values: true}} />
 );

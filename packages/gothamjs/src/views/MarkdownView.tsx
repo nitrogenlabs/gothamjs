@@ -1,11 +1,15 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback} from '@material-ui/core/styles';
-import {Flux} from '@nlabs/arkhamjs';
 import * as React from 'react';
 
 import {MarkdownActions} from '../actions/MarkdownActions';
 import {AppConstants} from '../constants/AppConstants';
 import {MarkdownViewProps, MarkdownViewState} from '../types/views/markdown';
 import {initComponent} from '../utils/components';
+import {ArkhamJS} from '../utils/flux';
 
 const styles: StyleRulesCallback = (theme) => ({
   markdown: {
@@ -36,7 +40,7 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
 
   componentDidMount() {
     // Add Listener
-    Flux.on(AppConstants.GET_EXTERNAL, this.onUpdate);
+    ArkhamJS.flux.on(AppConstants.GET_EXTERNAL, this.onUpdate);
 
     // Get external content
     const {external} = this.props;
@@ -49,7 +53,7 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
 
   componentWillUnmount() {
     // Remove Listener
-    Flux.off(AppConstants.GET_EXTERNAL, this.onUpdate);
+    ArkhamJS.flux.off(AppConstants.GET_EXTERNAL, this.onUpdate);
   }
 
   onUpdate(data): void {

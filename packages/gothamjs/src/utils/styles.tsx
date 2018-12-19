@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {withStyles} from '@material-ui/core/styles';
 import classNames from 'classnames';
 import React from 'react';
