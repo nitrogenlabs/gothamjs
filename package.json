@@ -11,8 +11,8 @@
     "update": "lex update -i"
   },
   "devDependencies": {
-    "@types/node": "^10.12.7",
-    "lerna": "^3.4.1"
+    "@types/node": "^10.12.18",
+    "lerna": "^3.8.0"
   },
   "workspaces": [
     "packages/gothamjs",
