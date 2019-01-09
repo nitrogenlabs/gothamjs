@@ -1,7 +1,3 @@
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 import {StyleRulesCallback, withStyles} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Hidden from '@material-ui/core/Hidden/Hidden';
@@ -18,6 +14,10 @@ import {TopBarProps, TopBarState} from '../types/components/topBar';
 import {GothamMenuItem} from '../types/gotham';
 import {ArkhamJS} from '../utils/flux';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 const styles: StyleRulesCallback = (theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1
@@ -136,4 +136,4 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 }
 
-export const TopBar = withStyles(styles, {withTheme: true})(TopBarBase);
+export const TopBar = withStyles(styles, {withTheme: true})(TopBarBase as any);

@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src",
+    "baseUrl": "./packages",
     "declaration": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
@@ -19,10 +20,10 @@
     "noImplicitThis": true,
     "noStrictGenericChecks": true,
     "noUnusedLocals": true,
-    "outDir": "./dist",
     "pretty": true,
+    "removeComments": true,
     "skipLibCheck": true,
-    "target": "esnext",
+    "target": "es5",
     "typeRoots": [
       "node_modules/@types",
       "node_modules/json-d-ts"
@@ -30,14 +31,5 @@
     "types": [
       "node"
     ]
-  },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "**/*.test.*",
-    "./dist",
-    "./node_modules",
-    "./test"
-  ]
+  }
 }

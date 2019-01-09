@@ -5,7 +5,8 @@
 import {DateFormatInput} from '@nlabs/material-ui-pickers';
 import React from 'react';
 import {Field} from 'react-final-form';
-import {DatePickerProps, DatePickerState} from 'types/components/datePicker';
+
+import {DatePickerProps, DatePickerState} from '../../types/components/datePicker';
 
 export class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
   constructor(props: DatePickerProps) {

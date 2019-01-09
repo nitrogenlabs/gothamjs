@@ -1,12 +1,9 @@
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 import 'bootstrap/dist/css/bootstrap-grid.css';
 import 'bootstrap/dist/css/bootstrap-reboot.css';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {createMuiTheme, MuiThemeProvider, StyleRulesCallback, withStyles} from '@material-ui/core/styles';
+import {Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {createBrowserHistory, History} from 'history';
@@ -23,9 +20,12 @@ import {AppConstants} from '../constants/AppConstants';
 import {AppStore} from '../stores/AppStore/AppStore';
 import {AuthStore} from '../stores/AuthStore/AuthStore';
 import {GothamConfiguration, GothamProps, GothamState} from '../types/gotham';
-import {ArkhamJS} from '../utils/flux';
 import {renderTransition} from '../utils/routes';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 const GlobalStyle = createGlobalStyle`
 body, p, h1, input {
   font-family: 'Open Sans', sans-serif;
@@ -79,6 +79,8 @@ img {
 
 const styles: StyleRulesCallback = () => ({});
 
+export const GothamContext = React.createContext({Flux});
+
 export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   config: GothamConfiguration;
   history: History;
@@ -104,22 +106,25 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       title: ''
     };
     this.config = merge(defaultConfig, appConfig);
-    const {base: {Flux}, middleware, name, stores, title} = this.config;
+    const {
+      middleware,
+      name,
+      stores,
+      title
+    } = this.config;
 
-    // Set Flux object
-    ArkhamJS.setFlux(Flux);
+    // Throw an error if Flux is not added to the config
+    if(Flux) {
+      // ArkhamJS Middleware
+      const env: string = Config.get('environment');
+      const logger: Logger = new Logger({
+        debugLevel: env === 'development' ? LoggerDebugLevel.DISPATCH : LoggerDebugLevel.DISABLED
+      });
 
-    // ArkhamJS Middleware
-    const env: string = Config.get('environment');
-    const logger: Logger = new Logger({
-      debugLevel: env === 'development' ? LoggerDebugLevel.DISPATCH : LoggerDebugLevel.DISABLED
-    });
+      // ArkhamJS Configuration
+      const storage: BrowserStorage = new BrowserStorage({type: 'session'});
 
-    // ArkhamJS Configuration
-    const storage: BrowserStorage = new BrowserStorage({type: 'session'});
-
-    if(ArkhamJS.flux) {
-      ArkhamJS.flux.init({
+      Flux.init({
         middleware: [logger, ...middleware],
         name,
         state: {app: {title}},
@@ -141,23 +146,23 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
 
   componentDidMount(): void {
     // Add event listeners
-    ArkhamJS.flux.onInit(this.init);
-    ArkhamJS.flux.on(AppConstants.NAV_BACK, this.navBack);
-    ArkhamJS.flux.on(AppConstants.NAV_FORWARD, this.navForward);
-    ArkhamJS.flux.on(AppConstants.NAV_GOTO, this.navGoto);
-    ArkhamJS.flux.on(AppConstants.NAV_REPLACE, this.navReplace);
+    Flux.onInit(this.init);
+    Flux.on(AppConstants.NAV_BACK, this.navBack);
+    Flux.on(AppConstants.NAV_FORWARD, this.navForward);
+    Flux.on(AppConstants.NAV_GOTO, this.navGoto);
+    Flux.on(AppConstants.NAV_REPLACE, this.navReplace);
 
     // Initialize
-    AppActions.init();
+    AppActions.init(Flux);
   }
 
   componentWillUnmount(): void {
     // Remove event listeners
-    ArkhamJS.flux.offInit(this.init);
-    ArkhamJS.flux.off(AppConstants.NAV_BACK, this.navBack);
-    ArkhamJS.flux.off(AppConstants.NAV_FORWARD, this.navForward);
-    ArkhamJS.flux.off(AppConstants.NAV_GOTO, this.navGoto);
-    ArkhamJS.flux.off(AppConstants.NAV_REPLACE, this.navReplace);
+    Flux.offInit(this.init);
+    Flux.off(AppConstants.NAV_BACK, this.navBack);
+    Flux.off(AppConstants.NAV_FORWARD, this.navForward);
+    Flux.off(AppConstants.NAV_GOTO, this.navGoto);
+    Flux.off(AppConstants.NAV_REPLACE, this.navReplace);
   }
 
   init(): void {
@@ -194,13 +199,15 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       <MuiThemeProvider theme={this.theme}>
         <CssBaseline />
         <GlobalStyle />
-        <Router history={this.history}>
-          {renderTransition(routes, base)}
-        </Router>
+        <GothamContext.Consumer>{({Flux}) => (
+          <Router history={this.history}>
+            {renderTransition(routes, Flux, {...base})}
+          </Router>
+        )}</GothamContext.Consumer>
       </MuiThemeProvider >
     );
   }
 }
 
-export const Gotham = hot(module)(withStyles(styles, {withTheme: true})(GothamBase));
+export const Gotham = hot(module)(withStyles(styles, {withTheme: true})(GothamBase as any));
 export default Gotham;

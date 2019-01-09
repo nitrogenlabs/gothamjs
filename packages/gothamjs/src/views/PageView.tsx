@@ -34,4 +34,4 @@ export class PageViewBase extends React.PureComponent<PageViewProps, PageViewSta
   }
 }
 
-export const PageView = withStyles(styles, {withTheme: true})(PageViewBase);
+export const PageView = withStyles(styles, {withTheme: true})(PageViewBase as any);

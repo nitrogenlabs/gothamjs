@@ -28,10 +28,10 @@ export class FormBase extends React.Component<FormProps, {}> {
   }
 
   renderForm({handleSubmit}) {
-    const {children, classes, onChange = () => {}} = this.props;
+    const {children, onChange = () => {}} = this.props;
 
     return (
-      <form className={classes.form} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <AutoSave onChange={onChange} />
         {children}
       </form>

@@ -12,11 +12,11 @@ export const initComponent = (
   styles?: StyleRulesCallback
 ) => {
   if(styles) {
-    return hot(componentModule)(withStyles(styles, {withTheme: true})(component));
+    return hot(componentModule)(withStyles(styles, {withTheme: true})(component as any));
   }
 
   return hot(componentModule)(component);
 };
 
 export const initStyle = (component: React.ComponentType<any>, styles?: StyleRulesCallback) =>
-  withStyles(styles, {withTheme: true})(component);
+  withStyles(styles, {withTheme: true})(component as any);

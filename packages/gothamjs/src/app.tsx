@@ -1,13 +1,25 @@
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import {Svg} from './components/Svg';
-import {GothamConfiguration} from './types/gotham';
+import {GothamConfiguration, GothamRoute} from './types/gotham';
 import {Gotham} from './views/Gotham';
+
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
+// Views
+const login: GothamRoute = {
+  path: '/login',
+  props: {
+    logo: <Svg name="gotham-logo" width={130} height={130} />,
+    onLogin: () => {},
+    onSignup: () => {}
+  },
+  title: 'Login',
+  view: 'login'
+};
 
 // CONFIGURATION
 const config: GothamConfiguration = {
@@ -102,14 +114,7 @@ const config: GothamConfiguration = {
           title: 'Welcome',
           view: 'home'
         },
-        {
-          path: '/login',
-          props: {
-            logo: <Svg name="gotham-logo" width={130} height={130} />
-          },
-          title: 'Login',
-          view: 'login'
-        }
+        login
       ]
     },
     {

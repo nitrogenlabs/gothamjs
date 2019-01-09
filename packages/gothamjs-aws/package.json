@@ -25,7 +25,7 @@
     "url": "nitrogenlabs/gothamjs/issues"
   },
   "scripts": {
-    "build": "lex compile -r",
+    "build": "lex compile -r -c ./tsconfig.build.json",
     "clean": "lex clean",
     "dev": "lex dev -r",
     "lint": "eslint ./src --ext .ts,.tsx",
@@ -44,7 +44,7 @@
     "aws-amplify": "^1.1.18"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.10",
+    "@types/jest": "^23.3.11",
     "@types/node": "^10.12.18",
     "eslint": "^5.11.1",
     "eslint-config-styleguidejs": "^0.7.13",

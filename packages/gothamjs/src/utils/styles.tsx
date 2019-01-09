@@ -9,7 +9,7 @@ import React from 'react';
 import {StyledProps} from '../types/styles';
 
 export const styled = (component: JSX.Element) => (style, options?: object) => {
-  const StyledComponent = (props: StyledProps) => {
+  const StyledComponent: any = (props: StyledProps) => {
     const {classes, className, ...other} = props;
     return <component.type {...component.props} className={classNames(classes.root, className)} {...other} />;
   };
@@ -19,7 +19,7 @@ export const styled = (component: JSX.Element) => (style, options?: object) => {
 };
 
 export const styledComponent = (Component) => (style, options = {}) => {
-  const StyledComponent = (props) => {
+  const StyledComponent: any = (props) => {
     const {classes, className, ...other} = props;
     return <Component className={classNames(classes.root, className)} {...other} />;
   };

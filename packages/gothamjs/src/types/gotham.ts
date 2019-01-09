@@ -31,8 +31,12 @@ export interface GothamRoute {
 }
 
 export interface GothamAppProps {
-  readonly Flux?: FluxFramework;
   readonly titleBarSeparator?: string;
+}
+
+export interface GothamButtonItem {
+  readonly label?: string;
+  readonly url?: string;
 }
 
 export interface GothamConfiguration {
@@ -51,7 +55,7 @@ export interface GothamMenuItem {
   readonly menu?: GothamMenuItem[];
 }
 
-export interface GothamButtonItem {
-  readonly label?: string;
-  readonly url?: string;
+export interface GothamProviderProps {
+  Flux: FluxFramework;
+  children?: any;
 }
