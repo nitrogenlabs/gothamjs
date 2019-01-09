@@ -48,6 +48,8 @@ export const parseRoute = (route: GothamRoute) => {
   } else if(!isEmpty(view)) {
     // Built-in views
     switch(view) {
+      case 'confirm':
+        return createAsyncComponent(() => import('../views/ConfirmView'));
       case 'home':
         return createAsyncComponent(() => import('../views/HomeView'));
       case 'login':

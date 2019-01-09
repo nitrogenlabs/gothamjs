@@ -51,7 +51,13 @@ export class NotFoundViewBase extends React.PureComponent<NotFoundViewProps, Not
             <span className={classes.shadow}>0</span>
             <span className={classes.shadow}>4</span>
           </div>
+        </div>
+
+        <div className="row">
           <div className={`col ${classes.h1}`}>Page Not Found</div>
+        </div>
+
+        <div className="row">
           <div className={`col ${classes.body}`}>
             Could not find the page you were looking for. Please try again or contact support.
           </div>

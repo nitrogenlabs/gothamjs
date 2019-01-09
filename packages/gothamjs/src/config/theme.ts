@@ -6,6 +6,8 @@ import {ThemeOptions} from '@material-ui/core/styles/createMuiTheme';
 
 const palette = {
   error: {
+    dark: '#C4272F',
+    light: '#FFEAEB',
     main: '#ed1c24'
   },
   primary: {

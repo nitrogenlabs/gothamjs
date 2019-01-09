@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import Button from '@material-ui/core/Button/Button';
 import Card from '@material-ui/core/Card/Card';
 import CardContent from '@material-ui/core/CardContent/CardContent';
@@ -8,15 +12,11 @@ import {Form} from '../components/Form/Form';
 import {TextField} from '../components/Form/TextField';
 import {PageHeader} from '../components/PageHeader';
 import {LoginConstants} from '../constants/LoginConstants';
-import {LoginViewProps, LoginViewState} from '../types/views/login';
+import {ConfirmViewProps, ConfirmViewState} from '../types/views/confirm';
 import {initComponent} from '../utils/components';
 import {ArkhamJS} from '../utils/flux';
 import {PageView} from './PageView';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 const styles: StyleRulesCallback = (theme) => ({
   btn: {
     marginLeft: 5
@@ -32,11 +32,6 @@ const styles: StyleRulesCallback = (theme) => ({
     marginBottom: 15,
     padding: '10px 5px'
   },
-  forgot: {
-    color: theme.palette.grey['400'],
-    fontSize: 12,
-    marginTop: 5
-  },
   logo: {
     alignItems: 'center',
     display: 'flex',
@@ -44,10 +39,15 @@ const styles: StyleRulesCallback = (theme) => ({
     flexDirection: 'column',
     marginBottom: 50,
     marginTop: 30
+  },
+  resend: {
+    color: theme.palette.grey['400'],
+    fontSize: 12,
+    marginTop: 5
   }
 });
 
-export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginViewState> {
+export class ConfirmViewBase extends React.PureComponent<ConfirmViewProps, ConfirmViewState> {
   state: any = {};
 
   constructor(props) {
@@ -57,12 +57,11 @@ export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginView
     this.onFailure = this.onFailure.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onSuccess = this.onSuccess.bind(this);
-    this.validate = this.validate.bind(this);
 
     // Initial state
     this.state = {
-      account: {
-        password: '',
+      confirmation: {
+        code: '',
         username: ''
       },
       errorMessage: null
@@ -81,43 +80,19 @@ export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginView
     ArkhamJS.flux.off(LoginConstants.FAILED, this.onFailure);
   }
 
+  onSubmit() {
+    const {onConfirm} = this.props;
+    const {confirmation} = this.state;
+    onConfirm(confirmation);
+  }
+
   onSuccess(): void {
   }
 
   onFailure({error}): void {
-    const {code} = error;
-    let errorMessage: string;
-
-    switch(code) {
-      case 'UserNotFoundException': {
-        errorMessage = 'Username and/or password was not found.';
-        break;
-      }
-      case 'UserNotConfirmedException': {
-        errorMessage = 'User has not yet been confirmed. Please check your email or text messages.';
-        break;
-      }
-    }
-
+    const {message} = error;
+    const errorMessage: string = message;
     this.setState({errorMessage});
-  }
-
-  onSubmit(values): void {
-    const {onLogin = () => {}} = this.props;
-    const {password, username} = values;
-    onLogin(username, password);
-  }
-
-  validate() {
-
-  }
-
-  renderLogo(logo: JSX.Element, classes): JSX.Element {
-    if(logo) {
-      return <div className={classes.logo}>{logo}</div>;
-    }
-
-    return null;
   }
 
   renderMessage(message: string): JSX.Element {
@@ -132,33 +107,28 @@ export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginView
   render(): JSX.Element {
     const {
       classes,
-      logo,
-      name = 'login',
-      onSignup = () => {},
-      title = 'Login'
+      onResend = () => {}
     } = this.props;
-    const {account, errorMessage} = this.state;
+    const {confirmation, errorMessage} = this.state;
 
     return (
-      <PageView name={name} title={title}>
+      <PageView name={name} title="Confirmation">
         <div className="row">
           <div className="col">
-            <PageHeader title="Welcome Back">
-              Welcome back sign-in now there is lot of new stuff waiting for you.
+            <PageHeader title="Confirmation">
+              Let's verify your phone/email.
             </PageHeader>
           </div>
         </div>
 
         <div className="row justify-content-center">
-          <div className="col-md-8 col-lg-6">
+          <div className="col-lg-10 col-md-8 col-lg-6">
             <Card className={classes.card}>
               <CardContent>
-                {this.renderLogo(logo, classes)}
                 {this.renderMessage(errorMessage)}
                 <Form
                   onSubmit={this.onSubmit}
-                  initialValues={account}
-                  validate={this.validate}
+                  initialValues={confirmation}
                   validateOnBlur>
                   <div className="container">
                     <div className="row">
@@ -168,21 +138,21 @@ export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginView
                     </div>
                     <div className="row">
                       <div className="col">
-                        <TextField label="Password" name="password" type="password" />
+                        <TextField label="Confirmation Code" name="code" type="text" />
                       </div>
                     </div>
                     <div className="row">
                       <div className="col">
-                        <p className={classes.forgot}>Forgot password?</p>
+                        <a onClick={() => onResend(confirmation)}><p className={classes.resend}>Resend code?</p></a>
                       </div>
                     </div>
                     <div className="row justify-content-end">
                       <div className="col-xs-auto">
-                        <Button className={classes.btn} color="default" size="large" onClick={onSignup} variant="text">
-                          Create new account
+                        <Button className={classes.btn} color="default" size="large" onClick={() => {}} variant="text">
+                          Cancel
                         </Button>
                         <Button className={classes.btn} color="primary" size="large" type="submit" variant="contained">
-                          Sign in
+                          Confirm
                         </Button>
                       </div>
                     </div>
@@ -197,5 +167,5 @@ export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginView
   }
 }
 
-export const LoginView = initComponent(module, LoginViewBase, styles);
-export default LoginView;
+export const ConfirmView = initComponent(module, ConfirmViewBase, styles);
+export default ConfirmView;

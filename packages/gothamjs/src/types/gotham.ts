@@ -27,7 +27,7 @@ export interface GothamRoute {
   readonly sensitive?: boolean;
   readonly strict?: boolean;
   readonly title?: string;
-  readonly view?: 'home' | 'login' | 'markdown' | 'notfound';
+  readonly view?: 'confirm' | 'home' | 'login' | 'markdown' | 'notfound';
 }
 
 export interface GothamAppProps {
