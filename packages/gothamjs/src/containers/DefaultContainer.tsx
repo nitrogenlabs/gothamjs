@@ -8,7 +8,6 @@ import * as React from 'react';
 import {TopBar} from '../components/TopBar';
 import {AppConstants} from '../constants/AppConstants';
 import {DefaultContainerProps, DefaultContainerState} from '../types/containers/defaultContainer';
-import {ArkhamJS} from '../utils/flux';
 import {renderTransition} from '../utils/routes';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -46,12 +45,12 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
   }
 
   onScroll(): void {
-    const {theme} = this.props;
+    const {Flux, theme} = this.props;
     const changeSolid: boolean = window.scrollY > theme.mixins.toolbar.minHeight;
 
     if(this.isTopSolid !== changeSolid) {
       this.isTopSolid = changeSolid;
-      ArkhamJS.flux.dispatch({isTransparent: !changeSolid, type: AppConstants.TOPBAR_SOLID});
+      Flux.dispatch({isTransparent: !changeSolid, type: AppConstants.TOPBAR_SOLID});
     }
   }
 

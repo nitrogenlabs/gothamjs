@@ -91,7 +91,7 @@ export const renderRoute = (
       // mapStyles={(styles) => ({opacity: `opacity: ${styles.opacity}`})}
       render={(props: RouteProps) => {
         const {props: componentProps, title, ...routeProps} = route;
-        AppActions.updateTitle(Flux, title, titleBarSeparator);
+        AppActions.updateTitle(title, titleBarSeparator);
         return (
           <LoadComponent
             baseProps={baseProps}
@@ -144,7 +144,7 @@ export const renderRouteList = (
       key="notFound"
       render={(props: RouteProps) => {
         const {title} = notFoundRoute;
-        AppActions.updateTitle(Flux, title, titleBarSeparator);
+        AppActions.updateTitle(title, titleBarSeparator);
         return <LoadComponent title={title} {...props} />;
       }} />
   );

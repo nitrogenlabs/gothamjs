@@ -10,7 +10,6 @@ import {PageHeader} from '../components/PageHeader';
 import {LoginConstants} from '../constants/LoginConstants';
 import {LoginViewProps, LoginViewState} from '../types/views/login';
 import {initComponent} from '../utils/components';
-import {ArkhamJS} from '../utils/flux';
 import {PageView} from './PageView';
 
 /**
@@ -70,15 +69,19 @@ export class LoginViewBase extends React.PureComponent<LoginViewProps, LoginView
   }
 
   componentDidMount(): void {
+    const {Flux} = this.props;
+
     // Add listeners
-    ArkhamJS.flux.on(LoginConstants.SUCCESS, this.onSuccess);
-    ArkhamJS.flux.on(LoginConstants.FAILED, this.onFailure);
+    Flux.on(LoginConstants.SUCCESS, this.onSuccess);
+    Flux.on(LoginConstants.FAILED, this.onFailure);
   }
 
   componentWillUnmount(): void {
+    const {Flux} = this.props;
+
     // Remove listeners
-    ArkhamJS.flux.off(LoginConstants.SUCCESS, this.onSuccess);
-    ArkhamJS.flux.off(LoginConstants.FAILED, this.onFailure);
+    Flux.off(LoginConstants.SUCCESS, this.onSuccess);
+    Flux.off(LoginConstants.FAILED, this.onFailure);
   }
 
   onSuccess(): void {

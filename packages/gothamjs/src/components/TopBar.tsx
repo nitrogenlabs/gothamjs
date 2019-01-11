@@ -4,6 +4,7 @@ import Hidden from '@material-ui/core/Hidden/Hidden';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Typography from '@material-ui/core/Typography/Typography';
+import {Flux} from '@nlabs/arkhamjs';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
 import NavLink from 'react-router-dom/NavLink';
@@ -12,7 +13,6 @@ import {Button} from '../components/Button';
 import {AppConstants} from '../constants/AppConstants';
 import {TopBarProps, TopBarState} from '../types/components/topBar';
 import {GothamMenuItem} from '../types/gotham';
-import {ArkhamJS} from '../utils/flux';
 
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
@@ -68,11 +68,11 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   componentDidMount() {
-    ArkhamJS.flux.on(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
+    Flux.on(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
   }
 
   componentWillUnmount() {
-    ArkhamJS.flux.off(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
+    Flux.off(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
   }
 
   onUpdateBackground(data) {
@@ -81,7 +81,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   onToggleDrawer() {
-    ArkhamJS.flux.dispatch({type: AppConstants.TOGGLE_MENU});
+    Flux.dispatch({type: AppConstants.TOGGLE_MENU});
   }
 
   renderMenuItem(menuItem: GothamMenuItem) {

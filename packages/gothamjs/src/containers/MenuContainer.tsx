@@ -10,7 +10,6 @@ import {TopBar} from '../components/TopBar';
 import {AppConstants} from '../constants/AppConstants';
 import {SideBarProps} from '../types/components/sideBar';
 import {MenuContainerProps, MenuContainerState} from '../types/containers/menuContainer';
-import {ArkhamJS} from '../utils/flux';
 import {renderTransition} from '../utils/routes';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -43,13 +42,17 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
   }
 
   componentDidMount(): void {
+    const {Flux} = this.props;
+
     // Add listener
-    ArkhamJS.flux.on(AppConstants.TOGGLE_MENU, this.toggleMenu);
+    Flux.on(AppConstants.TOGGLE_MENU, this.toggleMenu);
   }
 
   componentWillUnmount(): void {
+    const {Flux} = this.props;
+
     // Remove listener
-    ArkhamJS.flux.off(AppConstants.TOGGLE_MENU, this.toggleMenu);
+    Flux.off(AppConstants.TOGGLE_MENU, this.toggleMenu);
   }
 
   shouldComponentUpdate(nextProps) {

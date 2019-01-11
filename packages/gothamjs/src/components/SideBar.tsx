@@ -10,13 +10,13 @@ import ListItem from '@material-ui/core/ListItem/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import {StyleRulesCallback} from '@material-ui/core/styles';
+import {Flux} from '@nlabs/arkhamjs';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
 import {AppConstants} from '../constants/AppConstants';
 import {SideBarProps, SideBarState} from '../types/components/sideBar';
 import {initStyle} from '../utils/components';
-import {ArkhamJS} from '../utils/flux';
 
 const styles: StyleRulesCallback = (theme) => ({
   drawer: {
@@ -61,11 +61,11 @@ export class SideBarBase extends React.Component<SideBarProps, SideBarState> {
   }
 
   // componentDidMount(): void {
-  //   ArkhamJS.flux.on(AppConstants.TOGGLE_MENU, this.onToggle);
+  //   Flux.on(AppConstants.TOGGLE_MENU, this.onToggle);
   // }
 
   // componentWillUnmount(): void {
-  //   ArkhamJS.flux.off(AppConstants.TOGGLE_MENU, this.onToggle);
+  //   Flux.off(AppConstants.TOGGLE_MENU, this.onToggle);
   // }
 
   // onToggle(): void {
@@ -74,7 +74,7 @@ export class SideBarBase extends React.Component<SideBarProps, SideBarState> {
   // }
 
   toggleDrawer(): void {
-    ArkhamJS.flux.dispatch({type: AppConstants.TOGGLE_MENU});
+    Flux.dispatch({type: AppConstants.TOGGLE_MENU});
   }
 
   renderMenu(menu): JSX.Element {

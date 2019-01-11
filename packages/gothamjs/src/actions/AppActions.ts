@@ -2,38 +2,38 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {FluxAction, FluxFramework} from '@nlabs/arkhamjs';
+import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 
 import {AppConstants} from '../constants/AppConstants';
 import {GothamConfiguration} from '../types/gotham';
 
 export class AppActions {
-  static init(Flux: FluxFramework): Promise<FluxAction> {
+  static init(): Promise<FluxAction> {
     return Flux.dispatch({type: AppConstants.INITIALIZE});
   }
 
-  static setConfig(Flux: FluxFramework, config: GothamConfiguration): Promise<FluxAction> {
+  static setConfig(config: GothamConfiguration): Promise<FluxAction> {
     return Flux.dispatch({config, type: AppConstants.SET_CONFIG});
   }
 
-  static navBack(Flux: FluxFramework): Promise<FluxAction> {
+  static navBack(): Promise<FluxAction> {
     return Flux.dispatch({type: AppConstants.NAV_BACK});
   }
 
-  static navForward(Flux: FluxFramework): Promise<FluxAction> {
+  static navForward(): Promise<FluxAction> {
     return Flux.dispatch({type: AppConstants.NAV_FORWARD});
   }
 
-  static navGoto(Flux: FluxFramework, path: string): Promise<FluxAction> {
+  static navGoto(path: string): Promise<FluxAction> {
     return Flux.dispatch({path, type: AppConstants.NAV_GOTO});
   }
 
-  static navReplace(Flux: FluxFramework, path: string): Promise<FluxAction> {
+  static navReplace(path: string): Promise<FluxAction> {
     return Flux.dispatch({path, type: AppConstants.NAV_REPLACE});
   }
 
-  static updateTitle(Flux: FluxFramework, title: string, separator: string = ' :: '): Promise<FluxAction> {
+  static updateTitle(title: string, separator: string = ' :: '): Promise<FluxAction> {
     const siteTitle: string = Flux.getState('app.title');
 
     if(!isEmpty(title) && siteTitle !== title) {

@@ -9,7 +9,6 @@ import {MarkdownActions} from '../actions/MarkdownActions';
 import {AppConstants} from '../constants/AppConstants';
 import {MarkdownViewProps, MarkdownViewState} from '../types/views/markdown';
 import {initComponent} from '../utils/components';
-import {ArkhamJS} from '../utils/flux';
 
 const styles: StyleRulesCallback = (theme) => ({
   markdown: {
@@ -39,8 +38,10 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
   }
 
   componentDidMount() {
+    const {Flux} = this.props;
+
     // Add Listener
-    ArkhamJS.flux.on(AppConstants.GET_EXTERNAL, this.onUpdate);
+    Flux.on(AppConstants.GET_EXTERNAL, this.onUpdate);
 
     // Get external content
     const {external} = this.props;
@@ -52,8 +53,10 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
   }
 
   componentWillUnmount() {
+    const {Flux} = this.props;
+
     // Remove Listener
-    ArkhamJS.flux.off(AppConstants.GET_EXTERNAL, this.onUpdate);
+    Flux.off(AppConstants.GET_EXTERNAL, this.onUpdate);
   }
 
   onUpdate(data): void {

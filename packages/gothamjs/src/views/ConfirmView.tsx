@@ -14,7 +14,6 @@ import {PageHeader} from '../components/PageHeader';
 import {LoginConstants} from '../constants/LoginConstants';
 import {ConfirmViewProps, ConfirmViewState} from '../types/views/confirm';
 import {initComponent} from '../utils/components';
-import {ArkhamJS} from '../utils/flux';
 import {PageView} from './PageView';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -69,15 +68,19 @@ export class ConfirmViewBase extends React.PureComponent<ConfirmViewProps, Confi
   }
 
   componentDidMount(): void {
+    const {Flux} = this.props;
+
     // Add listeners
-    ArkhamJS.flux.on(LoginConstants.SUCCESS, this.onSuccess);
-    ArkhamJS.flux.on(LoginConstants.FAILED, this.onFailure);
+    Flux.on(LoginConstants.SUCCESS, this.onSuccess);
+    Flux.on(LoginConstants.FAILED, this.onFailure);
   }
 
   componentWillUnmount(): void {
+    const {Flux} = this.props;
+
     // Remove listeners
-    ArkhamJS.flux.off(LoginConstants.SUCCESS, this.onSuccess);
-    ArkhamJS.flux.off(LoginConstants.FAILED, this.onFailure);
+    Flux.off(LoginConstants.SUCCESS, this.onSuccess);
+    Flux.off(LoginConstants.FAILED, this.onFailure);
   }
 
   onSubmit() {

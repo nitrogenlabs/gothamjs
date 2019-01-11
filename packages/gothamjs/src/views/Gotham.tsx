@@ -153,7 +153,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     Flux.on(AppConstants.NAV_REPLACE, this.navReplace);
 
     // Initialize
-    AppActions.init(Flux);
+    AppActions.init();
   }
 
   componentWillUnmount(): void {
