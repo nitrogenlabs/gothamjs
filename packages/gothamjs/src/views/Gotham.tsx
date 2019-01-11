@@ -109,6 +109,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       middleware,
       name,
       stores,
+      theme,
       title
     } = this.config;
 
@@ -136,7 +137,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     this.history = createBrowserHistory();
 
     // Create theme
-    this.theme = createMuiTheme(defaultTheme);
+    this.theme = createMuiTheme(theme || defaultTheme);
 
     this.state = {
       isLoaded: false

@@ -3,6 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {WithStyles} from '@material-ui/core/styles';
+import {ThemeOptions} from '@material-ui/core/styles/createMuiTheme';
 import {FluxFramework, FluxMiddlewareType, FluxOptions, Store} from '@nlabs/arkhamjs';
 import {Location} from 'history';
 
@@ -47,6 +48,7 @@ export interface GothamConfiguration {
   readonly routes?: GothamRoute[];
   readonly stores?: Store[];
   readonly title?: string;
+  readonly theme?: ThemeOptions;
   readonly middleware?: FluxMiddlewareType[];
 }
 
