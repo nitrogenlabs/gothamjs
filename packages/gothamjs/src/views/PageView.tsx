@@ -2,6 +2,7 @@ import {StyleRulesCallback, withStyles} from '@material-ui/core';
 import * as React from 'react';
 
 import {PageViewProps, PageViewState} from '../types/views/page';
+import {GothamContext} from '../utils/GothamProvider';
 
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
@@ -18,6 +19,7 @@ const styles: StyleRulesCallback = (theme) => ({
 });
 
 export class PageViewBase extends React.PureComponent<PageViewProps, PageViewState> {
+  static contextType = GothamContext;
   state: any;
 
   render(): JSX.Element {

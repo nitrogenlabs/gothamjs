@@ -31,6 +31,7 @@ export interface GothamRoute {
 }
 
 export interface GothamAppProps {
+  readonly Flux: FluxFramework;
   readonly titleBarSeparator?: string;
 }
 

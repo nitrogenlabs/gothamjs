@@ -20,6 +20,7 @@ import {AppConstants} from '../constants/AppConstants';
 import {AppStore} from '../stores/AppStore/AppStore';
 import {AuthStore} from '../stores/AuthStore/AuthStore';
 import {GothamConfiguration, GothamProps, GothamState} from '../types/gotham';
+import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
 
 /**
@@ -78,8 +79,6 @@ img {
 `;
 
 const styles: StyleRulesCallback = () => ({});
-
-export const GothamContext = React.createContext({Flux});
 
 export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   config: GothamConfiguration;
