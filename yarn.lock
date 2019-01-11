@@ -4063,6 +4063,13 @@ jss-vendor-prefixer@^7.0.0:
   dependencies:
     css-vendor "^0.3.8"
 
+jss-vendor-prefixer@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/jss-vendor-prefixer/-/jss-vendor-prefixer-8.0.1.tgz#80bcf2840fad7c383e3215e9098b2b7d549f91ac"
+  integrity sha512-oh/y4zAyU5lJLE+9kRvkCF/uuvoMbkWetZZLTUPozeey2eOiPZ1kvKyhhd4KHu9wxxiISRjUnYqE/sbYGR1uFA==
+  dependencies:
+    css-vendor "^1.1.0"
+
 jss@^10.0.0-alpha.7:
   version "10.0.0-alpha.7"
   resolved "https://registry.yarnpkg.com/jss/-/jss-10.0.0-alpha.7.tgz#ee9909f3a97c9370fa120b50929a79b2caed8536"
