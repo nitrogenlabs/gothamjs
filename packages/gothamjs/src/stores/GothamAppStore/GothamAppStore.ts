@@ -8,9 +8,9 @@ import {set} from 'lodash';
 import {AppConstants} from '../../constants/AppConstants';
 import {MarkdownConstants} from '../../constants/MarkdownConstants';
 
-export class AppStore extends Store {
+export class GothamAppStore extends Store {
   constructor() {
-    super('app');
+    super('gothamApp');
   }
 
   initialState(): object {

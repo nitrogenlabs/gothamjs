@@ -17,8 +17,8 @@ import {AppActions} from '../actions/AppActions';
 import {Config} from '../config/properties';
 import {defaultTheme} from '../config/theme';
 import {AppConstants} from '../constants/AppConstants';
-import {AppStore} from '../stores/AppStore/AppStore';
 import {AuthStore} from '../stores/AuthStore/AuthStore';
+import {GothamAppStore} from '../stores/GothamAppStore/GothamAppStore';
 import {GothamConfiguration, GothamProps, GothamState} from '../types/gotham';
 import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
@@ -101,6 +101,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     const defaultConfig: GothamConfiguration = {
       middleware: [],
       routes: [],
+      storageType: 'session',
       stores: [],
       title: ''
     };
@@ -108,6 +109,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     const {
       middleware,
       name,
+      storageType,
       stores,
       theme,
       title
@@ -122,14 +124,14 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       });
 
       // ArkhamJS Configuration
-      const storage: BrowserStorage = new BrowserStorage({type: 'session'});
+      const storage: BrowserStorage = new BrowserStorage({type: storageType});
 
       Flux.init({
         middleware: [logger, ...middleware],
         name,
         state: {app: {title}},
         storage,
-        stores: [AppStore, AuthStore, ...stores]
+        stores: [GothamAppStore, AuthStore, ...stores]
       });
     }
 
@@ -137,7 +139,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     this.history = createBrowserHistory();
 
     // Create theme
-    this.theme = createMuiTheme(theme || defaultTheme);
+    this.theme = theme && createMuiTheme(theme || defaultTheme);
 
     this.state = {
       isLoaded: false

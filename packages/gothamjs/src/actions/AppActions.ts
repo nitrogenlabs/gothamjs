@@ -1,13 +1,13 @@
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 
 import {AppConstants} from '../constants/AppConstants';
 import {GothamConfiguration} from '../types/gotham';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 export class AppActions {
   static init(): Promise<FluxAction> {
     return Flux.dispatch({type: AppConstants.INITIALIZE});
@@ -34,7 +34,7 @@ export class AppActions {
   }
 
   static updateTitle(title: string, separator: string = ' :: '): Promise<FluxAction> {
-    const siteTitle: string = Flux.getState('app.title');
+    const siteTitle: string = Flux.getState('gothamApp.title');
 
     if(!isEmpty(title) && siteTitle !== title) {
       document.title = `${title}${separator}${siteTitle}`;

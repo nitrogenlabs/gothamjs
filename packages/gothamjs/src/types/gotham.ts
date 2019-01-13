@@ -4,7 +4,7 @@
  */
 import {WithStyles} from '@material-ui/core/styles';
 import {ThemeOptions} from '@material-ui/core/styles/createMuiTheme';
-import {FluxFramework, FluxMiddlewareType, FluxOptions, Store} from '@nlabs/arkhamjs';
+import {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import {Location} from 'history';
 
 export interface GothamProps extends WithStyles<any> {
@@ -46,7 +46,8 @@ export interface GothamConfiguration {
   readonly config?: FluxOptions;
   readonly name?: string;
   readonly routes?: GothamRoute[];
-  readonly stores?: Store[];
+  readonly storageType?: 'local' | 'session';
+  readonly stores?: any[];
   readonly title?: string;
   readonly theme?: ThemeOptions;
   readonly middleware?: FluxMiddlewareType[];
