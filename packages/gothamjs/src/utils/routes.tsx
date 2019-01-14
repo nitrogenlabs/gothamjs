@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import loadable from '@loadable/component';
 import {FluxFramework} from '@nlabs/arkhamjs/lib';
 import isEmpty from 'lodash/isEmpty';
@@ -13,10 +17,6 @@ import {DefaultContainer} from '../containers/DefaultContainer';
 import {MenuContainer} from '../containers/MenuContainer';
 import {GothamConfiguration, GothamRoute} from '../types/gotham';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 // import {AnimatedRoute} from 'react-router-transition';
 
 export const fadeTransition = {
@@ -77,8 +77,8 @@ export const AuthRoute = (props) => (
   <Route
     {...props}
     render={() => {
-      const {authentication} = props;
-      return ((authentication && authentication()) ? <props.render exact={props.exact} />
+      const {isAuth, render: ViewRoute, ...routeProps} = props;
+      return (isAuth ? <ViewRoute {...routeProps} />
         : <Redirect to={`/login?redirect=${props.location.pathname}${props.location.search}`} />);
     }} />
 );
@@ -90,14 +90,13 @@ export const renderRoute = (
 ): JSX.Element => {
   const LoadComponent = parseRoute(route);
   const {authenticate = false, exact = true, path, strict, location, sensitive} = route;
-  const {authentication, titleBarSeparator} = gothamConfig;
+  const {isAuth, titleBarSeparator} = gothamConfig;
   const ReactRoute = authenticate ? AuthRoute : Route;
 
   return (
     <ReactRoute
-      {...fadeTransition}
-      authentication={authentication}
       exact={exact}
+      isAuth={isAuth}
       key={path}
       location={location}
       path={path}

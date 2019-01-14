@@ -78,22 +78,22 @@ export const defaultTheme: ThemeOptions = {
     }
   },
   typography: {
-    display1: {
-      color: 'inherit',
-      fontFamily: 'inherit',
-      fontSize: 'inherit',
-      fontWeight: 'inherit',
-      lineHeight: 'inherit'
-    },
-    display4: {
+    fontFamily: ['Open Sans', 'sans-serif'].join(', '),
+    fontSize: 13,
+    h1: {
       color: 'rgba(0, 0, 0, 0.15)',
       fontFamily: 'inherit',
       fontSize: '50px',
       fontWeight: 100,
       lineHeight: 'inherit'
     },
-    fontFamily: ['Open Sans', 'sans-serif'].join(', '),
-    fontSize: 13,
+    h4: {
+      color: 'inherit',
+      fontFamily: 'inherit',
+      fontSize: 'inherit',
+      fontWeight: 'inherit',
+      lineHeight: 'inherit'
+    },
     useNextVariants: true
   }
 };

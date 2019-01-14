@@ -262,6 +262,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   }
 
   render(): JSX.Element {
+    const {isAuth} = this.props;
     const {isLoaded} = this.state;
 
     if(!isLoaded) {
@@ -269,21 +270,24 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     }
 
     const {routes = [], ...gothamConfig} = this.config;
+    const {Flux} = this.context;
 
     return (
       <MuiThemeProvider theme={this.theme}>
         <CssBaseline />
         <GlobalStyle />
-        <GothamContext.Consumer>{({Flux}) => (
+        <GothamContext.Provider value={{Flux, isAuth}}>
           <Router history={this.history}>
-            {renderTransition(routes, Flux, {...gothamConfig})}
+            {renderTransition(routes, Flux, {...gothamConfig, isAuth})}
           </Router>
-        )}</GothamContext.Consumer>
+        </GothamContext.Provider>
         {this.renderNotification()}
       </MuiThemeProvider >
     );
   }
 }
+
+GothamBase.contextType = GothamContext;
 
 export const Gotham = hot(module)(withStyles(styles, {withTheme: true})(GothamBase as any));
 export default Gotham;

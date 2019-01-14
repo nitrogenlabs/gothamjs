@@ -9,6 +9,7 @@ import {Location} from 'history';
 
 export interface GothamProps extends WithStyles<any> {
   readonly config?: GothamConfiguration;
+  readonly isAuth?: boolean;
 }
 
 export interface GothamState {
@@ -23,6 +24,7 @@ export interface GothamRoute {
   readonly component?: any;
   readonly container?: 'default' | 'menu';
   readonly exact?: boolean;
+  readonly isAuth?: boolean;
   readonly location?: Location;
   readonly name?: string;
   readonly path: string;
@@ -43,6 +45,7 @@ export interface GothamConfiguration {
   readonly authentication?: () => boolean;
   readonly config?: FluxOptions;
   readonly Flux?: FluxFramework;
+  readonly isAuth?: boolean;
   readonly name?: string;
   readonly routes?: GothamRoute[];
   readonly storageType?: 'local' | 'session';

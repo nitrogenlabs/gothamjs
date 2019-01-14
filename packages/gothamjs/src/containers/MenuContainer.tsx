@@ -6,6 +6,7 @@ import {TopBar} from '../components/TopBar';
 import {GothamConstants} from '../constants/GothamConstants';
 import {SideBarProps} from '../types/components/sideBar';
 import {MenuContainerProps, MenuContainerState} from '../types/containers/menuContainer';
+import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
 
 /**
@@ -78,14 +79,15 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
   render(): JSX.Element {
     const {classes, Flux, sideBar, routes = [], topBar = {}} = this.props;
     const {isMenuOpen} = this.state;
+    const {isAuth} = this.context;
 
     return (
       <React.Fragment>
-        <TopBar {...topBar} transparent open={isMenuOpen} />
+        <TopBar {...topBar} transparent={false} />
         <div className={classes.container}>
           {this.renderMenu(sideBar, isMenuOpen)}
           <div className={classes.content}>
-            {renderTransition(routes, Flux, {...this.props})}
+            {renderTransition(routes, Flux, {...this.props, isAuth})}
           </div>
         </div>
       </React.Fragment>
@@ -93,5 +95,6 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
   }
 }
 
+MenuContainerBase.contextType = GothamContext;
 export const MenuContainer = withStyles(styles, {withTheme: true})(MenuContainerBase as any);
 export default MenuContainer;

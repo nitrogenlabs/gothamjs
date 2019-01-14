@@ -8,6 +8,7 @@ import * as React from 'react';
 import {TopBar} from '../components/TopBar';
 import {GothamConstants} from '../constants/GothamConstants';
 import {DefaultContainerProps, DefaultContainerState} from '../types/containers/defaultContainer';
+import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
 
 const styles: StyleRulesCallback = (theme) => ({
@@ -56,17 +57,19 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
 
   render(): JSX.Element {
     const {classes, Flux, routes = [], topBar = {}} = this.props;
+    const {isAuth} = this.context;
 
     return (
       <React.Fragment>
         <TopBar {...topBar} transparent />
         <div className={classes.content} onScroll={this.onScroll}>
-          {renderTransition(routes, Flux, {...this.props})}
+          {renderTransition(routes, Flux, {...this.props, isAuth})}
         </div>
       </React.Fragment>
     );
   }
 }
 
+DefaultContainerBase.contextType = GothamContext;
 export const DefaultContainer = withStyles(styles, {withTheme: true})(DefaultContainerBase as any);
 export default DefaultContainer;

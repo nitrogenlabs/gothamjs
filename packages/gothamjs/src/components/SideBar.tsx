@@ -87,19 +87,18 @@ export class SideBarBase extends React.Component<SideBarProps, SideBarState> {
       }
 
       return (
-        <NavLink activeStyle={{fontWeight: 700}} className={classes.menuLink} to={url} exact>
+        <NavLink key={label} activeStyle={{fontWeight: 700}} className={classes.menuLink} to={url} exact>
           <ListItem
             button
             disableRipple
             disableTouchRipple
             divider={divider}
-            focusRipple={false}
-            key={label}>
+            focusRipple={false}>
             {icon && <ListItemIcon classes={{root: classes.menuIcon}}>{icon}</ListItemIcon>}
             <ListItemText
               classes={{root: classes.menuLabel}}
               primary={label}
-              primaryTypographyProps={{variant: 'display1'}} />
+              primaryTypographyProps={{variant: 'h4'}} />
           </ListItem>
         </NavLink>
       );
