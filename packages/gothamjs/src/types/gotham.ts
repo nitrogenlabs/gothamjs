@@ -28,7 +28,7 @@ export interface GothamRoute {
   readonly location?: Location;
   readonly name?: string;
   readonly path: string;
-  readonly props: any;
+  readonly props?: any;
   readonly routes?: GothamRoute[];
   readonly sensitive?: boolean;
   readonly strict?: boolean;

@@ -25,16 +25,24 @@ const styles: StyleRulesCallback = (theme) => ({
   drawerPaper: {
     position: 'relative'
   },
+  links: {
+    paddingLeft: theme.spacing.unit * 3,
+    paddingRight: theme.spacing.unit * 3
+  },
   menuIcon: {
     height: 16,
     marginRight: 0,
     width: 16
   },
   menuLabel: {
-    color: '#000',
     paddingLeft: 10
   },
   menuLink: {
+    '&:hover': {
+      color: theme.palette.primary.main,
+      textDecoration: 'none'
+    },
+    color: '#000',
     cursor: 'pointer',
     textDecoration: 'none'
   },
@@ -90,6 +98,7 @@ export class SideBarBase extends React.Component<SideBarProps, SideBarState> {
         <NavLink key={label} activeStyle={{fontWeight: 700}} className={classes.menuLink} to={url} exact>
           <ListItem
             button
+            className={classes.links}
             disableRipple
             disableTouchRipple
             divider={divider}

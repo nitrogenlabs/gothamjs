@@ -21,6 +21,7 @@ import Router from 'react-router-dom/Router';
 import {createGlobalStyle} from 'styled-components';
 
 import {GothamActions} from '../actions/GothamActions';
+import {Loader} from '../components/Loader';
 import {Notification} from '../components/Notification';
 import {Config} from '../config/properties';
 import {defaultTheme} from '../config/theme';
@@ -266,7 +267,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     const {isLoaded} = this.state;
 
     if(!isLoaded) {
-      return null;
+      return <Loader />;
     }
 
     const {routes = [], ...gothamConfig} = this.config;

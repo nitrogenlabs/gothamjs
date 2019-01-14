@@ -11,7 +11,9 @@ const palette = {
     main: '#ed1c24'
   },
   primary: {
-    main: '#bb8eff'
+    dark: '#1A0935',
+    light: '#bb8eff',
+    main: '#341861'
   },
   secondary: {
     main: '#442b69'
