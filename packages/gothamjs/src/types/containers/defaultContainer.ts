@@ -6,10 +6,8 @@ import {WithStyles} from '@material-ui/core/styles';
 import {FluxFramework} from '@nlabs/arkhamjs';
 
 import {TopBarProps} from '../components/topBar';
-import {GothamAppProps} from '../gotham';
 
 export interface DefaultContainerProps extends WithStyles<any> {
-  readonly baseProps?: GothamAppProps;
   readonly Flux?: FluxFramework;
   readonly location?: Location;
   readonly routes?: any[];

@@ -97,7 +97,6 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
 
   constructor(props: GothamProps) {
     super(props);
-
     // Methods
     this.addNotification = this.addNotification.bind(this);
     this.init = this.init.bind(this);
@@ -269,7 +268,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       return null;
     }
 
-    const {base, routes = []} = this.config;
+    const {routes = [], ...gothamConfig} = this.config;
 
     return (
       <MuiThemeProvider theme={this.theme}>
@@ -277,7 +276,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
         <GlobalStyle />
         <GothamContext.Consumer>{({Flux}) => (
           <Router history={this.history}>
-            {renderTransition(routes, Flux, {...base})}
+            {renderTransition(routes, Flux, {...gothamConfig})}
           </Router>
         )}</GothamContext.Consumer>
         {this.renderNotification()}

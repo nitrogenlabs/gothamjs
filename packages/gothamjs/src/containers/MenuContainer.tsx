@@ -76,7 +76,7 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
   }
 
   render(): JSX.Element {
-    const {baseProps, classes, Flux, sideBar, routes = [], topBar = {}} = this.props;
+    const {classes, Flux, sideBar, routes = [], topBar = {}} = this.props;
     const {isMenuOpen} = this.state;
 
     return (
@@ -85,7 +85,7 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
         <div className={classes.container}>
           {this.renderMenu(sideBar, isMenuOpen)}
           <div className={classes.content}>
-            {renderTransition(routes, Flux, baseProps)}
+            {renderTransition(routes, Flux, {...this.props})}
           </div>
         </div>
       </React.Fragment>

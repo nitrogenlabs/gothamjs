@@ -1,13 +1,13 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback, withStyles} from '@material-ui/core';
 import * as React from 'react';
 
 import {PageViewProps, PageViewState} from '../types/views/page';
 import {GothamContext} from '../utils/GothamProvider';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 const styles: StyleRulesCallback = (theme) => ({
   toolbar: theme.mixins.toolbar,
   view: {

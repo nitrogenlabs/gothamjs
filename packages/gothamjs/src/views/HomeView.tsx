@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import * as React from 'react';
 
@@ -13,10 +17,6 @@ import {SplashIntroProps} from '../types/components/splashIntro';
 import {HomeViewProps, HomeViewState} from '../types/views/home';
 import {initComponent} from '../utils/components';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 const styles: StyleRulesCallback = (theme) => ({
   button: {
     marginLeft: 3,

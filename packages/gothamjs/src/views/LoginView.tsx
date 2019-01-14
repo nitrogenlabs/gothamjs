@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import Button from '@material-ui/core/Button/Button';
 import Card from '@material-ui/core/Card/Card';
 import CardContent from '@material-ui/core/CardContent/CardContent';
@@ -12,10 +16,6 @@ import {LoginViewProps, LoginViewState} from '../types/views/login';
 import {initComponent} from '../utils/components';
 import {PageView} from './PageView';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 const styles: StyleRulesCallback = (theme) => ({
   btn: {
     marginLeft: 5

@@ -39,7 +39,7 @@ export interface FormProps extends WithStyles<any> {
   readonly mutators: any;
   readonly onChange?: any;
   readonly onSubmit: any;
-  readonly validate?: (value: any, allValues: any, meta: FormFieldState) => any;
+  readonly validate?: (value: any) => object | Promise<object>;
   readonly validateOnBlur: boolean;
 }
 

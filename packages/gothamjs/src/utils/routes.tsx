@@ -3,6 +3,7 @@ import {FluxFramework} from '@nlabs/arkhamjs/lib';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import {RouteProps} from 'react-router-dom';
+import Redirect from 'react-router-dom/Redirect';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 
@@ -10,7 +11,7 @@ import {GothamActions} from '../actions/GothamActions';
 import {Loader} from '../components/Loader';
 import {DefaultContainer} from '../containers/DefaultContainer';
 import {MenuContainer} from '../containers/MenuContainer';
-import {GothamAppProps, GothamRoute} from '../types/gotham';
+import {GothamConfiguration, GothamRoute} from '../types/gotham';
 
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
@@ -72,29 +73,40 @@ export const parseRoute = (route: GothamRoute) => {
   throw new Error(`Gotham Error: Route "${path}" is missing "component" property.`);
 };
 
+export const AuthRoute = (props) => (
+  <Route
+    {...props}
+    render={() => {
+      const {authentication} = props;
+      return ((authentication && authentication()) ? <props.render exact={props.exact} />
+        : <Redirect to={`/login?redirect=${props.location.pathname}${props.location.search}`} />);
+    }} />
+);
+
 export const renderRoute = (
   route: GothamRoute,
   Flux: FluxFramework,
-  baseProps: GothamAppProps
+  gothamConfig: GothamConfiguration
 ): JSX.Element => {
   const LoadComponent = parseRoute(route);
-  const {exact = true, path, strict, location, sensitive} = route;
-  const {titleBarSeparator} = baseProps;
+  const {authenticate = false, exact = true, path, strict, location, sensitive} = route;
+  const {authentication, titleBarSeparator} = gothamConfig;
+  const ReactRoute = authenticate ? AuthRoute : Route;
 
   return (
-    <Route
+    <ReactRoute
       {...fadeTransition}
+      authentication={authentication}
       exact={exact}
       key={path}
       location={location}
       path={path}
-      // mapStyles={(styles) => ({opacity: `opacity: ${styles.opacity}`})}
       render={(props: RouteProps) => {
         const {props: componentProps, title, ...routeProps} = route;
         GothamActions.updateTitle(title, titleBarSeparator);
         return (
           <LoadComponent
-            baseProps={baseProps}
+            gothamConfig={gothamConfig}
             Flux={Flux}
             title={title}
             {...props}
@@ -107,18 +119,18 @@ export const renderRoute = (
   );
 };
 
-export const getRoutes = (routes, Flux: FluxFramework, baseProps: GothamAppProps) =>
+export const getRoutes = (routes, Flux: FluxFramework, gothamConfig: GothamConfiguration) =>
   routes.reduce((renderedRoutes: JSX.Element[], route: GothamRoute) => {
     const {path, routes: nestedRoutes} = route;
     let routeList = [...renderedRoutes];
 
     // Only render routes that have a path and are not a custom error page.
     if(!isEmpty(path) && isNaN(+(path))) {
-      routeList.push(renderRoute(route, Flux, baseProps));
+      routeList.push(renderRoute(route, Flux, gothamConfig));
     }
 
     if(nestedRoutes && nestedRoutes.length) {
-      routeList = routeList.concat(getRoutes(nestedRoutes, Flux, baseProps));
+      routeList = routeList.concat(getRoutes(nestedRoutes, Flux, gothamConfig));
     }
 
     return routeList;
@@ -128,10 +140,10 @@ export const getRoutes = (routes, Flux: FluxFramework, baseProps: GothamAppProps
 export const renderRouteList = (
   routes: GothamRoute[] = [],
   Flux: FluxFramework,
-  baseProps: GothamAppProps
+  gothamConfig: GothamConfiguration
 ): JSX.Element[] => {
-  const {titleBarSeparator} = baseProps;
-  const gothamRoutes: JSX.Element[] = getRoutes(routes, Flux, baseProps);
+  const {titleBarSeparator} = gothamConfig;
+  const gothamRoutes: JSX.Element[] = getRoutes(routes, Flux, gothamConfig);
 
   // See if the user has provided a view for no matches
   const notFound: GothamRoute = routes.find((route: GothamRoute) => route && route.path === '404');
@@ -156,9 +168,9 @@ export const renderRouteList = (
 export const renderSwitch = (
   routes: GothamRoute[] = [],
   Flux: FluxFramework,
-  baseProps: GothamAppProps
+  gothamConfig: GothamConfiguration
 ): JSX.Element =>
-  <Switch location={location}>{renderRouteList(routes, Flux, baseProps)}</Switch>;
+  <Switch location={location}>{renderRouteList(routes, Flux, gothamConfig)}</Switch>;
 
 // View Transition
 // const bounce = (val) => spring(val, {
@@ -193,11 +205,5 @@ export const renderSwitch = (
 export const renderTransition = (
   routes: GothamRoute[] = [],
   Flux: FluxFramework,
-  baseProps: GothamAppProps
-): JSX.Element => (
-  <Switch
-    className="routeWrapper">
-    {renderRouteList(routes, Flux, baseProps)}
-  </Switch>
-);
-
+  gothamConfig: GothamConfiguration
+): JSX.Element => <Switch className="routeWrapper">{renderRouteList(routes, Flux, gothamConfig)}</Switch>;

@@ -55,13 +55,13 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
   }
 
   render(): JSX.Element {
-    const {baseProps, classes, Flux, routes = [], topBar = {}} = this.props;
+    const {classes, Flux, routes = [], topBar = {}} = this.props;
 
     return (
       <React.Fragment>
         <TopBar {...topBar} transparent />
         <div className={classes.content} onScroll={this.onScroll}>
-          {renderTransition(routes, Flux, baseProps)}
+          {renderTransition(routes, Flux, {...this.props})}
         </div>
       </React.Fragment>
     );

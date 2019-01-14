@@ -18,6 +18,7 @@ export interface GothamState {
 }
 
 export interface GothamRoute {
+  readonly authenticate?: boolean;
   readonly asyncComponent?: any;
   readonly component?: any;
   readonly container?: 'default' | 'menu';
@@ -33,24 +34,21 @@ export interface GothamRoute {
   readonly view?: 'confirm' | 'home' | 'login' | 'markdown' | 'notfound';
 }
 
-export interface GothamAppProps {
-  readonly Flux: FluxFramework;
-  readonly titleBarSeparator?: string;
-}
-
 export interface GothamButtonItem {
   readonly label?: string;
   readonly url?: string;
 }
 
 export interface GothamConfiguration {
-  readonly base?: GothamAppProps;
+  readonly authentication?: () => boolean;
   readonly config?: FluxOptions;
+  readonly Flux?: FluxFramework;
   readonly name?: string;
   readonly routes?: GothamRoute[];
   readonly storageType?: 'local' | 'session';
   readonly stores?: any[];
   readonly title?: string;
+  readonly titleBarSeparator?: string;
   readonly theme?: ThemeOptions;
   readonly middleware?: FluxMiddlewareType[];
 }

@@ -7,10 +7,8 @@ import {FluxFramework} from '@nlabs/arkhamjs';
 
 import {SideBarProps} from '../components/sideBar';
 import {TopBarProps} from '../components/topBar';
-import {GothamAppProps} from '../gotham';
 
 export interface MenuContainerProps extends WithStyles<any> {
-  readonly baseProps?: GothamAppProps;
   readonly Flux: FluxFramework
   readonly location: Location;
   readonly menu?: any[];
