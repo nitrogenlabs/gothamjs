@@ -6,7 +6,7 @@ import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import * as React from 'react';
 
 import {TopBar} from '../components/TopBar';
-import {AppConstants} from '../constants/AppConstants';
+import {GothamConstants} from '../constants/GothamConstants';
 import {DefaultContainerProps, DefaultContainerState} from '../types/containers/defaultContainer';
 import {renderTransition} from '../utils/routes';
 
@@ -50,7 +50,7 @@ export class DefaultContainerBase extends React.Component<DefaultContainerProps,
 
     if(this.isTopSolid !== changeSolid) {
       this.isTopSolid = changeSolid;
-      Flux.dispatch({isTransparent: !changeSolid, type: AppConstants.TOPBAR_SOLID});
+      Flux.dispatch({isTransparent: !changeSolid, type: GothamConstants.TOPBAR_SOLID});
     }
   }
 

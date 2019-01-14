@@ -12,6 +12,8 @@ export interface GothamProps extends WithStyles<any> {
 }
 
 export interface GothamState {
+  readonly currentNotification: GothamNotification;
+  readonly hasNotification: boolean;
   readonly isLoaded: boolean;
 }
 
@@ -57,6 +59,15 @@ export interface GothamMenuItem {
   readonly label?: string;
   readonly url: string;
   readonly menu?: GothamMenuItem[];
+}
+
+export type GothamPosition = 't' | 'tc' | 'tl' | 'tr' | 'b' | 'bc' | 'br' | 'bl';
+export type GothamStatus = 'default' | 'error' | 'info' | 'success' | 'warning' | number;
+
+export interface GothamNotification {
+  readonly key: string;
+  readonly message: string;
+  readonly status: GothamStatus;
 }
 
 export interface GothamProviderProps {

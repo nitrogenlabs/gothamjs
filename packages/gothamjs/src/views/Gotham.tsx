@@ -1,32 +1,36 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import 'bootstrap/dist/css/bootstrap-grid.css';
 import 'bootstrap/dist/css/bootstrap-reboot.css';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
 import {createMuiTheme, MuiThemeProvider, StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {createBrowserHistory, History} from 'history';
 import merge from 'lodash/merge';
+import {Close as CloseIcon} from 'mdi-material-ui';
 import * as React from 'react';
 import {hot} from 'react-hot-loader';
 import Router from 'react-router-dom/Router';
 import {createGlobalStyle} from 'styled-components';
 
-import {AppActions} from '../actions/AppActions';
+import {GothamActions} from '../actions/GothamActions';
+import {Notification} from '../components/Notification';
 import {Config} from '../config/properties';
 import {defaultTheme} from '../config/theme';
-import {AppConstants} from '../constants/AppConstants';
+import {GothamConstants} from '../constants/GothamConstants';
 import {AuthStore} from '../stores/AuthStore/AuthStore';
 import {GothamAppStore} from '../stores/GothamAppStore/GothamAppStore';
 import {GothamConfiguration, GothamProps, GothamState} from '../types/gotham';
 import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 const GlobalStyle = createGlobalStyle`
 body, p, h1, input {
   font-family: 'Open Sans', sans-serif;
@@ -78,11 +82,16 @@ img {
 }
 `;
 
-const styles: StyleRulesCallback = () => ({});
+const styles: StyleRulesCallback = (theme) => ({
+  close: {
+    padding: theme.spacing.unit / 2
+  }
+});
 
 export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   config: GothamConfiguration;
   history: History;
+  notifications: any[] = [];
   state: any = {};
   theme;
 
@@ -90,11 +99,15 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     super(props);
 
     // Methods
+    this.addNotification = this.addNotification.bind(this);
     this.init = this.init.bind(this);
     this.navBack = this.navBack.bind(this);
     this.navForward = this.navForward.bind(this);
     this.navGoto = this.navGoto.bind(this);
     this.navReplace = this.navReplace.bind(this);
+    this.onNotificationClose = this.onNotificationClose.bind(this);
+    this.onNotificationExit = this.onNotificationExit.bind(this);
+    this.processNotifications = this.processNotifications.bind(this);
 
     // Configuration
     const {config: appConfig = {}} = props;
@@ -142,6 +155,8 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     this.theme = theme && createMuiTheme(theme || defaultTheme);
 
     this.state = {
+      currentNotification: {},
+      hasNotification: false,
       isLoaded: false
     };
   }
@@ -149,22 +164,24 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   componentDidMount(): void {
     // Add event listeners
     Flux.onInit(this.init);
-    Flux.on(AppConstants.NAV_BACK, this.navBack);
-    Flux.on(AppConstants.NAV_FORWARD, this.navForward);
-    Flux.on(AppConstants.NAV_GOTO, this.navGoto);
-    Flux.on(AppConstants.NAV_REPLACE, this.navReplace);
+    Flux.on(GothamConstants.NAV_BACK, this.navBack);
+    Flux.on(GothamConstants.NAV_FORWARD, this.navForward);
+    Flux.on(GothamConstants.NAV_GOTO, this.navGoto);
+    Flux.on(GothamConstants.NAV_REPLACE, this.navReplace);
+    Flux.on(GothamConstants.NOTIFY, this.addNotification);
 
     // Initialize
-    AppActions.init();
+    GothamActions.init();
   }
 
   componentWillUnmount(): void {
     // Remove event listeners
     Flux.offInit(this.init);
-    Flux.off(AppConstants.NAV_BACK, this.navBack);
-    Flux.off(AppConstants.NAV_FORWARD, this.navForward);
-    Flux.off(AppConstants.NAV_GOTO, this.navGoto);
-    Flux.off(AppConstants.NAV_REPLACE, this.navReplace);
+    Flux.off(GothamConstants.NAV_BACK, this.navBack);
+    Flux.off(GothamConstants.NAV_FORWARD, this.navForward);
+    Flux.off(GothamConstants.NAV_GOTO, this.navGoto);
+    Flux.off(GothamConstants.NAV_REPLACE, this.navReplace);
+    Flux.off(GothamConstants.NOTIFY, this.addNotification);
   }
 
   init(): void {
@@ -189,13 +206,70 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     this.history.replace(path);
   }
 
+  // NOTIFICATION
+  addNotification({notification}) {
+    this.notifications.push(notification);
+    this.processNotifications();
+  }
+
+  onNotificationClose(event: any, reason?: string) {
+    if(reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({hasNotification: false});
+  }
+
+  onNotificationExit() {
+    this.processNotifications();
+  }
+
+  processNotifications() {
+    if(this.notifications.length > 0) {
+      this.setState({currentNotification: this.notifications.shift(), hasNotification: true});
+    }
+  }
+
+  renderNotification() {
+    const {classes} = this.props;
+    const {currentNotification, hasNotification: open} = this.state;
+    const {key, message, status} = currentNotification;
+    return (
+      <Snackbar
+        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+        autoHideDuration={10000}
+        key={key}
+        onClose={this.onNotificationClose}
+        onExited={this.onNotificationExit}
+        open={open}
+        ContentProps={{'aria-describedby': 'message-id'}}
+        message={<span id="message-id">{message}</span>}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="Close"
+            className={classes.close}
+            color="inherit"
+            onClick={this.onNotificationClose}>
+            <CloseIcon />
+          </IconButton>
+        ]}>
+        <Notification
+          message={message}
+          onClose={this.onNotificationClose}
+          variant={status} />
+      </Snackbar>
+    );
+  }
+
   render(): JSX.Element {
     const {isLoaded} = this.state;
-    const {base, routes = []} = this.config;
 
     if(!isLoaded) {
       return null;
     }
+
+    const {base, routes = []} = this.config;
 
     return (
       <MuiThemeProvider theme={this.theme}>
@@ -206,6 +280,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
             {renderTransition(routes, Flux, {...base})}
           </Router>
         )}</GothamContext.Consumer>
+        {this.renderNotification()}
       </MuiThemeProvider >
     );
   }

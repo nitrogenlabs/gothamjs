@@ -6,7 +6,7 @@ import {StyleRulesCallback} from '@material-ui/core/styles';
 import * as React from 'react';
 
 import {MarkdownActions} from '../actions/MarkdownActions';
-import {AppConstants} from '../constants/AppConstants';
+import {GothamConstants} from '../constants/GothamConstants';
 import {MarkdownViewProps, MarkdownViewState} from '../types/views/markdown';
 import {initComponent} from '../utils/components';
 
@@ -41,7 +41,7 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
     const {Flux} = this.props;
 
     // Add Listener
-    Flux.on(AppConstants.GET_EXTERNAL, this.onUpdate);
+    Flux.on(GothamConstants.GET_EXTERNAL, this.onUpdate);
 
     // Get external content
     const {external} = this.props;
@@ -56,7 +56,7 @@ export class MarkdownViewBase extends React.Component<MarkdownViewProps, Markdow
     const {Flux} = this.props;
 
     // Remove Listener
-    Flux.off(AppConstants.GET_EXTERNAL, this.onUpdate);
+    Flux.off(GothamConstants.GET_EXTERNAL, this.onUpdate);
   }
 
   onUpdate(data): void {

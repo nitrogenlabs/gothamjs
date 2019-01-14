@@ -5,7 +5,7 @@
 import {Store} from '@nlabs/arkhamjs';
 import {set} from 'lodash';
 
-import {AppConstants} from '../../constants/AppConstants';
+import {GothamConstants} from '../../constants/GothamConstants';
 import {MarkdownConstants} from '../../constants/MarkdownConstants';
 
 export class GothamAppStore extends Store {
@@ -30,13 +30,13 @@ export class GothamAppStore extends Store {
         const {content, url} = data;
         return set(state, ['external', url], content);
       }
-      case AppConstants.INITIALIZE: {
+      case GothamConstants.INITIALIZE: {
         return set(state, 'external', {});
       }
-      case AppConstants.SET_CONFIG: {
+      case GothamConstants.SET_CONFIG: {
         return set(state, 'config', data.config);
       }
-      case AppConstants.UPDATE_TITLE: {
+      case GothamConstants.UPDATE_TITLE: {
         return set(state, 'currentTitle', data.title);
       }
       default:

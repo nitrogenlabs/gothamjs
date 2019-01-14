@@ -6,7 +6,7 @@ import {RouteProps} from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 
-import {AppActions} from '../actions/AppActions';
+import {GothamActions} from '../actions/GothamActions';
 import {Loader} from '../components/Loader';
 import {DefaultContainer} from '../containers/DefaultContainer';
 import {MenuContainer} from '../containers/MenuContainer';
@@ -91,7 +91,7 @@ export const renderRoute = (
       // mapStyles={(styles) => ({opacity: `opacity: ${styles.opacity}`})}
       render={(props: RouteProps) => {
         const {props: componentProps, title, ...routeProps} = route;
-        AppActions.updateTitle(title, titleBarSeparator);
+        GothamActions.updateTitle(title, titleBarSeparator);
         return (
           <LoadComponent
             baseProps={baseProps}
@@ -144,7 +144,7 @@ export const renderRouteList = (
       key="notFound"
       render={(props: RouteProps) => {
         const {title} = notFoundRoute;
-        AppActions.updateTitle(title, titleBarSeparator);
+        GothamActions.updateTitle(title, titleBarSeparator);
         return <LoadComponent title={title} {...props} />;
       }} />
   );

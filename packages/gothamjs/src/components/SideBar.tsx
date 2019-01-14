@@ -1,7 +1,3 @@
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 import Divider from '@material-ui/core/Divider/Divider';
 import Drawer from '@material-ui/core/Drawer/Drawer';
 import Hidden from '@material-ui/core/Hidden/Hidden';
@@ -14,10 +10,14 @@ import {Flux} from '@nlabs/arkhamjs';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
-import {AppConstants} from '../constants/AppConstants';
+import {GothamConstants} from '../constants/GothamConstants';
 import {SideBarProps, SideBarState} from '../types/components/sideBar';
 import {initStyle} from '../utils/components';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 const styles: StyleRulesCallback = (theme) => ({
   drawer: {
     height: '100vh'
@@ -61,11 +61,11 @@ export class SideBarBase extends React.Component<SideBarProps, SideBarState> {
   }
 
   // componentDidMount(): void {
-  //   Flux.on(AppConstants.TOGGLE_MENU, this.onToggle);
+  //   Flux.on(GothamConstants.TOGGLE_MENU, this.onToggle);
   // }
 
   // componentWillUnmount(): void {
-  //   Flux.off(AppConstants.TOGGLE_MENU, this.onToggle);
+  //   Flux.off(GothamConstants.TOGGLE_MENU, this.onToggle);
   // }
 
   // onToggle(): void {
@@ -74,7 +74,7 @@ export class SideBarBase extends React.Component<SideBarProps, SideBarState> {
   // }
 
   toggleDrawer(): void {
-    Flux.dispatch({type: AppConstants.TOGGLE_MENU});
+    Flux.dispatch({type: GothamConstants.TOGGLE_MENU});
   }
 
   renderMenu(menu): JSX.Element {

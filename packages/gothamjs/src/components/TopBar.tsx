@@ -10,7 +10,7 @@ import * as React from 'react';
 import NavLink from 'react-router-dom/NavLink';
 
 import {Button} from '../components/Button';
-import {AppConstants} from '../constants/AppConstants';
+import {GothamConstants} from '../constants/GothamConstants';
 import {TopBarProps, TopBarState} from '../types/components/topBar';
 import {GothamMenuItem} from '../types/gotham';
 
@@ -68,11 +68,11 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   componentDidMount() {
-    Flux.on(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
+    Flux.on(GothamConstants.TOPBAR_SOLID, this.onUpdateBackground);
   }
 
   componentWillUnmount() {
-    Flux.off(AppConstants.TOPBAR_SOLID, this.onUpdateBackground);
+    Flux.off(GothamConstants.TOPBAR_SOLID, this.onUpdateBackground);
   }
 
   onUpdateBackground(data) {
@@ -81,7 +81,7 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
   }
 
   onToggleDrawer() {
-    Flux.dispatch({type: AppConstants.TOGGLE_MENU});
+    Flux.dispatch({type: GothamConstants.TOGGLE_MENU});
   }
 
   renderMenuItem(menuItem: GothamMenuItem) {

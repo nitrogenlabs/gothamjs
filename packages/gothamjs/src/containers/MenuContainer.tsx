@@ -1,17 +1,17 @@
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 import {StyleRulesCallback, withStyles} from '@material-ui/core/styles';
 import * as React from 'react';
 
 import {SideBar} from '../components/SideBar';
 import {TopBar} from '../components/TopBar';
-import {AppConstants} from '../constants/AppConstants';
+import {GothamConstants} from '../constants/GothamConstants';
 import {SideBarProps} from '../types/components/sideBar';
 import {MenuContainerProps, MenuContainerState} from '../types/containers/menuContainer';
 import {renderTransition} from '../utils/routes';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 const styles: StyleRulesCallback = (theme) => ({
   container: {
     display: 'flex',
@@ -45,14 +45,14 @@ export class MenuContainerBase extends React.Component<MenuContainerProps, MenuC
     const {Flux} = this.props;
 
     // Add listener
-    Flux.on(AppConstants.TOGGLE_MENU, this.toggleMenu);
+    Flux.on(GothamConstants.TOGGLE_MENU, this.toggleMenu);
   }
 
   componentWillUnmount(): void {
     const {Flux} = this.props;
 
     // Remove listener
-    Flux.off(AppConstants.TOGGLE_MENU, this.toggleMenu);
+    Flux.off(GothamConstants.TOGGLE_MENU, this.toggleMenu);
   }
 
   shouldComponentUpdate(nextProps) {

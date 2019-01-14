@@ -1,36 +1,40 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 
-import {AppConstants} from '../constants/AppConstants';
-import {GothamConfiguration} from '../types/gotham';
+import {GothamConstants} from '../constants/GothamConstants';
+import {GothamConfiguration, GothamStatus} from '../types/gotham';
 
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-export class AppActions {
+export class GothamActions {
   static init(): Promise<FluxAction> {
-    return Flux.dispatch({type: AppConstants.INITIALIZE});
+    return Flux.dispatch({type: GothamConstants.INITIALIZE});
   }
 
   static setConfig(config: GothamConfiguration): Promise<FluxAction> {
-    return Flux.dispatch({config, type: AppConstants.SET_CONFIG});
+    return Flux.dispatch({config, type: GothamConstants.SET_CONFIG});
   }
 
   static navBack(): Promise<FluxAction> {
-    return Flux.dispatch({type: AppConstants.NAV_BACK});
+    return Flux.dispatch({type: GothamConstants.NAV_BACK});
   }
 
   static navForward(): Promise<FluxAction> {
-    return Flux.dispatch({type: AppConstants.NAV_FORWARD});
+    return Flux.dispatch({type: GothamConstants.NAV_FORWARD});
   }
 
   static navGoto(path: string): Promise<FluxAction> {
-    return Flux.dispatch({path, type: AppConstants.NAV_GOTO});
+    return Flux.dispatch({path, type: GothamConstants.NAV_GOTO});
   }
 
   static navReplace(path: string): Promise<FluxAction> {
-    return Flux.dispatch({path, type: AppConstants.NAV_REPLACE});
+    return Flux.dispatch({path, type: GothamConstants.NAV_REPLACE});
+  }
+
+  static notify(message: string, status?: GothamStatus): void {
+    Flux.dispatch({notification: {message, status}, type: GothamConstants.NOTIFY});
   }
 
   static updateTitle(title: string, separator: string = ' :: '): Promise<FluxAction> {
@@ -42,6 +46,6 @@ export class AppActions {
       document.title = `${siteTitle}`;
     }
 
-    return Flux.dispatch({title, type: AppConstants.UPDATE_TITLE});
+    return Flux.dispatch({title, type: GothamConstants.UPDATE_TITLE});
   }
 }
