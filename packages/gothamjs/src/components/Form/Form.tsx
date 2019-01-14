@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback} from '@material-ui/core/styles';
 import * as React from 'react';
 import {Form as FinalForm} from 'react-final-form';
@@ -6,10 +10,6 @@ import {FormProps} from '../../types/components/form';
 import {initStyle} from '../../utils/components';
 import {AutoSave} from './AutoSave';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 const styles: StyleRulesCallback = () => ({
   form: {
     boxSizing: 'border-box',

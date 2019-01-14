@@ -1,11 +1,35 @@
-import {NativeSelectProps as MaterialNativeSelectProps} from '@material-ui/core/NativeSelect/NativeSelect';
-import {WithStyles} from '@material-ui/core/styles';
-import {StandardTextFieldProps as MaterialTextFieldProps} from '@material-ui/core/TextField';
-
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {NativeSelectProps as MaterialNativeSelectProps} from '@material-ui/core/NativeSelect/NativeSelect';
+import {WithStyles} from '@material-ui/core/styles';
+import {StandardTextFieldProps as MaterialTextFieldProps} from '@material-ui/core/TextField';
+
+export interface FormFieldState {
+  readonly active?: boolean;
+  readonly blur: () => {};
+  readonly change: (value: any) => {};
+  readonly data?: any;
+  readonly dirty?: boolean;
+  readonly dirtySinceLastSubmit?: boolean;
+  readonly error?: any;
+  readonly focus: () => {};
+  readonly initial?: any;
+  readonly invalid?: boolean;
+  readonly length?: number;
+  readonly name: string;
+  readonly pristine?: boolean;
+  readonly submitError?: any;
+  readonly submitFailed?: boolean;
+  readonly submitSucceeded?: boolean;
+  readonly submitting?: boolean;
+  readonly touched?: boolean;
+  readonly valid?: boolean;
+  readonly value?: any;
+  readonly visited?: boolean;
+}
+
 export interface FormProps extends WithStyles<any> {
   readonly children?: any;
   readonly debug: any;
@@ -15,7 +39,7 @@ export interface FormProps extends WithStyles<any> {
   readonly mutators: any;
   readonly onChange?: any;
   readonly onSubmit: any;
-  readonly validate?: any;
+  readonly validate?: (value: any, allValues: any, meta: FormFieldState) => any;
   readonly validateOnBlur: boolean;
 }
 
