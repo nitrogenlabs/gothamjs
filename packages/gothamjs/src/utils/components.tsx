@@ -9,7 +9,7 @@ import {hot} from 'react-hot-loader';
 export const initComponent = (
   componentModule: any,
   component: React.ComponentType<any>,
-  styles?: StyleRulesCallback
+  styles?: any
 ) => {
   if(styles) {
     return hot(componentModule)(withStyles(styles, {withTheme: true})(component as any));

@@ -3,7 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 export * from './button';
-export * from './datePicker';
+export * from './dateField';
 export * from './featureItem';
 export * from './footer';
 export * from './form';
@@ -13,5 +13,5 @@ export * from './promoRow';
 export * from './sideBar';
 export * from './splashIntro';
 export * from './svg';
-export * from './timePicker';
+export * from './timeField';
 export * from './topBar';

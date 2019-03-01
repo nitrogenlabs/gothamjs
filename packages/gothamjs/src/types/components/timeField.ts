@@ -6,9 +6,9 @@ import {FormHelperTextProps} from '@material-ui/core/FormHelperText';
 import {InputProps} from '@material-ui/core/Input';
 import {InputLabelProps} from '@material-ui/core/InputLabel';
 
-import {DatePickerOrigin} from './datePicker';
+import {DateFieldOrigin} from './dateField';
 
-export interface TimePickerClockProps {
+export interface TimeFieldClockProps {
   readonly action: (actions: any) => void;
   readonly value: Date;
   readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>) => void;
@@ -25,14 +25,14 @@ export interface TimePickerClockProps {
   };
 }
 
-export interface TimePickerProps {
+export interface TimeFieldProps {
   readonly name: string;
   readonly label?: string;
   readonly value: Date;
   readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>) => void;
   readonly selectableMinutesInterval?: number;
-  readonly anchorOrigin?: DatePickerOrigin;
-  readonly transformOrigin?: DatePickerOrigin;
+  readonly anchorOrigin?: DateFieldOrigin;
+  readonly transformOrigin?: DateFieldOrigin;
   readonly disabled?: boolean;
   readonly error?: string;
   readonly fullWidth?: boolean;
@@ -43,9 +43,9 @@ export interface TimePickerProps {
   readonly InputLabelProps?: InputLabelProps;
   readonly InputProps?: InputProps;
   readonly FormHelperTextProps?: FormHelperTextProps;
-  readonly ClockProps?: TimePickerClockProps;
+  readonly ClockProps?: TimeFieldClockProps;
 }
 
-export interface TimePickerState {
+export interface TimeFieldState {
   readonly time: Date;
 }

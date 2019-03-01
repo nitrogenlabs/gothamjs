@@ -6,12 +6,12 @@ import {FormHelperTextProps} from '@material-ui/core/FormHelperText';
 import {InputProps} from '@material-ui/core/Input';
 import {InputLabelProps} from '@material-ui/core/InputLabel';
 
-export interface DatePickerOrigin {
+export interface DateFieldOrigin {
   readonly vertical: 'top' | 'center' | 'bottom';
   readonly horizontal: 'left' | 'center' | 'right';
 }
 
-export interface DatePickerCalendarProps {
+export interface DateFieldCalendarProps {
   readonly action: (actions: any) => void;
   readonly value: Date;
   readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement>) => void;
@@ -29,13 +29,13 @@ export interface DatePickerCalendarProps {
   };
 }
 
-export interface DatePickerProps {
+export interface DateFieldProps {
   readonly name: string;
   readonly label?: string;
   readonly value: Date;
   readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement>) => void;
-  readonly anchorOrigin?: DatePickerOrigin;
-  readonly transformOrigin?: DatePickerOrigin;
+  readonly anchorOrigin?: DateFieldOrigin;
+  readonly transformOrigin?: DateFieldOrigin;
   readonly disabled?: boolean;
   readonly error?: string;
   readonly dateDisabled?: (date: Date) => boolean;
@@ -50,9 +50,9 @@ export interface DatePickerProps {
   readonly InputLabelProps?: InputLabelProps;
   readonly InputProps?: InputProps;
   readonly FormHelperTextProps?: FormHelperTextProps;
-  readonly CalendarProps?: DatePickerCalendarProps;
+  readonly CalendarProps?: DateFieldCalendarProps;
 }
 
-export interface DatePickerState {
+export interface DateFieldState {
   readonly date: Date;
 }

@@ -2,14 +2,14 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {DateFormatInput} from '@nlabs/material-ui-pickers';
+import {TimeFormatInput} from '@nlabs/material-ui-pickers';
 import React from 'react';
 import {Field} from 'react-final-form';
 
-import {DatePickerProps, DatePickerState} from '../../types/components/datePicker';
+import {TimeFieldProps, TimeFieldState} from '../../types/components/timeField';
 
-export class DatePicker extends React.Component<DatePickerProps, DatePickerState> {
-  constructor(props: DatePickerProps) {
+export class TimeField extends React.Component<TimeFieldProps, TimeFieldState> {
+  constructor(props: TimeFieldProps) {
     super(props);
 
     // Methods
@@ -17,7 +17,7 @@ export class DatePicker extends React.Component<DatePickerProps, DatePickerState
   }
 
   renderField({input}): JSX.Element {
-    return <DateFormatInput fullWidth {...this.props} {...input} />;
+    return <TimeFormatInput fullWidth {...this.props} {...input} />;
   }
 
   render(): JSX.Element {

@@ -38,16 +38,16 @@
     "watch": "lex compile -w"
   },
   "dependencies": {
-    "@nlabs/arkhamjs": "^3.12.2",
-    "@nlabs/arkhamjs-storage-browser": "^3.12.2",
+    "@nlabs/arkhamjs": "^3.12.3",
+    "@nlabs/arkhamjs-storage-browser": "^3.12.3",
     "amazon-cognito-identity-js": "^3.0.7",
     "aws-amplify": "^1.1.19"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.11",
-    "@types/node": "^10.12.18",
-    "eslint": "^5.12.0",
-    "eslint-config-styleguidejs": "^0.7.13",
-    "typescript": "^3.2.2"
+    "@types/jest": "^24.0.0",
+    "@types/node": "^10.12.21",
+    "eslint": "^5.13.0",
+    "eslint-config-styleguidejs": "^1.0.2",
+    "typescript": "^3.3.1"
   }
 }
