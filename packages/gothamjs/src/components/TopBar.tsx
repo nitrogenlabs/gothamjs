@@ -9,6 +9,7 @@ import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
 import NavLink from 'react-router-dom/NavLink';
 
+import {GothamActions} from '../actions/GothamActions';
 import {Button} from '../components/Button';
 import {GothamConstants} from '../constants/GothamConstants';
 import {TopBarProps, TopBarState} from '../types/components/topBar';
@@ -89,7 +90,15 @@ export class TopBarBase extends React.PureComponent<TopBarProps, TopBarState> {
     const {isTransparent} = this.state;
     const {label = '', url = ''} = menuItem;
     const color = isTransparent ? transparentTextColor : solidTextColor;
-    return <Button href={url} key={`${label}:${url}`} color="inherit" style={{color}}>{label}</Button>;
+    return (
+      <Button
+        color="inherit"
+        key={`${label}:${url}`}
+        onClick={() => GothamActions.navGoto(url)}
+        style={{color}}>
+        {label}
+      </Button>
+    );
   }
 
   renderMenu(menu) {
