@@ -78,7 +78,7 @@ export const AuthRoute = (props) => (
     {...props}
     render={() => {
       const {isAuth, render: ViewRoute, ...routeProps} = props;
-      return (isAuth ? <ViewRoute {...routeProps} />
+      return (isAuth() ? <ViewRoute {...routeProps} />
         : <Redirect to={`/login?redirect=${props.location.pathname}${props.location.search}`} />);
     }} />
 );

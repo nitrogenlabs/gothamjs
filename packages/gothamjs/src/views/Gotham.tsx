@@ -124,8 +124,8 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       name,
       storageType,
       stores,
-      theme,
-      title
+      theme
+      // title
     } = this.config;
 
     // Throw an error if Flux is not added to the config
@@ -142,7 +142,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       Flux.init({
         middleware: [logger, ...middleware],
         name,
-        state: {app: {title}},
+        // state: {app: {title}},
         storage,
         stores: [GothamAppStore, AuthStore, ...stores]
       });
@@ -185,6 +185,12 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   }
 
   init(): void {
+    const {onInit} = this.config;
+
+    if(onInit) {
+      onInit();
+    }
+
     this.setState({isLoaded: true});
   }
 
@@ -263,14 +269,13 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   }
 
   render(): JSX.Element {
-    const {isAuth} = this.props;
     const {isLoaded} = this.state;
 
     if(!isLoaded) {
       return <Loader />;
     }
 
-    const {routes = [], ...gothamConfig} = this.config;
+    const {isAuth, routes = [], ...gothamConfig} = this.config;
     const {Flux} = this.context;
 
     return (

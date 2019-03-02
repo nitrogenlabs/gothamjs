@@ -42,11 +42,11 @@ export interface GothamButtonItem {
 }
 
 export interface GothamConfiguration {
-  readonly authentication?: () => boolean;
   readonly config?: FluxOptions;
   readonly Flux?: FluxFramework;
-  readonly isAuth?: boolean;
+  readonly isAuth?: () => boolean;
   readonly name?: string;
+  readonly onInit?: () => any;
   readonly routes?: GothamRoute[];
   readonly storageType?: 'local' | 'session';
   readonly stores?: any[];
