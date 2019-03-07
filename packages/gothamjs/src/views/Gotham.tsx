@@ -23,7 +23,7 @@ import {createGlobalStyle} from 'styled-components';
 import {GothamActions} from '../actions/GothamActions';
 import {Loader} from '../components/Loader';
 import {Notification} from '../components/Notification';
-import {Config} from '../config/properties';
+import {Config} from '../config/app';
 import {defaultTheme} from '../config/theme';
 import {GothamConstants} from '../constants/GothamConstants';
 import {AuthStore} from '../stores/AuthStore/AuthStore';
@@ -118,7 +118,11 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       stores: [],
       title: ''
     };
+
+    // Save config to app
     this.config = merge(defaultConfig, appConfig);
+    Config.set(this.config);
+
     const {
       middleware,
       name,

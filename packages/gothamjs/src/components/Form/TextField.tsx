@@ -31,7 +31,7 @@ export class TextField extends React.PureComponent<TextFieldProps, {}> {
       updatedProps = {...remainingProps};
     }
 
-    return <MaterialTextField {...updatedProps} {...input} />;
+    return <MaterialTextField {...input} {...updatedProps} />;
   }
 
   render(): JSX.Element {

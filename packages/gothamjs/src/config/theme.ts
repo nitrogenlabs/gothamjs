@@ -58,25 +58,29 @@ export const defaultTheme: ThemeOptions = {
   },
   palette,
   props: {
-    MuiButton: {
-      disableFocusRipple: true,
-      disableRipple: true,
-      disableTouchRipple: true
+    MuiButtonBase: {
+      disableRipple: false,
+      disableTouchRipple: false,
+      focusRipple: false
     },
     MuiCheckbox: {
       disableRipple: true
     },
     MuiIconButton: {
-      disableRipple: true
+      disableRipple: true,
+      disableTouchRipple: true
+    },
+    MuiMenuItem: {
+      disableRipple: true,
+      disableTouchRipple: true
     },
     MuiRadio: {
-      disableRipple: true
+      disableRipple: true,
+      disableTouchRipple: true
     },
     MuiSwitch: {
-      disableRipple: true
-    },
-    MuiTouchRipple: {
-      disableRipple: true
+      disableRipple: true,
+      disableTouchRipple: true
     }
   },
   typography: {

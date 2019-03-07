@@ -1,6 +1,7 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 
+import {Config} from '../config/app';
 import {GothamConstants} from '../constants/GothamConstants';
 import {GothamConfiguration, GothamStatus} from '../types/gotham';
 
@@ -38,7 +39,7 @@ export class GothamActions {
   }
 
   static updateTitle(title: string, separator: string = ' :: '): Promise<FluxAction> {
-    const siteTitle: string = Flux.getState('gothamApp.title');
+    const siteTitle: string = Config.get('title', '');
 
     if(!isEmpty(title) && siteTitle !== title) {
       document.title = `${title}${separator}${siteTitle}`;
