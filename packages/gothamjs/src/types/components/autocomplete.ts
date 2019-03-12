@@ -5,6 +5,7 @@ export interface AutocompleteFieldProps extends WithStyles<any> {
   readonly name: string;
   readonly suggestions: any[];
   readonly validate?: (object) => object | Promise<object>;
+  readonly valueKey?: string;
   readonly wait?: number;
 }
 

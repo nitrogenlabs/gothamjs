@@ -15,9 +15,6 @@ export class Config {
   static get(path: string | string[], defaultValue?: any): any {
     const environment: string = process.env.NODE_ENV || 'development';
     const configValues: object = {...this.values, environment};
-    console.log('get::path', path, configValues);
-    console.log('get::configValues', configValues);
-    console.log('get::value', get(configValues, path, defaultValue));
     return get(configValues, path, defaultValue);
   }
 }

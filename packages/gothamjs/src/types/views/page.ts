@@ -6,8 +6,13 @@ import {WithStyles} from '@material-ui/core/styles';
 import {FluxFramework} from '@nlabs/arkhamjs';
 
 export interface PageViewProps extends WithStyles<any> {
-  readonly Flux?: FluxFramework
+  readonly Flux?: FluxFramework;
+  readonly computedMatch?: any;
+  readonly location?: any;
+  readonly path?: any;
   readonly name?: string;
+  readonly sensitive?: any;
+  readonly strict?: any;
   readonly title?: string;
 }
 
