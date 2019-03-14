@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2019-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {StyleRulesCallback, withStyles} from '@material-ui/core';
 import MaterialMenuItem from '@material-ui/core/MenuItem/MenuItem';
 import MaterialPaper from '@material-ui/core/Paper/Paper';
@@ -7,16 +11,13 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import debounce from 'lodash/debounce';
 import deburr from 'lodash/deburr';
+import isEmpty from 'lodash/isEmpty';
 import * as React from 'react';
 import ReactAutosuggest from 'react-autosuggest';
 import {Field} from 'react-final-form';
 
 import {AutocompleteFieldProps, AutocompleteFieldState} from '../../types/components/autocomplete';
 
-/**
- * Copyright (c) 2019-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 const styles: StyleRulesCallback = (theme) => ({
   container: {
     position: 'relative'
@@ -44,7 +45,10 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
   constructor(props: AutocompleteFieldProps) {
     super(props);
 
-    const {wait = 1000} = props;
+    const {
+      value = '',
+      wait = 1000
+    } = props;
 
     // Methods
     this.onChange = this.onChange.bind(this);
@@ -54,10 +58,12 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
     this.renderInputComponent = this.renderInputComponent.bind(this);
     this.renderSuggestion = this.renderSuggestion.bind(this);
 
+    console.log('AutocompleteFieldBase::props', props);
+
     this.state = {
       single: '',
       suggestions: props.suggestions || [],
-      value: ''
+      value
     };
   }
 
@@ -166,9 +172,10 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
     );
   }
 
-  renderField({input = {}, meta}): JSX.Element {
+  renderField({input = {value: ''}, meta}): JSX.Element {
     const {classes, valueKey = 'label'} = this.props;
     const {suggestions, value} = this.state;
+    const {value: inputValue} = input;
 
     return (
       <ReactAutosuggest
@@ -182,7 +189,7 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
           },
           meta,
           onChange: this.onChange(input),
-          value
+          value: !isEmpty(inputValue) ? inputValue : value
         }}
         getSuggestionValue={(suggestion) => suggestion[valueKey]}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}

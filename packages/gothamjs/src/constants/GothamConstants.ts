@@ -6,6 +6,7 @@ export class GothamConstants {
   static readonly CLEAR_EXTERNAL: string = 'GOTHAM_APP_CLEAR_EXTERNAL';
   static readonly GET_EXTERNAL: string = 'GOTHAM_APP_GET_EXTERNAL';
   static readonly INITIALIZE: string = 'GOTHAM_APP_INITIALIZE';
+  static readonly LOADING: string = 'GOTHAM_APP_LOADING';
   static readonly NAV_BACK: string = 'GOTHAM_APP_NAV_BACK';
   static readonly NAV_FORWARD: string = 'GOTHAM_APP_NAV_FORWARD';
   static readonly NAV_GOTO: string = 'GOTHAM_APP_NAV_GOTO';

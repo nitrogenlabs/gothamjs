@@ -108,6 +108,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     this.onNotificationClose = this.onNotificationClose.bind(this);
     this.onNotificationExit = this.onNotificationExit.bind(this);
     this.processNotifications = this.processNotifications.bind(this);
+    this.toggleLoader = this.toggleLoader.bind(this);
 
     // Configuration
     const {config: appConfig = {}} = props;
@@ -161,13 +162,15 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     this.state = {
       currentNotification: {},
       hasNotification: false,
-      isLoaded: false
+      isAppLoaded: false,
+      isLoading: false
     };
   }
 
   componentDidMount(): void {
     // Add event listeners
     Flux.onInit(this.init);
+    Flux.on(GothamConstants.LOADING, this.toggleLoader);
     Flux.on(GothamConstants.NAV_BACK, this.navBack);
     Flux.on(GothamConstants.NAV_FORWARD, this.navForward);
     Flux.on(GothamConstants.NAV_GOTO, this.navGoto);
@@ -180,12 +183,13 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
 
   componentWillUnmount(): void {
     // Remove event listeners
+    Flux.off(GothamConstants.NOTIFY, this.addNotification);
     Flux.offInit(this.init);
     Flux.off(GothamConstants.NAV_BACK, this.navBack);
     Flux.off(GothamConstants.NAV_FORWARD, this.navForward);
     Flux.off(GothamConstants.NAV_GOTO, this.navGoto);
     Flux.off(GothamConstants.NAV_REPLACE, this.navReplace);
-    Flux.off(GothamConstants.NOTIFY, this.addNotification);
+    Flux.off(GothamConstants.LOADING, this.toggleLoader);
   }
 
   init(): void {
@@ -195,7 +199,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
       onInit();
     }
 
-    this.setState({isLoaded: true});
+    this.setState({isAppLoaded: true});
   }
 
   navBack(): void {
@@ -240,10 +244,26 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
     }
   }
 
-  renderNotification() {
+  // Loader
+  toggleLoader({isLoading}) {
+    this.setState({isLoading});
+  }
+
+  renderLoading(): JSX.Element {
+    const {isLoading} = this.state;
+
+    if(!isLoading) {
+      return null;
+    }
+
+    return <Loader />;
+  }
+
+  renderNotification(): JSX.Element {
     const {classes} = this.props;
     const {currentNotification, hasNotification: open} = this.state;
     const {key, message, status} = currentNotification;
+
     return (
       <Snackbar
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -273,9 +293,9 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
   }
 
   render(): JSX.Element {
-    const {isLoaded} = this.state;
+    const {isAppLoaded} = this.state;
 
-    if(!isLoaded) {
+    if(!isAppLoaded) {
       return <Loader />;
     }
 

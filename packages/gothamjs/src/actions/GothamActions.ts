@@ -14,8 +14,8 @@ export class GothamActions {
     return Flux.dispatch({type: GothamConstants.INITIALIZE});
   }
 
-  static setConfig(config: GothamConfiguration): Promise<FluxAction> {
-    return Flux.dispatch({config, type: GothamConstants.SET_CONFIG});
+  static loading(isLoading: boolean): Promise<FluxAction> {
+    return Flux.dispatch({isLoading, type: GothamConstants.LOADING});
   }
 
   static navBack(): Promise<FluxAction> {
@@ -36,6 +36,10 @@ export class GothamActions {
 
   static notify(message: string, status?: GothamStatus): void {
     Flux.dispatch({notification: {message, status}, type: GothamConstants.NOTIFY});
+  }
+
+  static setConfig(config: GothamConfiguration): Promise<FluxAction> {
+    return Flux.dispatch({config, type: GothamConstants.SET_CONFIG});
   }
 
   static updateTitle(title: string, separator: string = ' :: '): Promise<FluxAction> {

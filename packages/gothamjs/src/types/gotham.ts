@@ -15,7 +15,8 @@ export interface GothamProps extends WithStyles<any> {
 export interface GothamState {
   readonly currentNotification: GothamNotification;
   readonly hasNotification: boolean;
-  readonly isLoaded: boolean;
+  readonly isAppLoaded: boolean;
+  readonly isLoading: boolean;
 }
 
 export interface GothamRoute {
