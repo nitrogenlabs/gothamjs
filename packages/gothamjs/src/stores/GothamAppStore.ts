@@ -5,8 +5,8 @@
 import {Store} from '@nlabs/arkhamjs';
 import {set} from 'lodash';
 
-import {GothamConstants} from '../../constants/GothamConstants';
-import {MarkdownConstants} from '../../constants/MarkdownConstants';
+import {GothamConstants} from '../constants/GothamConstants';
+import {MarkdownConstants} from '../constants/MarkdownConstants';
 
 export class GothamAppStore extends Store {
   constructor() {
@@ -23,13 +23,6 @@ export class GothamAppStore extends Store {
 
   onAction(type: string, data, state): object {
     switch(type) {
-      case MarkdownConstants.CLEAR_EXTERNAL: {
-        return set(state, 'external', {});
-      }
-      case MarkdownConstants.GET_EXTERNAL: {
-        const {content, url} = data;
-        return set(state, ['external', url], content);
-      }
       case GothamConstants.INITIALIZE: {
         return set(state, 'external', {});
       }
@@ -38,6 +31,13 @@ export class GothamAppStore extends Store {
       }
       case GothamConstants.UPDATE_TITLE: {
         return set(state, 'currentTitle', data.title);
+      }
+      case MarkdownConstants.CLEAR_EXTERNAL: {
+        return set(state, 'external', {});
+      }
+      case MarkdownConstants.GET_EXTERNAL: {
+        const {content, url} = data;
+        return set(state, ['external', url], content);
       }
       default:
         return state;

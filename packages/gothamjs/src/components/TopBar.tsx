@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography/Typography';
 import {Flux} from '@nlabs/arkhamjs';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import * as React from 'react';
-import NavLink from 'react-router-dom/NavLink';
+import {NavLink} from 'react-router-dom';
 
 import {GothamActions} from '../actions/GothamActions';
 import {Button} from '../components/Button';

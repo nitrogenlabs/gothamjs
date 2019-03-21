@@ -6,10 +6,7 @@ import loadable from '@loadable/component';
 import {FluxFramework} from '@nlabs/arkhamjs/lib';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
-import {RouteProps} from 'react-router-dom';
-import Redirect from 'react-router-dom/Redirect';
-import Route from 'react-router-dom/Route';
-import Switch from 'react-router-dom/Switch';
+import {Redirect, Route, RouteProps, Switch} from 'react-router-dom';
 
 import {GothamActions} from '../actions/GothamActions';
 import {Loader} from '../components/Loader';
@@ -169,7 +166,7 @@ export const renderSwitch = (
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
 ): JSX.Element =>
-  <Switch location={location}>{renderRouteList(routes, Flux, gothamConfig)}</Switch>;
+  <Switch>{renderRouteList(routes, Flux, gothamConfig)}</Switch>;
 
 // View Transition
 // const bounce = (val) => spring(val, {
@@ -205,4 +202,4 @@ export const renderTransition = (
   routes: GothamRoute[] = [],
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
-): JSX.Element => <Switch className="routeWrapper">{renderRouteList(routes, Flux, gothamConfig)}</Switch>;
+): JSX.Element => <Switch>{renderRouteList(routes, Flux, gothamConfig)}</Switch>;

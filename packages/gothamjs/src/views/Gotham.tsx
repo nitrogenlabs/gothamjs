@@ -17,7 +17,7 @@ import merge from 'lodash/merge';
 import {Close as CloseIcon} from 'mdi-material-ui';
 import * as React from 'react';
 import {hot} from 'react-hot-loader';
-import Router from 'react-router-dom/Router';
+import {Router} from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 
 import {GothamActions} from '../actions/GothamActions';
@@ -26,8 +26,7 @@ import {Notification} from '../components/Notification';
 import {Config} from '../config/app';
 import {defaultTheme} from '../config/theme';
 import {GothamConstants} from '../constants/GothamConstants';
-import {AuthStore} from '../stores/AuthStore/AuthStore';
-import {GothamAppStore} from '../stores/GothamAppStore/GothamAppStore';
+import {GothamAppStore} from '../stores/GothamAppStore';
 import {GothamConfiguration, GothamProps, GothamState} from '../types/gotham';
 import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
@@ -149,7 +148,7 @@ export class GothamBase extends React.PureComponent<GothamProps, GothamState> {
         name,
         // state: {app: {title}},
         storage,
-        stores: [GothamAppStore, AuthStore, ...stores]
+        stores: [GothamAppStore, ...stores]
       });
     }
 

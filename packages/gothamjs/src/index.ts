@@ -8,7 +8,7 @@ import {LoginConstants} from './constants/LoginConstants';
 import {MarkdownConstants} from './constants/MarkdownConstants';
 
 export {Flux} from '@nlabs/arkhamjs';
-export {default as NavLink} from 'react-router-dom/NavLink';
+export {NavLink} from 'react-router-dom';
 export * from './components';
 export * from './containers';
 export * from './views';
