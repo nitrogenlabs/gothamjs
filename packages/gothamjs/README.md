@@ -1,2 +1,0 @@
-# gothamjs
-Platform skeleton

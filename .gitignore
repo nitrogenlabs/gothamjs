@@ -1,6 +1,7 @@
-.DS_Store
-*.log
+changelog.tmp.md
+coverage
+lib
 node_modules
-/lib
-/coverage
-/packages/gothamjs-aws/lib
+package-lock.json
+yarn-error.log
+

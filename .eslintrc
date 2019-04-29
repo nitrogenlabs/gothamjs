@@ -9,7 +9,8 @@
       {
         "css": "always",
         "json": "always",
-        "svg": "always"
+        "svg": "always",
+        "types": "always"
       }
     ]
   }
