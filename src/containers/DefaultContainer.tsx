@@ -2,18 +2,18 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {useState} from '@nlabs/arkhamjs-utils-react';
 import React, {useContext, useEffect} from 'react';
 
-import {GothamConstants} from '..';
-
 import {TopBar} from '../components/TopBar/TopBar';
+import {GothamConstants} from '../constants/GothamConstants';
 import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
 import {DefaultContainerProps} from './DefaultContainer.types';
 
-const useStyles: any = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: Theme) => ({
   content: {
     backgroundColor: theme.palette.background.default,
     marginTop: -65,

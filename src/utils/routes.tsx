@@ -197,7 +197,6 @@ export const renderSwitch = (
 //   }
 // };
 
-
 export const renderTransition = (
   routes: GothamRoute[] = [],
   Flux: FluxFramework,

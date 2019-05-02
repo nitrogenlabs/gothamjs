@@ -2,13 +2,13 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import * as React from 'react';
 
-import {GothamContext} from '../../utils/GothamProvider';
 import {PageViewProps} from './PageView.types';
 
-const useStyles: any = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: Theme) => ({
   toolbar: theme.mixins.toolbar,
   view: {
     display: 'flex',
@@ -21,7 +21,7 @@ const useStyles: any = makeStyles((theme) => ({
 export const PageView = (props: PageViewProps) => {
   const {children} = props;
   const classes = useStyles();
-  const context: any = React.useContext(GothamContext);
+  // const context: any = React.useContext(GothamContext);
 
   return (
     <div className={classes.view}>

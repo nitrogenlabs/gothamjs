@@ -1,6 +1,6 @@
 import './ConversationListItem.css';
 
-import React, {Component, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import shave from 'shave';
 
 import {ConversationListItemProps} from './ConversationListItem.types';

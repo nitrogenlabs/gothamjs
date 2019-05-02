@@ -17,7 +17,7 @@ import {NavLink} from 'react-router-dom';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {SideBarProps} from './SideBar.types';
 
-const useStyles: any = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: any) => ({
   drawer: {
     height: '100vh'
   },
@@ -25,8 +25,8 @@ const useStyles: any = makeStyles((theme) => ({
     position: 'relative'
   },
   links: {
-    paddingLeft: theme.spacing.unit * 3,
-    paddingRight: theme.spacing.unit * 3
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3)
   },
   menuIcon: {
     height: 16,
@@ -100,9 +100,9 @@ export const SideBar = (props: SideBarProps) => {
   const {menu, open} = props;
 
   // Initial state
-  const [state, setState] = useStyles({
-    isOpen: false
-  });
+  // const [state, setState] = useStyles({
+  //   isOpen: false
+  // });
 
   // Styling
   const classes = useStyles();

@@ -2,6 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
 import * as React from 'react';
@@ -10,11 +11,11 @@ import {SideBar} from '../components/SideBar/SideBar';
 import {SideBarProps} from '../components/SideBar/SideBar.types';
 import {TopBar} from '../components/TopBar/TopBar';
 import {GothamConstants} from '../constants/GothamConstants';
-import {MenuContainerProps} from './MenuContainer.types';
 import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
+import {MenuContainerProps} from './MenuContainer.types';
 
-const useStyles: any = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: Theme) => ({
   container: {
     display: 'flex',
     flex: 1

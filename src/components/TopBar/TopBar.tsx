@@ -2,6 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {Theme} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Hidden from '@material-ui/core/Hidden/Hidden';
 import IconButton from '@material-ui/core/IconButton/IconButton';
@@ -11,7 +12,7 @@ import {makeStyles} from '@material-ui/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {NavLink} from 'react-router-dom';
 
 import {GothamActions} from '../../actions/GothamActions';
@@ -20,7 +21,7 @@ import {GothamMenuItem} from '../../views/Gotham/Gotham.types';
 import {Button} from '../Button/Button';
 import {TopBarProps} from './TopBar.types';
 
-const useStyles: any = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: Theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1
   },
@@ -82,7 +83,7 @@ export const renderMenu = (props, state, menu) => menu.map((menuItem) => renderM
 
 export const renderTitle = (title: string = ''): JSX.Element => {
   if(title !== '') {
-    return <Typography variant="title" color="inherit" noWrap>{title}</Typography>;
+    return <Typography variant="h1" color="inherit" noWrap>{title}</Typography>;
   }
 
   return null;

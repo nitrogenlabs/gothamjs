@@ -1,7 +1,7 @@
 import './ConversationList.css';
 
 import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
-import React, {Component, useEffect} from 'react';
+import React from 'react';
 
 import {MessageConstants} from '../../../constants/MessageConstants';
 import {ConversationListItem} from '../ConversationListItem/ConversationListItem';

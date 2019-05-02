@@ -2,12 +2,13 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import React from 'react';
 
 import {SplashIntroProps} from './SplashIntro.types';
 
-const useStyles: any = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: Theme) => ({
   splashIntro: {
     backgroundColor: theme.palette.background.default,
     backgroundPositionX: 'center',

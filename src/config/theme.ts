@@ -84,7 +84,7 @@ export const defaultTheme: ThemeOptions = {
     }
   },
   typography: {
-    fontFamily: ['Open Sans', 'sans-serif'].join(', '),
+    fontFamily: ['"Open Sans"', 'sans-serif'].join(', '),
     fontSize: 13,
     h1: {
       color: 'rgba(0, 0, 0, 0.15)',
@@ -99,7 +99,6 @@ export const defaultTheme: ThemeOptions = {
       fontSize: 'inherit',
       fontWeight: 'inherit',
       lineHeight: 'inherit'
-    },
-    useNextVariants: true
+    }
   }
 };

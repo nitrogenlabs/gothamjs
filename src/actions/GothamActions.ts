@@ -1,14 +1,14 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 
 import {Config} from '../config/app';
 import {GothamConstants} from '../constants/GothamConstants';
-import {GothamConfiguration, GothamStatus} from '../types/gotham';
+import {GothamConfiguration, GothamStatus} from '../views/Gotham/Gotham.types';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 export class GothamActions {
   static init(): Promise<FluxAction> {
     return Flux.dispatch({type: GothamConstants.INITIALIZE});

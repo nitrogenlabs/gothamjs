@@ -38,6 +38,7 @@ export const Compose = (props: ComposeProps) => {
   return (
     <div className="compose">
       <Form
+        onChange={() => onChange(setState)}
         initialValues={content}>
         <input
           name="content"

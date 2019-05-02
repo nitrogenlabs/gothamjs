@@ -2,7 +2,7 @@ import './MessageList.css';
 
 import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
 import {DateTime} from 'luxon';
-import React, {Component, useEffect} from 'react';
+import React from 'react';
 
 import {MessageConstants} from '../../../constants/MessageConstants';
 import {Compose} from '../Compose/Compose';

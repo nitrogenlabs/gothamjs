@@ -2,11 +2,11 @@
  * Copyright (c) 2019-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {StyleRulesCallback} from '@material-ui/core';
 import MaterialMenuItem from '@material-ui/core/MenuItem/MenuItem';
 import MaterialPaper from '@material-ui/core/Paper/Paper';
 import MaterialPopper from '@material-ui/core/Popper/Popper';
 import MaterialTextField from '@material-ui/core/TextField/TextField';
+import {makeStyles} from '@material-ui/styles';
 import {useState} from '@nlabs/arkhamjs-utils-react';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -18,7 +18,7 @@ import {Field} from 'react-final-form';
 
 import {AutocompleteFieldProps} from './AutocompleteField.types';
 
-const styles: StyleRulesCallback = (theme) => ({
+const useStyles: any = makeStyles((theme: any) => ({
   container: {
     position: 'relative'
   },
@@ -27,7 +27,7 @@ const styles: StyleRulesCallback = (theme) => ({
   },
   suggestionsContainerOpen: {
     left: 0,
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     position: 'absolute',
     right: 0,
     zIndex: 1
@@ -37,7 +37,7 @@ const styles: StyleRulesCallback = (theme) => ({
     margin: 0,
     padding: 0
   }
-});
+}));
 
 export const getSuggestions = (state) => (value) => {
   const {suggestions} = state;
@@ -83,9 +83,10 @@ export const onChange = (setState, input: any) => (event, {newValue}) => {
 };
 
 export const renderInputComponent = (props) => (inputProps) => {
-  const {classes, validate, getList, ...remainingProps} = props;
+  const {validate, getList, ...remainingProps} = props;
   const {inputRef = () => {}, meta, ref, ...other} = inputProps;
   const {active, dirty, error, touched} = meta;
+  const classes = useStyles();
   let updatedProps;
 
   if(!active && !!error && (dirty || touched)) {

@@ -7,15 +7,14 @@ import {GothamConstants} from './constants/GothamConstants';
 import {LoginConstants} from './constants/LoginConstants';
 import {MarkdownConstants} from './constants/MarkdownConstants';
 
+export {makeStyles} from '@material-ui/styles';
 export {Flux} from '@nlabs/arkhamjs';
 export {NavLink} from 'react-router-dom';
 export * from './components';
 export * from './containers';
 export * from './views';
-export * from './utils/components';
 export * from './utils/GothamProvider';
 export * from './utils/routes';
-export * from './utils/styles';
 export {
   GothamActions,
   GothamConstants,

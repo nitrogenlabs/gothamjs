@@ -1,9 +1,12 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import 'bootstrap/dist/css/bootstrap-grid.css';
 import 'bootstrap/dist/css/bootstrap-reboot.css';
 
-import {CssBaseline} from '@material-ui/core';
-import {createMuiTheme} from '@material-ui/core/styles';
-import {makeStyles, ThemeProvider} from '@material-ui/styles';
+import {createMuiTheme, CssBaseline} from '@material-ui/core';
+import {ThemeProvider} from '@material-ui/styles';
 import {ArkhamConstants, Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
@@ -11,7 +14,7 @@ import {useFlux} from '@nlabs/arkhamjs-utils-react';
 import {createBrowserHistory, History} from 'history';
 import merge from 'lodash/merge';
 import React, {useEffect, useState} from 'react';
-import {Router} from 'react-router';
+import {Router} from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 
 import {GothamActions} from '../../actions/GothamActions';
@@ -25,10 +28,6 @@ import {GothamContext} from '../../utils/GothamProvider';
 import {renderTransition} from '../../utils/routes';
 import {GothamConfiguration, GothamProps} from './Gotham.types';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 const GlobalStyle = createGlobalStyle`
 body, p, h1, input {
   font-family: 'Open Sans', sans-serif;
@@ -80,15 +79,8 @@ img {
 }
 `;
 
-const useStyles: any = makeStyles((theme) => ({
-  close: {
-    padding: theme.spacing.unit / 2
-  }
-}));
-
 export const init = (state, setState, config: GothamConfiguration) => (): void => {
   const {onInit} = config;
-  console.log('Gotham::init');
   GothamActions.init();
 
   if(onInit) {
@@ -98,20 +90,20 @@ export const init = (state, setState, config: GothamConfiguration) => (): void =
   setState({...state, isAppLoaded: true});
 };
 
-export const navBack = (history: History): void => {
+export const navBack = (history: History) => (): void => {
   history.goBack();
 };
 
-export const navForward = (history: History): void => {
+export const navForward = (history: History) => (): void => {
   history.goForward();
 };
 
-export const navGoto = (data, history: History): void => {
+export const navGoto = (history: History) => (data): void => {
   const {path = ''} = data;
   history.push(path);
 };
 
-export const navReplace = (data, history: History): void => {
+export const navReplace = (history: History) => (data): void => {
   const {path = ''} = data;
   history.replace(path);
 };
@@ -129,6 +121,9 @@ export const renderLoading = (isLoading: boolean): JSX.Element => {
   return <Loader />;
 };
 
+// Create browser history
+const history: History = createBrowserHistory();
+
 export const Gotham = (props: GothamProps): JSX.Element => {
   // Initial state
   const [state, setState] = useState({
@@ -138,7 +133,6 @@ export const Gotham = (props: GothamProps): JSX.Element => {
     isLoading: false
   });
   const {isAppLoaded} = state;
-  console.log('Gotham::isAppLoaded', isAppLoaded);
 
   // Configuration
   const {config: appConfig = {}} = props;
@@ -158,23 +152,20 @@ export const Gotham = (props: GothamProps): JSX.Element => {
     name,
     storageType,
     stores,
-    theme: configTheme
+    theme: configTheme = {}
     // title
   } = config;
 
-  // Create browser history
-  const history: History = createBrowserHistory();
-
   // Create theme
-  const theme = createMuiTheme(configTheme || defaultTheme);
+  const theme = createMuiTheme(merge(defaultTheme, configTheme));
 
   useFlux([
     {handler: init(state, setState, config), type: ArkhamConstants.INIT},
     {handler: toggleLoader(state, setState), type: GothamConstants.LOADING},
-    {handler: navBack, type: GothamConstants.NAV_BACK},
-    {handler: navForward, type: GothamConstants.NAV_FORWARD},
-    {handler: navGoto, type: GothamConstants.NAV_GOTO},
-    {handler: navReplace, type: GothamConstants.NAV_REPLACE}
+    {handler: navBack(history), type: GothamConstants.NAV_BACK},
+    {handler: navForward(history), type: GothamConstants.NAV_FORWARD},
+    {handler: navGoto(history), type: GothamConstants.NAV_GOTO},
+    {handler: navReplace(history), type: GothamConstants.NAV_REPLACE}
   ]);
 
   // Mount
@@ -202,7 +193,6 @@ export const Gotham = (props: GothamProps): JSX.Element => {
 
   let content: JSX.Element;
   const {isAuth, routes = [], ...gothamConfig} = config;
-  // const {Flux} = context;
 
   if(!isAppLoaded) {
     content = <Loader />;
@@ -226,7 +216,4 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   );
 };
 
-// GothamBase.contextType = GothamContext;
-
-// export const Gotham = hot(module)(withStyles(styles, {withTheme: true})(GothamBase as any));
 export default Gotham;

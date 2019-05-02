@@ -54,7 +54,7 @@ export interface SelectFieldOption {
 }
 
 export interface SelectFieldProps extends MaterialNativeSelectProps {
-  readonly classes: any;
+  readonly classes?: any;
   readonly label: string;
   readonly list: SelectFieldOption[];
   readonly value?: SelectFieldValue;

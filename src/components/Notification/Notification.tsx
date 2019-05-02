@@ -20,7 +20,10 @@ import React from 'react';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {NotificationProps} from './Notification.types';
 
-const useStyles: any = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: any) => ({
+  close: {
+    padding: theme.spacing(1)
+  },
   default: {
     backgroundColor: '#f1f1f1'
   },
@@ -31,7 +34,7 @@ const useStyles: any = makeStyles((theme) => ({
     fontSize: 20
   },
   iconVariant: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
     opacity: 0.9
   },
   info: {
@@ -86,7 +89,7 @@ export const onNotificationExit = (state, setState) => {
 export const Notification = (props: NotificationProps): JSX.Element => {
   const {className, setState, state, variant, ...other} = props;
   const {currentNotification, hasNotification: open} = state;
-  const {key, message, status} = currentNotification;
+  const {key, message} = currentNotification;
   const classes = useStyles();
   const Icon = variantIcon[variant];
   const notifyIcon = Icon && <Icon className={classNames(classes.icon, classes.iconVariant)} />;
