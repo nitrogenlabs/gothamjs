@@ -1,7 +1,7 @@
 export interface MessengerProps {
   readonly conversations: ConversationType[];
   readonly onCompose: (message: NewMessageType) => any;
-  readonly onGetMessages: (convoId: string) => MessageType[];
+  readonly onGetMessages: (convoId: string) => Promise<any>;
   readonly userId: string;
 }
 

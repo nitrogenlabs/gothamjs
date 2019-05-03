@@ -83,6 +83,7 @@ export const renderMessages = (props, state) => {
 
 export const MessageList = (props: MessageListProps) => {
   const {onCompose, userId} = props;
+
   // Initial state
   const [state, setState] = useState({
     convoId: '',
@@ -95,7 +96,6 @@ export const MessageList = (props: MessageListProps) => {
     {handler: onSuccess(setState), type: MessageConstants.GET_LIST_SUCCESS}
   ]);
 
-
   return (
     <div className="message-list">
       <Toolbar
@@ -104,8 +104,7 @@ export const MessageList = (props: MessageListProps) => {
           <ToolbarButton key="info" icon="ion-ios-information-circle-outline" />,
           <ToolbarButton key="video" icon="ion-ios-videocam" />,
           <ToolbarButton key="phone" icon="ion-ios-call" />
-        ]}
-      />
+        ]} />
 
       <div className="message-list-container">{renderMessages(props, state)}</div>
 

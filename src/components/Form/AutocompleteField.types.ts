@@ -1,4 +1,5 @@
 export interface AutocompleteFieldProps {
+  readonly classes?: any;
   readonly getList?: (value: string) => any[];
   readonly name: string;
   readonly suggestions: any[];
