@@ -6,6 +6,7 @@ import SvgIcon from '@material-ui/core/SvgIcon/SvgIcon';
 import {makeStyles} from '@material-ui/styles';
 import * as React from 'react';
 
+import {Config} from '../../config/app';
 import {SvgProps} from './Svg.types';
 
 export const Svg = ({color, height = 32, name, width = 32}: SvgProps) => {
@@ -16,7 +17,7 @@ export const Svg = ({color, height = 32, name, width = 32}: SvgProps) => {
 
   return (
     <SvgIcon className={classes.icon} color="primary" viewBox={`0 0 ${width} ${height}`}>
-      <use href={`./icons/icons.svg#${name}`} />
+      <use href={`${Config.get('baseUrl')}/icons/icons.svg#${name}`} />
     </SvgIcon>
   );
 };

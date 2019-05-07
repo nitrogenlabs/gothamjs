@@ -2,7 +2,6 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {ThemeOptions} from '@material-ui/core/styles/createMuiTheme';
 import {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import {Location} from 'history';
 
@@ -43,6 +42,7 @@ export interface GothamButtonItem {
 }
 
 export interface GothamConfiguration {
+  readonly baseUrl?: string;
   readonly config?: FluxOptions;
   readonly Flux?: FluxFramework;
   readonly isAuth?: () => boolean;
@@ -53,11 +53,12 @@ export interface GothamConfiguration {
   readonly stores?: any[];
   readonly title?: string;
   readonly titleBarSeparator?: string;
-  readonly theme?: ThemeOptions;
+  readonly theme?: any;
   readonly middleware?: FluxMiddlewareType[];
 }
 
 export interface GothamMenuItem {
+  readonly content?: (color: string) => JSX.Element;
   readonly label?: string;
   readonly url: string;
   readonly menu?: GothamMenuItem[];

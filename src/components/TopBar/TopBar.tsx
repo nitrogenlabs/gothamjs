@@ -65,18 +65,22 @@ export const renderMenuItem = (props, state, menuItem: GothamMenuItem) => {
     transparentTextColor = '#fff'
   } = props;
   const {isTransparent} = state;
-  const {label = '', url = ''} = menuItem;
+  const {content, label, url} = menuItem;
   const color = isTransparent ? transparentTextColor : solidTextColor;
 
-  return (
-    <Button
-      color="inherit"
-      key={`${label}:${url}`}
-      onClick={() => GothamActions.navGoto(url)}
-      style={{color}}>
-      {label}
-    </Button >
-  );
+  if(label) {
+    return (
+      <Button
+        color="inherit"
+        key={`${label}:${url}`}
+        onClick={() => GothamActions.navGoto(url)}
+        style={{color}}>
+        {label}
+      </Button >
+    );
+  }
+
+  return content(color);
 };
 
 export const renderMenu = (props, state, menu) => menu.map((menuItem) => renderMenuItem(props, state, menuItem));

@@ -137,6 +137,7 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   // Configuration
   const {config: appConfig = {}} = props;
   const defaultConfig: GothamConfiguration = {
+    baseUrl: '',
     middleware: [],
     routes: [],
     storageType: 'session',
