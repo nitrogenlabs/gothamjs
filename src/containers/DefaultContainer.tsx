@@ -18,6 +18,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.default,
     marginTop: -65,
     minWidth: 0,
+    overflowX: 'hidden',
     overflowY: 'auto'
   }
 }));

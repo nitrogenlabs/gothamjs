@@ -4,6 +4,8 @@
  */
 export {Button} from './Button/Button';
 export * from './Button/Button.types';
+export {CropTool} from './CropTool/CropTool';
+export * from './CropTool/CropTool.types';
 export {FeatureItem} from './FeatureItem/FeatureItem';
 export * from './FeatureItem/FeatureItem.types';
 export {Footer} from './Footer/Footer';

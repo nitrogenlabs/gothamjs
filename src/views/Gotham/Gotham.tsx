@@ -99,13 +99,13 @@ export const navForward = (history: History) => (): void => {
 };
 
 export const navGoto = (history: History) => (data): void => {
-  const {path = ''} = data;
-  history.push(path);
+  const {params, path = ''} = data;
+  history.push(path, params);
 };
 
 export const navReplace = (history: History) => (data): void => {
-  const {path = ''} = data;
-  history.replace(path);
+  const {params, path = ''} = data;
+  history.replace(path, params);
 };
 
 // Loader

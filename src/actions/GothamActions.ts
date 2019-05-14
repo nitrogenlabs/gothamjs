@@ -26,12 +26,12 @@ export class GothamActions {
     return Flux.dispatch({type: GothamConstants.NAV_FORWARD});
   }
 
-  static navGoto(path: string): Promise<FluxAction> {
-    return Flux.dispatch({path, type: GothamConstants.NAV_GOTO});
+  static navGoto(path: string, params?: any): Promise<FluxAction> {
+    return Flux.dispatch({params, path, type: GothamConstants.NAV_GOTO});
   }
 
-  static navReplace(path: string): Promise<FluxAction> {
-    return Flux.dispatch({path, type: GothamConstants.NAV_REPLACE});
+  static navReplace(path: string, params?: any): Promise<FluxAction> {
+    return Flux.dispatch({params, path, type: GothamConstants.NAV_REPLACE});
   }
 
   static notify(message: string, status?: GothamStatus): void {
