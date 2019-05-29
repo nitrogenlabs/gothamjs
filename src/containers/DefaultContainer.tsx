@@ -9,8 +9,10 @@ import React, {useContext, useEffect} from 'react';
 
 import {TopBar} from '../components/TopBar/TopBar';
 import {GothamConstants} from '../constants/GothamConstants';
+import {ContainerContext} from '../utils/ContainerProvider';
 import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
+import {getNavParams, getViewParams} from '../utils/viewUtils';
 import {DefaultContainerProps} from './DefaultContainer.types';
 
 const useStyles: any = makeStyles((theme: Theme) => ({
@@ -35,7 +37,16 @@ export const onScroll = (props, state, setState) => (): void => {
 };
 
 export const DefaultContainer = (props: DefaultContainerProps) => {
-  const {Flux, routes = [], topBar = {}} = props;
+  const {
+    exact,
+    Flux,
+    history,
+    location,
+    match,
+    routes = [],
+    staticContext,
+    topBar = {}
+  } = props;
   const [state, setState] = useState({
     isTopSolid: true
   });
@@ -52,14 +63,17 @@ export const DefaultContainer = (props: DefaultContainerProps) => {
 
   const context: any = useContext(GothamContext);
   const {isAuth} = context;
+  const navProps: any = getNavParams(props);
+  const routeProps: any = {exact, history, location, match, staticContext};
+  const viewProps: any = getViewParams(props);
 
   return (
-    <React.Fragment>
+    <ContainerContext.Provider value={{navProps, routeProps, viewProps}}>
       <TopBar {...topBar} transparent />
       <div className={classes.content} onScroll={onScroll(props, state, setState)}>
         {renderTransition(routes, Flux, {...props, isAuth})}
       </div>
-    </React.Fragment>
+    </ContainerContext.Provider>
   );
 };
 

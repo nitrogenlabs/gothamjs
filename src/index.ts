@@ -15,6 +15,8 @@ export * from './containers';
 export * from './views';
 export * from './utils/GothamProvider';
 export * from './utils/routes';
+export * from './utils/imageUtils';
+export * from './utils/viewUtils';
 export {
   GothamActions,
   GothamConstants,

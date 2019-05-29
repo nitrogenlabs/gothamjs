@@ -74,6 +74,13 @@ export interface GothamNotification {
 }
 
 export interface GothamProviderProps {
-  Flux: FluxFramework;
   children?: any;
+  Flux: FluxFramework;
+}
+
+export interface ContainerProviderProps {
+  children?: any;
+  navProps: any;
+  routeProps: any;
+  viewProps: any;
 }

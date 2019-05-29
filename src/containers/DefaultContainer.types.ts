@@ -8,11 +8,16 @@ import {FluxFramework} from '@nlabs/arkhamjs';
 import {TopBarProps} from '../components/TopBar/TopBar.types';
 
 export interface DefaultContainerProps {
-  readonly Flux?: FluxFramework;
-  readonly location?: Location;
-  readonly routes?: any[];
+  readonly exact: boolean;
+  readonly Flux: FluxFramework;
+  readonly history: History;
+  readonly location: Location;
+  readonly match?: any;
+  readonly menu?: any[];
+  readonly routes: any[];
+  readonly staticContext?: any;
   readonly theme: Theme;
-  readonly title?: string;
+  readonly title: string;
   readonly topBar?: TopBarProps;
 }
 

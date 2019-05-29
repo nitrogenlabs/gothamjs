@@ -5,14 +5,16 @@
 import {Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
-import * as React from 'react';
+import React, {useContext} from 'react';
 
 import {SideBar} from '../components/SideBar/SideBar';
 import {SideBarProps} from '../components/SideBar/SideBar.types';
 import {TopBar} from '../components/TopBar/TopBar';
 import {GothamConstants} from '../constants/GothamConstants';
+import {ContainerContext} from '../utils/ContainerProvider';
 import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
+import {getNavParams, getViewParams} from '../utils/viewUtils';
 import {MenuContainerProps} from './MenuContainer.types';
 
 const useStyles: any = makeStyles((theme: Theme) => ({
@@ -45,7 +47,16 @@ export const renderMenu = (props: SideBarProps, isOpen: boolean): JSX.Element =>
 };
 
 export const MenuContainer = (props: MenuContainerProps) => {
-  const {Flux, sideBar, routes = [], topBar = {}} = props;
+  const {
+    exact,
+    Flux,
+    history,
+    match,
+    routes = [],
+    sideBar,
+    staticContext,
+    topBar = {}
+  } = props;
   const classes = useStyles();
 
   // Initial state
@@ -54,15 +65,18 @@ export const MenuContainer = (props: MenuContainerProps) => {
   });
   const {isMenuOpen} = state;
 
-  const context: any = React.useContext(GothamContext);
+  const context: any = useContext(GothamContext);
   const {isAuth} = context;
+  const navProps: any = getNavParams(props);
+  const routeProps: any = {exact, history, location, match, staticContext};
+  const viewProps: any = getViewParams(props);
 
   useFlux([
     {handler: toggleMenu(state, setState), type: GothamConstants.TOGGLE_MENU}
   ]);
 
   return (
-    <React.Fragment>
+    <ContainerContext.Provider value={{navProps, routeProps, viewProps}}>
       <TopBar {...topBar} transparent={false} />
       <div className={classes.container}>
         {renderMenu(sideBar, isMenuOpen)}
@@ -70,7 +84,7 @@ export const MenuContainer = (props: MenuContainerProps) => {
           {renderTransition(routes, Flux, {...props, isAuth})}
         </div>
       </div>
-    </React.Fragment>
+    </ContainerContext.Provider>
   );
 };
 

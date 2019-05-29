@@ -11,10 +11,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import {makeStyles} from '@material-ui/styles';
 import {Flux} from '@nlabs/arkhamjs';
-import React from 'react';
-import {NavLink} from 'react-router-dom';
+import React, {useContext} from 'react';
+import {matchPath, NavLink} from 'react-router-dom';
 
 import {GothamConstants} from '../../constants/GothamConstants';
+import {ContainerContext} from '../../utils/ContainerProvider';
+import {parseNavUrl} from '../../utils/viewUtils';
 import {SideBarProps} from './SideBar.types';
 
 const useStyles: any = makeStyles((theme: any) => ({
@@ -57,17 +59,28 @@ export const toggleDrawer = (): void => {
   Flux.dispatch({type: GothamConstants.TOGGLE_MENU});
 };
 
-export const renderMenu = (menu): JSX.Element => {
+export const renderMenu = (pathname: string, menu: any[]): JSX.Element => {
   const classes = useStyles();
   const menuItems = menu.map((item) => {
-    const {divider, label, icon, url} = item;
+    const {divider, icon, label, path, url} = item;
+    const match = matchPath(pathname, {path});
+    let params = {};
+
+    if(match) {
+      const {params: matchParams} = match;
+      params = matchParams;
+    }
 
     if(label === '|') {
       return <Divider />;
     }
 
     return (
-      <NavLink key={label} activeStyle={{fontWeight: 700}} className={classes.menuLink} to={url} exact>
+      <NavLink
+        activeStyle={{fontWeight: 700}}
+        className={classes.menuLink}
+        exact
+        key={label} to={parseNavUrl(url, params)} >
         <ListItem
           button
           className={classes.links}
@@ -107,6 +120,9 @@ export const SideBar = (props: SideBarProps) => {
   // Styling
   const classes = useStyles();
 
+  const context: any = useContext(ContainerContext);
+  const {pathname} = context.routeProps.location;
+
   return (
     <div className={classes.sideBar}>
       <Hidden mdUp>
@@ -116,7 +132,7 @@ export const SideBar = (props: SideBarProps) => {
             role="button"
             onClick={() => toggleDrawer()}
             onKeyDown={() => toggleDrawer()}>
-            {renderMenu(menu)}
+            {renderMenu(pathname, menu)}
           </div>
         </Drawer>
       </Hidden>
@@ -127,7 +143,7 @@ export const SideBar = (props: SideBarProps) => {
           className={classes.drawer}
           transitionDuration={{enter: 0.3, exit: 0.3}}
           variant="permanent">
-          {renderMenu(menu)}
+          {renderMenu(pathname, menu)}
         </Drawer>
       </Hidden>
     </div>

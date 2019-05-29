@@ -15,7 +15,6 @@ import {createBrowserHistory, History} from 'history';
 import merge from 'lodash/merge';
 import React, {useEffect, useState} from 'react';
 import {Router} from 'react-router-dom';
-import {createGlobalStyle} from 'styled-components';
 
 import {GothamActions} from '../../actions/GothamActions';
 import {Loader} from '../../components/Loader/Loader';
@@ -27,57 +26,6 @@ import {GothamAppStore} from '../../stores/GothamAppStore';
 import {GothamContext} from '../../utils/GothamProvider';
 import {renderTransition} from '../../utils/routes';
 import {GothamConfiguration, GothamProps} from './Gotham.types';
-
-const GlobalStyle = createGlobalStyle`
-body, p, h1, input {
-  font-family: 'Open Sans', sans-serif;
-}
-h1, h2, h3, h4, h5, h6 {
-  color: #606676;
-  font-weight: 300;
-  line-height: 1.2;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-h1 {
-  font-size: 2.5rem;
-}
-.text-center {
-  text-align: center;
-}
-.subtitle {
-  font-size: 22px;
-  font-weight: 100;
-  line-height: 32px;
-  color: #5e6977;
-  width: 55%;
-  margin: 20px auto 40px;
-}
-.view {
-  display: flex;
-  flex: 1;
-  height: 100vh;
-}
-body {
-  margin: 0;
-  padding: 0;
-}
-img {
-  align-self: flex-start;
-  max-height: 100%;
-  max-width: 100%;
-}
-.routeWrapper {
-  display: flex;
-  flex: 1;
-  min-height: 100vh;
-  position: relative;
-}
-.routeWrapper > div {
-  position: relative;
-  width: 100%;
-}
-`;
 
 export const init = (state, setState, config: GothamConfiguration) => (): void => {
   const {onInit} = config;
@@ -122,7 +70,7 @@ export const renderLoading = (isLoading: boolean): JSX.Element => {
 };
 
 // Create browser history
-const history: History = createBrowserHistory();
+export const history: History = createBrowserHistory();
 
 export const Gotham = (props: GothamProps): JSX.Element => {
   // Initial state
@@ -208,7 +156,6 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <GlobalStyle />
       <GothamContext.Provider value={{Flux, isAuth}}>
         {content}
       </GothamContext.Provider>
