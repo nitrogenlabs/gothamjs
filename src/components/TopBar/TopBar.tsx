@@ -123,7 +123,7 @@ export const TopBar = (props: TopBarProps) => {
   return (
     <AppBar
       className={isTransparent ? appBarTransparent : appBarSolid}
-      position="sticky">
+      position="fixed">
       <Toolbar classes={{root: titleText}}>
         <Hidden mdUp>
           <IconButton

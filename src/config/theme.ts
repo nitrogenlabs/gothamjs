@@ -37,9 +37,11 @@ export const defaultTheme: ThemeOptions = {
         'body, p, h1, input': {
           fontFamily: '"Open Sans", sans-serif'
         },
+        'div, html, body': {
+          flexDirection: 'column'
+        },
         'div, html, body, nav, header, hgroup, footer, section, article': {
           display: 'flex',
-          flexDirection: 'column',
           flexShrink: 0
         },
         'h1, h2, h3, h4, h5, h6': {
@@ -125,6 +127,11 @@ export const defaultTheme: ThemeOptions = {
     MuiFormControl: {
       root: {
         display: 'flex'
+      }
+    },
+    MuiListItem: {
+      root: {
+        alignItems: 'flex-start'
       }
     },
     MuiListItemText: {

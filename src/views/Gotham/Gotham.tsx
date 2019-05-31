@@ -27,7 +27,7 @@ import {GothamContext} from '../../utils/GothamProvider';
 import {renderTransition} from '../../utils/routes';
 import {GothamConfiguration, GothamProps} from './Gotham.types';
 
-export const init = (state, setState, config: GothamConfiguration) => (): void => {
+export const init = (setAppLoaded, config: GothamConfiguration) => (): void => {
   const {onInit} = config;
   GothamActions.init();
 
@@ -35,7 +35,7 @@ export const init = (state, setState, config: GothamConfiguration) => (): void =
     onInit();
   }
 
-  setState({...state, isAppLoaded: true});
+  setAppLoaded(true);
 };
 
 export const navBack = (history: History) => (): void => {
@@ -57,8 +57,8 @@ export const navReplace = (history: History) => (data): void => {
 };
 
 // Loader
-export const toggleLoader = (state, setState) => ({isLoading}) => {
-  setState({...state, isLoading});
+export const toggleLoader = (setLoading) => ({isLoading}) => {
+  setLoading(isLoading);
 };
 
 export const renderLoading = (isLoading: boolean): JSX.Element => {
@@ -74,13 +74,8 @@ export const history: History = createBrowserHistory();
 
 export const Gotham = (props: GothamProps): JSX.Element => {
   // Initial state
-  const [state, setState] = useState({
-    currentNotification: {},
-    hasNotification: false,
-    isAppLoaded: false,
-    isLoading: false
-  });
-  const {isAppLoaded} = state;
+  const [isAppLoaded, setAppLoaded] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   // Configuration
   const {config: appConfig = {}} = props;
@@ -109,8 +104,8 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   const theme = createMuiTheme(merge(defaultTheme, configTheme));
 
   useFlux([
-    {handler: init(state, setState, config), type: ArkhamConstants.INIT},
-    {handler: toggleLoader(state, setState), type: GothamConstants.LOADING},
+    {handler: init(setAppLoaded, config), type: ArkhamConstants.INIT},
+    {handler: toggleLoader(setLoading), type: GothamConstants.LOADING},
     {handler: navBack(history), type: GothamConstants.NAV_BACK},
     {handler: navForward(history), type: GothamConstants.NAV_FORWARD},
     {handler: navGoto(history), type: GothamConstants.NAV_GOTO},
@@ -143,6 +138,7 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   let content: JSX.Element;
   const {isAuth, routes = [], ...gothamConfig} = config;
 
+  console.log('Gotham::isAppLoaded', isAppLoaded);
   if(!isAppLoaded) {
     content = <Loader />;
   } else {
@@ -157,9 +153,10 @@ export const Gotham = (props: GothamProps): JSX.Element => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <GothamContext.Provider value={{Flux, isAuth}}>
+        {renderLoading(isLoading)}
         {content}
       </GothamContext.Provider>
-      <Notification state={state} setState={setState} />
+      <Notification />
     </ThemeProvider >
   );
 };

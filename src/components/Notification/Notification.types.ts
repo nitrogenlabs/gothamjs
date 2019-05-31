@@ -6,7 +6,11 @@ export type NotificationType = 'default' | 'error' | 'info' | 'success' | 'warni
 
 export interface NotificationProps {
   readonly className?: string;
-  readonly setState?: any;
-  readonly state?: any;
+  readonly currentNotification?: any;
+  readonly hasNotification?: boolean;
+  readonly notifications?: any;
+  readonly setCurrent?: any;
+  readonly setHasNotification?: any;
+  readonly setNotifications?: any;
   readonly variant?: NotificationType;
 }

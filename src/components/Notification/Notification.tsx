@@ -15,7 +15,7 @@ import {
   Close as CloseIcon,
   InformationOutline as InfoIcon
 } from 'mdi-material-ui';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {GothamConstants} from '../../constants/GothamConstants';
 import {NotificationProps} from './Notification.types';
@@ -59,36 +59,47 @@ const variantIcon = {
   warning: WarningIcon
 };
 
-export const processNotifications = (state, setState) => {
-  const {notifications} = state;
-
+export const processNotifications = (notifications, setHasNotification, setNotifications, setCurrent) => {
   if(notifications.length > 0) {
-    setState({currentNotification: notifications.shift(), hasNotification: true});
+    setHasNotification(true);
+    setCurrent(notifications.shift());
+    setNotifications(notifications);
   }
 };
 
-export const addNotification = (state, setState) => ({notification}) => {
-  const {notifications} = state;
-  notifications.push(notification);
-  setState({notifications});
-  processNotifications(state, setState);
-};
+export const addNotification = (notifications, setHasNotification, setNotifications, setCurrent) =>
+  ({notification}) => {
+    notifications.push(notification);
+    setNotifications(notifications);
+    processNotifications(notifications, setHasNotification, setNotifications, setCurrent);
+  };
 
-export const onNotificationClose = (setState, event: any, reason?: string) => {
+export const onNotificationClose = (setHasNotification, event: any, reason?: string) => {
   if(reason === 'clickaway') {
     return;
   }
 
-  setState({hasNotification: false});
+  setHasNotification(false);
 };
 
-export const onNotificationExit = (state, setState) => {
-  processNotifications(state, setState);
+export const onNotificationExit = (notifications, setHasNotification, setNotifications, setCurrent) => {
+  processNotifications(notifications, setHasNotification, setNotifications, setCurrent);
 };
 
 export const Notification = (props: NotificationProps): JSX.Element => {
-  const {className, setState, state, variant, ...other} = props;
-  const {currentNotification, hasNotification: open} = state;
+  const {
+    className,
+    variant,
+    ...other
+  } = props;
+  const [currentNotification, setCurrent] = useState({key: '', message: ''});
+  const [hasNotification, setHasNotification] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
+  if(!currentNotification) {
+    return null;
+  }
+
   const {key, message} = currentNotification;
   const classes = useStyles();
   const Icon = variantIcon[variant];
@@ -96,7 +107,10 @@ export const Notification = (props: NotificationProps): JSX.Element => {
   const notifyClass = classes[variant] || classes.default;
 
   useFlux([
-    {handler: addNotification(state, setState), type: GothamConstants.NOTIFY}
+    {
+      handler: addNotification(notifications, setHasNotification, setNotifications, setCurrent),
+      type: GothamConstants.NOTIFY
+    }
   ]);
 
   return (
@@ -104,9 +118,9 @@ export const Notification = (props: NotificationProps): JSX.Element => {
       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
       autoHideDuration={10000}
       key={key}
-      onClose={(event) => onNotificationClose(setState, event)}
-      onExited={() => onNotificationExit(state, setState)}
-      open={open}
+      onClose={(event) => onNotificationClose(setHasNotification, event)}
+      onExited={() => onNotificationExit(notifications, setHasNotification, setNotifications, setCurrent)}
+      open={hasNotification}
       ContentProps={{'aria-describedby': 'message-id'}}
       message={<span id="message-id">{message}</span>}
       action={[
@@ -115,7 +129,7 @@ export const Notification = (props: NotificationProps): JSX.Element => {
           aria-label="Close"
           className={classes.close}
           color="inherit"
-          onClick={(event) => onNotificationClose(setState, event)}>
+          onClick={(event) => onNotificationClose(setHasNotification, event)}>
           <CloseIcon />
         </IconButton>
       ]}>
@@ -134,7 +148,7 @@ export const Notification = (props: NotificationProps): JSX.Element => {
             aria-label="Close"
             color="inherit"
             className={classes.close}
-            onClick={(event) => onNotificationClose(setState, event)}>
+            onClick={(event) => onNotificationClose(setHasNotification, event)}>
             <CloseIcon className={classes.icon} />
           </IconButton>
         ]}

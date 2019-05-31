@@ -98,14 +98,7 @@ export const renderMenu = (pathname: string, menu: any[]): JSX.Element => {
     );
   });
 
-  return (
-    <React.Fragment>
-      <div className={classes.toolbar} />
-      <List>
-        {menuItems}
-      </List>
-    </React.Fragment>
-  );
+  return <List>{menuItems}</List>;
 };
 
 export const SideBar = (props: SideBarProps) => {
@@ -127,6 +120,7 @@ export const SideBar = (props: SideBarProps) => {
     <div className={classes.sideBar}>
       <Hidden mdUp>
         <Drawer className={classes.drawer} open={open} onClose={() => toggleDrawer()}>
+          <div className={classes.toolbar} />
           <div
             tabIndex={0}
             role="button"
@@ -143,6 +137,7 @@ export const SideBar = (props: SideBarProps) => {
           className={classes.drawer}
           transitionDuration={{enter: 0.3, exit: 0.3}}
           variant="permanent">
+          <div className={classes.toolbar} />
           {renderMenu(pathname, menu)}
         </Drawer>
       </Hidden>

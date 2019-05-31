@@ -20,7 +20,8 @@ import {MenuContainerProps} from './MenuContainer.types';
 const useStyles: any = makeStyles((theme: Theme) => ({
   container: {
     display: 'flex',
-    flex: 1
+    flex: 1,
+    flexDirection: 'row'
   },
   content: {
     backgroundColor: theme.palette.background.default,
@@ -30,7 +31,8 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     overflowY: 'auto',
     paddingLeft: 15,
     paddingRight: 15
-  }
+  },
+  toolbar: theme.mixins.toolbar
 }));
 
 export const toggleMenu = (state, setState) => () => {
@@ -81,6 +83,7 @@ export const MenuContainer = (props: MenuContainerProps) => {
       <div className={classes.container}>
         {renderMenu(sideBar, isMenuOpen)}
         <div className={classes.content}>
+          <div className={classes.toolbar} />
           {renderTransition(routes, Flux, {...props, isAuth})}
         </div>
       </div>
