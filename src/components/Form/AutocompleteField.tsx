@@ -22,6 +22,9 @@ const styles: StyleRulesCallback = (theme) => ({
   container: {
     position: 'relative'
   },
+  listItem: {
+    flexDirection: 'row'
+  },
   suggestion: {
     display: 'block'
   },
@@ -46,19 +49,19 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
     super(props);
 
     const {
+      classes,
       value = '',
       wait = 1000
     } = props;
 
     // Methods
     this.onChange = this.onChange.bind(this);
+    this.onSelected = this.onSelected.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
     this.onSuggestionsFetchRequested = debounce(this.onSuggestionsFetchRequested.bind(this), wait);
     this.renderField = this.renderField.bind(this);
     this.renderInputComponent = this.renderInputComponent.bind(this);
-    this.renderSuggestion = this.renderSuggestion.bind(this);
-
-    console.log('AutocompleteFieldBase::props', props);
+    this.renderSuggestion = this.renderSuggestion.bind(this, classes);
 
     this.state = {
       single: '',
@@ -112,8 +115,16 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
     };
   }
 
+  onSelected(event, suggestion) {
+    const {onSelected} = this.props;
+
+    if(onSelected) {
+      onSelected(suggestion);
+    }
+  }
+
   renderInputComponent(inputProps) {
-    const {classes, validate, getList, ...remainingProps} = this.props;
+    const {classes, validate, getList, onSelected, ...remainingProps} = this.props;
     const {inputRef = () => {}, meta, ref, ...other} = inputProps;
     const {active, dirty, error, touched} = meta;
     let updatedProps;
@@ -161,13 +172,13 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
       (part.highlight ? highlightedElement(part, index) : strongElement(part, index)));
   }
 
-  renderSuggestion(suggestion, {query, isHighlighted}): JSX.Element {
+  renderSuggestion(classes, suggestion, {query, isHighlighted}): JSX.Element {
     const matches: any[] = match(suggestion.label, query);
     const parts: any[] = parse(suggestion.label, matches);
 
     return (
       <MaterialMenuItem selected={isHighlighted} component="div">
-        <div>{this.renderItemLabel(parts)}</div>
+        <div className={classes.listItem}>{this.renderItemLabel(parts)}</div>
       </MaterialMenuItem >
     );
   }
@@ -192,6 +203,7 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
           value: !isEmpty(inputValue) ? inputValue : value
         }}
         getSuggestionValue={(suggestion) => suggestion[valueKey]}
+        onSuggestionSelected={this.onSelected}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         renderInputComponent={this.renderInputComponent}

@@ -63,12 +63,15 @@ export const renderMenu = (pathname: string, menu: any[]): JSX.Element => {
   const classes = useStyles();
   const menuItems = menu.map((item) => {
     const {divider, icon, label, path, url} = item;
-    const match = matchPath(pathname, {path});
     let params = {};
 
-    if(match) {
-      const {params: matchParams} = match;
-      params = matchParams;
+    if(path) {
+      const match = matchPath(pathname, {path});
+
+      if(match) {
+        const {params: matchParams} = match;
+        params = matchParams;
+      }
     }
 
     if(label === '|') {
