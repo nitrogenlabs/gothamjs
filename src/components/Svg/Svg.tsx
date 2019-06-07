@@ -13,7 +13,7 @@ export const Svg = ({color, height = 32, name, width = 32}: SvgProps) => {
   const useStyles = makeStyles({
     icon: {color, height, width}
   });
-  const classes = useStyles();
+  const classes = useStyles({});
 
   return (
     <SvgIcon className={classes.icon} color="primary" viewBox={`0 0 ${width} ${height}`}>

@@ -8,8 +8,5 @@ export interface SideBarProps {
   readonly logo?: JSX.Element;
   readonly menu?: GothamMenuItem[];
   readonly open?: boolean;
-}
-
-export interface SideBarState {
-  readonly isOpen: boolean;
+  readonly pathname?: string;
 }

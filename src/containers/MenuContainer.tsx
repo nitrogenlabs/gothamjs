@@ -40,9 +40,9 @@ export const toggleMenu = (state, setState) => () => {
   setState({isMenuOpen: !isMenuOpen});
 };
 
-export const renderMenu = (props: SideBarProps, isOpen: boolean): JSX.Element => {
+export const renderMenu = (props: SideBarProps, isOpen: boolean, pathname: string): JSX.Element => {
   if(props) {
-    return <SideBar {...props} open={isOpen} />;
+    return <SideBar {...props} open={isOpen} pathname={pathname} />;
   }
 
   return null;
@@ -53,6 +53,7 @@ export const MenuContainer = (props: MenuContainerProps) => {
     exact,
     Flux,
     history,
+    location,
     match,
     routes = [],
     sideBar,
@@ -69,6 +70,7 @@ export const MenuContainer = (props: MenuContainerProps) => {
 
   const context: any = useContext(GothamContext);
   const {isAuth} = context;
+  const {pathname} = location;
   const navProps: any = getNavParams(props);
   const routeProps: any = {exact, history, location, match, staticContext};
   const viewProps: any = getViewParams(props);
@@ -81,7 +83,7 @@ export const MenuContainer = (props: MenuContainerProps) => {
     <ContainerContext.Provider value={{navProps, routeProps, viewProps}}>
       <TopBar {...topBar} transparent={false} />
       <div className={classes.container}>
-        {renderMenu(sideBar, isMenuOpen)}
+        {renderMenu(sideBar, isMenuOpen, pathname)}
         <div className={classes.content}>
           <div className={classes.toolbar} />
           {renderTransition(routes, Flux, {...props, isAuth})}

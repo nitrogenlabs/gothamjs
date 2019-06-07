@@ -8,7 +8,7 @@ import {Location} from 'history';
 export interface GothamProps {
   readonly classes?: any;
   readonly config?: GothamConfiguration;
-  readonly isAuth?: boolean;
+  readonly isAuth?: () => boolean;
 }
 
 export interface GothamState {
@@ -76,6 +76,7 @@ export interface GothamNotification {
 export interface GothamProviderProps {
   children?: any;
   Flux: FluxFramework;
+  isAuth?: () => boolean;
 }
 
 export interface ContainerProviderProps {

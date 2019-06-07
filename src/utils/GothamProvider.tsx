@@ -1,10 +1,12 @@
 import {Flux} from '@nlabs/arkhamjs';
-import * as React from 'react';
+import React, {createContext} from 'react';
 
 import {GothamProviderProps} from '../views/Gotham/Gotham.types';
 
-export const GothamContext = React.createContext({Flux});
+const isAuth = () => true;
 
-export const GothamProvider = ({Flux, children}: GothamProviderProps) => (
-  <GothamContext.Provider value={{Flux}}>{children}</GothamContext.Provider>
+export const GothamContext = createContext({Flux, isAuth});
+
+export const GothamProvider = ({children, Flux, isAuth}: GothamProviderProps) => (
+  <GothamContext.Provider value={{Flux, isAuth}}>{children}</GothamContext.Provider>
 );

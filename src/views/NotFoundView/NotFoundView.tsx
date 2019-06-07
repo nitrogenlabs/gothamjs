@@ -37,7 +37,7 @@ const useStyle = makeStyles(() => ({
 }));
 
 export const NotFoundView = () => {
-  const classes = useStyle();
+  const classes = useStyle({});
 
   return (
     <div className="container">

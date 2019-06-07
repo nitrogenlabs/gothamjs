@@ -11,11 +11,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import {makeStyles} from '@material-ui/styles';
 import {Flux} from '@nlabs/arkhamjs';
-import React, {useContext} from 'react';
+import React from 'react';
 import {matchPath, NavLink} from 'react-router-dom';
 
 import {GothamConstants} from '../../constants/GothamConstants';
-import {ContainerContext} from '../../utils/ContainerProvider';
 import {parseNavUrl} from '../../utils/viewUtils';
 import {SideBarProps} from './SideBar.types';
 
@@ -106,7 +105,7 @@ export const renderMenu = (pathname: string, menu: any[]): JSX.Element => {
 
 export const SideBar = (props: SideBarProps) => {
   // Props
-  const {menu, open} = props;
+  const {menu, open, pathname} = props;
 
   // Initial state
   // const [state, setState] = useStyles({
@@ -116,8 +115,8 @@ export const SideBar = (props: SideBarProps) => {
   // Styling
   const classes = useStyles();
 
-  const context: any = useContext(ContainerContext);
-  const {pathname} = context.routeProps.location;
+  // const context: any = useContext(ContainerContext);
+  // const {pathname} = context.routeProps.location;
 
   return (
     <div className={classes.sideBar}>
