@@ -50,7 +50,7 @@
     "@material-ui/styles": "^4.1.2",
     "@nlabs/arkhamjs-middleware-logger": "^3.14.1",
     "@nlabs/arkhamjs-storage-browser": "^3.14.1",
-    "@nlabs/material-ui-pickers": "^1.1.1",
+    "@nlabs/material-ui-pickers": "^1.1.2",
     "@nlabs/rip-hunter": "^2.0.2",
     "autosuggest-highlight": "^3.1.1",
     "bootstrap": "^4.3.1",
