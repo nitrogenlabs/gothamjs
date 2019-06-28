@@ -2,8 +2,8 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl/FormControl';
+import InputLabel from '@material-ui/core/InputLabel/InputLabel';
 import MaterialNativeSelect from '@material-ui/core/NativeSelect/NativeSelect';
 import {makeStyles} from '@material-ui/styles';
 import * as React from 'react';
@@ -36,20 +36,21 @@ export const renderSelect = (props) => ({input}): JSX.Element => {
     labelElement = <InputLabel shrink>{label}</InputLabel>;
   }
 
-  // If no value is added, set the first item as the initial value
-  if(list.length && props.value === undefined) {
-    props.value = list[0].value;
-  }
+  const updatedProps = {
+    ...props,
+    // If no value is added, set the first item as the initial value
+    value: (list.length && props.value === undefined) ? list[0].value : props.value
+  };
 
   return (
     <FormControl className={classes.field}>
       {labelElement}
-      <MaterialNativeSelect {...restProps} {...input}>{renderOptions(props, list)}</MaterialNativeSelect>
+      <MaterialNativeSelect {...restProps} {...input}>{renderOptions(updatedProps, list)}</MaterialNativeSelect>
     </FormControl>
   );
 };
 
 export const SelectField = (props: SelectFieldProps) => {
   const {name} = props;
-  return <Field name={name} render={renderSelect} />;
+  return <Field name={name} render={renderSelect(props)} />;
 };

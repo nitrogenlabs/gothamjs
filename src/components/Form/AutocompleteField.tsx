@@ -1,4 +1,4 @@
-import {StyleRulesCallback, withStyles} from '@material-ui/core';
+import {withStyles} from '@material-ui/core';
 import MaterialMenuItem from '@material-ui/core/MenuItem/MenuItem';
 import MaterialPaper from '@material-ui/core/Paper/Paper';
 import MaterialPopper from '@material-ui/core/Popper/Popper';
@@ -18,7 +18,7 @@ import {AutocompleteFieldProps, AutocompleteFieldState} from './AutocompleteFiel
  * Copyright (c) 2019-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-const styles: StyleRulesCallback = (theme) => ({
+const styles: any = (theme) => ({
   container: {
     position: 'relative'
   },

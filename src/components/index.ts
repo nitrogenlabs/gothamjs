@@ -67,6 +67,7 @@ export {default as GridList} from '@material-ui/core/GridList';
 export {default as GridListTile} from '@material-ui/core/GridListTile';
 export {default as IconButton} from '@material-ui/core/IconButton';
 export {default as Input} from '@material-ui/core/Input';
+export {default as InputAdornment} from '@material-ui/core/InputAdornment';
 export {default as InputLabel} from '@material-ui/core/InputLabel';
 export {default as List} from '@material-ui/core/List';
 export {default as ListItem} from '@material-ui/core/ListItem';

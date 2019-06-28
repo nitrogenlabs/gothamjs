@@ -1,10 +1,10 @@
-/* eslint-disable sort-keys */
-import {ThemeOptions} from '@material-ui/core/styles/createMuiTheme';
-
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {ThemeOptions} from '@material-ui/core/styles/createMuiTheme';
+
+/* eslint-disable sort-keys */
 const palette = {
   error: {
     dark: '#C4272F',
@@ -23,6 +23,11 @@ const palette = {
 
 export const defaultTheme: ThemeOptions = {
   overrides: {
+    MuiInputAdornment: {
+      root: {
+        flexDirection: 'row'
+      }
+    },
     MuiCssBaseline: {
       '@global': {
         '*': {
@@ -129,6 +134,11 @@ export const defaultTheme: ThemeOptions = {
         display: 'flex'
       }
     },
+    MuiInputBase: {
+      root: {
+        flexDirection: 'row'
+      }
+    },
     MuiListItem: {
       root: {
         alignItems: 'flex-start'
@@ -141,7 +151,9 @@ export const defaultTheme: ThemeOptions = {
     },
     MuiNativeSelect: {
       select: {
-        height: 24
+        height: 24,
+        paddingBottom: 0,
+        paddingTop: 14
       }
     },
     MuiTabs: {
