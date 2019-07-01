@@ -6,10 +6,10 @@ import {makeStyles} from '@material-ui/styles';
 import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
 import React, {useContext} from 'react';
 
-import {Theme} from '../../config/theme.types';
 import {SideBar} from '../components/SideBar/SideBar';
 import {SideBarProps} from '../components/SideBar/SideBar.types';
 import {TopBar} from '../components/TopBar/TopBar';
+import {Theme} from '../config/theme.types';
 import {GothamConstants} from '../constants/GothamConstants';
 import {ContainerContext} from '../utils/ContainerProvider';
 import {GothamContext} from '../utils/GothamProvider';
