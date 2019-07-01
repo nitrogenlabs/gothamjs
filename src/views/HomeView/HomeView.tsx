@@ -2,7 +2,6 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import * as React from 'react';
 
@@ -15,6 +14,7 @@ import {PromoRow} from '../../components/PromoRow/PromoRow';
 import {PromoRowProps} from '../../components/PromoRow/PromoRow.types';
 import {SplashIntro} from '../../components/SplashIntro/SplashIntro';
 import {SplashIntroProps} from '../../components/SplashIntro/SplashIntro.types';
+import {Theme} from '../../config/theme.types';
 import {HomeViewProps} from './HomeView.types';
 
 const useStyles: any = makeStyles((theme: Theme) => ({

@@ -2,11 +2,11 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
 import React, {useContext} from 'react';
 
+import {Theme} from '../../config/theme.types';
 import {SideBar} from '../components/SideBar/SideBar';
 import {SideBarProps} from '../components/SideBar/SideBar.types';
 import {TopBar} from '../components/TopBar/TopBar';

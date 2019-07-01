@@ -2,7 +2,6 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Theme} from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar/AppBar';
 import Hidden from '@material-ui/core/Hidden/Hidden';
 import IconButton from '@material-ui/core/IconButton/IconButton';
@@ -16,6 +15,7 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 
 import {GothamActions} from '../../actions/GothamActions';
+import {Theme} from '../../config/theme.types';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {GothamMenuItem} from '../../views/Gotham/Gotham.types';
 import {Button} from '../Button/Button';

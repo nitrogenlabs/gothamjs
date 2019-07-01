@@ -2,12 +2,12 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/styles';
 import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
 import React, {useEffect} from 'react';
 
 import {MarkdownActions} from '../../actions/MarkdownActions';
+import {Theme} from '../../config/theme.types';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {MarkdownViewProps} from './MarkdownView.types';
 

@@ -2,7 +2,6 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Theme} from '@material-ui/core';
 import Button from '@material-ui/core/Button/Button';
 import Card from '@material-ui/core/Card/Card';
 import CardContent from '@material-ui/core/CardContent/CardContent';
@@ -13,6 +12,7 @@ import * as React from 'react';
 import {Form} from '../../components/Form/Form';
 import {TextField} from '../../components/Form/TextField';
 import {PageHeader} from '../../components/PageHeader/PageHeader';
+import {Theme} from '../../config/theme.types';
 import {LoginConstants} from '../../constants/LoginConstants';
 import {PageView} from '../PageView/PageView';
 import {LoginViewProps} from './LoginView.types';

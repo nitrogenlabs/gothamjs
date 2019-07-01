@@ -14,11 +14,12 @@ import {Flux} from '@nlabs/arkhamjs';
 import React from 'react';
 import {matchPath, NavLink} from 'react-router-dom';
 
+import {Theme} from '../../config/theme.types';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {parseNavUrl} from '../../utils/viewUtils';
 import {SideBarProps} from './SideBar.types';
 
-const useStyles: any = makeStyles((theme: any) => ({
+const useStyles: any = makeStyles((theme: Theme) => ({
   drawer: {
     height: '100vh'
   },

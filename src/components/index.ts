@@ -31,10 +31,9 @@ export {Svg} from './Svg/Svg';
 export * from './Svg/Svg.types';
 export {TopBar} from './TopBar/TopBar';
 export * from './TopBar/TopBar.types';
+export {Theme, ThemeOptions} from '../config/theme.types';
 
 // Material UI
-export {ThemeOptions} from '@material-ui/core/styles/createMuiTheme';
-export {Theme} from '@material-ui/core';
 
 // Material UI Components
 export {default as AppBar} from '@material-ui/core/AppBar';

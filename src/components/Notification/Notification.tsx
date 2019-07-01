@@ -17,10 +17,11 @@ import {
 } from 'mdi-material-ui';
 import React, {useState} from 'react';
 
+import {Theme} from '../../config/theme.types';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {NotificationProps} from './Notification.types';
 
-const useStyles: any = makeStyles((theme: any) => ({
+const useStyles: any = makeStyles((theme: Theme) => ({
   close: {
     padding: theme.spacing(1)
   },

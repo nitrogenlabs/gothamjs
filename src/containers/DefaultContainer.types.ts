@@ -2,10 +2,10 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Theme} from '@material-ui/core';
 import {FluxFramework} from '@nlabs/arkhamjs';
 
 import {TopBarProps} from '../components/TopBar/TopBar.types';
+import {Theme} from '../config/theme.types';
 
 export interface DefaultContainerProps {
   readonly exact: boolean;

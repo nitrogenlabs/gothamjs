@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {ThemeOptions} from '@material-ui/core/styles/createMuiTheme';
+import {ThemeOptions} from './theme.types';
 
 /* eslint-disable sort-keys */
 const palette = {
