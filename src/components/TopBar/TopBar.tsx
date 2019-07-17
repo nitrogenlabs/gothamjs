@@ -9,9 +9,8 @@ import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Typography from '@material-ui/core/Typography/Typography';
 import {makeStyles} from '@material-ui/styles';
 import {Flux} from '@nlabs/arkhamjs';
-import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 
 import {GothamActions} from '../../actions/GothamActions';
@@ -21,18 +20,20 @@ import {GothamMenuItem} from '../../views/Gotham/Gotham.types';
 import {Button} from '../Button/Button';
 import {TopBarProps} from './TopBar.types';
 
+const TOPBAR_MAX_HEIGHT: number = 130;
+const TOPBAR_MIN_HEIGHT: number = 64;
+const TOPBAR_HEIGHT_TOLERANCE: number = 50;
+
 const useStyles: any = makeStyles((theme: Theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1
   },
   appBarSolid: {
-    backgroundColor: 'rgba(0, 0, 0, 1)',
     borderBottom: `1px solid ${theme.palette.primary.main}`,
     boxShadow: '0 5px 10px 0 rgba(0, 0, 0, 0), 0px 3px 10px 0px rgba(0, 0, 0, .3)',
     transition: 'all 0.3s ease-in-out'
   },
   appBarTransparent: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
     borderBottom: '1px solid transparent',
     boxShadow: '0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0), 0 0 0 0 rgba(0, 0, 0, 0)',
     transition: 'all 0.3s ease-in-out'
@@ -50,21 +51,15 @@ const useStyles: any = makeStyles((theme: Theme) => ({
   }
 }));
 
-export const onUpdateBackground = (setState, data) => {
-  const {isTransparent} = data;
-  setState({isTransparent});
-};
-
 export const onToggleDrawer = () => {
   Flux.dispatch({type: GothamConstants.TOGGLE_MENU});
 };
 
-export const renderMenuItem = (props, state, menuItem: GothamMenuItem) => {
+export const renderMenuItem = (props, isTransparent, menuItem: GothamMenuItem) => {
   const {
     solidTextColor = '#fff',
     transparentTextColor = '#fff'
   } = props;
-  const {isTransparent} = state;
   const {content, label, url} = menuItem;
   const color = isTransparent ? transparentTextColor : solidTextColor;
 
@@ -83,7 +78,8 @@ export const renderMenuItem = (props, state, menuItem: GothamMenuItem) => {
   return content(color);
 };
 
-export const renderMenu = (props, state, menu) => menu.map((menuItem) => renderMenuItem(props, state, menuItem));
+export const renderMenu = (props, isTransparent, menu) =>
+  menu.map((menuItem) => renderMenuItem(props, isTransparent, menuItem));
 
 export const renderTitle = (title: string = ''): JSX.Element => {
   if(title !== '') {
@@ -91,6 +87,38 @@ export const renderTitle = (title: string = ''): JSX.Element => {
   }
 
   return null;
+};
+
+export const calculateStyles = (): any => {
+  const {scrollY} = window;
+  const tolerance: number = scrollY - TOPBAR_HEIGHT_TOLERANCE;
+
+  // Calculate height
+  let updatedHeight: number = TOPBAR_MAX_HEIGHT - tolerance;
+
+  if(tolerance > TOPBAR_MAX_HEIGHT) {
+    updatedHeight = TOPBAR_MAX_HEIGHT - (tolerance - TOPBAR_MAX_HEIGHT);
+
+    if(updatedHeight < TOPBAR_MIN_HEIGHT) {
+      updatedHeight = TOPBAR_MIN_HEIGHT;
+    } else if(updatedHeight > TOPBAR_MAX_HEIGHT) {
+      updatedHeight = TOPBAR_MAX_HEIGHT;
+    }
+  } else {
+    updatedHeight = TOPBAR_MAX_HEIGHT;
+  }
+
+  // Calculate opacity
+  const opacityHeight: number = (updatedHeight - TOPBAR_MIN_HEIGHT);
+  const opacity: number = (opacityHeight > 0) ? 1 - (opacityHeight / TOPBAR_MIN_HEIGHT) : 1;
+
+  return {backgroundColor: `rgba(0, 0, 0, ${opacity})`, height: updatedHeight};
+};
+
+export const onScroll = (setTopState, setStyle) => (): void => {
+  const {scrollY} = window;
+  setStyle(calculateStyles());
+  setTopState((TOPBAR_MAX_HEIGHT + TOPBAR_MIN_HEIGHT + TOPBAR_HEIGHT_TOLERANCE) > scrollY);
 };
 
 export const TopBar = (props: TopBarProps) => {
@@ -104,17 +132,23 @@ export const TopBar = (props: TopBarProps) => {
   } = props;
 
   // State
-  const [state, setState] = useState({
-    isTransparent: transparent
-  });
-  const {isTransparent} = state;
+  const [isTransparent, setTopState] = useState(transparent);
+  const [barStyles, setStyle] = useState({backgroundColor: 'rgba(0, 0, 0, 0)', height: TOPBAR_MAX_HEIGHT});
+  const {backgroundColor, height} = barStyles;
 
   // Styling
   const classes = useStyles();
 
-  useFlux([
-    {handler: onUpdateBackground.bind(null, setState), type: GothamConstants.TOPBAR_SOLID}
-  ]);
+  if(transparent) {
+    useEffect(() => {
+      console.log('DefaultView::add scroll listener');
+      window.addEventListener('scroll', onScroll(setTopState, setStyle));
+
+      return () => {
+        window.removeEventListener('scroll', onScroll(setTopState, setStyle));
+      };
+    }, []);
+  }
 
   const appBarSolid = `${classes.appBar} ${classes.appBarSolid}`;
   const appBarTransparent = `${classes.appBar} ${classes.appBarTransparent}`;
@@ -123,8 +157,11 @@ export const TopBar = (props: TopBarProps) => {
   return (
     <AppBar
       className={isTransparent ? appBarTransparent : appBarSolid}
-      position="fixed">
-      <Toolbar classes={{root: titleText}}>
+      position="fixed"
+      style={{backgroundColor}}>
+      <Toolbar
+        classes={{root: titleText}}
+        style={{height}}>
         <Hidden mdUp>
           <IconButton
             color="inherit"
@@ -138,7 +175,7 @@ export const TopBar = (props: TopBarProps) => {
           {renderTitle(title)}
         </NavLink>
         <div style={{flex: 1}} />
-        {renderMenu(props, state, menu)}
+        {renderMenu(props, isTransparent, menu)}
       </Toolbar>
     </AppBar>
   );
