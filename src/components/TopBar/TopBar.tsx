@@ -134,12 +134,17 @@ export const TopBar = (props: TopBarProps) => {
   // State
   const [isTransparent, setTopState] = useState(transparent);
   const [barStyles, setStyle] = useState({backgroundColor: 'rgba(0, 0, 0, 0)', height: TOPBAR_MAX_HEIGHT});
-  const {backgroundColor, height} = barStyles;
+  const {backgroundColor: barStyleBg, height: barStyleHeight} = barStyles;
+  let backgroundColor;
+  let height;
 
   // Styling
   const classes = useStyles();
 
   if(transparent) {
+    backgroundColor = barStyleBg;
+    height = barStyleHeight;
+
     useEffect(() => {
       console.log('DefaultView::add scroll listener');
       window.addEventListener('scroll', onScroll(setTopState, setStyle));
@@ -148,6 +153,9 @@ export const TopBar = (props: TopBarProps) => {
         window.removeEventListener('scroll', onScroll(setTopState, setStyle));
       };
     }, []);
+  } else {
+    backgroundColor = '#000';
+    height = TOPBAR_MIN_HEIGHT;
   }
 
   const appBarSolid = `${classes.appBar} ${classes.appBarSolid}`;
