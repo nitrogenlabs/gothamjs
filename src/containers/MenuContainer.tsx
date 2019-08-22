@@ -25,7 +25,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
   },
   content: {
     backgroundColor: theme.palette.background.default,
-    flexGrow: 1,
+    flex: 1,
     marginBottom: 50,
     minWidth: 0,
     overflowY: 'auto',
