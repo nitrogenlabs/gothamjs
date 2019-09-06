@@ -78,7 +78,7 @@ export {default as OutlinedInput} from '@material-ui/core/OutlinedInput';
 export {default as Paper} from '@material-ui/core/Paper';
 export {default as Radio} from '@material-ui/core/Radio';
 export {default as RadioGroup} from '@material-ui/core/RadioGroup';
-export {default as Slider} from '@material-ui/lab/Slider';
+export {default as Slider} from '@material-ui/core/Slider';
 export {default as Snackbar} from '@material-ui/core/Snackbar';
 export {default as Step} from '@material-ui/core/Step';
 export {default as Stepper} from '@material-ui/core/Stepper';

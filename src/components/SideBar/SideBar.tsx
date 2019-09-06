@@ -27,25 +27,34 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     position: 'relative'
   },
   links: {
+    flexDirection: 'row',
     paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3)
+    paddingRight: theme.spacing(3),
+    '&:hover': {
+      color: theme.palette.primary.main
+    }
+  },
+  menu: {
+    paddingTop: theme.spacing(3)
   },
   menuIcon: {
-    height: 16,
+    color: 'inherit',
+    height: 32,
     marginRight: 0,
-    width: 16
+    minWidth: 'auto',
+    width: 32
   },
   menuLabel: {
     paddingLeft: 10
   },
   menuLink: {
-    '&:hover': {
-      color: theme.palette.primary.main,
-      textDecoration: 'none'
-    },
     color: '#000',
     cursor: 'pointer',
-    textDecoration: 'none'
+    textDecoration: 'none',
+
+    '&:hover': {
+      textDecoration: 'none'
+    }
   },
   sideBar: {
     display: 'flex',
@@ -101,7 +110,7 @@ export const renderMenu = (pathname: string, menu: any[]): JSX.Element => {
     );
   });
 
-  return <List>{menuItems}</List>;
+  return <List className={classes.menu}>{menuItems}</List>;
 };
 
 export const SideBar = (props: SideBarProps) => {

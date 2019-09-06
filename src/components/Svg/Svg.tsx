@@ -9,14 +9,19 @@ import * as React from 'react';
 import {Config} from '../../config/app';
 import {SvgProps} from './Svg.types';
 
+const useStyles = makeStyles({
+  icon: ({color, height, width}: any) => ({
+    color,
+    height,
+    width
+  })
+});
+
 export const Svg = ({color, height = 32, name, width = 32}: SvgProps) => {
-  const useStyles = makeStyles({
-    icon: {color, height, width}
-  });
-  const classes = useStyles({});
+  const classes = useStyles({color, height, width});
 
   return (
-    <SvgIcon className={classes.icon} color="primary" viewBox={`0 0 ${width} ${height}`}>
+    <SvgIcon className={classes.icon} viewBox={`0 0 ${width} ${height}`}>
       <use href={`${Config.get('baseUrl')}/icons/icons.svg#${name}`} />
     </SvgIcon>
   );
