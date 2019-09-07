@@ -10,6 +10,8 @@ import {MarkdownConstants} from './constants/MarkdownConstants';
 export * from '@material-ui/styles';
 export {Flux} from '@nlabs/arkhamjs';
 export {NavLink} from 'react-router-dom';
+
+export * from './index.types';
 export * from './components';
 export * from './containers';
 export * from './views';
