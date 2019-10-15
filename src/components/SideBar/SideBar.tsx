@@ -11,12 +11,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import {makeStyles} from '@material-ui/styles';
 import {Flux} from '@nlabs/arkhamjs';
-import React from 'react';
+import {useFlux} from '@nlabs/arkhamjs-utils-react/lib';
+import React, {useState} from 'react';
 import {matchPath, NavLink} from 'react-router-dom';
 
 import {Theme} from '../../config/theme.types';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {parseNavUrl} from '../../utils/viewUtils';
+import {GothamMenuType} from '../../views/Gotham/Gotham.types';
 import {SideBarProps} from './SideBar.types';
 
 const useStyles: any = makeStyles((theme: Theme) => ({
@@ -26,12 +28,31 @@ const useStyles: any = makeStyles((theme: Theme) => ({
   drawerPaper: {
     position: 'relative'
   },
-  links: {
+  headers: {
+    alignItems: 'center',
     flexDirection: 'row',
+    fontSize: 16,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    textTransform: 'uppercase',
+    '&:hover': {
+      color: theme.palette.primary.main
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: 14
+    }
+  },
+  links: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    fontSize: 14,
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
     '&:hover': {
       color: theme.palette.primary.main
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: 12
     }
   },
   menu: {
@@ -39,10 +60,11 @@ const useStyles: any = makeStyles((theme: Theme) => ({
   },
   menuIcon: {
     color: 'inherit',
-    height: 32,
     marginRight: 0,
-    minWidth: 'auto',
-    width: 32
+    minWidth: 'auto'
+  },
+  menuItem: {
+    fontSize: 'inherit'
   },
   menuLabel: {
     paddingLeft: 10
@@ -60,18 +82,19 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexGrow: 0,
     flexShrink: 0
-  },
-  toolbar: theme.mixins.toolbar
+  }
 }));
 
-export const toggleDrawer = (): void => {
-  Flux.dispatch({type: GothamConstants.TOGGLE_MENU});
+export const closeDrawer = (): void => {
+  Flux.dispatch({openState: false, type: GothamConstants.TOGGLE_MENU});
 };
 
-export const renderMenu = (pathname: string, menu: any[]): JSX.Element => {
-  const classes = useStyles();
+export const getTypeClass = (type: GothamMenuType, classes: any): string =>
+  (type === 'header' ? classes.headers : classes.links);
+
+export const renderMenu = (pathname: string, menu: any[] = [], classes: any): JSX.Element => {
   const menuItems = menu.map((item) => {
-    const {divider, icon, label, path, url} = item;
+    const {divider, icon, label, path, type = 'link', url} = item;
     let params = {};
 
     if(path) {
@@ -95,14 +118,14 @@ export const renderMenu = (pathname: string, menu: any[]): JSX.Element => {
         key={label} to={parseNavUrl(url, params)} >
         <ListItem
           button
-          className={classes.links}
+          className={getTypeClass(type, classes)}
           disableRipple
           disableTouchRipple
           divider={divider}
           focusRipple={false}>
           {icon && <ListItemIcon classes={{root: classes.menuIcon}}>{icon}</ListItemIcon>}
           <ListItemText
-            classes={{root: classes.menuLabel}}
+            classes={{primary: classes.menuItem, root: classes.menuLabel}}
             primary={label}
             primaryTypographyProps={{variant: 'h4'}} />
         </ListItem>
@@ -113,32 +136,31 @@ export const renderMenu = (pathname: string, menu: any[]): JSX.Element => {
   return <List className={classes.menu}>{menuItems}</List>;
 };
 
+export const toggleMenu = (setOpenState) => ({openState}) => setOpenState(openState);
+
 export const SideBar = (props: SideBarProps) => {
   // Props
-  const {menu, open, pathname} = props;
+  const {menu, pathname} = props;
 
-  // Initial state
-  // const [state, setState] = useStyles({
-  //   isOpen: false
-  // });
+  // State
+  const [openState, setOpenState] = useState(false);
 
   // Styling
   const classes = useStyles();
 
-  // const context: any = useContext(ContainerContext);
-  // const {pathname} = context.routeProps.location;
-
+  useFlux([
+    {handler: toggleMenu(setOpenState), type: GothamConstants.TOGGLE_MENU}
+  ]);
   return (
     <div className={classes.sideBar}>
       <Hidden mdUp>
-        <Drawer className={classes.drawer} open={open} onClose={() => toggleDrawer()}>
-          <div className={classes.toolbar} />
+        <Drawer className={classes.drawer} open={openState} onClose={closeDrawer}>
           <div
             tabIndex={0}
             role="button"
-            onClick={() => toggleDrawer()}
-            onKeyDown={() => toggleDrawer()}>
-            {renderMenu(pathname, menu)}
+            onClick={closeDrawer}
+            onKeyDown={closeDrawer}>
+            {renderMenu(pathname, menu, classes)}
           </div>
         </Drawer>
       </Hidden>
@@ -149,8 +171,7 @@ export const SideBar = (props: SideBarProps) => {
           className={classes.drawer}
           transitionDuration={{enter: 0.3, exit: 0.3}}
           variant="permanent">
-          <div className={classes.toolbar} />
-          {renderMenu(pathname, menu)}
+          {renderMenu(pathname, menu, classes)}
         </Drawer>
       </Hidden>
     </div>

@@ -2,13 +2,13 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import loadable from '@loadable/component';
 import {FluxFramework} from '@nlabs/arkhamjs/lib';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import {Redirect, Route, RouteProps, Switch} from 'react-router-dom';
 
 import {GothamActions} from '../actions/GothamActions';
+import {asyncLoader} from '../components/LazyLoader/LazyLoader';
 import {Loader} from '../components/Loader/Loader';
 import {DefaultContainer} from '../containers/DefaultContainer';
 import {MenuContainer} from '../containers/MenuContainer';
@@ -30,41 +30,42 @@ export const fadeTransition = {
     position: 'absolute'
   }
 };
-export const createAsyncComponent = (component) => loadable(component, {LoadingComponent: Loader});
-export const parseRoute = (route: GothamRoute) => {
-  const {asyncComponent, component, container, path, view} = route;
+
+export const parseRoute = (route: GothamRoute, props: any) => {
+  const {asyncComponent, component: Component, container, path, view} = route;
+  const viewProps: any = {loader: Loader, ...props};
 
   // Get component
   if(!isEmpty(container)) {
     // Built-in containers
     switch(container) {
       case 'menu':
-        return MenuContainer;
+        return <MenuContainer {...viewProps} />;
       default:
-        return DefaultContainer;
+        return <DefaultContainer {...viewProps} />;
     }
   } else if(!isEmpty(view)) {
     // Built-in views
     switch(view) {
       case 'confirm':
-        return createAsyncComponent(() => import('../views/ConfirmView/ConfirmView'));
+        return asyncLoader(() => import('../views/ConfirmView/ConfirmView'), viewProps);
       case 'home':
-        return createAsyncComponent(() => import('../views/HomeView/HomeView'));
+        return asyncLoader(() => import('../views/HomeView/HomeView'), viewProps);
       case 'login':
-        return createAsyncComponent(() => import('../views/LoginView/LoginView'));
+        return asyncLoader(() => import('../views/LoginView/LoginView'), viewProps);
       case 'markdown':
-        return createAsyncComponent(() => import('../views/MarkdownView/MarkdownView'));
+        return asyncLoader(() => import('../views/MarkdownView/MarkdownView'), viewProps);
       case 'notfound':
-        return createAsyncComponent(() => import('../views/NotFoundView/NotFoundView'));
+        return asyncLoader(() => import('../views/NotFoundView/NotFoundView'), viewProps);
       default:
         return null;
     }
   } else if(asyncComponent) {
     // Create an async imported component
-    return createAsyncComponent(asyncComponent);
-  } else if(component) {
+    return asyncLoader(asyncComponent, viewProps);
+  } else if(Component) {
     // Custom components
-    return component;
+    return <Component {...viewProps} />;
   }
 
   throw new Error(`Gotham Error: Route "${path}" is missing "component" property.`);
@@ -85,7 +86,6 @@ export const renderRoute = (
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
 ): JSX.Element => {
-  const LoadComponent = parseRoute(route);
   const {authenticate = false, exact = true, path, strict, location, sensitive} = route;
   const {isAuth, titleBarSeparator} = gothamConfig;
   const ReactRoute = authenticate ? AuthRoute : Route;
@@ -99,16 +99,13 @@ export const renderRoute = (
       path={path}
       render={(props: RouteProps) => {
         const {props: componentProps, title, ...routeProps} = route;
+        const viewProps: any = {gothamConfig, Flux, title, ...props, ...routeProps, ...componentProps};
+
+        // Update browser title
         GothamActions.updateTitle(title, titleBarSeparator);
-        return (
-          <LoadComponent
-            gothamConfig={gothamConfig}
-            Flux={Flux}
-            title={title}
-            {...props}
-            {...routeProps}
-            {...componentProps} />
-        );
+
+        // Dynamic async route view
+        return parseRoute(route, viewProps);
       }}
       sensitive={sensitive}
       strict={strict} />
@@ -146,14 +143,17 @@ export const renderRouteList = (
 
   // If not, load the default view
   const notFoundRoute: GothamRoute = {title: 'Page Not Found', ...notFound, view: 'notfound'};
-  const LoadComponent = parseRoute(notFoundRoute);
   const render404: JSX.Element = (
     <Route
       key="notFound"
       render={(props: RouteProps) => {
         const {title} = notFoundRoute;
+
+        // Update browser title
         GothamActions.updateTitle(title, titleBarSeparator);
-        return <LoadComponent title={title} {...props} />;
+
+        // Dynamic aysnc view
+        return parseRoute(notFoundRoute, {title, ...props});
       }} />
   );
 

@@ -3,13 +3,12 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {makeStyles} from '@material-ui/styles';
-import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
-import React, {useContext} from 'react';
+import {useFlux} from '@nlabs/arkhamjs-utils-react';
+import React, {useContext, useState} from 'react';
 
 import {SideBar} from '../components/SideBar/SideBar';
 import {SideBarProps} from '../components/SideBar/SideBar.types';
 import {TopBar} from '../components/TopBar/TopBar';
-import {Theme} from '../config/theme.types';
 import {GothamConstants} from '../constants/GothamConstants';
 import {ContainerContext} from '../utils/ContainerProvider';
 import {GothamContext} from '../utils/GothamProvider';
@@ -17,35 +16,42 @@ import {renderTransition} from '../utils/routes';
 import {getNavParams, getViewParams} from '../utils/viewUtils';
 import {MenuContainerProps} from './MenuContainer.types';
 
-const useStyles: any = makeStyles((theme: Theme) => ({
+const useStyles: any = makeStyles((theme: any) => ({
   container: {
+    bottom: 0,
     display: 'flex',
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    left: 0,
+    overflow: 'hidden',
+    position: 'absolute',
+    right: 0,
+    top: 64
   },
   content: {
     backgroundColor: theme.palette.background.default,
     flex: 1,
     minWidth: 0,
     overflowY: 'auto',
-    paddingLeft: 15,
-    paddingRight: 15
-  },
-  toolbar: theme.mixins.toolbar
+    position: 'relative'
+  }
 }));
 
-export const toggleMenu = (state, setState) => () => {
-  const {isMenuOpen} = state;
-  setState({isMenuOpen: !isMenuOpen});
-};
-
-export const renderMenu = (props: SideBarProps, isOpen: boolean, pathname: string): JSX.Element => {
+export const renderMenu = (props: SideBarProps, pathname: string): JSX.Element => {
   if(props) {
-    return <SideBar {...props} open={isOpen} pathname={pathname} />;
+    let loadedProps = props;
+
+    if(props instanceof Function) {
+      loadedProps = props();
+    }
+
+    return <SideBar {...loadedProps} pathname={pathname} />;
   }
 
   return null;
 };
+
+export const updateMenu = (setSidebarProps) => ({props}) => setSidebarProps(props);
 
 export const MenuContainer = (props: MenuContainerProps) => {
   const {
@@ -62,10 +68,7 @@ export const MenuContainer = (props: MenuContainerProps) => {
   const classes = useStyles();
 
   // Initial state
-  const [state, setState] = useState({
-    isMenuOpen: false
-  });
-  const {isMenuOpen} = state;
+  const [sideBarProps, setSidebarProps] = useState(sideBar);
 
   const context: any = useContext(GothamContext);
   const {isAuth} = context;
@@ -75,16 +78,15 @@ export const MenuContainer = (props: MenuContainerProps) => {
   const viewProps: any = getViewParams(props);
 
   useFlux([
-    {handler: toggleMenu(state, setState), type: GothamConstants.TOGGLE_MENU}
+    {handler: updateMenu(setSidebarProps), type: GothamConstants.UPDATE_MENU}
   ]);
 
   return (
     <ContainerContext.Provider value={{navProps, routeProps, viewProps}}>
       <TopBar {...topBar} transparent={false} />
       <div className={classes.container}>
-        {renderMenu(sideBar, isMenuOpen, pathname)}
+        {renderMenu(sideBarProps, pathname)}
         <div className={classes.content}>
-          <div className={classes.toolbar} />
           {renderTransition(routes, Flux, {...props, isAuth})}
         </div>
       </div>

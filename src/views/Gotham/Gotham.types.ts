@@ -57,10 +57,14 @@ export interface GothamConfiguration {
   readonly middleware?: FluxMiddlewareType[];
 }
 
+export type GothamSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type GothamMenuType = 'header' | 'link';
+
 export interface GothamMenuItem {
   readonly content?: (color: string) => JSX.Element;
   readonly label?: string;
   readonly url: string;
+  readonly type: GothamMenuType;
   readonly menu?: GothamMenuItem[];
 }
 

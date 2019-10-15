@@ -22,6 +22,15 @@ const palette = {
 };
 
 export const defaultTheme: ThemeOptions = {
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 576,
+      md: 768,
+      lg: 992,
+      xl: 1200
+    }
+  },
   overrides: {
     MuiInputAdornment: {
       root: {
@@ -65,6 +74,12 @@ export const defaultTheme: ThemeOptions = {
         h3: {
           fontSize: '1rem'
         },
+        button: {
+          fontFamily: '"Open Sans", sans-serif'
+        },
+        '.noFocusOutline a:focus, .noFocusOutline button:focus': {
+          outline: 'none'
+        },
         '.row': {
           flexDirection: 'row'
         },
@@ -98,15 +113,6 @@ export const defaultTheme: ThemeOptions = {
         '.routeWrapper > div': {
           position: 'relative',
           width: '100%'
-        },
-        '.filepond--file-action-button': {
-          cursor: 'pointer'
-        },
-        '.filepond--list': {
-          left: '1.5em'
-        },
-        '.filepond--item': {
-          width: 'calc(33.333% - 15px)'
         }
       }
     },
@@ -163,7 +169,8 @@ export const defaultTheme: ThemeOptions = {
     },
     MuiToolbar: {
       root: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        height: 64
       }
     }
   },

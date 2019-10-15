@@ -22,7 +22,7 @@ import {Notification} from '../../components/Notification/Notification';
 import {Config} from '../../config/app';
 import {defaultTheme} from '../../config/theme';
 import {GothamConstants} from '../../constants/GothamConstants';
-import {GothamAppStore} from '../../stores/GothamAppStore';
+import {gothamApp} from '../../stores/gothamAppStore';
 import {GothamContext} from '../../utils/GothamProvider';
 import {renderTransition} from '../../utils/routes';
 import {GothamConfiguration, GothamProps} from './Gotham.types';
@@ -71,6 +71,12 @@ export const renderLoading = (isLoading: boolean): JSX.Element => {
 
 // Create browser history
 export const history: History = createBrowserHistory();
+
+export const onKeyUp = (event) => {
+  if(event.which === 9) {
+    document.documentElement.classList.remove('noFocusOutline');
+  }
+};
 
 export const Gotham = (props: GothamProps): JSX.Element => {
   // Initial state
@@ -130,15 +136,17 @@ export const Gotham = (props: GothamProps): JSX.Element => {
         name,
         // state: {app: {title}},
         storage,
-        stores: [GothamAppStore, ...stores]
+        stores: [gothamApp, ...stores]
       });
     }
+
+    // Remove outline on focus
+    document.body.addEventListener('keyup', onKeyUp);
   }, []);
 
   let content: JSX.Element;
   const {isAuth, routes = [], ...gothamConfig} = config;
 
-  console.log('Gotham::isAppLoaded', isAppLoaded);
   if(!isAppLoaded) {
     content = <Loader />;
   } else {

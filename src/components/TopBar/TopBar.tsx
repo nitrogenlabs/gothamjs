@@ -3,7 +3,6 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import AppBar from '@material-ui/core/AppBar/AppBar';
-import Hidden from '@material-ui/core/Hidden/Hidden';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Typography from '@material-ui/core/Typography/Typography';
@@ -41,18 +40,33 @@ const useStyles: any = makeStyles((theme: Theme) => ({
   homeLink: {
     display: 'flex'
   },
-  titleTextSolid: {
-    color: theme.palette.primary.light,
-    transition: 'all 0.3s ease-in-out'
+  menuIcon: {
+    '& svg': {
+      height: 32,
+      width: 32
+    }
   },
-  titleTextTransparent: {
-    color: theme.palette.primary.dark,
-    transition: 'all 0.3s ease-in-out'
+  spacer: {
+    flex: 1
+  },
+  titleBar: {
+    justifyContent: 'space-between',
+    paddingLeft: 0,
+    transition: 'all 0.3s ease-in-out',
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: theme.spacing(3)
+    }
+  },
+  titleBarSolid: {
+    color: theme.palette.primary.light
+  },
+  titleBarTransparent: {
+    color: theme.palette.primary.dark
   }
 }));
 
-export const onToggleDrawer = () => {
-  Flux.dispatch({type: GothamConstants.TOGGLE_MENU});
+export const onToggleDrawer = (openState: boolean) => {
+  Flux.dispatch({openState, type: GothamConstants.TOGGLE_MENU});
 };
 
 export const renderMenuItem = (props, isTransparent, menuItem: GothamMenuItem) => {
@@ -135,8 +149,8 @@ export const TopBar = (props: TopBarProps) => {
   const [isTransparent, setTopState] = useState(transparent);
   const [barStyles, setStyle] = useState({backgroundColor: 'rgba(0, 0, 0, 0)', height: TOPBAR_MAX_HEIGHT});
   const {backgroundColor: barStyleBg, height: barStyleHeight} = barStyles;
-  let backgroundColor;
-  let height;
+  let backgroundColor: string;
+  let height: number;
 
   // Styling
   const classes = useStyles();
@@ -146,7 +160,6 @@ export const TopBar = (props: TopBarProps) => {
     height = barStyleHeight;
 
     useEffect(() => {
-      console.log('DefaultView::add scroll listener');
       window.addEventListener('scroll', onScroll(setTopState, setStyle));
 
       return () => {
@@ -158,31 +171,36 @@ export const TopBar = (props: TopBarProps) => {
     height = TOPBAR_MIN_HEIGHT;
   }
 
-  const appBarSolid = `${classes.appBar} ${classes.appBarSolid}`;
-  const appBarTransparent = `${classes.appBar} ${classes.appBarTransparent}`;
-  const titleText = isTransparent ? classes.titleTextTransparent : classes.titleTextSolid;
+  const appBarSolid: string = `${classes.appBar} ${classes.appBarSolid}`;
+  const appBarTransparent: string = `${classes.appBar} ${classes.appBarTransparent}`;
+  const titleBarStyles: string[] = [
+    classes.titleBar,
+    isTransparent ? classes.titleBarTransparent : classes.titleBarSolid
+  ];
+  const menuStyles: string[] = ['d-flex', 'd-md-none', classes.menuIcon];
+  const spacerStyles: string[] = ['d-none', 'd-md-flex', classes.spacer];
 
   return (
     <AppBar
       className={isTransparent ? appBarTransparent : appBarSolid}
-      position="fixed"
+      position="absolute"
       style={{backgroundColor}}>
       <Toolbar
-        classes={{root: titleText}}
+        classes={{root: titleBarStyles.join(' ')}}
+        disableGutters
         style={{height}}>
-        <Hidden mdUp>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={onToggleDrawer}>
-            {open ? <BackburgerIcon /> : <MenuIcon />}
-          </IconButton>
-        </Hidden>
+        <IconButton
+          classes={{root: menuStyles.join(' ')}}
+          color="inherit"
+          aria-label="open drawer"
+          onClick={() => onToggleDrawer(!open)}>
+          {open ? <BackburgerIcon /> : <MenuIcon />}
+        </IconButton>
         <NavLink to="/">
           {isTransparent ? (logoAlt || logo) : logo}
           {renderTitle(title)}
         </NavLink>
-        <div style={{flex: 1}} />
+        <div className={spacerStyles.join(' ')} />
         {renderMenu(props, isTransparent, menu)}
       </Toolbar>
     </AppBar>

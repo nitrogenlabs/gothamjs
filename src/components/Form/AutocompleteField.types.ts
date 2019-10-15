@@ -22,6 +22,7 @@ export interface AutocompleteFieldProps {
 
 export interface AutocompleteFieldState {
   readonly single: string;
+  readonly suggestion: any;
   readonly suggestions: any[];
   readonly value: string;
 }

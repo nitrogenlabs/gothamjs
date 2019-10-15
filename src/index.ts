@@ -11,13 +11,13 @@ export * from '@material-ui/styles';
 export {Flux} from '@nlabs/arkhamjs';
 export {NavLink} from 'react-router-dom';
 
-export * from './index.types';
 export * from './components';
 export * from './containers';
 export * from './views';
 export * from './utils/GothamProvider';
-export * from './utils/routes';
 export * from './utils/imageUtils';
+export * from './utils/routes';
+export * from './utils/useBreakpoint';
 export * from './utils/viewUtils';
 export {
   GothamActions,

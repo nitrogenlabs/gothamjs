@@ -15,5 +15,6 @@ export class GothamConstants {
   static readonly SET_CONFIG: string = 'GOTHAM_APP_SET_CONFIG';
   static readonly TOGGLE_MENU: string = 'GOTHAM_APP_TOGGLE_MENU';
   static readonly TOPBAR_SOLID: string = 'GOTHAM_APP_TOPBAR_SOLID';
+  static readonly UPDATE_MENU: string = 'GOTHAM_APP_UPDATE_MENU';
   static readonly UPDATE_TITLE: string = 'GOTHAM_APP_UPDATE_TITLE';
 }

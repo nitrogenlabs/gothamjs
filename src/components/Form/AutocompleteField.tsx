@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2019-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {withStyles} from '@material-ui/core';
 import MaterialMenuItem from '@material-ui/core/MenuItem/MenuItem';
 import MaterialPaper from '@material-ui/core/Paper/Paper';
@@ -7,17 +11,12 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import debounce from 'lodash/debounce';
 import deburr from 'lodash/deburr';
-import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import ReactAutosuggest from 'react-autosuggest';
 import {Field} from 'react-final-form';
 
 import {AutocompleteFieldProps, AutocompleteFieldState} from './AutocompleteField.types';
 
-/**
- * Copyright (c) 2019-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 const styles: any = (theme) => ({
   container: {
     position: 'relative'
@@ -55,6 +54,7 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
     } = props;
 
     // Methods
+    this.onBlur = this.onBlur.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSelected = this.onSelected.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
@@ -65,6 +65,7 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
 
     this.state = {
       single: '',
+      suggestion: null,
       suggestions: props.suggestions || [],
       value
     };
@@ -103,9 +104,17 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
     this.setState({suggestions: []});
   }
 
+  onBlur() {
+    const {suggestion} = this.state;
+
+    if(!suggestion) {
+      this.setState({value: ''});
+    }
+  }
+
   onChange(input: any) {
     return (event, {newValue}) => {
-      this.setState({value: newValue}, () => {
+      this.setState({suggestion: null, value: newValue}, () => {
         const {onChange} = input;
 
         if(onChange) {
@@ -117,6 +126,8 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
 
   onSelected(event, suggestion) {
     const {onSelected} = this.props;
+
+    this.setState({suggestion});
 
     if(onSelected) {
       onSelected(suggestion);
@@ -183,10 +194,9 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
     );
   }
 
-  renderField({input = {value: ''}, meta}): JSX.Element {
+  renderField({input = {}, meta}): JSX.Element {
     const {classes, valueKey = 'label'} = this.props;
     const {suggestions, value} = this.state;
-    const {value: inputValue} = input;
 
     return (
       <ReactAutosuggest
@@ -199,8 +209,9 @@ export class AutocompleteFieldBase extends React.PureComponent<AutocompleteField
             this.inputElement = node;
           },
           meta,
+          onBlur: this.onBlur,
           onChange: this.onChange(input),
-          value: !isEmpty(inputValue) ? inputValue : value
+          value
         }}
         getSuggestionValue={(suggestion) => suggestion[valueKey]}
         onSuggestionSelected={this.onSelected}
