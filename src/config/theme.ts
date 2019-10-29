@@ -7,9 +7,20 @@ import {ThemeOptions} from './theme.types';
 /* eslint-disable sort-keys */
 const palette = {
   error: {
-    dark: '#C4272F',
-    light: '#FFEAEB',
-    main: '#ed1c24'
+    dark: '#701c1c',
+    light: '#ffe5e5',
+    main: '#cc0000'
+  },
+  info: {
+    dark: '#035aa6',
+    light: '#d5e5f2',
+    main: '#4ea4d9'
+  },
+  neutral: {
+    contrastColor: '#fff',
+    dark: '#111',
+    light: '#f1f1f1',
+    main: '#e2e2e2'
   },
   primary: {
     dark: '#1A0935',
@@ -18,6 +29,16 @@ const palette = {
   },
   secondary: {
     main: '#442b69'
+  },
+  success: {
+    dark: '#038c65',
+    light: '#e0ffeb',
+    main: '#66d9af'
+  },
+  warning: {
+    dark: '#ffcb04',
+    light: '#fff5cd',
+    main: '#ffe068'
   }
 };
 

@@ -5,7 +5,7 @@
 import {makeStyles} from '@material-ui/styles';
 import * as React from 'react';
 
-const useStyle = makeStyles(() => ({
+const useStyle = makeStyles((theme: any) => ({
   body: {
     fontSize: 16
   },
@@ -13,26 +13,24 @@ const useStyle = makeStyles(() => ({
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    height: 'calc(100% - 150px)',
     justifyContent: 'center'
   },
   errorCode: {
-    marginTop: -250
+    alignItems: 'center',
+    color: theme.palette.neutral.main,
+    display: 'flex',
+    fontSize: 150,
+    fontWeight: 700,
+    position: 'relative',
+    transition: 'all 0.25s ease-out',
+    userSelect: 'none'
   },
   h1: {
     fontSize: 46,
     fontWeight: 100
   },
   shadow: {
-    color: '#fff',
-    fontSize: 150,
-    fontWeight: 700,
-    letterSpacing: '-0.05em',
-    position: 'relative',
-    textShadow: '-15px 5px 12px rgba(0, 0, 0, 0.1)',
-    textTransform: 'uppercase',
-    transition: 'all 0.25s ease-out',
-    userSelect: 'none'
   }
 }));
 
@@ -40,23 +38,11 @@ export const NotFoundView = () => {
   const classes = useStyle({});
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className={`col ${classes.errorCode}`}>
-          <span className={classes.shadow}>4</span>
-          <span className={classes.shadow}>0</span>
-          <span className={classes.shadow}>4</span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className={`col ${classes.h1}`}>Page Not Found</div>
-      </div>
-
-      <div className="row">
-        <div className={`col ${classes.body}`}>
-          Could not find the page you were looking for. Please try again or contact support.
-        </div>
+    <div className={classes.container}>
+      <div className={classes.errorCode}>404</div>
+      <h1>Page Not Found</h1>
+      <div className={classes.body}>
+        Could not find the page you were looking for. Please try again or contact support.
       </div>
     </div>
   );

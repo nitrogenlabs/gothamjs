@@ -19,41 +19,49 @@ import React, {useState} from 'react';
 
 import {Theme} from '../../config/theme.types';
 import {GothamConstants} from '../../constants/GothamConstants';
-import {NotificationProps} from './Notification.types';
+import {NotificationParams, NotificationProps} from './Notification.types';
 
 const useStyles: any = makeStyles((theme: Theme) => ({
   close: {
     padding: theme.spacing(1)
   },
   default: {
-    backgroundColor: '#f1f1f1'
+    backgroundColor: theme.palette.neutral.dark,
+    color: theme.palette.neutral.light
   },
   error: {
-    backgroundColor: theme.palette.error.dark
+    backgroundColor: theme.palette.error.dark,
+    color: theme.palette.error.light
   },
   icon: {
     fontSize: 20
   },
-  iconVariant: {
+  iconStatus: {
     marginRight: theme.spacing(1),
     opacity: 0.9
   },
   info: {
-    backgroundColor: '#E4F8FF'
+    backgroundColor: theme.palette.info.dark,
+    color: theme.palette.info.light
   },
   message: {
     alignItems: 'center',
     display: 'flex'
   },
+  notification: {
+    flexDirection: 'row'
+  },
   success: {
-    backgroundColor: '#EEFFDC'
+    backgroundColor: theme.palette.success.dark,
+    color: theme.palette.success.light
   },
   warning: {
-    backgroundColor: '#FEFFDD'
+    backgroundColor: theme.palette.warning.dark,
+    color: theme.palette.warning.light
   }
 }));
 
-const variantIcon = {
+const statusIcon = {
   error: ErrorIcon,
   info: InfoIcon,
   success: CheckCircleIcon,
@@ -68,12 +76,10 @@ export const processNotifications = (notifications, setHasNotification, setNotif
   }
 };
 
-export const addNotification = (notifications, setHasNotification, setNotifications, setCurrent) =>
-  ({notification}) => {
-    notifications.push(notification);
-    setNotifications(notifications);
-    processNotifications(notifications, setHasNotification, setNotifications, setCurrent);
-  };
+export const addNotification = (notifications, setHasNotification, setNotifications, setCurrent) => {
+  setNotifications(notifications);
+  processNotifications(notifications, setHasNotification, setNotifications, setCurrent);
+};
 
 export const onNotificationClose = (setHasNotification, event: any, reason?: string) => {
   if(reason === 'clickaway') {
@@ -88,12 +94,9 @@ export const onNotificationExit = (notifications, setHasNotification, setNotific
 };
 
 export const Notification = (props: NotificationProps): JSX.Element => {
-  const {
-    className,
-    variant,
-    ...other
-  } = props;
-  const [currentNotification, setCurrent] = useState({key: '', message: ''});
+  const {className, ...other} = props;
+  const defaultNotification: NotificationParams = {hideDuration: null, id: '', message: '', status: 'default'};
+  const [currentNotification, setCurrent] = useState(defaultNotification);
   const [hasNotification, setHasNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
@@ -101,29 +104,22 @@ export const Notification = (props: NotificationProps): JSX.Element => {
     return null;
   }
 
-  const {key, message} = currentNotification;
+  const {hideDuration, id, message, status} = currentNotification;
   const classes = useStyles();
-  const Icon = variantIcon[variant];
-  const notifyIcon = Icon && <Icon className={classNames(classes.icon, classes.iconVariant)} />;
-  const notifyClass = classes[variant] || classes.default;
+  const Icon = statusIcon[status];
+  const notifyIcon = Icon && <Icon className={classNames(classes.icon, classes.iconStatus)} />;
+  const notifyClass = classes[status] || classes.default;
 
   useFlux([
     {
-      handler: addNotification(notifications, setHasNotification, setNotifications, setCurrent),
+      handler: ({notification}) =>
+        addNotification([...notifications, notification], setHasNotification, setNotifications, setCurrent),
       type: GothamConstants.NOTIFY
     }
   ]);
 
   return (
     <Snackbar
-      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-      autoHideDuration={10000}
-      key={key}
-      onClose={(event) => onNotificationClose(setHasNotification, event)}
-      onExited={() => onNotificationExit(notifications, setHasNotification, setNotifications, setCurrent)}
-      open={hasNotification}
-      ContentProps={{'aria-describedby': 'message-id'}}
-      message={<span id="message-id">{message}</span>}
       action={[
         <IconButton
           key="close"
@@ -133,16 +129,16 @@ export const Notification = (props: NotificationProps): JSX.Element => {
           onClick={(event) => onNotificationClose(setHasNotification, event)}>
           <CloseIcon />
         </IconButton>
-      ]}>
+      ]}
+      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+      autoHideDuration={hideDuration}
+      key={id}
+      message={<span id="message-id">{message}</span>}
+      onClose={(event) => onNotificationClose(setHasNotification, event)}
+      onExited={() => onNotificationExit(notifications, setHasNotification, setNotifications, setCurrent)}
+      open={hasNotification}
+      ContentProps={{'aria-describedby': 'message-id'}}>
       <SnackbarContent
-        className={classNames(notifyClass, className)}
-        aria-describedby="client-snackbar"
-        message={
-          <span id="client-snackbar" className={classes.message}>
-            {notifyIcon}
-            {message}
-          </span>
-        }
         action={[
           <IconButton
             key="close"
@@ -153,6 +149,14 @@ export const Notification = (props: NotificationProps): JSX.Element => {
             <CloseIcon className={classes.icon} />
           </IconButton>
         ]}
+        aria-describedby="client-snackbar"
+        classes={{root: classNames(classes.notification, notifyClass, className)}}
+        message={
+          <span id="client-snackbar" className={classes.message}>
+            {notifyIcon}
+            {message}
+          </span>
+        }
         {...other} />
     </Snackbar>
   );

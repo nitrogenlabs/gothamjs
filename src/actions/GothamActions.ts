@@ -5,9 +5,10 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 
+import {NotificationParams} from '../components';
 import {Config} from '../config/app';
 import {GothamConstants} from '../constants/GothamConstants';
-import {GothamConfiguration, GothamStatus} from '../views/Gotham/Gotham.types';
+import {GothamConfiguration} from '../views/Gotham/Gotham.types';
 
 export class GothamActions {
   static init(): Promise<FluxAction> {
@@ -34,8 +35,9 @@ export class GothamActions {
     return Flux.dispatch({params, path, type: GothamConstants.NAV_REPLACE});
   }
 
-  static notify(message: string, status?: GothamStatus): void {
-    Flux.dispatch({notification: {message, status}, type: GothamConstants.NOTIFY});
+  static notify(message: string, params?: NotificationParams): void {
+    const updatedParams = params || {};
+    Flux.dispatch({notification: {message, ...updatedParams}, type: GothamConstants.NOTIFY});
   }
 
   static setConfig(config: GothamConfiguration): Promise<FluxAction> {

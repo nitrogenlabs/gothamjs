@@ -1,7 +1,3 @@
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 import Divider from '@material-ui/core/Divider/Divider';
 import Drawer from '@material-ui/core/Drawer/Drawer';
 import Hidden from '@material-ui/core/Hidden/Hidden';
@@ -15,13 +11,16 @@ import {useFlux} from '@nlabs/arkhamjs-utils-react/lib';
 import React, {useState} from 'react';
 import {matchPath, NavLink} from 'react-router-dom';
 
-import {Theme} from '../../config/theme.types';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {parseNavUrl} from '../../utils/viewUtils';
 import {GothamMenuType} from '../../views/Gotham/Gotham.types';
 import {SideBarProps} from './SideBar.types';
 
-const useStyles: any = makeStyles((theme: Theme) => ({
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
+const useStyles: any = makeStyles((theme: any) => ({
   drawer: {
     height: '100vh'
   },
@@ -44,6 +43,9 @@ const useStyles: any = makeStyles((theme: Theme) => ({
   },
   links: {
     alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomStyle: 'solid',
+    borderBottomColor: theme.palette.neutral.light,
     flexDirection: 'row',
     fontSize: 14,
     paddingLeft: theme.spacing(3),
@@ -52,7 +54,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
       color: theme.palette.primary.main
     },
     [theme.breakpoints.up('md')]: {
-      fontSize: 12
+      fontSize: 13
     }
   },
   menu: {
