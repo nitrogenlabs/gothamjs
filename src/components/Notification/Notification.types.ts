@@ -19,7 +19,7 @@ export interface NotificationProps {
 
 export interface NotificationParams {
   readonly hideDuration?: number;
-  readonly id: string;
-  readonly message: string;
+  readonly id?: string;
+  readonly message?: string;
   readonly status?: GothamStatus;
 }

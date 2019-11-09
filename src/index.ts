@@ -2,6 +2,8 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 import {GothamActions} from './actions/GothamActions';
 import {GothamConstants} from './constants/GothamConstants';
 import {LoginConstants} from './constants/LoginConstants';
@@ -23,5 +25,6 @@ export {
   GothamActions,
   GothamConstants,
   LoginConstants,
-  MarkdownConstants
+  MarkdownConstants,
+  useMediaQuery
 };

@@ -11,6 +11,7 @@ export * from './FeatureItem/FeatureItem.types';
 export {Footer} from './Footer/Footer';
 export * from './Footer/Footer.types';
 export * from './Form';
+export {GlobalStyles} from './GlobalStyles/GlobalStyles';
 export {Header} from './Header/Header';
 export * from './Header/Header.types';
 export {Loader} from './Loader/Loader';

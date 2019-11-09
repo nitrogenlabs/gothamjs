@@ -38,9 +38,6 @@ const useStyles: any = makeStyles((theme: Theme) => ({
       marginRight: 30
     }
   },
-  container: {
-
-  },
   splashImage: {
     marginBottom: 15
   },

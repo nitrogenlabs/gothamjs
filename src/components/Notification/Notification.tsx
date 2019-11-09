@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import {makeStyles} from '@material-ui/styles';
 import {useFlux} from '@nlabs/arkhamjs-utils-react';
+import {createHash} from '@nlabs/utils';
 import classNames from 'classnames';
 import {
   AlertCircleOutline as ErrorIcon,
@@ -17,11 +18,10 @@ import {
 } from 'mdi-material-ui';
 import React, {useState} from 'react';
 
-import {Theme} from '../../config/theme.types';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {NotificationParams, NotificationProps} from './Notification.types';
 
-const useStyles: any = makeStyles((theme: Theme) => ({
+const useStyles: any = makeStyles((theme: any) => ({
   close: {
     padding: theme.spacing(1)
   },
@@ -95,7 +95,8 @@ export const onNotificationExit = (notifications, setHasNotification, setNotific
 
 export const Notification = (props: NotificationProps): JSX.Element => {
   const {className, ...other} = props;
-  const defaultNotification: NotificationParams = {hideDuration: null, id: '', message: '', status: 'default'};
+  const defaultId: string = createHash('notification');
+  const defaultNotification: NotificationParams = {hideDuration: null, id: defaultId, message: '', status: 'default'};
   const [currentNotification, setCurrent] = useState(defaultNotification);
   const [hasNotification, setHasNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);

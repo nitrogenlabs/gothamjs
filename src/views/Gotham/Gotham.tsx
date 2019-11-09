@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap-grid.css';
 import 'bootstrap/dist/css/bootstrap-reboot.css';
 
 import {createMuiTheme, CssBaseline} from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {ThemeProvider} from '@material-ui/styles';
 import {ArkhamConstants, Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
@@ -17,8 +18,7 @@ import React, {useEffect, useState} from 'react';
 import {Router} from 'react-router-dom';
 
 import {GothamActions} from '../../actions/GothamActions';
-import {Loader} from '../../components/Loader/Loader';
-import {Notification} from '../../components/Notification/Notification';
+import {GlobalStyles, Loader, Notification} from '../../components';
 import {Config} from '../../config/app';
 import {defaultTheme} from '../../config/theme';
 import {GothamConstants} from '../../constants/GothamConstants';
@@ -107,7 +107,18 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   } = config;
 
   // Create theme
-  const theme = createMuiTheme(merge(defaultTheme, configTheme));
+  const darkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const theme = React.useMemo(
+    () => {
+      const themeType = {
+        palette: {
+          type: darkMode ? 'dark' : 'light'
+        }
+      };
+      return createMuiTheme(merge(defaultTheme, themeType, configTheme));
+    },
+    [darkMode],
+  );
 
   useFlux([
     {handler: init(setAppLoaded, config), type: ArkhamConstants.INIT},
@@ -161,6 +172,7 @@ export const Gotham = (props: GothamProps): JSX.Element => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <GothamContext.Provider value={{Flux, isAuth}}>
+        <GlobalStyles />
         {renderLoading(isLoading)}
         {content}
       </GothamContext.Provider>

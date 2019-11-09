@@ -5,53 +5,61 @@
 import {ThemeOptions} from './theme.types';
 
 /* eslint-disable sort-keys */
-const palette = {
+const palette: any = {
   error: {
-    dark: '#701c1c',
+    contrastText: '#fff',
+    dark: '#c4272f',
     light: '#ffe5e5',
     main: '#cc0000'
   },
   info: {
+    contrastText: '#fff',
     dark: '#035aa6',
     light: '#d5e5f2',
     main: '#4ea4d9'
   },
   neutral: {
-    contrastColor: '#fff',
-    dark: '#111',
+    contrastText: '#fff',
+    dark: '#1d1d1d',
     light: '#f1f1f1',
-    main: '#e2e2e2'
+    main: '#565656'
   },
   primary: {
+    contrastText: '#fff',
     dark: '#1A0935',
     light: '#bb8eff',
     main: '#341861'
   },
   secondary: {
+    contrastText: '#fff',
     main: '#442b69'
   },
   success: {
+    contrastText: '#fff',
     dark: '#038c65',
     light: '#e0ffeb',
     main: '#66d9af'
   },
   warning: {
+    contrastText: '#fff',
     dark: '#ffcb04',
     light: '#fff5cd',
     main: '#ffe068'
   }
 };
 
+const breakpoints: any = {
+  values: {
+    xs: 0,
+    sm: 576,
+    md: 768,
+    lg: 992,
+    xl: 1200
+  }
+};
+
 export const defaultTheme: ThemeOptions = {
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 576,
-      md: 768,
-      lg: 992,
-      xl: 1200
-    }
-  },
+  breakpoints,
   overrides: {
     MuiInputAdornment: {
       root: {
@@ -100,6 +108,11 @@ export const defaultTheme: ThemeOptions = {
         },
         '.noFocusOutline a:focus, .noFocusOutline button:focus': {
           outline: 'none'
+        },
+        '.container': {
+          [`@media (min-width: ${breakpoints.values.sm}px)`]: {
+            maxWidth: 'none'
+          }
         },
         '.row': {
           flexDirection: 'row'
