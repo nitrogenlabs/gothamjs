@@ -65,7 +65,7 @@ export const SideBar = (props: SideBarProps) => {
 
   return (
     <div className={classes.sideBar}>
-      <Hidden mdUp>
+      <Hidden lgUp>
         <Drawer
           classes={{paper: classes.drawerPaper, root: classes.drawerRoot}}
           open={openState}
@@ -79,7 +79,7 @@ export const SideBar = (props: SideBarProps) => {
           </div>
         </Drawer>
       </Hidden>
-      <Hidden smDown implementation="css">
+      <Hidden mdDown implementation="css">
         <Drawer
           classes={{paper: classes.drawerPaper, root: classes.drawerRoot}}
           open

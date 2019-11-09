@@ -1,9 +1,9 @@
+import {ThemeOptions} from './theme.types';
+
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {ThemeOptions} from './theme.types';
-
 /* eslint-disable sort-keys */
 const palette: any = {
   error: {
@@ -105,48 +105,6 @@ export const defaultTheme: ThemeOptions = {
         },
         button: {
           fontFamily: '"Open Sans", sans-serif'
-        },
-        '.noFocusOutline a:focus, .noFocusOutline button:focus': {
-          outline: 'none'
-        },
-        '.container': {
-          [`@media (min-width: ${breakpoints.values.sm}px)`]: {
-            maxWidth: 'none'
-          }
-        },
-        '.row': {
-          flexDirection: 'row'
-        },
-        '.text-center': {
-          textAlign: 'center'
-        },
-        '.subtitle': {
-          color: '#5e6977',
-          fontSize: '22px',
-          fontWeight: 100,
-          lineHeight: '32px',
-          margin: '20px auto 40px',
-          width: '55%'
-        },
-        '.view': {
-          display: 'flex',
-          flex: 1,
-          height: '100vh'
-        },
-        img: {
-          alignSelf: 'flex-start',
-          maxHeight: '100%',
-          maxWidth: '100%'
-        },
-        '.routeWrapper': {
-          display: 'flex',
-          flex: 1,
-          minHeight: '100vh',
-          position: 'relative'
-        },
-        '.routeWrapper > div': {
-          position: 'relative',
-          width: '100%'
         }
       }
     },
