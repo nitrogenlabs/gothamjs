@@ -1,34 +1,45 @@
 import throttle from 'lodash/throttle';
 import {useEffect, useState} from 'react';
 
-const getDeviceConfig = (width: number): string => {
-  if(width < 600) {
-    return 'xs';
-  } else if(width >= 600 && width < 960) {
-    return 'sm';
-  } else if(width >= 960 && width < 1280) {
-    return 'md';
-  } else if(width >= 1280 && width < 1920) {
-    return 'lg';
-  }
+import {breakpoints} from '../config/theme';
 
-  return 'xl';
+const getCurrentBreakpoint = (setBreakpoint) => (): void => {
+  const {values: {lg, md, sm, xl}} = breakpoints;
+  const {innerWidth} = window;
+
+  if(innerWidth < sm) {
+    setBreakpoint(0);
+  } else if(innerWidth < md) {
+    setBreakpoint(1);
+  } else if(innerWidth < lg) {
+    setBreakpoint(2);
+  } else if(innerWidth < xl) {
+    setBreakpoint(3);
+  } else {
+    setBreakpoint(4);
+  }
 };
 
 export const useBreakpoint = () => {
-  const [breakpoint, setBreakpoint] = useState(() => getDeviceConfig(window.innerWidth));
+  const breakpointValues = ['xs', 'sm', 'md', 'lg', 'xl'];
+  const [breakpoint, setBreakpoint] = useState(0);
 
   useEffect(() => {
-    const calcInnerWidth = throttle(() => {
-      setBreakpoint(getDeviceConfig(window.innerWidth));
-    }, 200);
+    const onResizeBreakpoint = getCurrentBreakpoint(setBreakpoint);
+    const onResize = throttle(onResizeBreakpoint, 100);
 
-    window.addEventListener('resize', calcInnerWidth);
+    // Inital sizing
+    onResizeBreakpoint();
 
-    return () => {
-      window.removeEventListener('resize', calcInnerWidth);
-    };
+    window.addEventListener('resize', onResize);
+
+    return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  return breakpoint;
+  return {
+    at: (size: string): boolean => size === breakpointValues[breakpoint],
+    down: (size: string): boolean => breakpointValues.indexOf(size) >= breakpoint,
+    up: (size: string): boolean => breakpointValues.indexOf(size) <= breakpoint,
+    value: (): string => breakpointValues[breakpoint]
+  };
 };

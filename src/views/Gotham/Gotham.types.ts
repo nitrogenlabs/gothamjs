@@ -41,9 +41,12 @@ export interface GothamButtonItem {
   readonly url?: string;
 }
 
+export type ThemeDisplayMode = 'auto' | 'dark' | 'light';
+
 export interface GothamConfiguration {
   readonly baseUrl?: string;
   readonly config?: FluxOptions;
+  readonly displayMode?: ThemeDisplayMode;
   readonly Flux?: FluxFramework;
   readonly isAuth?: () => boolean;
   readonly name?: string;

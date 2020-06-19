@@ -5,6 +5,12 @@ const useStyles = makeStyles((theme: any) => {
 
   return {
     '@global': {
+      'a, .link': {
+        color: theme.palette.primary.main,
+        '&:hover, &:active': {
+          color: theme.palette.primary.dark
+        }
+      },
       h1: {
         color: darkMode ? theme.palette.neutral.contrastText : theme.palette.neutral.dark
       },

@@ -17,6 +17,7 @@ export * from './components';
 export * from './containers';
 export * from './views';
 export * from './utils/GothamProvider';
+export * from './utils/colorUtils';
 export * from './utils/imageUtils';
 export * from './utils/routes';
 export * from './utils/useBreakpoint';

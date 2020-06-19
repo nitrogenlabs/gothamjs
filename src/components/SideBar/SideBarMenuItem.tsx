@@ -8,7 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import {makeStyles} from '@material-ui/styles';
 import React from 'react';
-import {matchPath, NavLink} from 'react-router-dom';
+import {matchPath, NavLink as Link} from 'react-router-dom';
 
 import {parseNavUrl} from '../../utils/viewUtils';
 import {GothamMenuType} from '../../views/Gotham/Gotham.types';
@@ -98,7 +98,7 @@ export const SideBarMenuItem = (props: SideBarMenuItemProps): JSX.Element => {
 
   return (
     <li>
-      <NavLink
+      <Link
         activeStyle={{fontWeight: 700}}
         className={classes.menuLink}
         exact
@@ -116,7 +116,7 @@ export const SideBarMenuItem = (props: SideBarMenuItemProps): JSX.Element => {
             primary={label}
             primaryTypographyProps={{variant: 'h4'}} />
         </ListItem>
-      </NavLink>
+      </Link>
     </li>
   );
 };

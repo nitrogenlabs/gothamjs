@@ -23,7 +23,7 @@ const useStyles: any = makeStyles((theme: any) => {
       position: 'relative'
     },
     drawerRoot: {
-      backgroundColor: darkMode ? theme.palette.neutral.dark : theme.palette.neutral.main,
+      backgroundColor: darkMode ? theme.palette.neutral.dark : theme.palette.neutral.light,
       height: '100vh'
     },
     menu: {
@@ -51,7 +51,7 @@ export const renderMenu = (pathname: string, menu: any[] = []) =>
 
 export const SideBar = (props: SideBarProps) => {
   // Props
-  const {menu, pathname} = props;
+  const {menu, pathname, top} = props;
 
   // State
   const [openState, setOpenState] = useState(false);
@@ -75,6 +75,7 @@ export const SideBar = (props: SideBarProps) => {
             onKeyDown={closeDrawer}
             role="button"
             tabIndex={0}>
+            {top}
             <List className={classes.menu}>{renderMenu(pathname, menu)}</List>
           </div>
         </Drawer>
@@ -85,6 +86,7 @@ export const SideBar = (props: SideBarProps) => {
           open
           transitionDuration={{enter: 0.3, exit: 0.3}}
           variant="permanent">
+          {top}
           <List className={classes.menu}>{renderMenu(pathname, menu)}</List>
         </Drawer>
       </Hidden>

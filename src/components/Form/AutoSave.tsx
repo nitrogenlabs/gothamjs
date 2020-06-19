@@ -31,9 +31,9 @@ export const AutoSaveBase = (props) => {
   // Initial state
   const [state, setState] = useState({submitting: false, values});
 
-
+  console.log('AutoSaveBase::values', values);
   useEffect(() => {
-    // blur occurred
+    // Blur occurred
     update(props, state, setState, active);
   }, [active]);
 

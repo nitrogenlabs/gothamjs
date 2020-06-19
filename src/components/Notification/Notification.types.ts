@@ -4,8 +4,6 @@
  */
 import {GothamStatus} from '../../views';
 
-export type NotificationType = 'default' | 'error' | 'info' | 'success' | 'warning';
-
 export interface NotificationProps {
   readonly className?: string;
   readonly currentNotification?: any;
@@ -14,7 +12,7 @@ export interface NotificationProps {
   readonly setCurrent?: any;
   readonly setHasNotification?: any;
   readonly setNotifications?: any;
-  readonly variant?: NotificationType;
+  readonly variant?: 'elevation' | 'outlined';
 }
 
 export interface NotificationParams {

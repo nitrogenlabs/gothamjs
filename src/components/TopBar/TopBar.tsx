@@ -3,18 +3,18 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import AppBar from '@material-ui/core/AppBar/AppBar';
-import IconButton from '@material-ui/core/IconButton/IconButton';
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Typography from '@material-ui/core/Typography/Typography';
-import {makeStyles} from '@material-ui/styles';
+import {makeStyles, useTheme} from '@material-ui/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import React, {useEffect, useState} from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink as Link} from 'react-router-dom';
 
 import {GothamActions} from '../../actions/GothamActions';
 import {Theme} from '../../config/theme.types';
 import {GothamConstants} from '../../constants/GothamConstants';
+import {useBreakpoint} from '../../utils/useBreakpoint';
 import {GothamMenuItem} from '../../views/Gotham/Gotham.types';
 import {Button} from '../Button/Button';
 import {TopBarProps} from './TopBar.types';
@@ -40,12 +40,13 @@ const useStyles: any = makeStyles((theme: Theme) => ({
   homeLink: {
     display: 'flex'
   },
-  menuIcon: {
+  menuIcon: ({menuIconColor}: any) => ({
+    color: menuIconColor,
     '& svg': {
       height: 32,
       width: 32
     }
-  },
+  }),
   spacer: {
     flex: 1
   },
@@ -103,7 +104,7 @@ export const renderTitle = (title: string = ''): JSX.Element => {
   return null;
 };
 
-export const calculateStyles = (): any => {
+export const calculateStyles = (forceHeight?: number): any => {
   const {scrollY} = window;
   const tolerance: number = scrollY - TOPBAR_HEIGHT_TOLERANCE;
 
@@ -123,10 +124,10 @@ export const calculateStyles = (): any => {
   }
 
   // Calculate opacity
-  const opacityHeight: number = (updatedHeight - TOPBAR_MIN_HEIGHT);
+  const opacityHeight: number = updatedHeight - TOPBAR_MIN_HEIGHT;
   const opacity: number = (opacityHeight > 0) ? 1 - (opacityHeight / TOPBAR_MIN_HEIGHT) : 1;
 
-  return {backgroundColor: `rgba(0, 0, 0, ${opacity})`, height: updatedHeight};
+  return {backgroundColor: `rgba(0, 0, 0, ${opacity})`, height: forceHeight ? forceHeight : updatedHeight};
 };
 
 export const onScroll = (setTopState, setStyle) => (): void => {
@@ -136,49 +137,56 @@ export const onScroll = (setTopState, setStyle) => (): void => {
 };
 
 export const TopBar = (props: TopBarProps) => {
+  const theme: any = useTheme();
   const {
     logo,
     logoAlt,
     menu = [],
     open,
+    solidTextColor = theme.palette.primary.dark,
     title,
-    transparent = false
+    transparent = false,
+    transparentTextColor
   } = props;
 
   // State
   const [isTransparent, setTopState] = useState(transparent);
   const [barStyles, setStyle] = useState({backgroundColor: 'rgba(0, 0, 0, 0)', height: TOPBAR_MAX_HEIGHT});
   const {backgroundColor: barStyleBg, height: barStyleHeight} = barStyles;
-  let backgroundColor: string;
-  let height: number;
+  const breakpoint = useBreakpoint();
+  const isMobile: boolean = breakpoint.down('sm');
+  const menuIconColor = transparentTextColor ? transparentTextColor : solidTextColor;
+  const backgroundColor: string = transparent ? barStyleBg : '#000';
+  const height: number = transparent ? barStyleHeight : TOPBAR_MIN_HEIGHT;
 
   // Styling
-  const classes = useStyles();
+  const classes = useStyles({menuIconColor});
 
-  if(transparent) {
-    backgroundColor = barStyleBg;
-    height = barStyleHeight;
-
-    useEffect(() => {
+  useEffect(() => {
+    if(transparent) {
       window.addEventListener('scroll', onScroll(setTopState, setStyle));
+      return () => window.removeEventListener('scroll', onScroll(setTopState, setStyle));
+    }
 
-      return () => {
-        window.removeEventListener('scroll', onScroll(setTopState, setStyle));
-      };
-    }, []);
-  } else {
-    backgroundColor = '#000';
-    height = TOPBAR_MIN_HEIGHT;
-  }
+    return () => {};
+  }, [transparent]);
 
   const appBarSolid: string = `${classes.appBar} ${classes.appBarSolid}`;
   const appBarTransparent: string = `${classes.appBar} ${classes.appBarTransparent}`;
-  const titleBarStyles: string[] = [
+  const titleBarStyles: string = [
     classes.titleBar,
     isTransparent ? classes.titleBarTransparent : classes.titleBarSolid
-  ];
-  const menuStyles: string[] = ['d-flex', 'd-md-none', classes.menuIcon];
-  const spacerStyles: string[] = ['d-none', 'd-md-flex', classes.spacer];
+  ].join(' ');
+  const menuStyles: string = `d-flex d-md-none ${classes.menuIcon}`;
+  const spacerStyles: string = `d-none d-md-flex ${classes.spacer}`;
+
+  useEffect(() => {
+    if(isMobile) {
+      setStyle(calculateStyles(TOPBAR_MIN_HEIGHT));
+    } else {
+      setStyle(calculateStyles());
+    }
+  }, [isMobile]);
 
   return (
     <AppBar
@@ -186,21 +194,20 @@ export const TopBar = (props: TopBarProps) => {
       position="absolute"
       style={{backgroundColor}}>
       <Toolbar
-        classes={{root: titleBarStyles.join(' ')}}
+        classes={{root: titleBarStyles}}
         disableGutters
         style={{height}}>
-        <IconButton
-          classes={{root: menuStyles.join(' ')}}
-          color="inherit"
-          aria-label="open drawer"
+        <div
+          className={menuStyles}
+          aria-label="Open drawer"
           onClick={() => onToggleDrawer(!open)}>
           {open ? <BackburgerIcon /> : <MenuIcon />}
-        </IconButton>
-        <NavLink to="/">
+        </div>
+        <Link to="/">
           {isTransparent ? (logoAlt || logo) : logo}
           {renderTitle(title)}
-        </NavLink>
-        <div className={spacerStyles.join(' ')} />
+        </Link>
+        <div className={spacerStyles} />
         {renderMenu(props, isTransparent, menu)}
       </Toolbar>
     </AppBar>

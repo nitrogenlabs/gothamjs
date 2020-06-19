@@ -20,14 +20,15 @@ const useStyle = makeStyles((theme: any) => ({
     alignItems: 'center',
     color: theme.palette.neutral.main,
     display: 'flex',
-    fontSize: 150,
+    fontSize: 100,
     fontWeight: 700,
+    opacity: 0.3,
     position: 'relative',
     transition: 'all 0.25s ease-out',
     userSelect: 'none'
   },
   h1: {
-    fontSize: 46,
+    fontSize: 30,
     fontWeight: 100
   },
   shadow: {
@@ -40,7 +41,7 @@ export const NotFoundView = () => {
   return (
     <div className={classes.container}>
       <div className={classes.errorCode}>404</div>
-      <h1>Page Not Found</h1>
+      <h1 className={classes.h1}>Page Not Found</h1>
       <div className={classes.body}>
         Could not find the page you were looking for. Please try again or contact support.
       </div>

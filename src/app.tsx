@@ -15,9 +15,9 @@ const login: GothamRoute = {
   props: {
     logo: <Svg name="gotham-logo" width={130} height={130} />,
     onLogin: () => {},
-    onSignup: () => {}
+    onSignup: () => {},
+    title: 'Login'
   },
-  title: 'Login',
   view: 'login'
 };
 
@@ -109,9 +109,9 @@ const config: GothamConfiguration = {
                 {label: 'API', url: '/api'}
               ],
               image: <Svg name="gotham-logo" width={130} height={130} />
-            }
+            },
+            title: 'Welcome'
           },
-          title: 'Welcome',
           view: 'home'
         },
         login
@@ -133,17 +133,17 @@ const config: GothamConfiguration = {
         {
           path: '/docs',
           props: {
-            external: './docs/gettingStarted.md'
+            external: './docs/gettingStarted.md',
+            title: 'Getting Started'
           },
-          title: 'Getting Started',
           view: 'markdown'
         },
         {
           path: '/docs/containers',
           props: {
-            external: './containers.md'
+            external: './containers.md',
+            title: 'Containers'
           },
-          title: 'Containers',
           view: 'markdown'
         }
       ]

@@ -12,13 +12,13 @@ import {ArkhamConstants, Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {useFlux} from '@nlabs/arkhamjs-utils-react';
-import {createBrowserHistory, History} from 'history';
 import merge from 'lodash/merge';
 import React, {useEffect, useState} from 'react';
-import {Router} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 
 import {GothamActions} from '../../actions/GothamActions';
 import {GlobalStyles, Loader, Notification} from '../../components';
+import {GothamRoute} from '../../components/Navigation/GothamRouter';
 import {Config} from '../../config/app';
 import {defaultTheme} from '../../config/theme';
 import {GothamConstants} from '../../constants/GothamConstants';
@@ -38,24 +38,6 @@ export const init = (setAppLoaded, config: GothamConfiguration) => (): void => {
   setAppLoaded(true);
 };
 
-export const navBack = (history: History) => (): void => {
-  history.goBack();
-};
-
-export const navForward = (history: History) => (): void => {
-  history.goForward();
-};
-
-export const navGoto = (history: History) => (data): void => {
-  const {params, path = ''} = data;
-  history.push(path, params);
-};
-
-export const navReplace = (history: History) => (data): void => {
-  const {params, path = ''} = data;
-  history.replace(path, params);
-};
-
 // Loader
 export const toggleLoader = (setLoading) => ({isLoading}) => {
   setLoading(isLoading);
@@ -68,9 +50,6 @@ export const renderLoading = (isLoading: boolean): JSX.Element => {
 
   return <Loader />;
 };
-
-// Create browser history
-export const history: History = createBrowserHistory();
 
 export const onKeyUp = (event) => {
   if(event.which === 9) {
@@ -98,6 +77,7 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   const config: GothamConfiguration = merge(defaultConfig, appConfig);
   Config.set(config);
   const {
+    displayMode = 'auto',
     middleware,
     name,
     storageType,
@@ -107,7 +87,14 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   } = config;
 
   // Create theme
-  const darkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  let darkMode: boolean;
+
+  if(displayMode === 'auto') {
+    darkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  } else {
+    darkMode = displayMode === 'dark';
+  }
+
   const theme = React.useMemo(
     () => {
       const themeType = {
@@ -122,11 +109,7 @@ export const Gotham = (props: GothamProps): JSX.Element => {
 
   useFlux([
     {handler: init(setAppLoaded, config), type: ArkhamConstants.INIT},
-    {handler: toggleLoader(setLoading), type: GothamConstants.LOADING},
-    {handler: navBack(history), type: GothamConstants.NAV_BACK},
-    {handler: navForward(history), type: GothamConstants.NAV_FORWARD},
-    {handler: navGoto(history), type: GothamConstants.NAV_GOTO},
-    {handler: navReplace(history), type: GothamConstants.NAV_REPLACE}
+    {handler: toggleLoader(setLoading), type: GothamConstants.LOADING}
   ]);
 
   // Mount
@@ -162,9 +145,10 @@ export const Gotham = (props: GothamProps): JSX.Element => {
     content = <Loader />;
   } else {
     content = (
-      <Router history={history}>
+      <BrowserRouter>
+        <GothamRoute />
         {renderTransition(routes, Flux, {...gothamConfig, isAuth})}
-      </Router>
+      </BrowserRouter>
     );
   }
 

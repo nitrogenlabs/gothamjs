@@ -14,8 +14,6 @@ import {DefaultContainer} from '../containers/DefaultContainer';
 import {MenuContainer} from '../containers/MenuContainer';
 import {GothamConfiguration, GothamRoute} from '../views/Gotham/Gotham.types';
 
-// import {AnimatedRoute} from 'react-router-transition';
-
 export const fadeTransition = {
   atActive: {
     opacity: 1,

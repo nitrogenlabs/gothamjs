@@ -6,7 +6,7 @@ import {FormHelperTextProps} from '@material-ui/core/FormHelperText';
 import {InputProps} from '@material-ui/core/Input';
 import {InputLabelProps} from '@material-ui/core/InputLabel';
 
-import {DateFieldOrigin} from './DateField.types';
+import {DateTimeFieldOrigin} from './DateTimeField.types';
 
 export interface TimeFieldClockProps {
   readonly action: (actions: any) => void;
@@ -31,8 +31,8 @@ export interface TimeFieldProps {
   readonly value: Date;
   readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>) => void;
   readonly selectableMinutesInterval?: number;
-  readonly anchorOrigin?: DateFieldOrigin;
-  readonly transformOrigin?: DateFieldOrigin;
+  readonly anchorOrigin?: DateTimeFieldOrigin;
+  readonly transformOrigin?: DateTimeFieldOrigin;
   readonly disabled?: boolean;
   readonly error?: string;
   readonly fullWidth?: boolean;

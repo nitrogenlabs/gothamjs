@@ -48,7 +48,7 @@ const palette: any = {
   }
 };
 
-const breakpoints: any = {
+export const breakpoints: any = {
   values: {
     xs: 0,
     sm: 576,
@@ -113,9 +113,10 @@ export const defaultTheme: ThemeOptions = {
         boxShadow: 'none'
       },
       outlined: {
+        backgroundColor: 'transparent',
         borderColor: palette.primary.main,
         borderRadius: 0,
-        borderWidth: 2
+        borderWidth: 1
       },
       root: {
         outline: 0,

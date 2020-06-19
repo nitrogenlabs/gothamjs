@@ -4,6 +4,7 @@
  */
 import {makeStyles} from '@material-ui/styles';
 import {useFlux} from '@nlabs/arkhamjs-utils-react';
+import isEmpty from 'lodash/isEmpty';
 import React, {useContext, useState} from 'react';
 
 import {SideBar} from '../components/SideBar/SideBar';
@@ -76,14 +77,16 @@ export const MenuContainer = (props: MenuContainerProps) => {
   const navProps: any = getNavParams(props);
   const routeProps: any = {exact, history, location, match, staticContext};
   const viewProps: any = getViewParams(props);
-
+  const topBarComponent = !isEmpty(topBar)
+    ? <TopBar {...topBar} transparent={false} />
+    : null;
   useFlux([
     {handler: updateMenu(setSidebarProps), type: GothamConstants.UPDATE_MENU}
   ]);
 
   return (
     <ContainerContext.Provider value={{navProps, routeProps, viewProps}}>
-      <TopBar {...topBar} transparent={false} />
+      {topBarComponent}
       <div className={classes.container}>
         {renderMenu(sideBarProps, pathname)}
         <div className={classes.content}>

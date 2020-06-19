@@ -5,9 +5,9 @@
 import {GothamMenuItem, GothamMenuType} from '../../views/Gotham/Gotham.types';
 
 export interface SideBarProps {
-  readonly logo?: JSX.Element;
   readonly menu?: GothamMenuItem[];
   readonly pathname?: string;
+  readonly top?: JSX.Element;
 }
 
 export interface SideBarMenuItemProps {

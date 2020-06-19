@@ -4,8 +4,8 @@
  */
 export {AutocompleteField} from './AutocompleteField';
 export * from './AutocompleteField.types';
-export {DateField} from './DateField';
-export * from './DateField.types';
+export {DateTimeField} from './DateTimeField';
+export {DateTimeFieldProps} from './DateTimeField.types';
 export {Form} from './Form';
 export * from './Form.types';
 export {SelectField} from './SelectField';
