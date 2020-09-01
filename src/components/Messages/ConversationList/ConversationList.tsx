@@ -39,10 +39,8 @@ export const ConversationList = (props: ConversationListProps) => {
   });
   const {conversations} = state;
 
-  useFlux([
-    {handler: onError, type: MessageConstants.CONVO_LIST_FAILED},
-    {handler: onSuccess(setState), type: MessageConstants.CONVO_LIST_SUCCESS}
-  ]);
+  useFlux(MessageConstants.CONVO_LIST_FAILED, onError);
+  useFlux(MessageConstants.CONVO_LIST_SUCCESS, onSuccess(setState));
 
   return (
     <div className="conversation-list">

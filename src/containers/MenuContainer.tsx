@@ -80,9 +80,7 @@ export const MenuContainer = (props: MenuContainerProps) => {
   const topBarComponent = !isEmpty(topBar)
     ? <TopBar {...topBar} transparent={false} />
     : null;
-  useFlux([
-    {handler: updateMenu(setSidebarProps), type: GothamConstants.UPDATE_MENU}
-  ]);
+  useFlux(GothamConstants.UPDATE_MENU, updateMenu(setSidebarProps));
 
   return (
     <ContainerContext.Provider value={{navProps, routeProps, viewProps}}>

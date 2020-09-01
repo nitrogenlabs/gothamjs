@@ -1,14 +1,15 @@
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 import {makeStyles} from '@material-ui/styles';
+import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 
 import {Theme} from '../../config/theme.types';
 import {Svg} from '../Svg/Svg';
 import {LoaderProps} from './Loader.types';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 const useStyles: any = makeStyles((theme: Theme) => ({
   loader: {
     alignItems: 'center',
@@ -16,7 +17,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     display: 'flex',
     flex: 1,
     justifyContent: 'center',
-    opacity: 0.9,
+    opacity: 0.95,
     textAlign: 'center'
   },
   loaderDefault: {
@@ -30,19 +31,39 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     width: '100%',
     zIndex: theme.zIndex.tooltip + 1
   },
+  loaderText: {
+    fontSize: 12
+  },
   loaderThrobber: {
+    animationName: '$rotate',
+    animationDuration: '750ms',
+    animationIterationCount: 'infinite',
+    animationTimingFunction: theme.transitions.easing.easeInOut,
     display: 'flex'
+  },
+  '@keyframes rotate': {
+    '0%': {
+      transform: 'rotate(0deg)'
+    },
+    '100%': {
+      transform: 'rotate(360deg)'
+    }
   }
 }));
 
-export const Loader = ({full}: LoaderProps) => {
+export const Loader = ({content, full}: LoaderProps) => {
   const classes = useStyles();
 
   return (
     <div id="loader" className={`${classes.loader} ${(full ? classes.loaderFull : classes.loaderDefault)}`}>
       <div className={classes.loaderThrobber}>
-        <Svg name="loading" width={200} height={200} />
+        <Svg name="loading" width={50} height={50} />
       </div>
+      {!isEmpty(content) && (
+        <div className={classes.loaderText}>
+          {content}
+        </div>
+      )}
     </div>
   );
 };

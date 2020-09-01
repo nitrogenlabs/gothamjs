@@ -32,7 +32,7 @@ export interface DateTimeFieldCalendarProps {
 export interface DateTimeFieldProps {
   readonly name: string;
   readonly label?: string;
-  readonly value: Date;
+  readonly value?: Date;
   readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement>) => void;
   readonly anchorOrigin?: DateTimeFieldOrigin;
   readonly transformOrigin?: DateTimeFieldOrigin;

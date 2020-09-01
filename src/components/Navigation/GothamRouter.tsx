@@ -25,12 +25,10 @@ export const navReplace = (history) => (data): void => {
 export const GothamRoute = (): JSX.Element => {
   const history = useHistory();
 
-  useFlux([
-    {handler: navBack(history), type: GothamConstants.NAV_BACK},
-    {handler: navForward(history), type: GothamConstants.NAV_FORWARD},
-    {handler: navGoto(history), type: GothamConstants.NAV_GOTO},
-    {handler: navReplace(history), type: GothamConstants.NAV_REPLACE}
-  ]);
+  useFlux(GothamConstants.NAV_BACK, navBack(history));
+  useFlux(GothamConstants.NAV_FORWARD, navForward(history));
+  useFlux(GothamConstants.NAV_GOTO, navGoto(history));
+  useFlux(GothamConstants.NAV_REPLACE, navReplace(history));
 
   return null;
 };

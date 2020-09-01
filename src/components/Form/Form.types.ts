@@ -4,6 +4,7 @@
  */
 import {NativeSelectProps as MaterialNativeSelectProps} from '@material-ui/core/NativeSelect/NativeSelect';
 import {StandardTextFieldProps as MaterialTextFieldProps} from '@material-ui/core/TextField';
+import {SyntheticEvent} from 'react';
 
 export interface FormFieldState {
   readonly active?: boolean;
@@ -43,6 +44,7 @@ export interface FormProps {
 }
 
 export interface TextFieldProps extends MaterialTextFieldProps {
+  readonly onChange?: (event: SyntheticEvent, value?: string) => any;
   readonly validate?: (object) => object | Promise<object>;
 }
 

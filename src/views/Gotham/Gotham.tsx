@@ -39,16 +39,17 @@ export const init = (setAppLoaded, config: GothamConfiguration) => (): void => {
 };
 
 // Loader
-export const toggleLoader = (setLoading) => ({isLoading}) => {
+export const toggleLoader = (setLoading, setLoaderContent) => ({content, isLoading}) => {
   setLoading(isLoading);
+  setLoaderContent(content);
 };
 
-export const renderLoading = (isLoading: boolean): JSX.Element => {
+export const renderLoading = (isLoading: boolean, content: string): JSX.Element => {
   if(!isLoading) {
     return null;
   }
 
-  return <Loader />;
+  return <Loader content={content} full />;
 };
 
 export const onKeyUp = (event) => {
@@ -61,6 +62,7 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   // Initial state
   const [isAppLoaded, setAppLoaded] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [loaderContent, setLoaderContent] = useState();
 
   // Configuration
   const {config: appConfig = {}} = props;
@@ -107,10 +109,8 @@ export const Gotham = (props: GothamProps): JSX.Element => {
     [darkMode],
   );
 
-  useFlux([
-    {handler: init(setAppLoaded, config), type: ArkhamConstants.INIT},
-    {handler: toggleLoader(setLoading), type: GothamConstants.LOADING}
-  ]);
+  useFlux(ArkhamConstants.INIT, init(setAppLoaded, config));
+  useFlux(GothamConstants.LOADING, toggleLoader(setLoading, setLoaderContent));
 
   // Mount
   useEffect(() => {
@@ -157,8 +157,8 @@ export const Gotham = (props: GothamProps): JSX.Element => {
       <CssBaseline />
       <GothamContext.Provider value={{Flux, isAuth}}>
         <GlobalStyles />
-        {renderLoading(isLoading)}
         {content}
+        {renderLoading(isLoading, loaderContent)}
       </GothamContext.Provider>
       <Notification />
     </ThemeProvider >

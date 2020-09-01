@@ -91,10 +91,8 @@ export const MessageList = (props: MessageListProps) => {
   });
   const {convoId} = state;
 
-  useFlux([
-    {handler: onError, type: MessageConstants.GET_LIST_FAILED},
-    {handler: onSuccess(setState), type: MessageConstants.GET_LIST_SUCCESS}
-  ]);
+  useFlux(MessageConstants.GET_LIST_FAILED, onError);
+  useFlux(MessageConstants.GET_LIST_SUCCESS, onSuccess(setState));
 
   return (
     <div className="message-list">

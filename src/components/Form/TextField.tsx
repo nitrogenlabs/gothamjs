@@ -3,13 +3,22 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import MaterialTextField from '@material-ui/core/TextField/TextField';
-import React from 'react';
+import React, {SyntheticEvent, useState} from 'react';
 import {Field} from 'react-final-form';
 
 import {TextFieldProps} from './Form.types';
 
+export const onChange = (onChangeFn, setValue) => (event: SyntheticEvent) => {
+  const {target: {value = ''}}: any = event;
+  setValue(value);
+
+  if(onChangeFn) {
+    onChangeFn(event, value);
+  }
+};
+
 export const renderField = (props) => ({input = {}, meta}): JSX.Element => {
-  const {validate, ...remainingProps} = props;
+  const {setValue, validate, ...remainingProps} = props;
   const {active, dirty, error, touched} = meta;
   let updatedProps;
 
@@ -27,6 +36,8 @@ export const renderField = (props) => ({input = {}, meta}): JSX.Element => {
 };
 
 export const TextField = (props: TextFieldProps) => {
-  const {name, validate} = props;
-  return <Field name={name} render={renderField(props)} validate={validate} />;
+  const {name, onChange: customOnChange, validate, value = ''} = props;
+  const [updatedValue, setValue] = useState(value);
+  const updatedProps = {...props, onChange: onChange(customOnChange, setValue), setValue, value: updatedValue};
+  return <Field name={name} render={renderField(updatedProps)} validate={validate} />;
 };

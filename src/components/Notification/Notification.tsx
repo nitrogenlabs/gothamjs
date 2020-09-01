@@ -111,13 +111,8 @@ export const Notification = (props: NotificationProps): JSX.Element => {
   const notifyIcon = Icon && <Icon className={classNames(classes.icon, classes.iconStatus)} />;
   const notifyClass = classes[status] || classes.default;
 
-  useFlux([
-    {
-      handler: ({notification}) =>
-        addNotification([...notifications, notification], setHasNotification, setNotifications, setCurrent),
-      type: GothamConstants.NOTIFY
-    }
-  ]);
+  useFlux(GothamConstants.NOTIFY, ({notification}) =>
+    addNotification([...notifications, notification], setHasNotification, setNotifications, setCurrent));
 
   return (
     <Snackbar

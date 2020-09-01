@@ -47,7 +47,7 @@ export interface GothamConfiguration {
   readonly baseUrl?: string;
   readonly config?: FluxOptions;
   readonly displayMode?: ThemeDisplayMode;
-  readonly Flux?: FluxFramework;
+  readonly flux?: FluxFramework;
   readonly isAuth?: () => boolean;
   readonly name?: string;
   readonly onInit?: () => any;

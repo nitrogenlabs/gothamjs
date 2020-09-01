@@ -36,9 +36,7 @@ export const MarkdownView = (props: MarkdownViewProps) => {
   const {content = ''} = state;
   const classes = useStyles();
 
-  useFlux([
-    {handler: onUpdate(setState), type: GothamConstants.GET_EXTERNAL}
-  ]);
+  useFlux(GothamConstants.GET_EXTERNAL, onUpdate(setState));
 
   useEffect(() => {
     if(content === '') {

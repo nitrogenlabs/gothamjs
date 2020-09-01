@@ -59,9 +59,7 @@ export const SideBar = (props: SideBarProps) => {
   // Styling
   const classes = useStyles();
 
-  useFlux([
-    {handler: toggleMenu(setOpenState), type: GothamConstants.TOGGLE_MENU}
-  ]);
+  useFlux(GothamConstants.TOGGLE_MENU, toggleMenu(setOpenState));
 
   return (
     <div className={classes.sideBar}>

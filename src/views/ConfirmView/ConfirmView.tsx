@@ -85,11 +85,8 @@ export const ConfirmView = (props: ConfirmViewProps) => {
   });
   const {confirmation, errorMessage} = state;
 
-  useFlux([
-    {handler: onSuccess, type: LoginConstants.SUCCESS},
-    {handler: onFailure(setState), type: LoginConstants.FAILED}
-  ]);
-
+  useFlux(LoginConstants.SUCCESS, onSuccess);
+  useFlux(LoginConstants.FAILED, onFailure(setState));
 
   return (
     <PageView name={name} title="Confirmation">

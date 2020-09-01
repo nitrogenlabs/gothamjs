@@ -8,7 +8,6 @@ import {Field} from 'react-final-form';
 import {DatePicker} from './DatePicker/DatePicker';
 import {DateTimeFieldProps} from './DateTimeField.types';
 
-
 export const renderField = (props) => (fieldProps): JSX.Element => {
   const {input = {}, meta}: any = fieldProps;
   const {onChange: onChangeInput, ...inputProps} = input;
