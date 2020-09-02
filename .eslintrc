@@ -12,6 +12,7 @@
         "svg": "always",
         "types": "always"
       }
-    ]
+    ],
+    "no-plusplus": 0
   }
 }

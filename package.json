@@ -64,6 +64,7 @@
     "clsx": "^1.1.1",
     "cropperjs": "^1.5.7",
     "final-form": "^4.20.1",
+    "final-form-set-field-data": "^1.0.2",
     "hast-util-sanitize": "^3.0.0",
     "highlight.js": "^10.1.1",
     "history": "^5.0.0",

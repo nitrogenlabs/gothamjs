@@ -110,7 +110,6 @@ export const DatePicker = (props: DatePickerProps) => {
   const [calendarShow, setCalendarShow] = useState(false);
   const [selectedDate, setSelected] = useState(formatValue(value));
 
-  console.log('DatePicker::selectedDate', selectedDate.toFormat('EEE, LLL d, yyyy @ h:mm a'));
   // References
   const inputRef: any = useRef();
   const calendarRef: any = useRef();

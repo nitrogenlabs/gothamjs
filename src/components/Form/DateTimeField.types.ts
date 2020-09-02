@@ -30,28 +30,28 @@ export interface DateTimeFieldCalendarProps {
 }
 
 export interface DateTimeFieldProps {
-  readonly name: string;
-  readonly label?: string;
-  readonly value?: Date;
-  readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement>) => void;
   readonly anchorOrigin?: DateTimeFieldOrigin;
-  readonly transformOrigin?: DateTimeFieldOrigin;
-  readonly disabled?: boolean;
-  readonly error?: string;
-  readonly dateDisabled?: (date: Date) => boolean;
-  readonly min?: Date;
-  readonly max?: Date;
-  readonly dateFormat?: string | ((date: Date) => string);
-  readonly fullWidth?: boolean;
-  readonly dialog?: boolean;
-  readonly okToConfirm?: boolean;
-  readonly endIcon?: Node;
   readonly className?: string;
+  readonly dateDisabled?: (date: Date) => boolean;
+  readonly dateFormat?: string | ((date: Date) => string);
+  readonly dialog?: boolean;
+  readonly disabled?: boolean;
+  readonly endIcon?: Node;
+  readonly error?: string;
+  readonly fullWidth?: boolean;
+  readonly label?: string;
+  readonly name: string;
+  readonly max?: Date;
+  readonly min?: Date;
+  readonly onChange?: (value: Date, event?: React.MouseEvent<HTMLElement>) => any;
+  readonly okToConfirm?: boolean;
+  readonly transformOrigin?: DateTimeFieldOrigin;
+  readonly validate?: (value: any) => object | Promise<object>;
+  readonly value?: Date;
+  readonly CalendarProps?: DateTimeFieldCalendarProps;
   readonly InputLabelProps?: InputLabelProps;
   readonly InputProps?: InputProps;
   readonly FormHelperTextProps?: FormHelperTextProps;
-  readonly CalendarProps?: DateTimeFieldCalendarProps;
-  readonly validate?: (value: any) => object | Promise<object>;
 }
 
 export interface DateTimeFieldState {

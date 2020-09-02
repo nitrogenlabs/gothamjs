@@ -12,12 +12,13 @@ export const onChange = (onChangeFn, setValue) => (event: SyntheticEvent) => {
   const {target: {value = ''}}: any = event;
   setValue(value);
 
+  console.log('TextField::value', value);
   if(onChangeFn) {
     onChangeFn(event, value);
   }
 };
 
-export const renderField = (props) => ({input = {}, meta}): JSX.Element => {
+export const renderField = (props) => ({input = {}, meta}: any): JSX.Element => {
   const {setValue, validate, ...remainingProps} = props;
   const {active, dirty, error, touched} = meta;
   let updatedProps;
@@ -25,11 +26,12 @@ export const renderField = (props) => ({input = {}, meta}): JSX.Element => {
   if(!active && !!error && (dirty || touched)) {
     updatedProps = {
       ...remainingProps,
+      ...input,
       error: true,
       helperText: <span>{error}</span>
     };
   } else {
-    updatedProps = {...remainingProps};
+    updatedProps = {...remainingProps, ...input};
   }
 
   return <MaterialTextField {...input} {...updatedProps} />;
