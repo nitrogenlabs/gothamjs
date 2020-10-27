@@ -5,7 +5,7 @@
 import Button from '@material-ui/core/Button/Button';
 import Card from '@material-ui/core/Card/Card';
 import CardContent from '@material-ui/core/CardContent/CardContent';
-import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
+import {useFluxListener, useState} from '@nlabs/arkhamjs-utils-react';
 import * as React from 'react';
 
 import {Form} from '../../components/Form/Form';
@@ -85,8 +85,8 @@ export const ConfirmView = (props: ConfirmViewProps) => {
   });
   const {confirmation, errorMessage} = state;
 
-  useFlux(LoginConstants.SUCCESS, onSuccess);
-  useFlux(LoginConstants.FAILED, onFailure(setState));
+  useFluxListener(LoginConstants.SUCCESS, onSuccess);
+  useFluxListener(LoginConstants.FAILED, onFailure(setState));
 
   return (
     <PageView name={name} title="Confirmation">

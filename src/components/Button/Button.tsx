@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import MaterialButton from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/styles';
 import classNames from 'classnames';
@@ -5,11 +9,8 @@ import React from 'react';
 
 import {colorLuminance} from '../../utils/colorUtils';
 import {ButtonProps, ButtonVariant} from './Button.types';
+import {ButtonSpinner} from './ButtonSpinner';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 const useStyles = makeStyles((theme: any) => ({
   contained: {
     backgroundColor: theme.palette.primary.main,
@@ -60,10 +61,9 @@ const useStyles = makeStyles((theme: any) => ({
   }
 }));
 
-export const Button = (props: ButtonProps) => {
-  const {children, className, ...buttonProps} = props;
+export const Button = ({children, className, isLoading = false, ...buttonProps}: ButtonProps) => {
   const {variant = 'contained', ...restBtnProps} = buttonProps;
-  const classes = useStyles({});
+  const classes = useStyles();
   const buttonCls = classNames(classes[variant], className);
   const variantType: any = ['contained', 'outlined', 'text']
     .reduce((selectedVariant: ButtonVariant, type: ButtonVariant): ButtonVariant => {
@@ -77,6 +77,7 @@ export const Button = (props: ButtonProps) => {
   return (
     <MaterialButton {...restBtnProps} variant={variantType} className={buttonCls} >
       {children}
+      {isLoading && <ButtonSpinner />}
     </MaterialButton >
   );
 };

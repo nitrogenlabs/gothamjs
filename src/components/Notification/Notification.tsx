@@ -6,7 +6,7 @@ import {Snackbar} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import {makeStyles} from '@material-ui/styles';
-import {useFlux} from '@nlabs/arkhamjs-utils-react';
+import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import {createHash} from '@nlabs/utils';
 import classNames from 'classnames';
 import {
@@ -111,7 +111,7 @@ export const Notification = (props: NotificationProps): JSX.Element => {
   const notifyIcon = Icon && <Icon className={classNames(classes.icon, classes.iconStatus)} />;
   const notifyClass = classes[status] || classes.default;
 
-  useFlux(GothamConstants.NOTIFY, ({notification}) =>
+  useFluxListener(GothamConstants.NOTIFY, ({notification}) =>
     addNotification([...notifications, notification], setHasNotification, setNotifications, setCurrent));
 
   return (

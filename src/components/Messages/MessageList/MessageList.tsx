@@ -1,6 +1,6 @@
 import './MessageList.css';
 
-import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
+import {useFluxListener, useState} from '@nlabs/arkhamjs-utils-react';
 import {DateTime} from 'luxon';
 import React from 'react';
 
@@ -91,8 +91,8 @@ export const MessageList = (props: MessageListProps) => {
   });
   const {convoId} = state;
 
-  useFlux(MessageConstants.GET_LIST_FAILED, onError);
-  useFlux(MessageConstants.GET_LIST_SUCCESS, onSuccess(setState));
+  useFluxListener(MessageConstants.GET_LIST_FAILED, onError);
+  useFluxListener(MessageConstants.GET_LIST_SUCCESS, onSuccess(setState));
 
   return (
     <div className="message-list">

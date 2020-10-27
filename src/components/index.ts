@@ -4,6 +4,8 @@
  */
 export {Button} from './Button/Button';
 export * from './Button/Button.types';
+export {Breadcrumbs} from './Breadcrumbs/Breadcrumbs';
+export * from './Breadcrumbs/Breadcrumbs.types';
 export {CropTool} from './CropTool/CropTool';
 export * from './CropTool/CropTool.types';
 export {FeatureItem} from './FeatureItem/FeatureItem';
@@ -34,15 +36,12 @@ export {TopBar} from './TopBar/TopBar';
 export * from './TopBar/TopBar.types';
 export {Theme, ThemeOptions} from '../config/theme.types';
 
-// Material UI
-
 // Material UI Components
 export {default as AppBar} from '@material-ui/core/AppBar';
 export {default as Avatar} from '@material-ui/core/Avatar';
 export {default as Badge} from '@material-ui/core/Badge';
 export {default as BottomNavigation} from '@material-ui/core/BottomNavigation';
 export {default as BottomNavigationAction} from '@material-ui/core/BottomNavigationAction';
-export {default as Breadcrumbs} from '@material-ui/core/Breadcrumbs';
 export {default as Card} from '@material-ui/core/Card';
 export {default as CardActions} from '@material-ui/core/CardActions';
 export {default as CardActionArea} from '@material-ui/core/CardActionArea';

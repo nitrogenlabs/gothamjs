@@ -2,7 +2,7 @@
  * Copyright (c) 2019-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {withStyles} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core';
 import MaterialMenuItem from '@material-ui/core/MenuItem/MenuItem';
 import MaterialPaper from '@material-ui/core/Paper/Paper';
 import MaterialPopper from '@material-ui/core/Popper/Popper';
@@ -11,13 +11,13 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import debounce from 'lodash/debounce';
 import deburr from 'lodash/deburr';
-import React from 'react';
+import React, {SyntheticEvent, useCallback, useRef, useState} from 'react';
 import ReactAutosuggest from 'react-autosuggest';
 import {Field} from 'react-final-form';
 
-import {AutocompleteFieldProps, AutocompleteFieldState} from './AutocompleteField.types';
+import {AutocompleteFieldProps} from './AutocompleteField.types';
 
-const styles: any = (theme) => ({
+const useStyles: any = makeStyles((theme) => ({
   container: {
     position: 'relative'
   },
@@ -39,209 +39,276 @@ const styles: any = (theme) => ({
     margin: 0,
     padding: 0
   }
-});
+}));
 
-export class AutocompleteFieldBase extends React.PureComponent<AutocompleteFieldProps, AutocompleteFieldState> {
-  inputElement;
+export const getSuggestions = (value: string, suggestions: any[]) => {
+  const inputValue: string = deburr(value.trim()).toLowerCase();
+  const inputLength: number = inputValue.length;
+  let count: number = 0;
 
-  constructor(props: AutocompleteFieldProps) {
-    super(props);
+  return inputLength === 0
+    ? []
+    : suggestions.filter((suggestion) => {
+      const keep =
+        count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
 
-    const {
-      classes,
-      value = '',
-      wait = 1000
-    } = props;
+      if(keep) {
+        count += 1;
+      }
 
-    // Methods
-    this.onBlur = this.onBlur.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onSelected = this.onSelected.bind(this);
-    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
-    this.onSuggestionsFetchRequested = debounce(this.onSuggestionsFetchRequested.bind(this), wait);
-    this.renderField = this.renderField.bind(this);
-    this.renderInputComponent = this.renderInputComponent.bind(this);
-    this.renderSuggestion = this.renderSuggestion.bind(this, classes);
+      return keep;
+    });
+};
 
-    this.state = {
-      single: '',
-      suggestion: null,
-      suggestions: props.suggestions || [],
-      value
+export const onBlur = (suggestion, setValue) => () => {
+  if(!suggestion) {
+    setValue('');
+  }
+};
+
+export const onChange = (onChangeFn, setValue, setSuggestion) => (event: SyntheticEvent, {newValue}) => {
+  setSuggestion(null);
+  setValue(newValue);
+  const {target: {value = ''}}: any = event;
+  console.log('onChange::newValue', newValue);
+  console.log('onChange::value', value);
+  if(onChangeFn) {
+    onChangeFn(newValue);
+  }
+};
+
+export const onFocus = (onFocusFn, setValue, setSuggestion) => () => {
+  setSuggestion(null);
+  setValue('');
+  console.log('onFocus');
+  if(onFocusFn) {
+    onFocusFn();
+  }
+};
+
+export const onSelected = (onSelectedFn, setSuggestion) => (event, suggestion) => {
+  setSuggestion(suggestion);
+
+  if(onSelectedFn) {
+    onSelectedFn(suggestion);
+  }
+};
+
+export const onSuggestionsClearRequested = (setSuggestionList) => () => {
+  setSuggestionList([]);
+};
+
+export const onSuggestionsFetchRequested = (getList, setSuggestionList) => async ({value}) => {
+  if(getList) {
+    const suggestions: any[] = await getList(value);
+    setSuggestionList(suggestions);
+  }
+};
+
+export const renderInputComponent = (inputProps) => {
+  const {classes, inputRef, meta, valueKey, ...remainingProps} = inputProps;
+  const {active, dirty, error, touched} = meta;
+  let updatedProps;
+  if(!active && !!error && (dirty || touched)) {
+    updatedProps = {
+      ...remainingProps,
+      error: true,
+      helperText: <span>{error}</span>
     };
+  } else {
+    updatedProps = {...remainingProps};
   }
 
-  getSuggestions(value) {
-    const {suggestions} = this.state;
-    const inputValue: string = deburr(value.trim()).toLowerCase();
-    const inputLength: number = inputValue.length;
-    let count: number = 0;
+  console.log('renderInputComponent::updatedProps', updatedProps);
+  return (
+    <MaterialTextField
+      fullWidth
+      InputProps={{
+        classes: {
+          input: classes.input
+        },
+        inputRef
+      }}
+      {...updatedProps} />
+  );
+};
 
-    return inputLength === 0
-      ? []
-      : suggestions.filter((suggestion) => {
-        const keep =
-          count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+export const renderItemLabel = (parts): JSX.Element[] => {
+  const highlightedElement = (part, index: number) => (
+    <span key={`${index}`} style={{fontWeight: 700}}>
+      {part.text}
+    </span>
+  );
+  const strongElement = (part, index: number) => (
+    <strong key={`${index}`} style={{fontWeight: 300}}>
+      {part.text}
+    </strong>
+  );
 
-        if(keep) {
-          count += 1;
-        }
+  return parts.map((part, index: number) =>
+    (part.highlight ? highlightedElement(part, index) : strongElement(part, index)));
+};
 
-        return keep;
-      });
-  }
+export const renderSuggestion = (classes) => (suggestion, {query, isHighlighted}): JSX.Element => {
+  const matches: any[] = match(suggestion.label, query);
+  const parts: any[] = parse(suggestion.label, matches);
 
-  async onSuggestionsFetchRequested({value}) {
-    const {getList} = this.props;
+  return (
+    <MaterialMenuItem selected={isHighlighted} component="div">
+      <div className={classes.listItem}>{renderItemLabel(parts)}</div>
+    </MaterialMenuItem >
+  );
+};
 
-    if(getList) {
-      const suggestions: any[] = await getList(value);
-      this.setState({suggestions});
-    }
-  }
+export const renderField = (
+  props,
+  suggestionList,
+  inputRef,
+  classes,
+  onBlurFn,
+  onChangeFn,
+  onFocusFn,
+  onSelectedFn,
+  onSuggestionsClearRequestedFn,
+  onSuggestionsFetchRequestedFn
+) => ({input = {value: ''}, meta}: any): JSX.Element => {
+  const {getList, name, onSelected, validate, valueKey, ...remainingProps} = props;
+  const inputElement = inputRef?.current;
 
-  onSuggestionsClearRequested() {
-    this.setState({suggestions: []});
-  }
-
-  onBlur() {
-    const {suggestion} = this.state;
-
-    if(!suggestion) {
-      this.setState({value: ''});
-    }
-  }
-
-  onChange(input: any) {
-    return (event, {newValue}) => {
-      this.setState({suggestion: null, value: newValue}, () => {
-        const {onChange} = input;
-
-        if(onChange) {
-          onChange(newValue);
-        }
-      });
-    };
-  }
-
-  onSelected(event, suggestion) {
-    const {onSelected} = this.props;
-
-    this.setState({suggestion});
-
-    if(onSelected) {
-      onSelected(suggestion);
-    }
-  }
-
-  renderInputComponent(inputProps) {
-    const {classes, validate, getList, onSelected, ...remainingProps} = this.props;
-    const {inputRef = () => {}, meta, ref, ...other} = inputProps;
-    const {active, dirty, error, touched} = meta;
-    let updatedProps;
-
-    if(!active && !!error && (dirty || touched)) {
-      updatedProps = {
+  console.log('renderField::input', input);
+  console.log('renderField::props', props);
+  return (
+    <ReactAutosuggest
+      id={name}
+      inputProps={{
         ...remainingProps,
-        error: true,
-        helperText: <span>{error}</span>
-      };
-    } else {
-      updatedProps = {...remainingProps};
-    }
+        ...input,
+        InputLabelProps: {
+          shrink: true
+        },
+        classes,
+        inputRef,
+        meta,
+        onBlur: onBlurFn,
+        onChange: onChangeFn,
+        onFocus: onFocusFn,
+        validate,
+        valueKey
+      }}
+      getSuggestionValue={(suggestion) => suggestion[valueKey]}
+      onSuggestionSelected={onSelectedFn}
+      onSuggestionsClearRequested={onSuggestionsClearRequestedFn}
+      onSuggestionsFetchRequested={onSuggestionsFetchRequestedFn}
+      renderInputComponent={renderInputComponent}
+      renderSuggestion={renderSuggestion(classes)}
+      renderSuggestionsContainer={({children, containerProps}) => (
+        <MaterialPopper anchorEl={inputElement} open={!!children}>
+          <MaterialPaper
+            square
+            {...containerProps}
+            style={{width: inputElement ? inputElement.clientWidth : null}}>
+            {children}
+          </MaterialPaper>
+        </MaterialPopper>
+      )}
+      suggestions={suggestionList}
+      theme={{
+        suggestion: classes.suggestion,
+        suggestionsList: classes.suggestionsList
+      }}
+    />
+  );
+};
 
-    return (
-      <MaterialTextField
-        fullWidth
-        InputProps={{
-          classes: {
-            input: classes.input
-          },
-          inputRef: (node) => {
-            ref(node);
-            inputRef(node);
-          }
-        }}
-        {...other}
-        {...updatedProps} />
-    );
-  }
+export const AutocompleteField = (props: AutocompleteFieldProps) => {
+  const {
+    getList,
+    name,
+    onChange: onChangeFn,
+    // onBlur: onBlurFn,
+    onFocus: onFocusFn,
+    onSelected: onSelectedFn,
+    suggestionList: propSuggestionList = [],
+    validate,
+    value = '',
+    valueKey = 'label',
+    wait = 1000
+  } = props;
+  const classes = useStyles();
+  const inputRef = useRef();
+  const inputElement: any = inputRef.current;
+  const [suggestion, setSuggestion] = useState();
+  const [suggestionList, setSuggestionList] = useState(propSuggestionList);
+  const [updatedValue, setValue] = useState(value);
+  const updatedProps: any = {
+    ...props,
+    value: updatedValue,
+    valueKey,
+    wait
+  };
+  const onSuggestionsFetchRequestedFn = useCallback(
+    debounce(onSuggestionsFetchRequested(getList, setSuggestionList), wait),
+    [getList, wait]
+  );
 
-  renderItemLabel(parts): JSX.Element[] {
-    const highlightedElement = (part, index: number) => (
-      <span key={`${index}`} style={{fontWeight: 700}}>
-        {part.text}
-      </span>
-    );
-    const strongElement = (part, index: number) => (
-      <strong key={`${index}`} style={{fontWeight: 300}}>
-        {part.text}
-      </strong>
-    );
-
-    return parts.map((part, index: number) =>
-      (part.highlight ? highlightedElement(part, index) : strongElement(part, index)));
-  }
-
-  renderSuggestion(classes, suggestion, {query, isHighlighted}): JSX.Element {
-    const matches: any[] = match(suggestion.label, query);
-    const parts: any[] = parse(suggestion.label, matches);
-
-    return (
-      <MaterialMenuItem selected={isHighlighted} component="div">
-        <div className={classes.listItem}>{this.renderItemLabel(parts)}</div>
-      </MaterialMenuItem >
-    );
-  }
-
-  renderField({input = {}, meta}): JSX.Element {
-    const {classes, valueKey = 'label'} = this.props;
-    const {suggestions, value} = this.state;
-
-    return (
-      <ReactAutosuggest
-        inputProps={{
-          ...input,
-          InputLabelProps: {
-            shrink: true
-          },
-          inputRef: (node) => {
-            this.inputElement = node;
-          },
-          meta,
-          onBlur: this.onBlur,
-          onChange: this.onChange(input),
-          value
-        }}
-        getSuggestionValue={(suggestion) => suggestion[valueKey]}
-        onSuggestionSelected={this.onSelected}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-        renderInputComponent={this.renderInputComponent}
-        renderSuggestion={this.renderSuggestion}
-        renderSuggestionsContainer={(options) => (
-          <MaterialPopper anchorEl={this.inputElement} open={!!options.children}>
-            <MaterialPaper
-              square
-              {...options.containerProps}
-              style={{width: this.inputElement ? this.inputElement.clientWidth : null}}>
-              {options.children}
-            </MaterialPaper>
-          </MaterialPopper>
-        )}
-        suggestions={suggestions}
-        theme={{
-          suggestion: classes.suggestion,
-          suggestionsList: classes.suggestionsList
-        }}
-      />
-    );
-  }
-
-  render(): JSX.Element {
-    const {name, validate} = this.props;
-    return <Field name={name} render={this.renderField} validate={validate} />;
-  }
-}
-
-export const AutocompleteField = withStyles(styles, {withTheme: true})(AutocompleteFieldBase as any);
+  console.log('AutocompleteField::value', value);
+  console.log('AutocompleteField::updatedValue', updatedValue);
+  return (
+    <ReactAutosuggest
+      id={name}
+      inputProps={{
+        // ...remainingProps,
+        // ...input,
+        InputLabelProps: {
+          shrink: true
+        },
+        classes,
+        inputRef,
+        // meta,
+        // onBlur: onBlurFn,
+        onChange: onChangeFn,
+        onFocus: onFocusFn,
+        validate,
+        valueKey
+      }}
+      getSuggestionValue={(suggestion) => suggestion[valueKey]}
+      onSuggestionSelected={onSelectedFn}
+      // onSuggestionsClearRequested={onSuggestionsClearRequestedFn}
+      onSuggestionsFetchRequested={onSuggestionsFetchRequestedFn}
+      renderInputComponent={renderInputComponent}
+      renderSuggestion={renderSuggestion(classes)}
+      renderSuggestionsContainer={({children, containerProps}) => (
+        <MaterialPopper anchorEl={inputElement} open={!!children}>
+          <MaterialPaper
+            square
+            {...containerProps}
+            style={{width: inputElement ? inputElement.clientWidth : null}}>
+            {children}
+          </MaterialPaper>
+        </MaterialPopper>
+      )}
+      suggestions={suggestionList}
+      theme={{
+        suggestion: classes.suggestion,
+        suggestionsList: classes.suggestionsList
+      }}
+    />
+  );
+  return (
+    <Field
+      name={name}
+      render={renderField(
+        updatedProps,
+        suggestionList,
+        inputRef,
+        classes,
+        onBlur(suggestion, setValue),
+        onChange(onChangeFn, setValue, setSuggestion),
+        onFocus(onFocusFn, setValue, setSuggestion),
+        onSelected(onSelectedFn, setSuggestion),
+        onSuggestionsClearRequested(setSuggestionList),
+        onSuggestionsFetchRequestedFn
+      )}
+      validate={validate} />
+  );
+};

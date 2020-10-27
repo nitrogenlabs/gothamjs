@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button/Button';
 import Card from '@material-ui/core/Card/Card';
 import CardContent from '@material-ui/core/CardContent/CardContent';
 import {makeStyles} from '@material-ui/styles';
-import {useFlux, useState} from '@nlabs/arkhamjs-utils-react/lib';
+import {useFluxListener, useState} from '@nlabs/arkhamjs-utils-react/lib';
 import * as React from 'react';
 
 import {Form} from '../../components/Form/Form';
@@ -115,8 +115,8 @@ export const LoginView = (props: LoginViewProps) => {
 
   const classes = useStyles();
 
-  useFlux(LoginConstants.SUCCESS, onSuccess);
-  useFlux(LoginConstants.FAILED, onFailure(setState));
+  useFluxListener(LoginConstants.SUCCESS, onSuccess);
+  useFluxListener(LoginConstants.FAILED, onFailure(setState));
 
   return (
     <PageView name={name} title={title}>

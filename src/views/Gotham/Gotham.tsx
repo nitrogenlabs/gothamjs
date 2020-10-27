@@ -11,7 +11,7 @@ import {ThemeProvider} from '@material-ui/styles';
 import {ArkhamConstants, Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
-import {useFlux} from '@nlabs/arkhamjs-utils-react';
+import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import merge from 'lodash/merge';
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter} from 'react-router-dom';
@@ -109,8 +109,8 @@ export const Gotham = (props: GothamProps): JSX.Element => {
     [darkMode],
   );
 
-  useFlux(ArkhamConstants.INIT, init(setAppLoaded, config));
-  useFlux(GothamConstants.LOADING, toggleLoader(setLoading, setLoaderContent));
+  useFluxListener(ArkhamConstants.INIT, init(setAppLoaded, config));
+  useFluxListener(GothamConstants.LOADING, toggleLoader(setLoading, setLoaderContent));
 
   // Mount
   useEffect(() => {

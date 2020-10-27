@@ -90,5 +90,4 @@ export interface ContainerProviderProps {
   children?: any;
   navProps: any;
   routeProps: any;
-  viewProps: any;
 }

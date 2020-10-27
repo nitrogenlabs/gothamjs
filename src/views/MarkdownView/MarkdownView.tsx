@@ -3,7 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {makeStyles} from '@material-ui/styles';
-import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
+import {useFluxListener, useState} from '@nlabs/arkhamjs-utils-react';
 import React, {useEffect} from 'react';
 
 import {MarkdownActions} from '../../actions/MarkdownActions';
@@ -36,7 +36,7 @@ export const MarkdownView = (props: MarkdownViewProps) => {
   const {content = ''} = state;
   const classes = useStyles();
 
-  useFlux(GothamConstants.GET_EXTERNAL, onUpdate(setState));
+  useFluxListener(GothamConstants.GET_EXTERNAL, onUpdate(setState));
 
   useEffect(() => {
     if(content === '') {

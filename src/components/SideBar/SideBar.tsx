@@ -7,7 +7,7 @@ import Hidden from '@material-ui/core/Hidden/Hidden';
 import List from '@material-ui/core/List/List';
 import {makeStyles} from '@material-ui/styles';
 import {Flux} from '@nlabs/arkhamjs';
-import {useFlux} from '@nlabs/arkhamjs-utils-react/lib';
+import {useFluxListener} from '@nlabs/arkhamjs-utils-react/lib';
 import React, {useState} from 'react';
 
 import {GothamConstants} from '../../constants/GothamConstants';
@@ -59,7 +59,7 @@ export const SideBar = (props: SideBarProps) => {
   // Styling
   const classes = useStyles();
 
-  useFlux(GothamConstants.TOGGLE_MENU, toggleMenu(setOpenState));
+  useFluxListener(GothamConstants.TOGGLE_MENU, toggleMenu(setOpenState));
 
   return (
     <div className={classes.sideBar}>

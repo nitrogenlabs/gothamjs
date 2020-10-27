@@ -1,7 +1,6 @@
 import './ConversationList.css';
 
-import {useFlux, useState} from '@nlabs/arkhamjs-utils-react';
-import React from 'react';
+import React, {useFluxListener, useState} from '@nlabs/arkhamjs-utils-react';
 
 import {MessageConstants} from '../../../constants/MessageConstants';
 import {ConversationListItem} from '../ConversationListItem/ConversationListItem';
@@ -39,8 +38,8 @@ export const ConversationList = (props: ConversationListProps) => {
   });
   const {conversations} = state;
 
-  useFlux(MessageConstants.CONVO_LIST_FAILED, onError);
-  useFlux(MessageConstants.CONVO_LIST_SUCCESS, onSuccess(setState));
+  useFluxListener(MessageConstants.CONVO_LIST_FAILED, onError);
+  useFluxListener(MessageConstants.CONVO_LIST_SUCCESS, onSuccess(setState));
 
   return (
     <div className="conversation-list">

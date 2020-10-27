@@ -2,14 +2,25 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-export const getNavParams = (props): any => {
-  const {location: {state = {}} = {}} = props;
-  return state;
-};
+import qs from 'qs';
+import {useMemo} from 'react';
+import {useHistory, useLocation, useParams, useRouteMatch} from 'react-router-dom';
 
-export const getViewParams = (props): any => {
-  const {computedMatch: {params = {}} = {}} = props;
-  return params;
+export const useRoute = (): any => {
+  const history = useHistory();
+  const location = useLocation();
+  const urlParams = useParams();
+  const match = useRouteMatch();
+
+  return useMemo(() => ({
+    history,
+    location,
+    match,
+    params: {
+      ...urlParams,
+      ...qs.parse(location.search, {ignoreQueryPrefix: true})
+    }
+  }), [history, location, match, urlParams]);
 };
 
 export const parseNavUrl = (path: string, params: any): string => path
