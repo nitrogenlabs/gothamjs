@@ -1,4 +1,4 @@
-import {Breadcrumbs as MuiBreadcrumbs} from '@material-ui/core';
+import MuiBreadcrumbs from '@material-ui/core/Breadcrumbs';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 

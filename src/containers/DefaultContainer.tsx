@@ -2,15 +2,15 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {makeStyles} from '@material-ui/styles';
+import makeStyles from '@material-ui/styles/makeStyles';
+import {FluxFramework} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 import React, {useContext} from 'react';
 
-import {TopBar} from '../components/TopBar/TopBar';
-import {Theme} from '../config/theme.types';
+import {TopBar, TopBarProps} from '../components/TopBar';
+import {Theme} from '../config/theme';
 import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
-import {DefaultContainerProps} from './DefaultContainer.types';
 
 const useStyles: any = makeStyles((theme: Theme) => ({
   content: {
@@ -20,6 +20,20 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     overflowY: 'auto'
   }
 }));
+
+export interface DefaultContainerProps {
+  readonly exact: boolean;
+  readonly Flux: FluxFramework;
+  readonly history: History;
+  readonly location: Location;
+  readonly match?: any;
+  readonly menu?: any[];
+  readonly routes: any[];
+  readonly staticContext?: any;
+  readonly theme: Theme;
+  readonly title: string;
+  readonly topBar?: TopBarProps;
+}
 
 export const DefaultContainer = (props: DefaultContainerProps) => {
   const {

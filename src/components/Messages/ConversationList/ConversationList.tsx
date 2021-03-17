@@ -5,9 +5,9 @@ import React, {useFluxListener, useState} from '@nlabs/arkhamjs-utils-react';
 import {MessageConstants} from '../../../constants/MessageConstants';
 import {ConversationListItem} from '../ConversationListItem/ConversationListItem';
 import {ConversationSearch} from '../ConversationSearch/ConversationSearch';
+import {ConversationType, MessageType} from '../Messenger';
 import {Toolbar} from '../Toolbar/Toolbar';
 import {ToolbarButton} from '../ToolbarButton/ToolbarButton';
-import {ConversationListProps} from './ConversationList.types';
 
 
 export const onError = ({error}) => {
@@ -28,6 +28,11 @@ export const renderConversations = (props, conversations): JSX.Element[] => {
       onClick={onGetMessages} />
   ));
 };
+
+export interface ConversationListProps {
+  readonly conversations: ConversationType[];
+  readonly onGetMessages: (convoId: string) => Promise<MessageType[]>;
+}
 
 export const ConversationList = (props: ConversationListProps) => {
   const {conversations: propConversations = []} = props;

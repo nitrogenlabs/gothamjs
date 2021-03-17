@@ -4,9 +4,14 @@
  */
 import React from 'react';
 
-import {Svg} from '../Svg/Svg';
+import {Svg} from '../Svg';
 
-export const LogoPanel = ({logo, name}) => (
+export interface LogoPanelProps {
+  readonly logo?: string;
+  readonly name?: string;
+}
+
+export const LogoPanel = ({logo, name}: LogoPanelProps) => (
   <React.Fragment>
     <div className="logopanel">
       <a href="/" title={name}><Svg name={logo} /></a>

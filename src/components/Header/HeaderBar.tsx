@@ -8,6 +8,10 @@ import {NavTabs} from './NavTabs';
 import {SearchPanel} from './SearchPanel';
 import {TabPanes} from './TabPanes';
 
+export interface HeaderBarProps {
+  readonly appLogo?: string;
+}
+
 export const HeaderBar = () => (
   <div className="headerbar">
     <a id="menuToggle" className="menutoggle"><i className="fa fa-bars" /></a>

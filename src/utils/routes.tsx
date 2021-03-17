@@ -8,11 +8,18 @@ import React from 'react';
 import {Redirect, Route, RouteProps, Switch} from 'react-router-dom';
 
 import {GothamActions} from '../actions/GothamActions';
-import {asyncLoader} from '../components/LazyLoader/LazyLoader';
-import {Loader} from '../components/Loader/Loader';
+import {LazyLoad} from '../components/LazyLoader';
+import {Loader} from '../components/Loader';
 import {DefaultContainer} from '../containers/DefaultContainer';
 import {MenuContainer} from '../containers/MenuContainer';
-import {GothamConfiguration, GothamRoute} from '../views/Gotham/Gotham.types';
+import {GothamConfiguration, GothamRoute} from '../views/Gotham';
+import {lazyImport} from './lazyImport';
+
+const {NotFoundView} = lazyImport(() => import('../views/NotFoundView'), 'NotFoundView');
+const {ConfirmView} = lazyImport(() => import('../views/ConfirmView'), 'ConfirmView');
+const {HomeView} = lazyImport(() => import('../views/HomeView'), 'HomeView');
+const {SignInView} = lazyImport(() => import('../views/SignInView'), 'SignInView');
+const {MarkdownView} = lazyImport(() => import('../views/MarkdownView'), 'MarkdownView');
 
 export const fadeTransition = {
   atActive: {
@@ -46,21 +53,21 @@ export const parseRoute = (route: GothamRoute, props: any) => {
     // Built-in views
     switch(view) {
       case 'confirm':
-        return asyncLoader(() => import('../views/ConfirmView/ConfirmView'), viewProps);
+        return <LazyLoad component={ConfirmView} {...viewProps} />;
       case 'home':
-        return asyncLoader(() => import('../views/HomeView/HomeView'), viewProps);
+        return <LazyLoad component={HomeView} {...viewProps} />;
       case 'login':
-        return asyncLoader(() => import('../views/LoginView/LoginView'), viewProps);
+        return <LazyLoad component={SignInView} {...viewProps} />;
       case 'markdown':
-        return asyncLoader(() => import('../views/MarkdownView/MarkdownView'), viewProps);
+        return <LazyLoad component={MarkdownView} {...viewProps} />;
       case 'notfound':
-        return asyncLoader(() => import('../views/NotFoundView/NotFoundView'), viewProps);
+        return <LazyLoad component={NotFoundView} {...viewProps} />;
       default:
         return null;
     }
   } else if(asyncComponent) {
     // Create an async imported component
-    return asyncLoader(asyncComponent, viewProps);
+    return <LazyLoad component={asyncComponent} {...viewProps} />;
   } else if(Component) {
     // Custom components
     return <Component {...viewProps} />;

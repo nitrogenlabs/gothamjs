@@ -11,6 +11,7 @@ import {MarkdownConstants} from './constants/MarkdownConstants';
 
 export * from '@material-ui/styles';
 export {Flux} from '@nlabs/arkhamjs';
+export * from 'react-i18next';
 export {Link, NavLink, useHistory, useLocation, useParams, useRouteMatch} from 'react-router-dom';
 
 export * from './components';
@@ -19,6 +20,7 @@ export * from './views';
 export * from './utils/GothamProvider';
 export * from './utils/colorUtils';
 export * from './utils/imageUtils';
+export * from './utils/lazyImport';
 export * from './utils/routes';
 export * from './utils/useBreakpoint';
 export * from './utils/viewUtils';

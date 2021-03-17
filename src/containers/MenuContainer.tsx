@@ -7,14 +7,13 @@ import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import isEmpty from 'lodash/isEmpty';
 import React, {useContext, useState} from 'react';
 
-import {SideBar} from '../components/SideBar/SideBar';
-import {SideBarProps} from '../components/SideBar/SideBar.types';
-import {TopBar} from '../components/TopBar/TopBar';
+import {SideBar, SideBarProps} from '../components/SideBar/SideBar';
+import {TopBar} from '../components/TopBar';
 import {GothamConstants} from '../constants/GothamConstants';
 import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routes';
 import {useRoute} from '../utils/viewUtils';
-import {MenuContainerProps} from './MenuContainer.types';
+import {DefaultContainerProps} from './DefaultContainer';
 
 const useStyles: any = makeStyles((theme: any) => ({
   container: {
@@ -52,6 +51,10 @@ export const renderMenu = (props: SideBarProps, pathname: string): JSX.Element =
 };
 
 export const updateMenu = (setSidebarProps) => ({props}) => setSidebarProps(props);
+
+export interface MenuContainerProps extends DefaultContainerProps {
+  readonly sideBar?: SideBarProps;
+}
 
 export const MenuContainer = (props: MenuContainerProps) => {
   const {

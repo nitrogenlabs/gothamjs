@@ -6,7 +6,12 @@ import React from 'react';
 
 import {LogoPanel} from './LogoPanel';
 
-export const Header = ({appLogo, appName}) => (
+export interface HeaderProps {
+  readonly appLogo?: string;
+  readonly appName?: string;
+}
+
+export const Header = ({appLogo, appName}: HeaderProps) => (
   <header>
     <div className="headerpanel">
       <LogoPanel name={appName} logo={appLogo} />

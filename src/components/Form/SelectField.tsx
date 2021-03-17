@@ -4,13 +4,12 @@
  */
 import FormControl from '@material-ui/core/FormControl/FormControl';
 import InputLabel from '@material-ui/core/InputLabel/InputLabel';
-import MaterialNativeSelect from '@material-ui/core/NativeSelect/NativeSelect';
+import MaterialNativeSelect, {NativeSelectProps} from '@material-ui/core/NativeSelect/NativeSelect';
 import {makeStyles} from '@material-ui/styles';
 import * as React from 'react';
-import {Field} from 'react-final-form';
+import {Controller, useFormContext} from 'react-hook-form';
 
-import {SelectFieldOption, SelectFieldProps} from './Form.types';
-import {SelectOption} from './SelectOption';
+import {SelectFieldOption, SelectFieldValue, SelectOption} from './SelectOption';
 
 const useStyles: any = makeStyles(() => ({
   field: {
@@ -19,6 +18,14 @@ const useStyles: any = makeStyles(() => ({
   }
 }));
 
+export interface SelectFieldProps extends NativeSelectProps {
+  readonly classes?: any;
+  readonly label: string;
+  readonly name: string;
+  readonly list: SelectFieldOption[];
+  readonly value?: SelectFieldValue;
+}
+
 export const renderOptions = (props, list: SelectFieldOption[] = []): JSX.Element[] =>
   list.map((optionProps: SelectFieldOption) => {
     const {name} = props;
@@ -26,9 +33,10 @@ export const renderOptions = (props, list: SelectFieldOption[] = []): JSX.Elemen
     return <SelectOption key={`${name}${label}${value}`} {...optionProps} />;
   });
 
-export const renderSelect = (props) => ({input}): JSX.Element => {
-  const {label, list = [], ...restProps} = props;
+export const SelectField = (props: SelectFieldProps) => {
+  const {defaultValue, label, list = [], name, ...restProps} = props;
   const classes = useStyles();
+  const {control, errors} = useFormContext();
   let labelElement: JSX.Element;
 
   // If using a label, add a label component
@@ -45,12 +53,21 @@ export const renderSelect = (props) => ({input}): JSX.Element => {
   return (
     <FormControl className={classes.field}>
       {labelElement}
-      <MaterialNativeSelect {...restProps} {...input}>{renderOptions(updatedProps, list)}</MaterialNativeSelect>
+      <Controller
+        control={control}
+        defaultValue={defaultValue}
+        name={name}
+        render={({onBlur, onChange, ref, value}) => (
+          <MaterialNativeSelect
+            error={!!errors[name]}
+            inputRef={ref}
+            onBlur={onBlur}
+            onChange={onChange}
+            value={value}
+            {...restProps}>
+            {renderOptions(updatedProps, list)}
+          </MaterialNativeSelect>
+        )} />
     </FormControl>
   );
-};
-
-export const SelectField = (props: SelectFieldProps) => {
-  const {name} = props;
-  return <Field name={name} render={renderSelect(props)} />;
 };

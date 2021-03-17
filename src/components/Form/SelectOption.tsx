@@ -4,7 +4,12 @@
  */
 import React from 'react';
 
-import {SelectFieldOption} from './Form.types';
+export type SelectFieldValue = string | number | boolean;
+
+export interface SelectFieldOption {
+  readonly label: string;
+  readonly value: SelectFieldValue;
+}
 
 export const SelectOption = ({label, value}: SelectFieldOption): JSX.Element => {
   const optionValue: any = value;

@@ -4,10 +4,10 @@
  */
 import {makeStyles} from '@material-ui/core/styles';
 import Schedule from '@material-ui/icons/Schedule';
+import {DateTime} from 'luxon';
 import React from 'react';
 
 import {TimeButton} from './TimeButton';
-import {TimeSelectProps} from './TimeSelect.types';
 
 const useStyles: any = makeStyles((theme: any) => ({
   icon: {
@@ -32,6 +32,16 @@ const useStyles: any = makeStyles((theme: any) => ({
     padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`
   }
 }));
+
+export interface TimeSelectProps {
+  readonly interval: number;
+  readonly maxDate: DateTime;
+  readonly minDate: DateTime;
+  readonly onChange: (event: React.MouseEvent<HTMLElement>, date: DateTime) => any;
+  readonly selectedDate: DateTime;
+  readonly setSelected: (date: DateTime) => any;
+  readonly use24Hour: boolean;
+}
 
 export const TimeSelect = (props: TimeSelectProps) => {
   const {interval, selectedDate, setSelected, use24Hour} = props;

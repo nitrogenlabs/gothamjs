@@ -9,8 +9,6 @@ import clsx from 'clsx';
 import {DateTime} from 'luxon';
 import React, {forwardRef, useCallback, useEffect, useRef, useState} from 'react';
 
-import {ClockProps} from './Clock.types';
-
 export const defaultTime = new Date(1970, 1, 1);
 
 const useStyles: any = makeStyles((theme: Theme) => ({
@@ -278,6 +276,17 @@ export const getSelectedDate = (selectedTime) => {
       minute: 0
     };
 };
+
+export interface ClockProps {
+  readonly onSelect: (
+    selectedTime: DateTime,
+    event?: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>
+  ) => void;
+  readonly onClose: () => any;
+  readonly selectableMinutesInterval?: number;
+  readonly setClockResize?: (action: any) => any;
+  readonly value: string;
+}
 
 export const ClockBase = (props: ClockProps, ref): JSX.Element => {
   const {onClose, onSelect, selectableMinutesInterval, setClockResize, value} = props;

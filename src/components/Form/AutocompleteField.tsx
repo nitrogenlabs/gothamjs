@@ -2,22 +2,19 @@
  * Copyright (c) 2019-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {makeStyles} from '@material-ui/core';
 import MaterialMenuItem from '@material-ui/core/MenuItem/MenuItem';
 import MaterialPaper from '@material-ui/core/Paper/Paper';
 import MaterialPopper from '@material-ui/core/Popper/Popper';
 import MaterialTextField from '@material-ui/core/TextField/TextField';
+import makeStyles from '@material-ui/styles/makeStyles';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import debounce from 'lodash/debounce';
 import deburr from 'lodash/deburr';
 import React, {SyntheticEvent, useCallback, useRef, useState} from 'react';
 import ReactAutosuggest from 'react-autosuggest';
-import {Field} from 'react-final-form';
 
-import {AutocompleteFieldProps} from './AutocompleteField.types';
-
-const useStyles: any = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: any) => ({
   container: {
     position: 'relative'
   },
@@ -160,7 +157,7 @@ export const renderSuggestion = (classes) => (suggestion, {query, isHighlighted}
   );
 };
 
-export const renderField = (
+export const renderAutoCompleteField = (
   props,
   suggestionList,
   inputRef,
@@ -220,6 +217,30 @@ export const renderField = (
   );
 };
 
+
+export type AutocompleteSuggestionMethod = 'click' | 'enter';
+
+export interface AutocompleteSuggestion {
+  readonly suggestion: any;
+  readonly suggestionValue: any;
+  readonly suggestionIndex: number;
+  readonly sectionIndex: number;
+  readonly method: AutocompleteSuggestionMethod;
+}
+
+export interface AutocompleteFieldProps {
+  readonly getList?: (value: string) => any[];
+  readonly name: string;
+  readonly onChange?: (event: SyntheticEvent) => any;
+  readonly onFocus?: (event: SyntheticEvent) => any;
+  readonly onSelected?: (suggestion: AutocompleteSuggestion) => any;
+  readonly suggestionList: any[];
+  readonly validate?: (object) => object | Promise<object>;
+  readonly value: string;
+  readonly valueKey?: string;
+  readonly wait?: number;
+}
+
 export const AutocompleteField = (props: AutocompleteFieldProps) => {
   const {
     getList,
@@ -237,22 +258,22 @@ export const AutocompleteField = (props: AutocompleteFieldProps) => {
   const classes = useStyles();
   const inputRef = useRef();
   const inputElement: any = inputRef.current;
-  const [suggestion, setSuggestion] = useState();
+  // const [suggestion, setSuggestion] = useState();
   const [suggestionList, setSuggestionList] = useState(propSuggestionList);
-  const [updatedValue, setValue] = useState(value);
-  const updatedProps: any = {
-    ...props,
-    value: updatedValue,
-    valueKey,
-    wait
-  };
+  // const [updatedValue, setValue] = useState(value);
+  // const updatedProps: any = {
+  //   ...props,
+  //   value: updatedValue,
+  //   valueKey,
+  //   wait
+  // };
   const onSuggestionsFetchRequestedFn = useCallback(
     debounce(onSuggestionsFetchRequested(getList, setSuggestionList), wait),
     [getList, wait]
   );
 
   console.log('AutocompleteField::value', value);
-  console.log('AutocompleteField::updatedValue', updatedValue);
+  // console.log('AutocompleteField::updatedValue', updatedValue);
   return (
     <ReactAutosuggest
       id={name}
@@ -293,22 +314,5 @@ export const AutocompleteField = (props: AutocompleteFieldProps) => {
         suggestionsList: classes.suggestionsList
       }}
     />
-  );
-  return (
-    <Field
-      name={name}
-      render={renderField(
-        updatedProps,
-        suggestionList,
-        inputRef,
-        classes,
-        onBlur(suggestion, setValue),
-        onChange(onChangeFn, setValue, setSuggestion),
-        onFocus(onFocusFn, setValue, setSuggestion),
-        onSelected(onSelectedFn, setSuggestion),
-        onSuggestionsClearRequested(setSuggestionList),
-        onSuggestionsFetchRequestedFn
-      )}
-      validate={validate} />
   );
 };

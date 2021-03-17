@@ -8,11 +8,11 @@ import isEmpty from 'lodash/isEmpty';
 import {NotificationParams} from '../components';
 import {Config} from '../config/app';
 import {GothamConstants} from '../constants/GothamConstants';
-import {GothamConfiguration} from '../views/Gotham/Gotham.types';
+import {GothamConfiguration} from '../views/Gotham';
 
 export const GothamActions = {
   init: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.INITIALIZE}),
-  loading: (isLoading: boolean, content: string): Promise<FluxAction> =>
+  loading: (isLoading: boolean, content?: string): Promise<FluxAction> =>
     Flux.dispatch({content, isLoading, type: GothamConstants.LOADING}),
   navBack: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.NAV_BACK}),
   navForward: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.NAV_FORWARD}),

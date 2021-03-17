@@ -13,6 +13,16 @@
         "types": "always"
       }
     ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*.test.ts",
+          "**/*.test.tsx",
+          "**/testUtils.tsx"
+        ]
+      }
+    ],
     "no-plusplus": 0
   }
 }

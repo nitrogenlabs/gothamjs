@@ -4,10 +4,10 @@
  */
 import Dialog from '@material-ui/core/Dialog';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
+import FormHelperText, {FormHelperTextProps} from '@material-ui/core/FormHelperText';
+import Input, {InputProps} from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
+import InputLabel, {InputLabelProps} from '@material-ui/core/InputLabel';
 import Popover from '@material-ui/core/Popover';
 import {makeStyles} from '@material-ui/core/styles';
 import Today from '@material-ui/icons/Today';
@@ -15,11 +15,8 @@ import isEmpty from 'lodash/isEmpty';
 import {DateTime} from 'luxon';
 import React, {useCallback, useRef, useState} from 'react';
 
-import {TimeSelect} from '../TimePicker/TimeSelect';
-import {TimeSelectProps} from '../TimePicker/TimeSelect.types';
-import {Calendar} from './Calendar/Calendar';
-import {CalendarProps} from './Calendar/Calendar.types';
-import {DatePickerProps} from './DatePicker.types';
+import {TimeSelect, TimeSelectProps} from '../TimePicker/TimeSelect';
+import {Calendar, CalendarProps} from './Calendar/Calendar';
 
 const useStyles: any = makeStyles({
   formControl: {
@@ -54,6 +51,43 @@ export const handleWindowClick = (inputRef, calendarRef, toggleCalendar) => (eve
     toggleCalendar(false);
   }
 };
+export type DatePickerTypes = 'date' | 'time' | 'datetime';
+
+export interface DatePickerOrigin {
+  readonly vertical: 'top' | 'center' | 'bottom';
+  readonly horizontal: 'left' | 'center' | 'right';
+}
+
+export interface DatePickerProps {
+  readonly autoFocus: boolean;
+  readonly anchorOrigin?: DatePickerOrigin;
+  readonly calendarProps?: CalendarProps;
+  readonly className?: string;
+  readonly dateDisabled?: (date: Date) => boolean;
+  readonly dateFormat?: string | ((date: Date) => string);
+  readonly defaultValue?: string;
+  readonly dialog?: boolean;
+  readonly disabled?: boolean;
+  readonly endIcon?: Node;
+  readonly error?: boolean;
+  readonly format?: string;
+  readonly formHelperTextProps?: FormHelperTextProps;
+  readonly fullWidth?: boolean;
+  readonly inputLabelProps?: InputLabelProps;
+  readonly inputProps?: InputProps;
+  readonly label?: string;
+  readonly min?: string;
+  readonly max?: string;
+  readonly name: string;
+  readonly onChange?: (event: React.MouseEvent<HTMLElement>, selectedDate: DateTime) => void;
+  readonly onChangeInput?: (event: any) => void;
+  readonly placeholder?: string;
+  readonly timeInterval: number;
+  readonly transformOrigin?: DatePickerOrigin;
+  readonly type?: DatePickerTypes;
+  readonly use24Hour?: boolean;
+  readonly value?: string;
+}
 
 export const DatePicker = (props: DatePickerProps) => {
   const {

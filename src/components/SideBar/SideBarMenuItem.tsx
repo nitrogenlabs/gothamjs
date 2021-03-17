@@ -11,8 +11,7 @@ import React from 'react';
 import {matchPath, NavLink as Link} from 'react-router-dom';
 
 import {parseNavUrl} from '../../utils/viewUtils';
-import {GothamMenuType} from '../../views/Gotham/Gotham.types';
-import {SideBarMenuItemProps} from './SideBar.types';
+import {GothamMenuType} from '../../views/Gotham';
 
 const useStyles: any = makeStyles((theme: any) => {
   const darkMode = theme.palette.type === 'dark';
@@ -70,6 +69,15 @@ const useStyles: any = makeStyles((theme: any) => {
 export const getTypeClass = (type: GothamMenuType, classes: any): string =>
   (type === 'header' ? classes.headers : classes.links);
 
+export interface SideBarMenuItemProps {
+  readonly divider?: boolean;
+  readonly icon: JSX.Element;
+  readonly label: string;
+  readonly path: string;
+  readonly pathname?: string;
+  readonly type?: GothamMenuType;
+  readonly url: string;
+}
 export const SideBarMenuItem = (props: SideBarMenuItemProps): JSX.Element => {
   const {
     divider,

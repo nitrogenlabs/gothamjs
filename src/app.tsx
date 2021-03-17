@@ -5,17 +5,16 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import {Svg} from './components/Svg/Svg';
-import {Gotham} from './views/Gotham/Gotham';
-import {GothamConfiguration, GothamRoute} from './views/Gotham/Gotham.types';
+import {Svg} from './components/Svg';
+import {Gotham, GothamConfiguration, GothamRoute} from './views/Gotham';
 
 // Views
 const login: GothamRoute = {
   path: '/login',
   props: {
     logo: <Svg name="gotham-logo" width={130} height={130} />,
-    onLogin: () => {},
-    onSignup: () => {},
+    onLogin: () => { },
+    onSignup: () => { },
     title: 'Login'
   },
   view: 'login'

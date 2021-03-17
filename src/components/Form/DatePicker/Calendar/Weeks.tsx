@@ -7,7 +7,6 @@ import {DateTime} from 'luxon';
 import React from 'react';
 
 import {Week} from './Week';
-import {WeeksProps} from './Weeks.types';
 
 const useStyles: any = makeStyles({
   week: {
@@ -15,6 +14,15 @@ const useStyles: any = makeStyles({
     justifyContent: 'space-around'
   }
 });
+
+export interface WeeksProps {
+  readonly dateDisabled: (date: DateTime) => any;
+  readonly maxDate: DateTime;
+  readonly minDate: DateTime;
+  readonly onSelectDate: (event: React.MouseEvent<HTMLElement>, date: DateTime) => any;
+  readonly selectedDate: DateTime;
+  readonly week: DateTime[];
+}
 
 export const Weeks = (props: WeeksProps) => {
   const {dateDisabled, maxDate, minDate, onSelectDate, selectedDate, week} = props;

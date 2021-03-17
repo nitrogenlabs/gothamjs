@@ -2,7 +2,11 @@ import './Toolbar.css';
 
 import React from 'react';
 
-import {ToolbarProps} from './Toolbar.types';
+export interface ToolbarProps {
+  readonly title?: string;
+  readonly leftItems?: JSX.Element[];
+  readonly rightItems?: JSX.Element[];
+}
 
 export const Toolbar = (props: ToolbarProps) => {
   const {title, leftItems, rightItems} = props;

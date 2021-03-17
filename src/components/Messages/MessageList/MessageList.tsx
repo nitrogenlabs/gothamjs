@@ -7,10 +7,9 @@ import React from 'react';
 import {MessageConstants} from '../../../constants/MessageConstants';
 import {Compose} from '../Compose/Compose';
 import {Message} from '../Message/Message';
-import {MessageType} from '../Messenger/Messenger.types';
+import {MessageType, NewMessageType} from '../Messenger';
 import {Toolbar} from '../Toolbar/Toolbar';
 import {ToolbarButton} from '../ToolbarButton/ToolbarButton';
-import {MessageListProps} from './MessageList.types';
 
 
 export const onError = ({error}) => {
@@ -80,6 +79,11 @@ export const renderMessages = (props, state) => {
 
   return renderedMessages;
 };
+
+export interface MessageListProps {
+  readonly onCompose: (message: NewMessageType) => any;
+  readonly userId: string;
+}
 
 export const MessageList = (props: MessageListProps) => {
   const {onCompose, userId} = props;

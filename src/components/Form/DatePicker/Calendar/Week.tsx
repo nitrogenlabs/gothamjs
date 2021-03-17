@@ -7,8 +7,6 @@ import clsx from 'clsx';
 import {DateTime} from 'luxon';
 import React from 'react';
 
-import {WeekProps} from './Week.types';
-
 const useStyles: any = makeStyles((theme: any) => ({
   dayPlaceholder: {
     borderColor: 'transparent',
@@ -49,6 +47,15 @@ const useStyles: any = makeStyles((theme: any) => ({
 
 export const isDayInvalid = (date: DateTime, selectedDate: DateTime, minDate: DateTime, maxDate: DateTime) =>
   (minDate && date.diff(minDate, 'days').days > 0) || (maxDate && date.diff(maxDate, 'days').days < 0);
+
+export interface WeekProps {
+  readonly date: DateTime;
+  readonly dateDisabled: (date: DateTime) => any;
+  readonly maxDate: DateTime;
+  readonly minDate: DateTime;
+  readonly onSelectDate: (event: React.MouseEvent<HTMLElement>, date: DateTime) => any;
+  readonly selectedDate: DateTime;
+}
 
 export const Week = (props: WeekProps) => {
   const {date, dateDisabled, maxDate, minDate, onSelectDate, selectedDate} = props;

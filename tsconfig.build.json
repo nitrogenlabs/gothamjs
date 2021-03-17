@@ -33,6 +33,7 @@
       "node_modules/json-d-ts"
     ],
     "types": [
+      "jest",
       "node"
     ]
   },

@@ -1,9 +1,9 @@
-import {ThemeOptions} from './theme.types';
-
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {Theme, ThemeOptions} from '@material-ui/core/styles/createMuiTheme';
+
 /* eslint-disable sort-keys */
 const palette: any = {
   error: {
@@ -47,6 +47,8 @@ const palette: any = {
     main: '#ffe068'
   }
 };
+
+export {Theme, ThemeOptions};
 
 export const breakpoints: any = {
   values: {

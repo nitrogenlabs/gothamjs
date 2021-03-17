@@ -1,7 +1,7 @@
 import {Flux} from '@nlabs/arkhamjs';
 import React, {createContext} from 'react';
 
-import {GothamProviderProps} from '../views/Gotham/Gotham.types';
+import {GothamProviderProps} from '../views/Gotham';
 
 const isAuth = () => true;
 

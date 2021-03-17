@@ -4,19 +4,19 @@
  */
 import Dialog from '@material-ui/core/Dialog';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import FormHelperText, {FormHelperTextProps} from '@material-ui/core/FormHelperText';
 import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
+import Input, {InputProps} from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
+import InputLabel, {InputLabelProps} from '@material-ui/core/InputLabel';
 import Popover from '@material-ui/core/Popover';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, StyledComponentProps} from '@material-ui/core/styles';
 import AccessTime from '@material-ui/icons/AccessTime';
 import {DateTime} from 'luxon';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {Clock} from './Clock';
-import {TimePickerProps} from './TimePicker.types';
+import {DatePickerOrigin} from '../DatePicker/DatePicker';
+import {Clock, ClockProps} from './Clock';
 
 const useStyles: any = makeStyles({
   formControl: {
@@ -45,6 +45,26 @@ export const handleWindowClick = (inputElement, clockElement, closeClock) => (ev
     closeClock();
   }
 };
+
+export interface TimePickerProps extends React.Props<{}>, StyledComponentProps {
+  readonly anchorOrigin?: DatePickerOrigin;
+  readonly className?: string;
+  readonly clockProps?: ClockProps;
+  readonly dialog?: boolean;
+  readonly disabled?: boolean;
+  readonly endIcon?: Node;
+  readonly error?: string;
+  readonly formHelperTextProps?: FormHelperTextProps;
+  readonly fullWidth?: boolean;
+  readonly inputLabelProps?: InputLabelProps;
+  readonly inputProps?: InputProps;
+  readonly label?: string;
+  readonly name: string;
+  readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>) => void;
+  readonly selectableMinutesInterval?: number;
+  readonly transformOrigin?: DatePickerOrigin;
+  readonly value: Date;
+}
 
 export const TimePicker = (props: TimePickerProps): JSX.Element => {
   const {
@@ -85,7 +105,7 @@ export const TimePicker = (props: TimePickerProps): JSX.Element => {
   const toggleShowClock = useCallback(() => setClockShow(!clockShow), []);
 
   // Vars
-  const defaultResize: any = () => {};
+  const defaultResize: any = () => { };
   const [onClickResize, setClockResize] = useState(defaultResize);
 
   // On mount

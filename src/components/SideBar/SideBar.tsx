@@ -11,8 +11,8 @@ import {useFluxListener} from '@nlabs/arkhamjs-utils-react/lib';
 import React, {useState} from 'react';
 
 import {GothamConstants} from '../../constants/GothamConstants';
-import {SideBarMenuItemProps, SideBarProps} from './SideBar.types';
-import {SideBarMenuItem} from './SideBarMenuItem';
+import {GothamMenuItem} from '../../views/Gotham';
+import {SideBarMenuItem, SideBarMenuItemProps} from './SideBarMenuItem';
 
 const useStyles: any = makeStyles((theme: any) => {
   const darkMode = theme.palette.type === 'dark';
@@ -48,6 +48,12 @@ export const renderMenu = (pathname: string, menu: any[] = []) =>
     const {label, path} = item;
     return <SideBarMenuItem key={`${label}${path}`} pathname={pathname} {...item} />;
   });
+
+export interface SideBarProps {
+  readonly menu?: GothamMenuItem[];
+  readonly pathname?: string;
+  readonly top?: JSX.Element;
+}
 
 export const SideBar = (props: SideBarProps) => {
   // Props

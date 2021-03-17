@@ -11,8 +11,8 @@ import SkipPrevious from '@material-ui/icons/SkipPrevious';
 import {DateTime} from 'luxon';
 import React, {useEffect, useState} from 'react';
 
-import {CalendarProps} from './Calendar.types';
 import {Weeks} from './Weeks';
+
 
 const useStyles: any = makeStyles((theme: any) => ({
   buttons: {
@@ -125,6 +125,16 @@ export const generateMonthCalendar = (selectedDate: DateTime): DateTime[][] => {
 
   return daysInWeekInMonth;
 };
+
+export interface CalendarProps {
+  readonly dateDisabled: (date: any) => boolean;
+  readonly maxDate: DateTime;
+  readonly minDate: DateTime;
+  readonly onChange: (event: React.MouseEvent<HTMLElement>, date: DateTime) => any;
+  readonly onClose: () => any;
+  readonly selectedDate: DateTime;
+  readonly setSelected: (date: DateTime) => any;
+}
 
 export const Calendar = (props: CalendarProps): JSX.Element => {
   const {

@@ -3,7 +3,15 @@ import './Message.css';
 import {DateTime} from 'luxon';
 import React from 'react';
 
-import {MessageProps} from './Message.types';
+import {MessageType} from '../Messenger';
+
+export interface MessageProps {
+  readonly endsSequence: any;
+  readonly isMine: boolean;
+  readonly message: MessageType;
+  readonly showTimestamp: boolean;
+  readonly startsSequence: any;
+}
 
 export const Message = (props: MessageProps) => {
   const {

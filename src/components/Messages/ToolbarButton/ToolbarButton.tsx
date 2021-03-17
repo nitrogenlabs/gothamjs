@@ -2,7 +2,9 @@ import './ToolbarButton.css';
 
 import React from 'react';
 
-import {ToolbarButtonProps} from './ToolbarButton.types';
+export interface ToolbarButtonProps {
+  readonly icon?: string;
+}
 
 export const ToolbarButton = (props: ToolbarButtonProps) => {
   const {icon} = props;

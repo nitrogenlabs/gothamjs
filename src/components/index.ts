@@ -2,39 +2,23 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-export {Button} from './Button/Button';
-export * from './Button/Button.types';
-export {Breadcrumbs} from './Breadcrumbs/Breadcrumbs';
-export * from './Breadcrumbs/Breadcrumbs.types';
-export {CropTool} from './CropTool/CropTool';
-export * from './CropTool/CropTool.types';
-export {FeatureItem} from './FeatureItem/FeatureItem';
-export * from './FeatureItem/FeatureItem.types';
-export {Footer} from './Footer/Footer';
-export * from './Footer/Footer.types';
+export * from './Breadcrumbs/Breadcrumbs';
+export * from './CropTool/CropTool';
+export * from './FeatureItem';
+export * from './Footer';
 export * from './Form';
-export {GlobalStyles} from './GlobalStyles/GlobalStyles';
-export {Header} from './Header/Header';
-export * from './Header/Header.types';
-export {Loader} from './Loader/Loader';
-export * from './Loader/Loader.types';
-export {Messenger} from './Messages/Messenger/Messenger';
-export * from './Messages/Messenger/Messenger.types';
-export {Notification} from './Notification/Notification';
-export * from './Notification/Notification.types';
-export {PageHeader} from './PageHeader/PageHeader';
-export * from './PageHeader/PageHeader.types';
-export {PromoRow} from './PromoRow/PromoRow';
-export * from './PromoRow/PromoRow.types';
-export {SideBar} from './SideBar/SideBar';
-export * from './SideBar/SideBar.types';
-export {SplashIntro} from './SplashIntro/SplashIntro';
-export * from './SplashIntro/SplashIntro.types';
-export {Svg} from './Svg/Svg';
-export * from './Svg/Svg.types';
-export {TopBar} from './TopBar/TopBar';
-export * from './TopBar/TopBar.types';
-export {Theme, ThemeOptions} from '../config/theme.types';
+export * from './GlobalStyles';
+export * from './Header/Header';
+export * from './Loader';
+// export * from './Messages/Messenger';
+export * from './Notification';
+export * from './PageHeader';
+export * from './PromoRow';
+export * from './SideBar/SideBar';
+export * from './SplashIntro';
+export * from './Svg';
+export * from './TopBar';
+export {Theme, ThemeOptions} from '../config/theme';
 
 // Material UI Components
 export {default as AppBar} from '@material-ui/core/AppBar';
