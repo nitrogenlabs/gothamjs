@@ -13,7 +13,7 @@ import {Form} from '../components/Form/Form';
 import {TextField} from '../components/Form/TextField';
 import {PageHeader} from '../components/PageHeader';
 import {Theme} from '../config/theme';
-import {LoginConstants} from '../constants/LoginConstants';
+import {AuthConstants} from '../constants/AuthConstants';
 import {PageView, PageViewProps} from './PageView';
 
 export interface LoginViewProps extends PageViewProps {
@@ -103,9 +103,9 @@ export const renderMessage = (message: string): JSX.Element => {
 export const SignInView = (props: LoginViewProps) => {
   const {
     logo,
-    name = 'login',
+    name = 'signIn',
     onSignup = () => { },
-    title = 'Login'
+    title = 'Sign In'
   } = props;
 
   // Initial state
@@ -120,8 +120,8 @@ export const SignInView = (props: LoginViewProps) => {
 
   const classes = useStyles();
 
-  useFluxListener(LoginConstants.SUCCESS, onSuccess);
-  useFluxListener(LoginConstants.FAILED, onFailure(setState));
+  useFluxListener(AuthConstants.SIGNIN_SUCCESS, onSuccess);
+  useFluxListener(AuthConstants.SIGNIN_FAILED, onFailure(setState));
 
   return (
     <PageView name={name} title={title}>

@@ -9,15 +9,15 @@ import {Svg} from './components/Svg';
 import {Gotham, GothamConfiguration, GothamRoute} from './views/Gotham';
 
 // Views
-const login: GothamRoute = {
-  path: '/login',
+const signIn: GothamRoute = {
+  path: '/signIn',
   props: {
     logo: <Svg name="gotham-logo" width={130} height={130} />,
     onLogin: () => { },
     onSignup: () => { },
     title: 'Login'
   },
-  view: 'login'
+  view: 'signIn'
 };
 
 // CONFIGURATION
@@ -31,8 +31,8 @@ const config: GothamConfiguration = {
         topBar: {
           logo: <Svg name="gotham" width={175} height={50} />,
           menu: [
-            {label: 'Login', url: '/login'},
-            {label: 'Signup', url: '/signup'}
+            {label: 'Sign In', url: '/signIn'},
+            {label: 'Sign Up', url: '/signUp'}
           ],
           solidTextColor: '#fff',
           transparentTextColor: '#fff'
@@ -113,7 +113,7 @@ const config: GothamConfiguration = {
           },
           view: 'home'
         },
-        login
+        signIn
       ]
     },
     {

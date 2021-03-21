@@ -59,14 +59,14 @@ const useStyles = makeStyles((theme: any) => ({
 
 export interface ButtonProps extends MaterialButtonProps {
   readonly isLoading?: boolean;
-  readonly label: string;
+  readonly label?: string;
   readonly type?: 'button' | 'reset' | 'submit';
   readonly variant?: 'text' | 'outlined' | 'contained';
 }
 
 export type ButtonVariant = 'text' | 'contained' | 'containedDark' | 'containedLight' | 'outlined' | 'outlinedDark' | 'outlinedLight';
 
-export const Button = ({className, isLoading = false, label, ...buttonProps}: ButtonProps) => {
+export const Button = ({children, className, isLoading = false, label, ...buttonProps}: ButtonProps) => {
   const {variant = 'contained', ...restBtnProps} = buttonProps;
   const classes = useStyles();
   const {t} = useTranslation();
@@ -82,7 +82,7 @@ export const Button = ({className, isLoading = false, label, ...buttonProps}: Bu
 
   return (
     <MaterialButton {...restBtnProps} data-testid={`button-${label}`} variant={variantType} className={buttonCls} >
-      {t(label)}
+      {children ? children : t(label)}
       {isLoading && <ButtonSpinner />}
     </MaterialButton >
   );

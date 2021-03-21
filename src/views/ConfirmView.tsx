@@ -11,7 +11,7 @@ import * as React from 'react';
 import {Form} from '../components/Form/Form';
 import {TextField} from '../components/Form/TextField';
 import {PageHeader} from '../components/PageHeader';
-import {LoginConstants} from '../constants/LoginConstants';
+import {AuthConstants} from '../constants/AuthConstants';
 import {PageView, PageViewProps} from './PageView';
 
 export interface ConfirmViewProps extends PageViewProps {
@@ -80,8 +80,8 @@ export const ConfirmView = (props: ConfirmViewProps) => {
 
   let errorMessage: string;
 
-  useFluxListener(LoginConstants.SUCCESS, onSuccess);
-  useFluxListener(LoginConstants.FAILED, onFailure(setValues));
+  useFluxListener(AuthConstants.SIGNIN_SUCCESS, onSuccess);
+  useFluxListener(AuthConstants.SIGNIN_FAILED, onFailure(setValues));
 
   return (
     <PageView title="Confirmation">

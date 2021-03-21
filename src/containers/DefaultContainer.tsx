@@ -10,7 +10,7 @@ import React, {useContext} from 'react';
 import {TopBar, TopBarProps} from '../components/TopBar';
 import {Theme} from '../config/theme';
 import {GothamContext} from '../utils/GothamProvider';
-import {renderTransition} from '../utils/routes';
+import {renderTransition} from '../utils/routeUtils';
 
 const useStyles: any = makeStyles((theme: Theme) => ({
   content: {

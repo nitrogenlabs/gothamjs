@@ -28,7 +28,7 @@ import {GothamConstants} from '../constants/GothamConstants';
 import {gothamApp} from '../stores/gothamAppStore';
 import {GothamContext} from '../utils/GothamProvider';
 import {i18n} from '../utils/i18nUtil';
-import {renderTransition} from '../utils/routes';
+import {renderTransition} from '../utils/routeUtils';
 
 export interface GothamProps {
   readonly classes?: any;
@@ -58,7 +58,7 @@ export interface GothamRoute {
   readonly sensitive?: boolean;
   readonly strict?: boolean;
   readonly title?: string;
-  readonly view?: 'confirm' | 'home' | 'login' | 'markdown' | 'notfound';
+  readonly view?: 'confirm' | 'home' | 'markdown' | 'signIn' | 'notfound';
 }
 
 export interface GothamButtonItem {

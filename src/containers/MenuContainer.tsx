@@ -11,7 +11,7 @@ import {SideBar, SideBarProps} from '../components/SideBar/SideBar';
 import {TopBar} from '../components/TopBar';
 import {GothamConstants} from '../constants/GothamConstants';
 import {GothamContext} from '../utils/GothamProvider';
-import {renderTransition} from '../utils/routes';
+import {renderTransition} from '../utils/routeUtils';
 import {useRoute} from '../utils/viewUtils';
 import {DefaultContainerProps} from './DefaultContainer';
 

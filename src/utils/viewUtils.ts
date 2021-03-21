@@ -6,7 +6,14 @@ import qs from 'qs';
 import {useMemo} from 'react';
 import {useHistory, useLocation, useParams, useRouteMatch} from 'react-router-dom';
 
-export const useRoute = (): any => {
+export interface AppRouter {
+  readonly history: History;
+  readonly location: Location;
+  readonly match: any;
+  readonly params: any;
+}
+
+export const useRoute = (): AppRouter => {
   const history = useHistory();
   const location = useLocation();
   const urlParams = useParams();

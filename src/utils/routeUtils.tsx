@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {FluxFramework} from '@nlabs/arkhamjs/lib';
+import {FluxFramework} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import {Redirect, Route, RouteProps, Switch} from 'react-router-dom';
@@ -14,6 +14,7 @@ import {DefaultContainer} from '../containers/DefaultContainer';
 import {MenuContainer} from '../containers/MenuContainer';
 import {GothamConfiguration, GothamRoute} from '../views/Gotham';
 import {lazyImport} from './lazyImport';
+
 
 const {NotFoundView} = lazyImport(() => import('../views/NotFoundView'), 'NotFoundView');
 const {ConfirmView} = lazyImport(() => import('../views/ConfirmView'), 'ConfirmView');
@@ -56,12 +57,12 @@ export const parseRoute = (route: GothamRoute, props: any) => {
         return <LazyLoad component={ConfirmView} {...viewProps} />;
       case 'home':
         return <LazyLoad component={HomeView} {...viewProps} />;
-      case 'login':
-        return <LazyLoad component={SignInView} {...viewProps} />;
       case 'markdown':
         return <LazyLoad component={MarkdownView} {...viewProps} />;
       case 'notfound':
         return <LazyLoad component={NotFoundView} {...viewProps} />;
+      case 'signIn':
+        return <LazyLoad component={SignInView} {...viewProps} />;
       default:
         return null;
     }
@@ -82,7 +83,7 @@ export const AuthRoute = (props) => (
     render={() => {
       const {isAuth, render: ViewRoute, ...routeProps} = props;
       return (isAuth() ? <ViewRoute {...routeProps} />
-        : <Redirect to={`/login?redirect=${props.location.pathname}${props.location.search}`} />);
+        : <Redirect to={`/signIn?redirect=${props.location.pathname}${props.location.search}`} />);
     }} />
 );
 
