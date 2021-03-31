@@ -1,7 +1,3 @@
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 import 'bootstrap/dist/css/bootstrap-grid.css';
 import 'bootstrap/dist/css/bootstrap-reboot.css';
 
@@ -29,7 +25,12 @@ import {gothamApp} from '../stores/gothamAppStore';
 import {GothamContext} from '../utils/GothamProvider';
 import {i18n} from '../utils/i18nUtil';
 import {renderTransition} from '../utils/routeUtils';
+import {LoaderView} from './LoaderView';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 export interface GothamProps {
   readonly classes?: any;
   readonly config?: GothamConfiguration;
@@ -118,7 +119,7 @@ export interface ContainerProviderProps {
   routeProps: any;
 }
 
-export const init = (setAppLoaded, config: GothamConfiguration) => (): void => {
+export const init = (isAppLoaded, setAppLoaded, config: GothamConfiguration) => (): void => {
   const {onInit} = config;
   GothamActions.init();
 
@@ -129,31 +130,21 @@ export const init = (setAppLoaded, config: GothamConfiguration) => (): void => {
   setAppLoaded(true);
 };
 
-// Loader
-export const toggleLoader = (setLoading, setLoaderContent) => ({content, isLoading}) => {
-  setLoading(isLoading);
-  setLoaderContent(content);
-};
-
-export const renderLoading = (isLoading: boolean, content: string): JSX.Element => {
-  if(!isLoading) {
-    return null;
-  }
-
-  return <Loader content={content} full />;
-};
-
 export const onKeyUp = (event) => {
   if(event.which === 9) {
     document.documentElement.classList.remove('noFocusOutline');
   }
 };
 
+export const signOut = async () => {
+  await Flux.clearAppData();
+  await GothamActions.loading(false);
+  GothamActions.navGoto('/signIn');
+};
+
 export const Gotham = (props: GothamProps): JSX.Element => {
   // Initial state
   const [isAppLoaded, setAppLoaded] = useState(false);
-  const [isLoading, setLoading] = useState(false);
-  const [loaderContent, setLoaderContent] = useState();
 
   // Configuration
   const {config: appConfig = {}} = props;
@@ -200,8 +191,8 @@ export const Gotham = (props: GothamProps): JSX.Element => {
     [darkMode],
   );
 
-  useFluxListener(ArkhamConstants.INIT, init(setAppLoaded, config));
-  useFluxListener(GothamConstants.LOADING, toggleLoader(setLoading, setLoaderContent));
+  useFluxListener(ArkhamConstants.INIT, init(isAppLoaded, setAppLoaded, config));
+  useFluxListener(GothamConstants.SIGNOUT, signOut);
 
   // Mount
   useEffect(() => {
@@ -250,7 +241,7 @@ export const Gotham = (props: GothamProps): JSX.Element => {
         <GothamContext.Provider value={{Flux, isAuth}}>
           <GlobalStyles />
           {content}
-          {renderLoading(isLoading, loaderContent)}
+          <LoaderView />
         </GothamContext.Provider>
       </I18nextProvider>
       <Notification />

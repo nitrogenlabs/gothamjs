@@ -4,7 +4,11 @@ import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import {BreadcrumbLinkProps} from './Breadcrumbs.types';
+export interface BreadcrumbLinkProps {
+  readonly classes?: any;
+  readonly name: string;
+  readonly path?: string;
+}
 
 export const BreadcrumbLink = ({classes, name, path}: BreadcrumbLinkProps) => (isEmpty(path)
   ? <Typography color="textPrimary" variant="inherit">{name}</Typography>

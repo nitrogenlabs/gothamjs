@@ -2,8 +2,13 @@ import MuiBreadcrumbs from '@material-ui/core/Breadcrumbs';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 
-import {BreadcrumbLink} from './BreadcrumbLink';
-import {BreadcrumbsProps} from './Breadcrumbs.types';
+import {BreadcrumbLink, BreadcrumbLinkProps} from './BreadcrumbLink';
+
+export interface BreadcrumbsProps {
+  readonly className?: string;
+  readonly classes?: any;
+  readonly items: BreadcrumbLinkProps[];
+}
 
 export const Breadcrumbs = ({classes, className, items = []}: BreadcrumbsProps) => (
   <MuiBreadcrumbs aria-label="breadcrumb" className={className}>

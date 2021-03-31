@@ -13,6 +13,7 @@ export class GothamConstants {
   static readonly NAV_REPLACE: string = 'GOTHAM_APP_NAV_REPLACE';
   static readonly NOTIFY: string = 'GOTHAM_APP_NOTIFY';
   static readonly SET_CONFIG: string = 'GOTHAM_APP_SET_CONFIG';
+  static readonly SIGNOUT: string = 'GOTHAM_APP_SIGNOUT';
   static readonly TOGGLE_MENU: string = 'GOTHAM_APP_TOGGLE_MENU';
   static readonly TOPBAR_SOLID: string = 'GOTHAM_APP_TOPBAR_SOLID';
   static readonly UPDATE_MENU: string = 'GOTHAM_APP_UPDATE_MENU';

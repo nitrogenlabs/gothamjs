@@ -24,6 +24,7 @@ export const GothamActions = {
     const updatedParams = params || {};
     Flux.dispatch({notification: {message, ...updatedParams}, type: GothamConstants.NOTIFY});
   },
+  signOut: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.SIGNOUT}),
   setConfig: (config: GothamConfiguration): Promise<FluxAction> =>
     Flux.dispatch({config, type: GothamConstants.SET_CONFIG}),
   updateTitle: (title: string, separator: string = ' :: '): Promise<FluxAction> => {
