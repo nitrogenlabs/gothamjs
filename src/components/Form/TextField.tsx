@@ -21,6 +21,8 @@ export interface TextFieldProps extends StandardTextFieldProps {
 export const TextField = ({
   defaultValue = '',
   name,
+  onChange: onChangeFn,
+  onBlur: onBlurFn,
   placeholder = '',
   type = 'text',
   ...restProps
@@ -40,8 +42,20 @@ export const TextField = ({
           error={!!errors[name]}
           helperText={errors[name] && t(errors[name].message)}
           inputRef={ref}
-          onChange={onChange}
-          onBlur={onBlur}
+          onChange={(event) => {
+            onChange(event);
+
+            if(onChangeFn) {
+              onChangeFn(event);
+            }
+          }}
+          onBlur={(event) => {
+            onBlur(event);
+
+            if(onBlurFn) {
+              onBlurFn(event);
+            }
+          }}
           placeholder={t(placeholder)}
           type={type}
           value={value}
