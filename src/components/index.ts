@@ -11,12 +11,13 @@ export * from './GlobalStyles';
 export * from './Header/Header';
 export * from './Loader';
 // export * from './Messages/Messenger';
-export * from './Notification';
 export * from './PageHeader';
 export * from './PromoRow';
 export * from './SideBar/SideBar';
 export * from './SplashIntro';
 export * from './Svg';
+export * from './Tag';
+export * from './TagList';
 export * from './TopBar';
 export {Theme, ThemeOptions} from '../config/theme';
 

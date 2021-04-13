@@ -3,6 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 export class GothamConstants {
+  static readonly ALERT: string = 'GOTHAM_ALERT';
   static readonly CLEAR_EXTERNAL: string = 'GOTHAM_APP_CLEAR_EXTERNAL';
   static readonly GET_EXTERNAL: string = 'GOTHAM_APP_GET_EXTERNAL';
   static readonly INITIALIZE: string = 'GOTHAM_APP_INITIALIZE';
@@ -11,7 +12,8 @@ export class GothamConstants {
   static readonly NAV_FORWARD: string = 'GOTHAM_APP_NAV_FORWARD';
   static readonly NAV_GOTO: string = 'GOTHAM_APP_NAV_GOTO';
   static readonly NAV_REPLACE: string = 'GOTHAM_APP_NAV_REPLACE';
-  static readonly NOTIFY: string = 'GOTHAM_APP_NOTIFY';
+  static readonly NOTIFY_OPEN: string = 'GOTHAM_APP_NOTIFY_OPEN';
+  static readonly NOTIFY_CLOSE: string = 'GOTHAM_APP_NOTIFY_CLOSE';
   static readonly SET_CONFIG: string = 'GOTHAM_APP_SET_CONFIG';
   static readonly SIGNOUT: string = 'GOTHAM_APP_SIGNOUT';
   static readonly TOGGLE_MENU: string = 'GOTHAM_APP_TOGGLE_MENU';

@@ -2,8 +2,11 @@ import 'bootstrap/dist/css/bootstrap-grid.css';
 import 'bootstrap/dist/css/bootstrap-reboot.css';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Slide from '@material-ui/core/Slide';
 import {createMuiTheme} from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {LocalizationProvider} from '@material-ui/pickers';
+import LuxonUtils from '@material-ui/pickers/adapter/luxon';
 import {ThemeProvider} from '@material-ui/styles';
 import {ArkhamConstants, Flux, FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
@@ -11,13 +14,15 @@ import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import {Location} from 'history';
 import merge from 'lodash/merge';
+import {SnackbarProvider} from 'notistack';
 import React, {useEffect, useState} from 'react';
 import {I18nextProvider} from 'react-i18next';
 import {BrowserRouter} from 'react-router-dom';
 
 import {GothamActions} from '../actions/GothamActions';
-import {GlobalStyles, Loader, Notification} from '../components';
+import {GlobalStyles, Loader} from '../components';
 import {GothamRoute} from '../components/GothamRouter';
+import {Notify} from '../components/Notify';
 import {Config} from '../config/app';
 import {defaultTheme} from '../config/theme';
 import {GothamConstants} from '../constants/GothamConstants';
@@ -75,6 +80,8 @@ export interface GothamConfiguration {
   readonly displayMode?: ThemeDisplayMode;
   readonly flux?: FluxFramework;
   readonly isAuth?: () => boolean;
+  readonly maxNotifications?: number;
+  readonly middleware?: FluxMiddlewareType[];
   readonly name?: string;
   readonly onInit?: () => any;
   readonly routes?: GothamRoute[];
@@ -84,7 +91,6 @@ export interface GothamConfiguration {
   readonly titleBarSeparator?: string;
   readonly theme?: any;
   readonly translations?: any;
-  readonly middleware?: FluxMiddlewareType[];
 }
 
 export type GothamSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -162,6 +168,7 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   Config.set(config);
   const {
     displayMode = 'auto',
+    maxNotifications = 3,
     middleware,
     name,
     storageType,
@@ -238,13 +245,24 @@ export const Gotham = (props: GothamProps): JSX.Element => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <I18nextProvider i18n={i18n(translations)}>
-        <GothamContext.Provider value={{Flux, isAuth}}>
-          <GlobalStyles />
-          {content}
-          <LoaderView />
-        </GothamContext.Provider>
+        <LocalizationProvider dateAdapter={LuxonUtils}>
+          <GothamContext.Provider value={{Flux, isAuth}}>
+            <SnackbarProvider
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              maxSnack={maxNotifications}
+              preventDuplicate
+              TransitionComponent={Slide} >
+              <GlobalStyles />
+              {content}
+              <LoaderView />
+              <Notify />
+            </SnackbarProvider>
+          </GothamContext.Provider>
+        </LocalizationProvider>
       </I18nextProvider>
-      <Notification />
     </ThemeProvider >
   );
 };

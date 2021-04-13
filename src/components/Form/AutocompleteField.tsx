@@ -122,9 +122,9 @@ export interface AutocompleteFieldProps {
   readonly onFocus?: (event: SyntheticEvent) => any;
   readonly onSelected?: (suggestion: AutocompleteSuggestion) => any;
   readonly placeholder?: string;
-  readonly suggestionList: any[];
+  readonly suggestionList?: any[];
   readonly validate?: (object) => object | Promise<object>;
-  readonly value: string;
+  readonly value?: any;
   readonly valueKey?: string;
   readonly wait?: number;
 }
@@ -149,8 +149,7 @@ export const AutocompleteField = (props: AutocompleteFieldProps) => {
   const {t} = useTranslation();
 
   // Form
-  const {errors, register, getValues, setValue} = useFormContext();
-  register({name, type: 'custom', value: defaultValue});
+  const {formState: {errors}, register, getValues, setValue} = useFormContext();
   const initialValue = getValues(name) || {};
 
   // State
@@ -173,70 +172,73 @@ export const AutocompleteField = (props: AutocompleteFieldProps) => {
   }, [name, valueKey]);
 
   return (
-    <ReactAutosuggest
-      id={`reactAutosuggest-${name}`}
-      inputProps={{
-        InputLabelProps: {
-          shrink: true
-        },
-        classes,
-        onBlur: onBlur(onBlurFn, getValues, setInputValue, name, valueKey),
-        onChange: onChange(onChangeFn, setInputValue),
-        onFocus: onFocus(onFocusFn, setInputValue, setValue, name),
-        label: label ? t(label) : undefined,
-        placeholder: placeholder ? t(placeholder) : undefined,
-        validate,
-        value: updatedValue,
-        valueKey
-      }}
-      getSuggestionValue={(suggestion) => getSelectedValue(suggestion, valueKey)}
-      onSuggestionSelected={onSuggestionSelectedFn}
-      onSuggestionsClearRequested={onSuggestionsClearRequestedFn}
-      onSuggestionsFetchRequested={onSuggestionsFetchRequestedFn}
-      renderInputComponent={({classes, valueKey, ...remainingProps}) => {
-        let updatedProps;
+    <>
+      <input {...register(name)} type="hidden" value={defaultValue as any} />
+      <ReactAutosuggest
+        id={`reactAutosuggest-${name}`}
+        inputProps={{
+          InputLabelProps: {
+            shrink: true
+          },
+          classes,
+          onBlur: onBlur(onBlurFn, getValues, setInputValue, name, valueKey),
+          onChange: onChange(onChangeFn, setInputValue),
+          onFocus: onFocus(onFocusFn, setInputValue, setValue, name),
+          label: label ? t(label) : undefined,
+          placeholder: placeholder ? t(placeholder) : undefined,
+          validate,
+          value: updatedValue,
+          valueKey
+        }}
+        getSuggestionValue={(suggestion) => getSelectedValue(suggestion, valueKey)}
+        onSuggestionSelected={onSuggestionSelectedFn}
+        onSuggestionsClearRequested={onSuggestionsClearRequestedFn}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequestedFn}
+        renderInputComponent={({classes, valueKey, ...remainingProps}) => {
+          let updatedProps;
 
-        if(errors[name]) {
-          updatedProps = {
-            ...remainingProps,
-            error: true,
-            helperText: errors[name] && t(errors[name].message)
-          };
-        } else {
-          updatedProps = {...remainingProps};
-        }
+          if(errors[name]) {
+            updatedProps = {
+              ...remainingProps,
+              error: true,
+              helperText: errors[name] && t(errors[name].message)
+            };
+          } else {
+            updatedProps = {...remainingProps};
+          }
 
-        return (
-          <MaterialTextField
-            fullWidth
-            InputProps={{
-              classes: {
-                input: classes.input
-              },
-              inputRef
-            }}
-            {...updatedProps} />
-        );
-      }}
-      renderSuggestion={renderSuggestion(classes, valueKey)}
-      renderSuggestionsContainer={({children, containerProps}) => {
-        const inputElement: any = inputRef.current;
-        return (
-          <MaterialPopper anchorEl={inputRef.current} open={!!children}>
-            <MaterialPaper
-              square
-              {...containerProps}
-              style={{width: inputElement ? inputElement.clientWidth : null}}>
-              {children}
-            </MaterialPaper>
-          </MaterialPopper>
-        );
-      }}
-      suggestions={suggestionList}
-      theme={{
-        suggestion: classes.suggestion,
-        suggestionsList: classes.suggestionsList
-      }}
-    />
+          return (
+            <MaterialTextField
+              fullWidth
+              InputProps={{
+                classes: {
+                  input: classes.input
+                },
+                inputRef
+              }}
+              {...updatedProps} />
+          );
+        }}
+        renderSuggestion={renderSuggestion(classes, valueKey)}
+        renderSuggestionsContainer={({children, containerProps}) => {
+          const inputElement: any = inputRef.current;
+          return (
+            <MaterialPopper anchorEl={inputRef.current} open={!!children}>
+              <MaterialPaper
+                square
+                {...containerProps}
+                style={{width: inputElement ? inputElement.clientWidth : null}}>
+                {children}
+              </MaterialPaper>
+            </MaterialPopper>
+          );
+        }}
+        suggestions={suggestionList}
+        theme={{
+          suggestion: classes.suggestion,
+          suggestionsList: classes.suggestionsList
+        }}
+      />
+    </>
   );
 };

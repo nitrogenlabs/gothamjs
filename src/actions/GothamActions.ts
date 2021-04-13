@@ -5,7 +5,7 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 
-import {NotificationParams} from '../components';
+import {GothamNotifyParams} from '../components/Notify';
 import {Config} from '../config/app';
 import {GothamConstants} from '../constants/GothamConstants';
 import {GothamConfiguration} from '../views/Gotham';
@@ -20,10 +20,11 @@ export const GothamActions = {
     Flux.dispatch({params, path, type: GothamConstants.NAV_GOTO}),
   navReplace: (path: string, params?: any): Promise<FluxAction> =>
     Flux.dispatch({params, path, type: GothamConstants.NAV_REPLACE}),
-  notify: (message: string, params?: NotificationParams): void => {
-    const updatedParams = params || {};
-    Flux.dispatch({notification: {message, ...updatedParams}, type: GothamConstants.NOTIFY});
-  },
+  notifyOpen: (message: string, params: Partial<GothamNotifyParams> = {}): Promise<FluxAction> =>
+    Flux.dispatch({message, ...params, type: GothamConstants.NOTIFY_OPEN}),
+  notifyClose: (key: string): Promise<FluxAction> =>
+    Flux.dispatch({key, type: GothamConstants.NOTIFY_CLOSE}),
+
   signOut: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.SIGNOUT}),
   setConfig: (config: GothamConfiguration): Promise<FluxAction> =>
     Flux.dispatch({config, type: GothamConstants.SET_CONFIG}),

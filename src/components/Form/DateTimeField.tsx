@@ -2,17 +2,11 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {FormHelperTextProps} from '@material-ui/core/FormHelperText';
-import {InputProps} from '@material-ui/core/Input';
-import {InputLabelProps} from '@material-ui/core/InputLabel';
+import MaterialTextField from '@material-ui/core/TextField';
+import {DateTimePicker} from '@material-ui/pickers';
 import React from 'react';
-
-import {DatePicker} from './DatePicker/DatePicker';
-
-export interface DateTimeFieldOrigin {
-  readonly vertical: 'top' | 'center' | 'bottom';
-  readonly horizontal: 'left' | 'center' | 'right';
-}
+import {Controller, useFormContext} from 'react-hook-form';
+import {useTranslation} from 'react-i18next';
 
 export interface DateTimeFieldCalendarProps {
   readonly action: (actions: any) => void;
@@ -33,46 +27,50 @@ export interface DateTimeFieldCalendarProps {
 }
 
 export interface DateTimeFieldProps {
-  readonly anchorOrigin?: DateTimeFieldOrigin;
+  readonly allowKeyboardControl?: boolean;
+  readonly allowSameDateSelection?: boolean;
+  readonly ampmInClock?: boolean;
   readonly className?: string;
-  readonly dateDisabled?: (date: Date) => boolean;
-  readonly dateFormat?: string | ((date: Date) => string);
-  readonly dialog?: boolean;
-  readonly disabled?: boolean;
-  readonly endIcon?: Node;
-  readonly error?: string;
-  readonly fullWidth?: boolean;
   readonly label?: string;
+  readonly minutesStep?: number;
   readonly name: string;
-  readonly max?: Date;
-  readonly min?: Date;
-  readonly onChange?: (value: Date, event?: React.MouseEvent<HTMLElement>) => any;
-  readonly okToConfirm?: boolean;
-  readonly transformOrigin?: DateTimeFieldOrigin;
-  readonly validate?: (value: any) => object | Promise<object>;
-  readonly value?: Date;
-  readonly CalendarProps?: DateTimeFieldCalendarProps;
-  readonly InputLabelProps?: InputLabelProps;
-  readonly InputProps?: InputProps;
-  readonly FormHelperTextProps?: FormHelperTextProps;
+  readonly onChange?: any;
+  readonly placeholder?: string;
+  readonly toolbarTitle?: string;
+  readonly value?: any;
 }
 
 export const DateTimeField = (props: DateTimeFieldProps) => {
-  console.log({props});
-  // const {onChange: onChangeInput, validate, ...remainingProps} = props;
-  // let updatedProps;
+  const {
+    allowKeyboardControl = true,
+    allowSameDateSelection = true,
+    ampmInClock = true,
+    minutesStep = 30,
+    toolbarTitle = 'Select Date',
+    name,
+    value
+  } = props;
+  const {t} = useTranslation();
+  const {control, formState: {errors}} = useFormContext();
 
-  // if(!active && !!error && (dirty || touched)) {
-  //   updatedProps = {
-  //     ...remainingProps,
-  //     ...inputProps,
-  //     error: true,
-  //     helperText: <span>{error}</span>,
-  //     onChangeInput
-  //   };
-  // } else {
-  //   updatedProps = {...remainingProps, ...inputProps, onChangeInput};
-  // }
-
-  return <DatePicker name={props.name} autoFocus={false} timeInterval={1} />;
+  return (
+    <Controller
+      control={control}
+      defaultValue={value}
+      name={name}
+      render={({field: {name, onChange, ref, value}}) => (
+        <DateTimePicker
+          allowKeyboardControl={allowKeyboardControl}
+          allowSameDateSelection={allowSameDateSelection}
+          ampmInClock={ampmInClock}
+          data-testid={`dateTimeField-${name}`}
+          minutesStep={minutesStep}
+          onChange={onChange}
+          ref={ref}
+          renderInput={(props) => <MaterialTextField {...props} error={!!errors[name]} helperText={errors[name]} />}
+          toolbarTitle={t(toolbarTitle)}
+          value={value}
+        />
+      )} />
+  );
 };

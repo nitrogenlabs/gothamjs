@@ -16,6 +16,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.default,
     display: 'flex',
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
     opacity: 0.95,
     textAlign: 'center'

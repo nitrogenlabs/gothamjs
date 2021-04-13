@@ -36,7 +36,7 @@ export const renderOptions = (props, list: SelectFieldOption[] = []): JSX.Elemen
 export const SelectField = (props: SelectFieldProps) => {
   const {defaultValue, label, list = [], name, ...restProps} = props;
   const classes = useStyles();
-  const {control, errors} = useFormContext();
+  const {control, formState: {errors}} = useFormContext();
   let labelElement: JSX.Element;
 
   // If using a label, add a label component
@@ -57,14 +57,14 @@ export const SelectField = (props: SelectFieldProps) => {
         control={control}
         defaultValue={defaultValue}
         name={name}
-        render={({onBlur, onChange, ref, value}) => (
+        render={({field: {name, onBlur, onChange, ref, value}}) => (
           <MaterialNativeSelect
+            {...restProps}
             error={!!errors[name]}
             inputRef={ref}
             onBlur={onBlur}
             onChange={onChange}
-            value={value}
-            {...restProps}>
+            value={value}>
             {renderOptions(updatedProps, list)}
           </MaterialNativeSelect>
         )} />

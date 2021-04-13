@@ -92,7 +92,7 @@ export const renderRoute = (
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
 ): JSX.Element => {
-  const {authenticate = false, exact = true, path, strict, location, sensitive} = route;
+  const {authenticate = false, exact = true, location, path, strict, sensitive} = route;
   const {isAuth, titleBarSeparator} = gothamConfig;
   const ReactRoute = authenticate ? AuthRoute : Route;
 

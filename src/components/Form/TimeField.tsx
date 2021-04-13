@@ -2,54 +2,41 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {FormHelperTextProps} from '@material-ui/core/FormHelperText';
-import {InputProps} from '@material-ui/core/Input';
-import {InputLabelProps} from '@material-ui/core/InputLabel';
+import MaterialTextField from '@material-ui/core/TextField';
+import {DateTimePicker, TimePickerProps} from '@material-ui/pickers';
 import React from 'react';
+import {Controller, useFormContext} from 'react-hook-form';
 
-import {DateTimeFieldOrigin} from './DateTimeField';
-import {TimePicker} from './TimePicker/TimePicker';
-
-export interface TimeFieldClockProps {
-  readonly action: (actions: any) => void;
-  readonly value: Date;
-  readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>) => void;
-  readonly closeClock: () => void;
-  readonly selectableMinutesInterval?: number;
-  readonly okToConfirm?: boolean;
-  readonly classes?: {
-    root?: string
-    digitalContainer?: string
-    clockBackground?: string
-    hand?: string
-    textSelected?: string
-    minuteDotSelected?: string
-  };
-}
-
-export interface TimeFieldProps {
+export interface TimeFieldProps extends TimePickerProps {
   readonly name: string;
-  readonly label?: string;
-  readonly value: Date;
-  readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>) => void;
-  readonly selectableMinutesInterval?: number;
-  readonly anchorOrigin?: DateTimeFieldOrigin;
-  readonly transformOrigin?: DateTimeFieldOrigin;
-  readonly disabled?: boolean;
-  readonly error?: string;
-  readonly fullWidth?: boolean;
-  readonly dialog?: boolean;
-  readonly okToConfirm?: boolean;
-  readonly endIcon?: Node;
-  readonly className?: string;
-  readonly InputLabelProps?: InputLabelProps;
-  readonly InputProps?: InputProps;
-  readonly FormHelperTextProps?: FormHelperTextProps;
-  readonly ClockProps?: TimeFieldClockProps;
 }
 
 export const TimeField = (props: TimeFieldProps) => {
-  // const {name} = props;
-  console.log({props});
-  return <TimePicker {...props} />;
+  const {
+    allowKeyboardControl = true,
+    ampmInClock = true,
+    minutesStep = 30,
+    name,
+    value
+  } = props;
+  const {control, formState: {errors}} = useFormContext();
+
+  return (
+    <Controller
+      control={control}
+      defaultValue={value}
+      name={name}
+      render={({field: {name, onChange, ref, value}}) => (
+        <DateTimePicker
+          allowKeyboardControl={allowKeyboardControl}
+          ampmInClock={ampmInClock}
+          data-testid={`dateTimeField-${name}`}
+          ref={ref}
+          minutesStep={minutesStep}
+          onChange={onChange}
+          renderInput={(props) => <MaterialTextField {...props} error={!!errors[name]} helperText={errors[name]} />}
+          value={value}
+        />
+      )} />
+  );
 };

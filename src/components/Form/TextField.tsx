@@ -28,20 +28,21 @@ export const TextField = ({
   ...restProps
 }: TextFieldProps) => {
   const {t} = useTranslation();
-  const {control, errors} = useFormContext();
+  const {control, formState: {errors}} = useFormContext();
 
   return (
     <Controller
       control={control}
       defaultValue={defaultValue}
       name={name}
-      render={({onBlur, onChange, ref, value}) => (
+      render={({field: {name, onBlur, onChange, ref, value}}) => (
         <MaterialTextField
           {...restProps}
           data-testid={`textField-${name}`}
           error={!!errors[name]}
           helperText={errors[name] && t(errors[name].message)}
           inputRef={ref}
+          name={name}
           onChange={(event) => {
             onChange(event);
 
@@ -50,7 +51,7 @@ export const TextField = ({
             }
           }}
           onBlur={(event) => {
-            onBlur(event);
+            onBlur();
 
             if(onBlurFn) {
               onBlurFn(event);

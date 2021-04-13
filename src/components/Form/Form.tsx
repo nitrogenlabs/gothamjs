@@ -15,7 +15,14 @@ export interface FormProps {
   readonly schema?: any;
 }
 
-export const Form = ({children, className, defaultValues, mode, schema, onSubmit}: FormProps) => {
+export const Form = ({
+  children,
+  className,
+  defaultValues = {},
+  mode = 'onBlur',
+  schema,
+  onSubmit
+}: FormProps) => {
   const methods = useForm({
     defaultValues,
     mode,

@@ -7,5 +7,6 @@ export * from './Button';
 export * from './DateTimeField';
 export * from './Form';
 export * from './SelectField';
+export * from './TagField';
 export * from './TextField';
 export * from './TimeField';
