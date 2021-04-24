@@ -20,7 +20,6 @@ const useStyles: any = makeStyles((theme: any) => ({
     bottom: 0,
     display: 'flex',
     flex: 1,
-    flexDirection: 'row',
     left: 0,
     overflow: 'hidden',
     position: 'absolute',
@@ -29,7 +28,9 @@ const useStyles: any = makeStyles((theme: any) => ({
   },
   content: {
     backgroundColor: theme.palette.background.default,
+    display: 'flex',
     flex: 1,
+    flexDirection: 'column',
     minWidth: 0,
     overflowY: 'auto',
     position: 'relative'

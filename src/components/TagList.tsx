@@ -1,11 +1,13 @@
 import makeStyles from '@material-ui/styles/makeStyles';
-import React from 'react';
+import isEmpty from 'lodash/isEmpty';
+import React, {SyntheticEvent} from 'react';
 
-import {Tag, TagProps} from './Tag';
+import {TagChip, TagChipProps} from './TagChip';
 
 const useStyles: any = makeStyles({
   tagList: {
     alignItems: 'flex-start',
+    display: 'flex',
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap'
@@ -13,8 +15,8 @@ const useStyles: any = makeStyles({
 });
 
 export interface TagListProps {
-  readonly tags: TagProps[];
-  readonly onClick: (tagId: string) => any;
+  readonly tags: TagChipProps[];
+  readonly onClick: (event: SyntheticEvent, tagId: string) => any;
 }
 
 export const TagList = ({onClick, tags = []}) => {
@@ -26,7 +28,7 @@ export const TagList = ({onClick, tags = []}) => {
 
   return (
     <div className={classes.tagList}>
-      {tags.map(({name, tagId}) => <Tag key={tagId} name={name} tagId={tagId} onClick={onClick} />)}
+      {tags.map((tag) => <TagChip key={tag.id} onClick={onClick} tag={tag} />)}
     </div>
   );
 };

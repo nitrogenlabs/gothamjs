@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {useFormContext} from 'react-hook-form';
 import ReactTags from 'react-tag-autocomplete';
 
-import {Tag} from '../Tag';
+import {TagChip} from '../TagChip';
 
 const useStyles: any = makeStyles((theme: any) => ({
   root: {
@@ -149,7 +149,7 @@ export const TagField = ({
   onSuggest,
   placeholder,
   suggestions: propSuggestions = [],
-  tagComponent = ({tag = {}, ...tagProps}) => <Tag className="error" {...tagProps} {...tag} />
+  tagComponent = ({tag, ...tagProps}) => <TagChip className="error" {...tagProps} tag={tag} />
 }: TagFieldProps) => {
   const classes = useStyles();
   const [suggestions, setSuggestions] = useState(propSuggestions);

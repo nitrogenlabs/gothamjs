@@ -12,8 +12,8 @@ const useStyle = makeStyles((theme: any) => ({
   container: {
     alignItems: 'center',
     display: 'flex',
+    flex: 1,
     flexDirection: 'column',
-    height: 'calc(100% - 150px)',
     justifyContent: 'center'
   },
   errorCode: {

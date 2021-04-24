@@ -31,6 +31,7 @@ const useStyles: any = makeStyles((theme: any) => {
     },
     sideBar: {
       display: 'flex',
+      flexDirection: 'column',
       flexGrow: 0,
       flexShrink: 0
     }

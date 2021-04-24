@@ -33,7 +33,9 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     zIndex: theme.zIndex.tooltip + 1
   },
   loaderText: {
-    fontSize: 12
+    fontSize: 24,
+    fontWeight: 100,
+    marginTop: theme.spacing(1)
   },
   loaderThrobber: {
     animationName: '$rotate',

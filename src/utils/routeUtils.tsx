@@ -5,16 +5,16 @@
 import {FluxFramework} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
-import {Redirect, Route, RouteProps, Switch} from 'react-router-dom';
+import {Route, RouteProps, Switch} from 'react-router-dom';
 
 import {GothamActions} from '../actions/GothamActions';
+import {AuthRoute} from '../components/AuthRoute';
 import {LazyLoad} from '../components/LazyLoader';
 import {Loader} from '../components/Loader';
 import {DefaultContainer} from '../containers/DefaultContainer';
 import {MenuContainer} from '../containers/MenuContainer';
 import {GothamConfiguration, GothamRoute} from '../views/Gotham';
 import {lazyImport} from './lazyImport';
-
 
 const {NotFoundView} = lazyImport(() => import('../views/NotFoundView'), 'NotFoundView');
 const {ConfirmView} = lazyImport(() => import('../views/ConfirmView'), 'ConfirmView');
@@ -77,23 +77,13 @@ export const parseRoute = (route: GothamRoute, props: any) => {
   throw new Error(`Gotham Error: Route "${path}" is missing "component" property.`);
 };
 
-export const AuthRoute = (props) => (
-  <Route
-    {...props}
-    render={() => {
-      const {isAuth, render: ViewRoute, ...routeProps} = props;
-      return (isAuth() ? <ViewRoute {...routeProps} />
-        : <Redirect to={`/signIn?redirect=${props.location.pathname}${props.location.search}`} />);
-    }} />
-);
-
 export const renderRoute = (
   route: GothamRoute,
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
 ): JSX.Element => {
-  const {authenticate = false, exact = true, location, path, strict, sensitive} = route;
-  const {isAuth, titleBarSeparator} = gothamConfig;
+  const {isAuth: defaultIsAuth, titleBarSeparator} = gothamConfig;
+  const {authenticate = false, exact = true, isAuth = defaultIsAuth, location, path, strict, sensitive} = route;
   const ReactRoute = authenticate ? AuthRoute : Route;
 
   return (

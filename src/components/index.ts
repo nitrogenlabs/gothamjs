@@ -4,6 +4,7 @@
  */
 export * from './Breadcrumbs/Breadcrumbs';
 export * from './CropTool/CropTool';
+export * from './AuthRoute';
 export * from './FeatureItem';
 export * from './Footer';
 export * from './Form';
@@ -16,7 +17,7 @@ export * from './PromoRow';
 export * from './SideBar/SideBar';
 export * from './SplashIntro';
 export * from './Svg';
-export * from './Tag';
+export * from './TagChip';
 export * from './TagList';
 export * from './TopBar';
 export {Theme, ThemeOptions} from '../config/theme';

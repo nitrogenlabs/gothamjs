@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import 'bootstrap/dist/css/bootstrap-grid.css';
 import 'bootstrap/dist/css/bootstrap-reboot.css';
 
@@ -32,10 +36,6 @@ import {i18n} from '../utils/i18nUtil';
 import {renderTransition} from '../utils/routeUtils';
 import {LoaderView} from './LoaderView';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 export interface GothamProps {
   readonly classes?: any;
   readonly config?: GothamConfiguration;
@@ -55,7 +55,7 @@ export interface GothamRoute {
   readonly component?: any;
   readonly container?: 'default' | 'menu';
   readonly exact?: boolean;
-  readonly isAuth?: boolean;
+  readonly isAuth?: () => boolean;
   readonly location?: Location;
   readonly name?: string;
   readonly path: string;

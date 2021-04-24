@@ -15,6 +15,9 @@ import {renderTransition} from '../utils/routeUtils';
 const useStyles: any = makeStyles((theme: Theme) => ({
   content: {
     backgroundColor: theme.palette.background.default,
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
     minWidth: 0,
     overflowX: 'hidden',
     overflowY: 'auto'

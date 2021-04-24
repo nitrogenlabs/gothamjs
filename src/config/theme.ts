@@ -79,6 +79,9 @@ export const defaultTheme: ThemeOptions = {
           padding: 0,
           position: 'relative'
         },
+        '#app': {
+          display: 'flex'
+        },
         'body, p, h1, input': {
           fontFamily: '"Open Sans", sans-serif'
         },
