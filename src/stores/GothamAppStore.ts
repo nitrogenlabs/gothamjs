@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {set} from 'lodash';
+import set from 'lodash/set';
 
 import {GothamConstants} from '../constants/GothamConstants';
 import {MarkdownConstants} from '../constants/MarkdownConstants';

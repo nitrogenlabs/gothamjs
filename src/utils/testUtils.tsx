@@ -2,7 +2,6 @@ import {StylesOptions, StylesProvider, ThemeProvider} from '@material-ui/styles'
 import {Flux} from '@nlabs/arkhamjs';
 import {FluxProvider} from '@nlabs/arkhamjs-utils-react';
 import {render, screen, waitFor} from '@testing-library/react';
-import {SnackbarProvider} from 'notistack';
 import React from 'react';
 import {MemoryRouter} from 'react-router-dom';
 
@@ -27,9 +26,7 @@ export const renderWithProvider = async (Element, props = {}) => {
       <MemoryRouter initialEntries={[mockRoute]} initialIndex={0} >
         <StylesProvider generateClassName={generateClassName} >
           <ThemeProvider theme={defaultTheme} >
-            <SnackbarProvider>
-              <Element {...restProps} />
-            </SnackbarProvider>
+            <Element {...restProps} />
           </ThemeProvider>
         </StylesProvider>
       </MemoryRouter>
@@ -58,11 +55,9 @@ export const renderWithForm = async (Element, props = {}) => {
       <MemoryRouter initialEntries={['/']} initialIndex={0}>
         <StylesProvider generateClassName={generateClassName}>
           <ThemeProvider theme={defaultTheme}>
-            <SnackbarProvider>
-              <Form onSubmit={onSubmit}>
-                <Element {...restProps} />
-              </Form>
-            </SnackbarProvider>
+            <Form onSubmit={onSubmit}>
+              <Element {...restProps} />
+            </Form>
           </ThemeProvider>
         </StylesProvider>
       </MemoryRouter>

@@ -21,7 +21,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noStrictGenericChecks": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "outDir": "./lib",
     "pretty": true,
     "removeComments": true,

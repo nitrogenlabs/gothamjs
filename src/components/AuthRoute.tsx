@@ -10,7 +10,7 @@ export const AuthRoute = (props) => (
     {...props}
     render={() => {
       const {isAuth, render: ViewRoute, ...routeProps} = props;
-      console.log('AuthRoute::isAuth', isAuth);
+
       return (isAuth && isAuth() ? <ViewRoute {...routeProps} />
         : <Redirect to={`/signIn?redirect=${props.location.pathname}${props.location.search}`} />);
     }} />

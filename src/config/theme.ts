@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Theme, ThemeOptions} from '@material-ui/core/styles/createMuiTheme';
+import {Theme, ThemeOptions} from '@material-ui/core';
 
 /* eslint-disable sort-keys */
 const palette: any = {
@@ -62,134 +62,160 @@ export const breakpoints: any = {
 
 export const defaultTheme: ThemeOptions = {
   breakpoints,
-  overrides: {
+  components: {
     MuiInputAdornment: {
-      root: {
-        flexDirection: 'row'
-      }
-    },
-    MuiCssBaseline: {
-      '@global': {
-        '*': {
-          boxSizing: 'border-box'
-        },
-        'html, body, #app': {
-          margin: 0,
-          minHeight: '100vh',
-          padding: 0,
-          position: 'relative'
-        },
-        '#app': {
-          display: 'flex'
-        },
-        'body, p, h1, input': {
-          fontFamily: '"Open Sans", sans-serif'
-        },
-        'h1, h2, h3, h4, h5, h6': {
-          color: '#606676',
-          fontWeight: 300,
-          lineHeight: 1.2,
-          marginBottom: '0.5rem',
-          marginTop: 0
-        },
-        h1: {
-          fontSize: '3rem'
-        },
-        h2: {
-          fontSize: '2rem'
-        },
-        h3: {
-          fontSize: '1rem'
-        },
-        button: {
-          fontFamily: '"Open Sans", sans-serif'
+      styleOverrides: {
+        root: {
+          flexDirection: 'row'
         }
       }
     },
+    MuiCssBaseline: {
+      styleOverrides: `
+        html, body, #app {
+          margin: 0;
+          min-height: 100vh;
+          padding: 0;
+          position: relative;
+        }
+        #app {
+          display: flex;
+        }
+        body, button, p, h1, input, textarea {
+          font-family: "Open Sans", sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+          color: #606676;
+          font-weight: 300;
+          line-height: 1.2;
+          margin-bottom: 0.5rem;
+          margin-top: 0;
+        }
+        h1 {
+          font-size: 3rem;
+        }
+        h2 {
+          font-size: 2rem;
+        }
+        h3 {
+          font-size: 1rem;
+        }`
+    },
     MuiButton: {
-      contained: {
-        boxShadow: 'none'
-      },
-      outlined: {
-        backgroundColor: 'transparent',
-        borderColor: palette.primary.main,
-        borderRadius: 0,
-        borderWidth: 1
-      },
-      root: {
-        outline: 0,
-        transition: '.3s ease-in all'
+      styleOverrides: {
+        contained: {
+          boxShadow: 'none'
+        },
+        outlined: {
+          backgroundColor: 'transparent',
+          borderColor: palette.primary.main,
+          borderRadius: 0,
+          borderWidth: 1
+        },
+        root: {
+          outline: 0,
+          transition: '.3s ease-in all'
+        }
+      }
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: true,
+        disableTouchRipple: true,
+        focusRipple: true
+      }
+    },
+    MuiCheckbox: {
+      defaultProps: {
+        disableRipple: true
+      }
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          position: 'relative'
+        }
       }
     },
     MuiDrawer: {
-      paper: {
-        width: 275
+      styleOverrides: {
+        paper: {
+          width: 275
+        }
       }
     },
     MuiFormControl: {
-      root: {
-        display: 'flex'
+      styleOverrides: {
+        root: {
+          display: 'flex'
+        }
+      }
+    },
+    MuiIconButton: {
+      defaultProps: {
+        disableRipple: true,
+        disableTouchRipple: true
       }
     },
     MuiInputBase: {
-      root: {
-        flexDirection: 'row'
+      styleOverrides: {
+        root: {
+          flexDirection: 'row'
+        }
       }
     },
     MuiListItem: {
-      root: {
-        alignItems: 'flex-start'
+      styleOverrides: {
+        root: {
+          alignItems: 'flex-start'
+        }
       }
     },
     MuiListItemText: {
-      primary: {
-        fontSize: 14
+      styleOverrides: {
+        primary: {
+          fontSize: 14
+        }
       }
     },
     MuiNativeSelect: {
-      select: {
-        height: 24,
-        paddingBottom: 0,
-        paddingTop: 14
+      styleOverrides: {
+        select: {
+          height: 24,
+          paddingBottom: 0,
+          paddingTop: 14
+        }
+      }
+    },
+    MuiRadio: {
+      defaultProps: {
+        disableRipple: true,
+        disableTouchRipple: true
+      }
+    },
+    MuiSwitch: {
+      defaultProps: {
+        disableRipple: true,
+        disableTouchRipple: true
       }
     },
     MuiTabs: {
-      flexContainer: {
-        flexDirection: 'row'
+      styleOverrides: {
+        flexContainer: {
+          flexDirection: 'row'
+        }
       }
     },
     MuiToolbar: {
-      root: {
-        flexDirection: 'row',
-        height: 64
+      styleOverrides: {
+        root: {
+          flexDirection: 'row',
+          height: 64
+        }
       }
     }
   },
   palette,
-  props: {
-    MuiButtonBase: {
-      disableRipple: true,
-      disableTouchRipple: true,
-      focusRipple: true
-    },
-    MuiCheckbox: {
-      disableRipple: true
-    },
-    MuiIconButton: {
-      disableRipple: true,
-      disableTouchRipple: true
-    },
-    MuiMenuItem: {
-    },
-    MuiRadio: {
-      disableRipple: true,
-      disableTouchRipple: true
-    },
-    MuiSwitch: {
-      disableRipple: true,
-      disableTouchRipple: true
-    }
-  },
   typography: {
     fontFamily: ['"Open Sans"', 'sans-serif'].join(', '),
     fontSize: 13,

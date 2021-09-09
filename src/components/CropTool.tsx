@@ -1,3 +1,20 @@
+import 'cropperjs/dist/cropper.css';
+
+import React, {useCallback, useRef} from 'react';
+import Cropper from 'react-cropper';
+
+export const crop = (onCrop, cropper) => () => {
+  if(onCrop) {
+    const options = {
+      fillColor: '#000',
+      imageSmoothingEnabled: false,
+      imageSmoothingQuality: 'high'
+    };
+
+    onCrop(cropper.getCroppedCanvas(options).toDataURL());
+  }
+};
+
 export type CropDragMode = 'crop' | 'move' | 'none';
 export type CropViewMode = 0 | 1 | 2 | 3;
 export type CropOrigin = '' | 'anonymous' | 'use-credentials';
@@ -18,12 +35,14 @@ export interface CropBoxData {
 }
 
 export interface CropToolProps {
-  readonly style?: any;
-  readonly className?: string;
-  readonly crossOrigin?: CropOrigin;
-  readonly src?: string;
   readonly alt?: string;
   readonly aspectRatio?: number;
+  readonly className?: string;
+  readonly crossOrigin?: CropOrigin;
+  readonly imageUrl?: string;
+  readonly initialAspectRatio?: number;
+  readonly cropBoxMovable?: boolean;
+  readonly cropBoxResizable?: boolean;
   readonly dragMode?: CropDragMode;
   readonly data?: CropData;
   readonly scaleX?: number;
@@ -50,12 +69,8 @@ export interface CropToolProps {
   readonly movable?: boolean;
   readonly rotatable?: boolean;
   readonly scalable?: boolean;
-  readonly zoomable?: boolean;
-  readonly zoomOnTouch?: boolean;
-  readonly zoomOnWheel?: boolean;
+  readonly style?: any;
   readonly wheelZoomRatio?: number;
-  readonly cropBoxMovable?: boolean;
-  readonly cropBoxResizable?: boolean;
   readonly toggleDragModeOnDblclick?: boolean;
   readonly minContainerWidth?: number;
   readonly minContainerHeight?: number;
@@ -69,4 +84,45 @@ export interface CropToolProps {
   readonly cropend?: () => any;
   readonly onCrop?: (base64: string) => any;
   readonly zoom?: () => any;
+  readonly zoomable?: boolean;
+  readonly zoomOnTouch?: boolean;
+  readonly zoomOnWheel?: boolean;
 }
+
+export const CropTool = ({
+  className,
+  imageUrl,
+  onCrop,
+  style,
+  ...restProps
+}: CropToolProps) => {
+  // References
+  const imagRef = useRef();
+  const handleCrop = useCallback(
+    () => {
+      const imageElement: any = imagRef.current;
+      if(imageElement) {
+        const cropper: any = imageElement?.cropper;
+        return crop(onCrop, cropper);
+      }
+
+      return null;
+    },
+    [imagRef.current, onCrop]
+  );
+
+  return (
+    <div style={style} className={className}>
+      <Cropper
+        src={imageUrl}
+        style={{height: 500, width: '100%'}}
+        guides={false}
+        crop={handleCrop}
+        ref={imagRef}
+        {...restProps}
+      />
+    </div>
+  );
+};
+
+export default CropTool;

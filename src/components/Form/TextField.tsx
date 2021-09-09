@@ -25,6 +25,7 @@ export const TextField = ({
   onBlur: onBlurFn,
   placeholder = '',
   type = 'text',
+  variant = 'standard',
   ...restProps
 }: TextFieldProps) => {
   const {t} = useTranslation();
@@ -60,6 +61,7 @@ export const TextField = ({
           placeholder={t(placeholder)}
           type={type}
           value={value}
+          variant={variant}
         />
       )}
     />

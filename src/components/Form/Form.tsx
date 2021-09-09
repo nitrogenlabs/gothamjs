@@ -3,7 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {yupResolver} from '@hookform/resolvers/yup';
-import React, {useCallback} from 'react';
+import React, {BaseSyntheticEvent, useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 
 export interface FormProps {
@@ -11,7 +11,8 @@ export interface FormProps {
   readonly className?: string;
   readonly defaultValues?: any;
   readonly mode?: 'onSubmit' | 'onBlur' | 'onChange' | 'onTouched' | 'all';
-  readonly onSubmit: (data: any, setError: any) => any;
+  readonly name?: string;
+  readonly onSubmit: (data: any, event: BaseSyntheticEvent, setError: any) => any;
   readonly schema?: any;
 }
 
@@ -20,6 +21,7 @@ export const Form = ({
   className,
   defaultValues = {},
   mode = 'onBlur',
+  name = 'default',
   schema,
   onSubmit
 }: FormProps) => {
@@ -30,13 +32,13 @@ export const Form = ({
   });
   const {handleSubmit, setError} = methods;
   const handleFormSubmit = useCallback(
-    handleSubmit((data) => onSubmit(data, setError)),
+    handleSubmit((data, event) => onSubmit(data, event, setError)),
     []
   );
 
   return (
     <FormProvider {...methods}>
-      <form className={className} data-testid="form" onSubmit={handleFormSubmit}>
+      <form className={className} data-testid={`form-${name}`} onSubmit={handleFormSubmit}>
         {children}
       </form>
     </FormProvider>

@@ -1,10 +1,15 @@
-import {Button, IconButton} from '@material-ui/core';
+import Alert from '@material-ui/core/Alert/Alert';
+import Button from '@material-ui/core/Button/Button';
+import IconButton from '@material-ui/core/IconButton/IconButton';
+import Slide from '@material-ui/core/Slide';
+import Snackbar, {SnackbarProps} from '@material-ui/core/Snackbar';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
-import {useSnackbar} from 'notistack';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {GothamConstants} from '../constants/GothamConstants';
 import {Svg} from './Svg';
+
+export const TransitionUp = (props) => <Slide {...props} direction="up" />;
 
 export interface GothamNotifyAction {
   readonly icon?: string;
@@ -12,25 +17,21 @@ export interface GothamNotifyAction {
   readonly onClick: (key) => any;
 }
 
-export interface GothamNotifyParams {
+export interface GothamNotifyParams extends SnackbarProps {
   readonly actions?: GothamNotifyAction[];
-  readonly autoHideDuration?: number;
-  readonly key: string;
-  readonly message: string;
-  readonly persist?: boolean;
-  readonly variant?: 'default' | 'success' | 'error' | 'warning' | 'info'
+  readonly severity?: 'error' | 'info' | 'success' | 'warning'
 }
 
 export const Notify = () => {
-  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
-
+  const [isOpen, setOpen] = useState(false);
+  const [notification, setNotification] = useState({});
+  const notifyClose = () => setOpen(false);
   const notifyOpen = ({
     actions = [],
     autoHideDuration = 3000,
-    key,
     message,
-    persist = false,
-    variant = 'default'
+    severity,
+    ...restProps
   }: GothamNotifyParams) => {
     let action;
 
@@ -47,13 +48,26 @@ export const Notify = () => {
       );
     }
 
-    enqueueSnackbar(message, {action, autoHideDuration, key, persist, variant});
+    setNotification({
+      ...restProps,
+      action,
+      autoHideDuration,
+      message: severity ? (
+        <Alert onClose={notifyClose} severity="success" sx={{width: '100%'}}>{message}</Alert>
+      ) : message
+    });
+    setOpen(true);
   };
-
-  const notifyClose = ({key}) => closeSnackbar(key);
 
   useFluxListener(GothamConstants.NOTIFY_OPEN, notifyOpen);
   useFluxListener(GothamConstants.NOTIFY_CLOSE, notifyClose);
 
-  return null;
+  return (
+    <Snackbar
+      {...notification}
+      open={isOpen}
+      onClose={notifyClose}
+      TransitionComponent={TransitionUp}
+    />
+  );
 };

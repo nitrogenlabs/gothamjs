@@ -1,20 +1,19 @@
-import {makeStyles} from '@material-ui/styles';
-import React from 'react';
-
-import {Theme} from '../config/theme';
-import {GothamMenuItem} from '../views/Gotham';
-
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {makeStyles} from '@material-ui/styles';
+import React from 'react';
+
+import {GothamMenuItem} from '../views/Gotham';
+
 export interface FooterProps {
   readonly copyright?: string;
   readonly logo?: JSX.Element;
   readonly menu?: GothamMenuItem[];
 }
 
-const useStyles: any = makeStyles((theme: Theme) => ({
+const useStyles: any = makeStyles({
   footer: {
     backgroundColor: '#808080',
     boxShadow: 'inset 0 10px 10px -5px rgba(0,0,0,.2)',
@@ -49,7 +48,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     fontSize: 14,
     fontWeight: 700
   }
-}));
+});
 
 export const footerMenu = (menu: GothamMenuItem[]): JSX.Element[] => menu.map((item: GothamMenuItem) => {
   const {menu = [], label, url} = item;

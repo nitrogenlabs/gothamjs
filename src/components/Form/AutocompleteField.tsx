@@ -126,6 +126,7 @@ export interface AutocompleteFieldProps {
   readonly validate?: (object) => object | Promise<object>;
   readonly value?: any;
   readonly valueKey?: string;
+  readonly variant?: 'text' | 'outlined' | 'contained';
   readonly wait?: number;
 }
 
@@ -143,6 +144,7 @@ export const AutocompleteField = (props: AutocompleteFieldProps) => {
     validate,
     value: defaultValue = {},
     valueKey = 'label',
+    variant = 'standard',
     wait = 1000
   } = props;
   const classes = useStyles();
@@ -216,7 +218,8 @@ export const AutocompleteField = (props: AutocompleteFieldProps) => {
                 },
                 inputRef
               }}
-              {...updatedProps} />
+              {...updatedProps}
+              variant={variant} />
           );
         }}
         renderSuggestion={renderSuggestion(classes, valueKey)}

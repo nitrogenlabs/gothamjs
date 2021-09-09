@@ -8,7 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import {makeStyles} from '@material-ui/styles';
 import React from 'react';
-import {matchPath, NavLink as Link} from 'react-router-dom';
+import {matchPath, NavLink} from 'react-router-dom';
 
 import {parseNavUrl} from '../../utils/viewUtils';
 import {GothamMenuType} from '../../views/Gotham';
@@ -17,6 +17,11 @@ const useStyles: any = makeStyles((theme: any) => {
   const darkMode = theme.palette.type === 'dark';
 
   return {
+    activeLink: {
+      backgroundColor: '#fff',
+      borderRight: `3px solid ${theme.palette.primary.dark}`,
+      fontWeight: 700
+    },
     headers: {
       alignItems: 'center',
       flexDirection: 'row',
@@ -25,7 +30,8 @@ const useStyles: any = makeStyles((theme: any) => {
       paddingRight: theme.spacing(2),
       textTransform: 'uppercase',
       '&:hover': {
-        color: darkMode ? theme.palette.primary.light : theme.palette.primary.main
+        color: darkMode ? theme.palette.primary.light : theme.palette.primary.main,
+        backgroundColor: '#f7f7f7'
       },
       [theme.breakpoints.up('md')]: {
         fontSize: 14
@@ -33,12 +39,14 @@ const useStyles: any = makeStyles((theme: any) => {
     },
     links: {
       alignItems: 'center',
+      backgroundColor: '#e6e6e6',
       flexDirection: 'row',
       fontSize: 14,
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(3),
       '&:hover': {
-        color: darkMode ? theme.palette.primary.light : theme.palette.primary.main
+        color: darkMode ? theme.palette.primary.light : theme.palette.primary.main,
+        backgroundColor: '#f7f7f7'
       },
       [theme.breakpoints.up('md')]: {
         fontSize: 13
@@ -58,6 +66,7 @@ const useStyles: any = makeStyles((theme: any) => {
     menuLink: {
       color: theme.palette.type === 'dark' ? theme.palette.neutral.light : theme.palette.neutral.dark,
       cursor: 'pointer',
+      display: 'flex',
       textDecoration: 'none',
       '&:hover': {
         textDecoration: 'none'
@@ -78,6 +87,7 @@ export interface SideBarMenuItemProps {
   readonly type?: GothamMenuType;
   readonly url: string;
 }
+
 export const SideBarMenuItem = (props: SideBarMenuItemProps): JSX.Element => {
   const {
     divider,
@@ -106,8 +116,8 @@ export const SideBarMenuItem = (props: SideBarMenuItemProps): JSX.Element => {
 
   return (
     <li>
-      <Link
-        activeStyle={{fontWeight: 700}}
+      <NavLink
+        activeClassName={classes.activeLink}
         className={classes.menuLink}
         exact
         key={label} to={parseNavUrl(url, params)} >
@@ -124,7 +134,7 @@ export const SideBarMenuItem = (props: SideBarMenuItemProps): JSX.Element => {
             primary={label}
             primaryTypographyProps={{variant: 'h4'}} />
         </ListItem>
-      </Link>
+      </NavLink>
     </li>
   );
 };

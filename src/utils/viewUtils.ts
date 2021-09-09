@@ -15,7 +15,7 @@ export interface AppRouter {
 
 export const useRoute = (): AppRouter => {
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation() || {};
   const urlParams = useParams();
   const match = useRouteMatch();
 
@@ -24,6 +24,7 @@ export const useRoute = (): AppRouter => {
     location,
     match,
     params: {
+      ...(location.state || {}),
       ...urlParams,
       ...qs.parse(location.search, {ignoreQueryPrefix: true})
     }

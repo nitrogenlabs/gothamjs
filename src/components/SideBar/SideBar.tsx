@@ -2,8 +2,8 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {Theme, useMediaQuery} from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer/Drawer';
-import Hidden from '@material-ui/core/Hidden/Hidden';
 import List from '@material-ui/core/List/List';
 import {makeStyles} from '@material-ui/styles';
 import {Flux} from '@nlabs/arkhamjs';
@@ -56,9 +56,8 @@ export interface SideBarProps {
   readonly top?: JSX.Element;
 }
 
-export const SideBar = (props: SideBarProps) => {
-  // Props
-  const {menu, pathname, top} = props;
+export const SideBar = ({menu, pathname, top}: SideBarProps) => {
+  const lgHidden: boolean = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   // State
   const [openState, setOpenState] = useState(false);
@@ -70,7 +69,7 @@ export const SideBar = (props: SideBarProps) => {
 
   return (
     <div className={classes.sideBar}>
-      <Hidden lgUp>
+      {!lgHidden ? (
         <Drawer
           classes={{paper: classes.drawerPaper, root: classes.drawerRoot}}
           open={openState}
@@ -84,8 +83,7 @@ export const SideBar = (props: SideBarProps) => {
             <List className={classes.menu}>{renderMenu(pathname, menu)}</List>
           </div>
         </Drawer>
-      </Hidden>
-      <Hidden mdDown implementation="css">
+      ) : (
         <Drawer
           classes={{paper: classes.drawerPaper, root: classes.drawerRoot}}
           open
@@ -94,7 +92,7 @@ export const SideBar = (props: SideBarProps) => {
           {top}
           <List className={classes.menu}>{renderMenu(pathname, menu)}</List>
         </Drawer>
-      </Hidden>
+      )}
     </div>
   );
 };

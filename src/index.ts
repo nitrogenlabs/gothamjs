@@ -11,6 +11,7 @@ import {MarkdownConstants} from './constants/MarkdownConstants';
 
 export * from '@material-ui/styles';
 export {Flux} from '@nlabs/arkhamjs';
+export {useFormContext} from 'react-hook-form';
 export * from 'react-i18next';
 export {Link, NavLink} from 'react-router-dom';
 

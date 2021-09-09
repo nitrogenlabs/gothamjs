@@ -160,7 +160,7 @@ export const SignInView = (props: LoginViewProps) => {
                   </div>
                   <div className="row justify-content-end">
                     <div className="col-xs-auto">
-                      <Button className={classes.btn} color="default" size="large" onClick={onSignup} variant="text">
+                      <Button className={classes.btn} color="primary" size="large" onClick={onSignup} variant="text">
                         Create new account
                       </Button>
                       <Button className={classes.btn} color="primary" size="large" type="submit" variant="contained">

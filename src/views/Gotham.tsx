@@ -1,24 +1,18 @@
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 import 'bootstrap/dist/css/bootstrap-grid.css';
-import 'bootstrap/dist/css/bootstrap-reboot.css';
 
+import LuxonUtils from '@date-io/luxon';
+import createCache from '@emotion/cache';
+import {CacheProvider} from '@emotion/react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Slide from '@material-ui/core/Slide';
-import {createMuiTheme} from '@material-ui/core/styles';
+import {createTheme, StyledEngineProvider, ThemeProvider} from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import {LocalizationProvider} from '@material-ui/pickers';
-import LuxonUtils from '@material-ui/pickers/adapter/luxon';
-import {ThemeProvider} from '@material-ui/styles';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import {ArkhamConstants, Flux, FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
-import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
+import {useFluxListener, useFluxValue} from '@nlabs/arkhamjs-utils-react';
 import {Location} from 'history';
 import merge from 'lodash/merge';
-import {SnackbarProvider} from 'notistack';
 import React, {useEffect, useState} from 'react';
 import {I18nextProvider} from 'react-i18next';
 import {BrowserRouter} from 'react-router-dom';
@@ -36,6 +30,10 @@ import {i18n} from '../utils/i18nUtil';
 import {renderTransition} from '../utils/routeUtils';
 import {LoaderView} from './LoaderView';
 
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 export interface GothamProps {
   readonly classes?: any;
   readonly config?: GothamConfiguration;
@@ -80,7 +78,6 @@ export interface GothamConfiguration {
   readonly displayMode?: ThemeDisplayMode;
   readonly flux?: FluxFramework;
   readonly isAuth?: () => boolean;
-  readonly maxNotifications?: number;
   readonly middleware?: FluxMiddlewareType[];
   readonly name?: string;
   readonly onInit?: () => any;
@@ -114,9 +111,10 @@ export interface GothamNotification {
 }
 
 export interface GothamProviderProps {
-  children?: any;
-  Flux: FluxFramework;
-  isAuth?: () => boolean;
+  readonly children?: any;
+  readonly Flux: FluxFramework;
+  readonly isAuth?: () => boolean;
+  readonly session?: any;
 }
 
 export interface ContainerProviderProps {
@@ -168,7 +166,6 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   Config.set(config);
   const {
     displayMode = 'auto',
-    maxNotifications = 3,
     middleware,
     name,
     storageType,
@@ -193,7 +190,7 @@ export const Gotham = (props: GothamProps): JSX.Element => {
           type: darkMode ? 'dark' : 'light'
         }
       };
-      return createMuiTheme(merge(defaultTheme, themeType, configTheme));
+      return createTheme(merge(defaultTheme, themeType, configTheme));
     },
     [darkMode],
   );
@@ -230,6 +227,14 @@ export const Gotham = (props: GothamProps): JSX.Element => {
   let content: JSX.Element;
   const {isAuth, routes = [], ...gothamConfig} = config;
 
+  // Session
+  const existingSession = useFluxValue('user.session', {});
+  const [session, setSession] = useState(existingSession);
+  useFluxListener(GothamConstants.UPDATE_SESSION, ({session}) => {
+    setSession(session);
+    console.log('gotham::update', {session});
+  });
+
   if(!isAppLoaded) {
     content = <Loader />;
   } else {
@@ -241,28 +246,28 @@ export const Gotham = (props: GothamProps): JSX.Element => {
     );
   }
 
+  const cache = createCache({
+    key: 'css',
+    prepend: true
+  });
+
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <I18nextProvider i18n={i18n(translations)}>
-        <LocalizationProvider dateAdapter={LuxonUtils}>
-          <GothamContext.Provider value={{Flux, isAuth}}>
-            <SnackbarProvider
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-              maxSnack={maxNotifications}
-              preventDuplicate
-              TransitionComponent={Slide} >
-              <GlobalStyles />
-              {content}
-              <LoaderView />
-              <Notify />
-            </SnackbarProvider>
-          </GothamContext.Provider>
-        </LocalizationProvider>
-      </I18nextProvider>
+      <StyledEngineProvider injectFirst>
+        <CacheProvider value={cache}>
+          <CssBaseline />
+          <I18nextProvider i18n={i18n(translations)}>
+            <LocalizationProvider dateAdapter={LuxonUtils}>
+              <GothamContext.Provider value={{Flux, isAuth, session}}>
+                <GlobalStyles />
+                {content}
+                <LoaderView />
+                <Notify />
+              </GothamContext.Provider>
+            </LocalizationProvider>
+          </I18nextProvider>
+        </CacheProvider>
+      </StyledEngineProvider>
     </ThemeProvider >
   );
 };

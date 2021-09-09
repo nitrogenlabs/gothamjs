@@ -5,8 +5,8 @@ import {GothamProviderProps} from '../views/Gotham';
 
 const isAuth = () => true;
 
-export const GothamContext = createContext({Flux, isAuth});
+export const GothamContext = createContext({Flux, isAuth, session: {}});
 
-export const GothamProvider = ({children, Flux, isAuth}: GothamProviderProps) => (
-  <GothamContext.Provider value={{Flux, isAuth}}>{children}</GothamContext.Provider>
+export const GothamProvider = ({children, Flux, isAuth, session}: GothamProviderProps) => (
+  <GothamContext.Provider value={{Flux, isAuth, session}}>{children}</GothamContext.Provider>
 );

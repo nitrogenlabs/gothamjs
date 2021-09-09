@@ -3,74 +3,76 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import MaterialTextField from '@material-ui/core/TextField';
-import {DateTimePicker} from '@material-ui/pickers';
+import {DateTimePickerProps} from '@material-ui/lab/DateTimePicker';
+import MobileDateTimePicker from '@material-ui/lab/MobileDateTimePicker';
 import React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 
-export interface DateTimeFieldCalendarProps {
-  readonly action: (actions: any) => void;
-  readonly value: Date;
-  readonly onChange: (value: Date, event?: React.MouseEvent<HTMLElement>) => void;
-  readonly closeCalendar: () => void;
-  readonly dateDisabled?: (date: Date) => boolean;
-  readonly min?: Date;
-  readonly max?: Date;
-  readonly okToConfirm?: boolean;
-  readonly classes?: {
-    root?: string
-    selectedDay?: string
-    selectedDayText?: string
-    selectedYear?: string
-    selectedYearText?: string
-  };
-}
-
-export interface DateTimeFieldProps {
-  readonly allowKeyboardControl?: boolean;
-  readonly allowSameDateSelection?: boolean;
-  readonly ampmInClock?: boolean;
-  readonly className?: string;
-  readonly label?: string;
-  readonly minutesStep?: number;
+export interface DateTimeFieldProps extends Partial<DateTimePickerProps> {
+  readonly cancelText?: string;
+  readonly clearText?: string;
+  readonly format?: string;
+  readonly okText?: string;
+  readonly label: string;
   readonly name: string;
-  readonly onChange?: any;
-  readonly placeholder?: string;
+  readonly todayText?: string;
   readonly toolbarTitle?: string;
-  readonly value?: any;
+  readonly variant?: 'filled' | 'outlined' | 'standard';
 }
 
-export const DateTimeField = (props: DateTimeFieldProps) => {
-  const {
-    allowKeyboardControl = true,
-    allowSameDateSelection = true,
-    ampmInClock = true,
-    minutesStep = 30,
-    toolbarTitle = 'Select Date',
-    name,
-    value
-  } = props;
+export const DateTimeField = ({
+  allowSameDateSelection = true,
+  cancelText = 'Cancel',
+  clearText = 'Clear',
+  format = 'ccc, DD @ ttt',
+  minutesStep = 30,
+  okText = 'Ok',
+  label,
+  name,
+  todayText = 'Today',
+  toolbarTitle = 'Select Date',
+  value: defaultValue,
+  variant = 'standard',
+  ...props
+}: DateTimeFieldProps) => {
   const {t} = useTranslation();
   const {control, formState: {errors}} = useFormContext();
 
   return (
     <Controller
       control={control}
-      defaultValue={value}
+      defaultValue={defaultValue}
       name={name}
-      render={({field: {name, onChange, ref, value}}) => (
-        <DateTimePicker
-          allowKeyboardControl={allowKeyboardControl}
+      render={({field: {name, onBlur, onChange, ref, value}}) => (
+        <MobileDateTimePicker
+          {...props}
           allowSameDateSelection={allowSameDateSelection}
-          ampmInClock={ampmInClock}
+          ampm
+          ampmInClock
+          cancelText={t(cancelText)}
+          clearText={t(clearText)}
           data-testid={`dateTimeField-${name}`}
+          inputFormat={format}
+          label={t(label)}
           minutesStep={minutesStep}
-          onChange={onChange}
-          ref={ref}
-          renderInput={(props) => <MaterialTextField {...props} error={!!errors[name]} helperText={errors[name]} />}
+          onChange={(date) => onChange(date)}
+          onClose={onBlur}
+          okText={t(okText)}
+          reduceAnimations
+          renderInput={(fieldProps) => (
+            <MaterialTextField
+              {...fieldProps}
+              error={!!errors[name]}
+              helperText={errors[name]}
+              inputRef={ref}
+              variant={variant} />
+          )}
+          showToolbar={false}
+          todayText={t(todayText)}
           toolbarTitle={t(toolbarTitle)}
           value={value}
-        />
-      )} />
+        />)
+      }/>
   );
 };

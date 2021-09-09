@@ -1,7 +1,7 @@
 import makeStyles from '@material-ui/styles/makeStyles';
 import useTheme from '@material-ui/styles/useTheme';
 import clsx from 'clsx';
-import React, {SyntheticEvent} from 'react';
+import React, {SyntheticEvent, useEffect, useState} from 'react';
 
 const useStyles = makeStyles((theme: any) => ({
   tagChip: {
@@ -12,9 +12,9 @@ const useStyles = makeStyles((theme: any) => ({
     fontSize: 12,
     fontWeight: 700,
     justifyContent: 'center',
-    margin: `0 ${theme.spacing(0.5)}px ${theme.spacing(0.5)}px 0`,
+    margin: `0 ${theme.spacing(0.5)} ${theme.spacing(0.5)} 0`,
     minWidth: 30,
-    padding: `${theme.spacing(0.5)}px ${theme.spacing(1.5)}px`,
+    padding: `${theme.spacing(0.5)} ${theme.spacing(1.5)}`,
 
     '&.error:hover': {
       backgroundColor: theme.palette.error.dark,
