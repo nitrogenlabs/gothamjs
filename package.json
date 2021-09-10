@@ -1,6 +1,6 @@
 {
   "name": "@nlabs/gothamjs",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Platform",
   "license": "MIT",
   "main": "./index.js",
