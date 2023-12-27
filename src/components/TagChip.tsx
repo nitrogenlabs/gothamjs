@@ -1,5 +1,5 @@
-import makeStyles from '@material-ui/styles/makeStyles';
-import useTheme from '@material-ui/styles/useTheme';
+import makeStyles from '@mui/styles/makeStyles';
+import useTheme from '@mui/styles/useTheme';
 import clsx from 'clsx';
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 

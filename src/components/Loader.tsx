@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {makeStyles} from '@material-ui/styles';
+import {makeStyles} from '@mui/styles';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 

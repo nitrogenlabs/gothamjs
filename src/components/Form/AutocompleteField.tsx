@@ -2,11 +2,11 @@
  * Copyright (c) 2019-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import MaterialMenuItem from '@material-ui/core/MenuItem/MenuItem';
-import MaterialPaper from '@material-ui/core/Paper/Paper';
-import MaterialPopper from '@material-ui/core/Popper/Popper';
-import MaterialTextField from '@material-ui/core/TextField/TextField';
-import makeStyles from '@material-ui/styles/makeStyles';
+import MaterialMenuItem from '@mui/material/MenuItem/MenuItem';
+import MaterialPaper from '@mui/material/Paper/Paper';
+import MaterialPopper from '@mui/material/Popper/Popper';
+import MaterialTextField from '@mui/material/TextField/TextField';
+import makeStyles from '@mui/styles/makeStyles';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import debounce from 'lodash/debounce';
@@ -196,14 +196,17 @@ export const AutocompleteField = (props: AutocompleteFieldProps) => {
         onSuggestionSelected={onSuggestionSelectedFn}
         onSuggestionsClearRequested={onSuggestionsClearRequestedFn}
         onSuggestionsFetchRequested={onSuggestionsFetchRequestedFn}
-        renderInputComponent={({classes, valueKey, ...remainingProps}) => {
+        renderInputComponent={({classes, ...remainingProps}) => {
           let updatedProps;
 
           if(errors[name]) {
+            const helperText = errors[name]?.message ? (
+              <div>{errors[name]?.message as string}</div>
+            ) : undefined;
             updatedProps = {
               ...remainingProps,
               error: true,
-              helperText: errors[name] && t(errors[name].message)
+              helperText
             };
           } else {
             updatedProps = {...remainingProps};

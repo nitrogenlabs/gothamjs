@@ -3,7 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import React from 'react';
-import {Redirect, Route} from 'react-router-dom';
+import {Navigate, Route} from 'react-router-dom';
 
 export const AuthRoute = (props) => (
   <Route
@@ -12,6 +12,6 @@ export const AuthRoute = (props) => (
       const {isAuth, render: ViewRoute, ...routeProps} = props;
 
       return (isAuth && isAuth() ? <ViewRoute {...routeProps} />
-        : <Redirect to={`/signIn?redirect=${props.location.pathname}${props.location.search}`} />);
+        : <Navigate to={`/signIn?redirect=${props.location.pathname}${props.location.search}`} />);
     }} />
 );

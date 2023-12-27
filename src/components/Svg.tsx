@@ -2,8 +2,8 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import SvgIcon from '@material-ui/core/SvgIcon/SvgIcon';
-import {makeStyles} from '@material-ui/styles';
+import SvgIcon from '@mui/material/SvgIcon/SvgIcon';
+import {makeStyles} from '@mui/styles';
 import clsx from 'clsx';
 import * as React from 'react';
 

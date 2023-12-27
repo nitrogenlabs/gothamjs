@@ -1,5 +1,5 @@
-import MuiLink from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
+import MuiLink from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import {Link} from 'react-router-dom';

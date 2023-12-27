@@ -1,8 +1,8 @@
-import Alert from '@material-ui/core/Alert/Alert';
-import Button from '@material-ui/core/Button/Button';
-import IconButton from '@material-ui/core/IconButton/IconButton';
-import Slide from '@material-ui/core/Slide';
-import Snackbar, {SnackbarProps} from '@material-ui/core/Snackbar';
+import Alert from '@mui/material/Alert/Alert';
+import Button from '@mui/material/Button/Button';
+import IconButton from '@mui/material/IconButton/IconButton';
+import Slide from '@mui/material/Slide';
+import Snackbar, {SnackbarProps} from '@mui/material/Snackbar';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import React, {useState} from 'react';
 

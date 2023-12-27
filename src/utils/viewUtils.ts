@@ -4,31 +4,31 @@
  */
 import qs from 'qs';
 import {useMemo} from 'react';
-import {useHistory, useLocation, useParams, useRouteMatch} from 'react-router-dom';
+import {Location, Navigation, useLocation, useNavigation, useParams, useMatches} from 'react-router-dom';
 
 export interface AppRouter {
-  readonly history: History;
+  readonly navigation: Navigation;
   readonly location: Location;
-  readonly match: any;
+  readonly matches: any;
   readonly params: any;
 }
 
 export const useRoute = (): AppRouter => {
-  const history = useHistory();
-  const location = useLocation() || {};
+  const navigation = useNavigation();
+  const location = useLocation() || {} as unknown as Location;
   const urlParams = useParams();
-  const match = useRouteMatch();
+  const matches = useMatches();
 
   return useMemo(() => ({
-    history,
+    navigation,
     location,
-    match,
+    matches,
     params: {
       ...(location.state || {}),
       ...urlParams,
       ...qs.parse(location.search, {ignoreQueryPrefix: true})
     }
-  }), [history, location, match, urlParams]);
+  }), [navigation, location, matches, urlParams]);
 };
 
 export const parseNavUrl = (path: string, params: any): string => path

@@ -4,8 +4,8 @@
  */
 import {FluxFramework} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
-import React from 'react';
-import {Route, RouteProps, Switch} from 'react-router-dom';
+import React, {FC, ReactNode} from 'react';
+import {Route, RouteProps, Routes} from 'react-router-dom';
 
 import {GothamActions} from '../actions/GothamActions';
 import {AuthRoute} from '../components/AuthRoute';
@@ -37,7 +37,7 @@ export const fadeTransition = {
   }
 };
 
-export const parseRoute = (route: GothamRoute, props: any) => {
+export const parseRoute = (route: GothamRoute, props: any): ReactNode => {
   const {asyncComponent, component: Component, container, path, view} = route;
   const viewProps: any = {loader: Loader, ...props};
 
@@ -139,19 +139,12 @@ export const renderRouteList = (
 
   // If not, load the default view
   const notFoundRoute: GothamRoute = {title: 'Page Not Found', ...notFound, view: 'notfound'};
-  const render404: JSX.Element = (
-    <Route
-      key="notFound"
-      render={(props: RouteProps) => {
-        const {title} = notFoundRoute;
+  const {title} = notFoundRoute;
+  GothamActions.updateTitle(title, titleBarSeparator);
 
-        // Update browser title
-        GothamActions.updateTitle(title, titleBarSeparator);
-
-        // Dynamic aysnc view
-        return parseRoute(notFoundRoute, {title, ...props});
-      }} />
-  );
+  const render404 = <Route
+    key="notFound"
+    element={parseRoute(notFoundRoute, {title}) as any} />;
 
   gothamRoutes.push(render404);
   return gothamRoutes;
@@ -162,7 +155,7 @@ export const renderSwitch = (
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
 ): JSX.Element =>
-  <Switch>{renderRouteList(routes, Flux, gothamConfig)}</Switch>;
+  <Routes>{renderRouteList(routes, Flux, gothamConfig)}</Routes>;
 
 // View Transition
 // const bounce = (val) => spring(val, {
@@ -197,4 +190,4 @@ export const renderTransition = (
   routes: GothamRoute[] = [],
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
-): JSX.Element => <Switch>{renderRouteList(routes, Flux, gothamConfig)}</Switch>;
+): JSX.Element => <Routes>{renderRouteList(routes, Flux, gothamConfig)}</Routes>;

@@ -2,10 +2,10 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Theme, useMediaQuery} from '@material-ui/core';
-import Drawer from '@material-ui/core/Drawer/Drawer';
-import List from '@material-ui/core/List/List';
-import {makeStyles} from '@material-ui/styles';
+import {Theme, useMediaQuery} from '@mui/material';
+import Drawer from '@mui/material/Drawer/Drawer';
+import List from '@mui/material/List/List';
+import {makeStyles} from '@mui/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react/lib';
 import React, {useState} from 'react';

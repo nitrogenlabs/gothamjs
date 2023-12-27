@@ -2,10 +2,10 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import Button from '@material-ui/core/Button/Button';
-import Card from '@material-ui/core/Card/Card';
-import CardContent from '@material-ui/core/CardContent/CardContent';
-import {makeStyles} from '@material-ui/styles';
+import Button from '@mui/material/Button/Button';
+import Card from '@mui/material/Card/Card';
+import CardContent from '@mui/material/CardContent/CardContent';
+import {makeStyles} from '@mui/styles';
 import {useFluxListener, useState} from '@nlabs/arkhamjs-utils-react/lib';
 import * as React from 'react';
 

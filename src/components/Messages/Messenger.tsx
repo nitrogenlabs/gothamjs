@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import makeStyles from '@material-ui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import {useFluxDispatch} from '@nlabs/arkhamjs-utils-react/lib';
 import clsx from 'clsx';
 import React from 'react';

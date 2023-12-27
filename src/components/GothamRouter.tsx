@@ -1,5 +1,5 @@
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import {GothamConstants} from '../constants/GothamConstants';
 
@@ -23,12 +23,12 @@ export const navReplace = (history) => (data): void => {
 };
 
 export const GothamRoute = (): JSX.Element => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  useFluxListener(GothamConstants.NAV_BACK, navBack(history));
-  useFluxListener(GothamConstants.NAV_FORWARD, navForward(history));
-  useFluxListener(GothamConstants.NAV_GOTO, navGoto(history));
-  useFluxListener(GothamConstants.NAV_REPLACE, navReplace(history));
+  useFluxListener(GothamConstants.NAV_BACK, navBack(navigate));
+  useFluxListener(GothamConstants.NAV_FORWARD, navForward(navigate));
+  useFluxListener(GothamConstants.NAV_GOTO, navGoto(navigate));
+  useFluxListener(GothamConstants.NAV_REPLACE, navReplace(navigate));
 
   return null;
 };

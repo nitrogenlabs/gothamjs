@@ -2,14 +2,14 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import {GothamActions} from './actions/GothamActions';
 import {AuthConstants} from './constants/AuthConstants';
 import {GothamConstants} from './constants/GothamConstants';
 import {MarkdownConstants} from './constants/MarkdownConstants';
 
-export * from '@material-ui/styles';
+export * from '@mui/styles';
 export {Flux} from '@nlabs/arkhamjs';
 export {useFormContext} from 'react-hook-form';
 export * from 'react-i18next';

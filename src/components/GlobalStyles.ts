@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/styles';
+import {makeStyles} from '@mui/styles';
 
 const useStyles = makeStyles((theme: any) => {
   const darkMode: boolean = theme.palette.type === 'dark';

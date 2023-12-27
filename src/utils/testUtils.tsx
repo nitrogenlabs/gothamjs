@@ -1,4 +1,4 @@
-import {StylesOptions, StylesProvider, ThemeProvider} from '@material-ui/styles';
+import {StylesOptions, StylesProvider, ThemeProvider} from '@mui/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import {FluxProvider} from '@nlabs/arkhamjs-utils-react';
 import {render, screen, waitFor} from '@testing-library/react';

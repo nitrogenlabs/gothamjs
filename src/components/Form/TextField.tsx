@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import MaterialTextField, {StandardTextFieldProps} from '@material-ui/core/TextField';
+import MaterialTextField, {StandardTextFieldProps} from '@mui/material/TextField';
 import React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
@@ -30,6 +30,9 @@ export const TextField = ({
 }: TextFieldProps) => {
   const {t} = useTranslation();
   const {control, formState: {errors}} = useFormContext();
+  const helperText = errors[name]?.message ? (
+    <div>{errors[name]?.message as string}</div>
+  ) : undefined;
 
   return (
     <Controller
@@ -41,7 +44,7 @@ export const TextField = ({
           {...restProps}
           data-testid={`textField-${name}`}
           error={!!errors[name]}
-          helperText={errors[name] && t(errors[name].message)}
+          helperText={helperText}
           inputRef={ref}
           name={name}
           onChange={(event) => {

@@ -2,10 +2,10 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import FormControl from '@material-ui/core/FormControl/FormControl';
-import InputLabel from '@material-ui/core/InputLabel/InputLabel';
-import MaterialNativeSelect, {NativeSelectProps} from '@material-ui/core/NativeSelect/NativeSelect';
-import {makeStyles} from '@material-ui/styles';
+import FormControl from '@mui/material/FormControl/FormControl';
+import InputLabel from '@mui/material/InputLabel/InputLabel';
+import MaterialNativeSelect, {NativeSelectProps} from '@mui/material/NativeSelect/NativeSelect';
+import {makeStyles} from '@mui/styles';
 import * as React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 

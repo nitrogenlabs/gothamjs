@@ -2,12 +2,13 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import Divider from '@material-ui/core/Divider/Divider';
-import ListItem from '@material-ui/core/ListItem/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText/ListItemText';
-import {makeStyles} from '@material-ui/styles';
-import React from 'react';
+import Divider from '@mui/material/Divider/Divider';
+import ListItem from '@mui/material/ListItem/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText/ListItemText';
+import {makeStyles} from '@mui/styles';
+import clsx from 'clsx';
+import React, {FC} from 'react';
 import {matchPath, NavLink} from 'react-router-dom';
 
 import {parseNavUrl} from '../../utils/viewUtils';
@@ -88,21 +89,20 @@ export interface SideBarMenuItemProps {
   readonly url: string;
 }
 
-export const SideBarMenuItem = (props: SideBarMenuItemProps): JSX.Element => {
-  const {
-    divider,
-    icon,
-    label,
-    path,
-    pathname,
-    type = 'link',
-    url
-  } = props;
+export const SideBarMenuItem: FC<SideBarMenuItemProps> = ({
+  divider,
+  icon,
+  label,
+  path,
+  pathname,
+  type = 'link',
+  url
+}) => {
   const classes = useStyles({});
   let params = {};
 
   if(path) {
-    const match = matchPath(pathname, {path});
+    const match = matchPath(path, pathname);// matchPath(pathname, {path});
 
     if(match) {
       const {params: matchParams} = match;
@@ -117,10 +117,8 @@ export const SideBarMenuItem = (props: SideBarMenuItemProps): JSX.Element => {
   return (
     <li>
       <NavLink
-        activeClassName={classes.activeLink}
-        className={classes.menuLink}
-        exact
-        key={label} to={parseNavUrl(url, params)} >
+        className={({isActive}) => clsx(classes.menuLink, {[classes.activeLink]: isActive})}
+        key={label} to={parseNavUrl(url, params)}>
         <ListItem
           button
           className={getTypeClass(type, classes)}

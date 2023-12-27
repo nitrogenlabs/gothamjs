@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {makeStyles} from '@material-ui/styles';
+import {makeStyles} from '@mui/styles';
 import * as React from 'react';
 
 const useStyle = makeStyles((theme: any) => ({

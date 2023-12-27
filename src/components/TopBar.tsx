@@ -2,10 +2,10 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import AppBar from '@material-ui/core/AppBar/AppBar';
-import Toolbar from '@material-ui/core/Toolbar/Toolbar';
-import Typography from '@material-ui/core/Typography/Typography';
-import {makeStyles, useTheme} from '@material-ui/styles';
+import AppBar from '@mui/material/AppBar/AppBar';
+import Toolbar from '@mui/material/Toolbar/Toolbar';
+import Typography from '@mui/material/Typography/Typography';
+import {makeStyles, useTheme} from '@mui/styles';
 import {Flux} from '@nlabs/arkhamjs';
 import {Backburger as BackburgerIcon, Menu as MenuIcon} from 'mdi-material-ui';
 import React, {useEffect, useState} from 'react';

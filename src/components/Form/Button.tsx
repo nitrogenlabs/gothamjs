@@ -1,5 +1,5 @@
-import MaterialButton, {ButtonProps as MaterialButtonProps} from '@material-ui/core/Button';
-import makeStyles from '@material-ui/styles/makeStyles';
+import MaterialButton, {ButtonProps as MaterialButtonProps} from '@mui/material/Button';
+import makeStyles from '@mui/styles/makeStyles';
 import clsx from 'clsx';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
