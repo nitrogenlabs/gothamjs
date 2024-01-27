@@ -5,18 +5,9 @@
 import FormControl from '@mui/material/FormControl/FormControl';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
 import MaterialNativeSelect, {NativeSelectProps} from '@mui/material/NativeSelect/NativeSelect';
-import {makeStyles} from '@mui/styles';
-import * as React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
 import {SelectFieldOption, SelectFieldValue, SelectOption} from './SelectOption';
-
-const useStyles: any = makeStyles(() => ({
-  field: {
-    display: 'flex',
-    flex: 1
-  }
-}));
 
 export interface SelectFieldProps extends NativeSelectProps {
   readonly classes?: any;
@@ -35,7 +26,6 @@ export const renderOptions = (props, list: SelectFieldOption[] = []): JSX.Elemen
 
 export const SelectField = (props: SelectFieldProps) => {
   const {defaultValue, label, list = [], name, ...restProps} = props;
-  const classes = useStyles();
   const {control, formState: {errors}} = useFormContext();
   let labelElement: JSX.Element;
 
@@ -51,7 +41,7 @@ export const SelectField = (props: SelectFieldProps) => {
   };
 
   return (
-    <FormControl className={classes.field}>
+    <FormControl className="flex flex-auto">
       {labelElement}
       <Controller
         control={control}

@@ -2,9 +2,9 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import React from 'react';
+import {Fragment} from 'react';
 
-import {Svg} from '../Svg';
+import {Svg} from '../Svg/Svg';
 
 export interface LogoPanelProps {
   readonly logo?: string;
@@ -12,9 +12,9 @@ export interface LogoPanelProps {
 }
 
 export const LogoPanel = ({logo, name}: LogoPanelProps) => (
-  <React.Fragment>
+  <Fragment>
     <div className="logopanel">
       <a href="/" title={name}><Svg name={logo} /></a>
     </div>
-  </React.Fragment>
+  </Fragment>
 );

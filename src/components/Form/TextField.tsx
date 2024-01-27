@@ -3,10 +3,8 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import MaterialTextField, {StandardTextFieldProps} from '@mui/material/TextField';
-import React from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
-
 
 export interface TextFieldProps extends StandardTextFieldProps {
   readonly autoFocus?: boolean;

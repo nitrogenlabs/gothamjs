@@ -3,91 +3,106 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import Divider from '@mui/material/Divider/Divider';
-import ListItem from '@mui/material/ListItem/ListItem';
+import ListItem, {ListItemProps} from '@mui/material/ListItem/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText/ListItemText';
-import {makeStyles} from '@mui/styles';
-import clsx from 'clsx';
-import React, {FC} from 'react';
-import {matchPath, NavLink} from 'react-router-dom';
+import styled from '@emotion/styled';
+import {FC, ReactNode} from 'react';
+import {matchPath, NavLink, NavLinkProps} from 'react-router-dom';
+import {Theme} from '@mui/material';
 
 import {parseNavUrl} from '../../utils/viewUtils';
 import {GothamMenuType} from '../../views/Gotham';
 
-const useStyles: any = makeStyles((theme: any) => {
-  const darkMode = theme.palette.type === 'dark';
-
-  return {
-    activeLink: {
-      backgroundColor: '#fff',
-      borderRight: `3px solid ${theme.palette.primary.dark}`,
-      fontWeight: 700
-    },
-    headers: {
-      alignItems: 'center',
-      flexDirection: 'row',
-      fontSize: 16,
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-      textTransform: 'uppercase',
-      '&:hover': {
-        color: darkMode ? theme.palette.primary.light : theme.palette.primary.main,
-        backgroundColor: '#f7f7f7'
-      },
-      [theme.breakpoints.up('md')]: {
-        fontSize: 14
-      }
-    },
-    links: {
-      alignItems: 'center',
-      backgroundColor: '#e6e6e6',
-      flexDirection: 'row',
-      fontSize: 14,
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3),
-      '&:hover': {
-        color: darkMode ? theme.palette.primary.light : theme.palette.primary.main,
-        backgroundColor: '#f7f7f7'
-      },
-      [theme.breakpoints.up('md')]: {
-        fontSize: 13
-      }
-    },
-    menuIcon: {
-      color: 'inherit',
-      marginRight: 0,
-      minWidth: 'auto'
-    },
-    menuItem: {
-      fontSize: 'inherit'
-    },
-    menuLabel: {
-      paddingLeft: 10
-    },
-    menuLink: {
-      color: theme.palette.type === 'dark' ? theme.palette.neutral.light : theme.palette.neutral.dark,
-      cursor: 'pointer',
-      display: 'flex',
-      textDecoration: 'none',
-      '&:hover': {
-        textDecoration: 'none'
-      }
-    }
-  };
-});
-
-export const getTypeClass = (type: GothamMenuType, classes: any): string =>
-  (type === 'header' ? classes.headers : classes.links);
-
 export interface SideBarMenuItemProps {
   readonly divider?: boolean;
-  readonly icon: JSX.Element;
+  readonly icon?: ReactNode;
   readonly label: string;
   readonly path: string;
   readonly pathname?: string;
   readonly type?: GothamMenuType;
   readonly url: string;
 }
+
+interface NavLinkStyledProps extends NavLinkProps {
+  readonly theme?: Theme;
+}
+
+interface LinkStyledProps extends ListItemProps {
+  readonly theme?: Theme;
+}
+
+const NavLinkStyled = styled(NavLink)<NavLinkStyledProps>`${({theme}) => `
+  color: ${theme.palette.common.black};
+  cursor: pointer;
+  display: flex;
+  textDecoration: none;
+
+  &.active {
+    background-color: #fff;
+    border-right: 3px solid ${theme.palette.primary.dark};
+    fontWeight: 700;
+  }
+
+  &:hover {
+    textDecoration: none;
+  }
+`}`;
+
+const HeaderStyled = styled(ListItem)<LinkStyledProps>`${({theme}) => `
+  align-items: center;
+  flex-direction: row;
+  font-size: 16;
+  padding-left: ${theme.spacing(2)}
+  padding-right: ${theme.spacing(2)}
+  text-transform: uppercase;
+
+  &:hover {
+    color: ${theme.palette.primary[500]};
+    background-color: #f7f7f7;
+  }
+
+  ${theme.breakpoints.up('md')} {
+    fontSize: 14;
+  }
+`}`;
+
+const LinkStyled = styled(ListItem)<LinkStyledProps>`${({theme}) => `
+  align-items: center;
+  background-color: #e6e6e6;
+  flex-direction: row;
+  font-size: 14;
+  padding-left: ${theme.spacing(3)};
+  padding-right: ${theme.spacing(3)};
+
+  &:hover {
+    color: ${theme.palette.primary[500]},
+    background-color: #f7f7f7;
+  }
+
+  ${theme.breakpoints.up('md')} {
+    font-size: 13;
+  }
+`}`;
+
+const ListItemTextStyled = styled(ListItemText)`
+  .MuiListItemText-root {
+    padding-left: 10;
+  }
+
+  .MuiListItemText-primary {
+    font-size: inherit;
+  }
+`;
+
+const ListItemIconStyled = styled(ListItemIcon)`
+  color: inherit;
+  margin-right: 0;
+  min-width: auto;
+`;
+
+export const getTypeClass = (type: GothamMenuType, classes: any): string =>
+  (type === 'header' ? classes.headers : classes.links);
 
 export const SideBarMenuItem: FC<SideBarMenuItemProps> = ({
   divider,
@@ -98,7 +113,6 @@ export const SideBarMenuItem: FC<SideBarMenuItemProps> = ({
   type = 'link',
   url
 }) => {
-  const classes = useStyles({});
   let params = {};
 
   if(path) {
@@ -114,25 +128,20 @@ export const SideBarMenuItem: FC<SideBarMenuItemProps> = ({
     return <Divider />;
   }
 
+  const ListItemStyled = type === 'header' ? HeaderStyled : LinkStyled;
+
   return (
     <li>
-      <NavLink
-        className={({isActive}) => clsx(classes.menuLink, {[classes.activeLink]: isActive})}
-        key={label} to={parseNavUrl(url, params)}>
-        <ListItem
-          button
-          className={getTypeClass(type, classes)}
-          disableRipple
-          disableTouchRipple
-          divider={divider}
-          focusRipple={false}>
-          {icon && <ListItemIcon classes={{root: classes.menuIcon}}>{icon}</ListItemIcon>}
-          <ListItemText
-            classes={{primary: classes.menuItem, root: classes.menuLabel}}
+      <NavLinkStyled
+        key={label}
+        to={parseNavUrl(url, params)}>
+        <ListItemStyled divider={divider}>
+          {icon && <ListItemIconStyled>{icon}</ListItemIconStyled>}
+          <ListItemTextStyled
             primary={label}
             primaryTypographyProps={{variant: 'h4'}} />
-        </ListItem>
-      </NavLink>
+        </ListItemStyled>
+      </NavLinkStyled>
     </li>
   );
 };

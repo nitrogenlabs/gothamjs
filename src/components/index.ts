@@ -3,23 +3,23 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 export * from './Breadcrumbs/Breadcrumbs';
-export * from './CropTool';
-export * from './AuthRoute';
-export * from './FeatureItem';
-export * from './Footer';
+export * from './CropTool/CropTool';
+export * from './AuthRoute/AuthRoute';
+export * from './FeatureItem/FeatureItem';
+export * from './Footer/Footer';
 export * from './Form';
-export * from './GlobalStyles';
+export * from './GlobalStyles/GlobalStyles';
 export * from './Header/Header';
-export * from './Loader';
-export * from './Markdown';
-export * from './PageHeader';
-export * from './PromoRow';
+export * from './Loader/Loader';
+export * from './Markdown/Markdown';
+export * from './PageHeader/PageHeader';
+export * from './PromoRow/PromoRow';
 export * from './SideBar/SideBar';
-export * from './SplashIntro';
-export * from './Svg';
-export * from './TagChip';
-export * from './TagList';
-export * from './TopBar';
+export * from './SplashIntro/SplashIntro';
+export * from './Svg/Svg';
+export * from './TagChip/TagChip';
+export * from './TagList/TagList';
+export * from './TopBar/TopBar';
 export {Theme, ThemeOptions} from '../config/theme';
 
 // Material UI Components

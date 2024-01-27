@@ -1,5 +1,5 @@
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
-import React, {useState} from 'react';
+import {useState} from 'react';
 
 import {Loader} from '../components';
 import {GothamConstants} from '../constants/GothamConstants';

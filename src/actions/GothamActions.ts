@@ -25,7 +25,7 @@ export const GothamActions = {
   notifyClose: (key: string): Promise<FluxAction> =>
     Flux.dispatch({key, type: GothamConstants.NOTIFY_CLOSE}),
 
-  signOut: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.SIGNOUT}),
+  signOut: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.SIGN_OUT}),
   setConfig: (config: GothamConfiguration): Promise<FluxAction> =>
     Flux.dispatch({config, type: GothamConstants.SET_CONFIG}),
   updateTitle: (title: string, separator: string = ' :: '): Promise<FluxAction> => {

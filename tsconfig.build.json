@@ -7,13 +7,9 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "lib": [
       "dom",
-      "es2015",
-      "es5",
-      "es6",
-      "es7",
       "esnext"
     ],
     "module": "commonjs",

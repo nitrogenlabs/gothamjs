@@ -3,40 +3,50 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {Theme, useMediaQuery} from '@mui/material';
-import Drawer from '@mui/material/Drawer/Drawer';
+import Drawer, {DrawerProps} from '@mui/material/Drawer/Drawer';
 import List from '@mui/material/List/List';
-import {makeStyles} from '@mui/styles';
+import styled from '@emotion/styled';
 import {Flux} from '@nlabs/arkhamjs';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react/lib';
-import React, {useState} from 'react';
+import {FC, useState} from 'react';
 
 import {GothamConstants} from '../../constants/GothamConstants';
 import {GothamMenuItem} from '../../views/Gotham';
 import {SideBarMenuItem, SideBarMenuItemProps} from './SideBarMenuItem';
 
-const useStyles: any = makeStyles((theme: any) => {
-  const darkMode = theme.palette.type === 'dark';
+export interface SideBarProps {
+  readonly menu?: GothamMenuItem[];
+  readonly pathname?: string;
+  readonly top?: JSX.Element;
+}
 
-  return {
-    drawerPaper: {
-      backgroundColor: 'transparent',
-      position: 'relative'
-    },
-    drawerRoot: {
-      backgroundColor: darkMode ? theme.palette.neutral.dark : theme.palette.neutral.light,
-      height: '100vh'
-    },
-    menu: {
-      paddingTop: theme.spacing(3)
-    },
-    sideBar: {
-      display: 'flex',
-      flexDirection: 'column',
-      flexGrow: 0,
-      flexShrink: 0
-    }
-  };
-});
+export interface DrawerStyledProps extends DrawerProps {
+  readonly theme?: Theme;
+}
+
+export interface ListStyledProps extends DrawerProps {
+  readonly theme?: Theme;
+}
+
+const SideBarStyled = styled.div`
+  flex-grow: 0;
+  flex-shrink: 0;
+`;
+
+const DrawerStyled = styled(Drawer)<DrawerStyledProps>`${({theme}: DrawerStyledProps) => `
+  .MuiDrawer-root {
+    background-color: ${theme.palette.common.white},
+    height: 100vh;
+  }
+  .MuiDrawer-paper {
+    background-color: transparent;
+    position: relative;
+  }
+`}`;
+
+const ListStyled = styled(List)<ListStyledProps>`${({theme}: {theme: Theme}) => `
+  padding-top: ${theme.spacing(3)};
+`}`;
 
 export const closeDrawer = (): void => {
   Flux.dispatch({openState: false, type: GothamConstants.TOGGLE_MENU});
@@ -50,29 +60,18 @@ export const renderMenu = (pathname: string, menu: any[] = []) =>
     return <SideBarMenuItem key={`${label}${path}`} pathname={pathname} {...item} />;
   });
 
-export interface SideBarProps {
-  readonly menu?: GothamMenuItem[];
-  readonly pathname?: string;
-  readonly top?: JSX.Element;
-}
 
-export const SideBar = ({menu, pathname, top}: SideBarProps) => {
+export const SideBar: FC<SideBarProps> = ({menu, pathname, top}) => {
   const lgHidden: boolean = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const [isOpen, setIsOpen] = useState(false);
 
-  // State
-  const [openState, setOpenState] = useState(false);
-
-  // Styling
-  const classes = useStyles();
-
-  useFluxListener(GothamConstants.TOGGLE_MENU, toggleMenu(setOpenState));
+  useFluxListener(GothamConstants.TOGGLE_MENU, toggleMenu(setIsOpen));
 
   return (
-    <div className={classes.sideBar}>
+    <SideBarStyled className="flex flex-column">
       {!lgHidden ? (
-        <Drawer
-          classes={{paper: classes.drawerPaper, root: classes.drawerRoot}}
-          open={openState}
+        <DrawerStyled
+          open={isOpen}
           onClose={closeDrawer}>
           <div
             onClick={closeDrawer}
@@ -80,19 +79,22 @@ export const SideBar = ({menu, pathname, top}: SideBarProps) => {
             role="button"
             tabIndex={0}>
             {top}
-            <List className={classes.menu}>{renderMenu(pathname, menu)}</List>
+            <ListStyled>
+              {menu.map(({label, path, url}) => (
+                <SideBarMenuItem key={`${label}${path}${url}`} label={label} path={path} pathname={pathname} url={url}/>
+              ))}
+            </ListStyled>
           </div>
-        </Drawer>
+        </DrawerStyled>
       ) : (
-        <Drawer
-          classes={{paper: classes.drawerPaper, root: classes.drawerRoot}}
+        <DrawerStyled
           open
           transitionDuration={{enter: 0.3, exit: 0.3}}
           variant="permanent">
           {top}
-          <List className={classes.menu}>{renderMenu(pathname, menu)}</List>
-        </Drawer>
+          <ListStyled>{renderMenu(pathname, menu)}</ListStyled>
+        </DrawerStyled>
       )}
-    </div>
+    </SideBarStyled>
   );
 };

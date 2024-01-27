@@ -9,7 +9,6 @@ import {AuthConstants} from './constants/AuthConstants';
 import {GothamConstants} from './constants/GothamConstants';
 import {MarkdownConstants} from './constants/MarkdownConstants';
 
-export * from '@mui/styles';
 export {Flux} from '@nlabs/arkhamjs';
 export {useFormContext} from 'react-hook-form';
 export * from 'react-i18next';

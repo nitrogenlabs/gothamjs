@@ -1,7 +1,5 @@
 import './Compose.css';
 
-import React from 'react';
-
 import {Form} from '../../Form';
 import {NewMessageType} from '../Messenger';
 

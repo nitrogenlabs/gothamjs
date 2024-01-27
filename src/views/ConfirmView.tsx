@@ -6,13 +6,14 @@ import Button from '@mui/material/Button/Button';
 import Card from '@mui/material/Card/Card';
 import CardContent from '@mui/material/CardContent/CardContent';
 import {useFluxListener, useState} from '@nlabs/arkhamjs-utils-react';
-import * as React from 'react';
+import {FC} from 'react';
 
 import {Form} from '../components/Form/Form';
 import {TextField} from '../components/Form/TextField';
 import {PageHeader} from '../components/PageHeader';
 import {AuthConstants} from '../constants/AuthConstants';
 import {PageView, PageViewProps} from './PageView';
+import {ErrorMessage} from '../components/ErrorMessage/ErrorMessage';
 
 export interface ConfirmViewProps extends PageViewProps {
   onConfirm: (confirmation: object) => any;
@@ -25,36 +26,6 @@ export interface ConfirmViewState {
   readonly session?: object;
 }
 
-// const useStyles: any = makeStyles((theme: Theme) => ({
-//   btn: {
-//     marginLeft: 5
-//   },
-//   card: {
-//     borderRadius: 10
-//   },
-//   errorMessage: {
-//     backgroundColor: theme.palette.error.light,
-//     borderRadius: 3,
-//     color: theme.palette.error.dark,
-//     fontSize: '14px',
-//     marginBottom: 15,
-//     padding: '10px 5px'
-//   },
-//   logo: {
-//     alignItems: 'center',
-//     display: 'flex',
-//     flex: 1,
-//     flexDirection: 'column',
-//     marginBottom: 50,
-//     marginTop: 30
-//   },
-//   resend: {
-//     color: theme.palette.grey['400'],
-//     fontSize: 12,
-//     marginTop: 5
-//   }
-// }));
-
 export const onSubmit = (onConfirm) => (values) => onConfirm(values);
 
 export const onSuccess = (): void => {
@@ -66,13 +37,9 @@ export const onFailure = (setState) => ({error}): void => {
   setState({errorMessage});
 };
 
-export const ConfirmView = (props: ConfirmViewProps) => {
-  const {
-    classes,
-    onResend = () => { }
-  } = props;
-
-  // Initial state
+export const ConfirmView: FC<ConfirmViewProps> = ({
+  onResend = () => { }
+}) => {
   const [values, setValues] = useState({
     code: '',
     username: ''
@@ -80,8 +47,8 @@ export const ConfirmView = (props: ConfirmViewProps) => {
 
   let errorMessage: string;
 
-  useFluxListener(AuthConstants.SIGNIN_SUCCESS, onSuccess);
-  useFluxListener(AuthConstants.SIGNIN_FAILED, onFailure(setValues));
+  useFluxListener(AuthConstants.SIGN_IN_SUCCESS, onSuccess);
+  useFluxListener(AuthConstants.SIGN_IN_FAILED, onFailure(setValues));
 
   return (
     <PageView title="Confirmation">
@@ -95,9 +62,9 @@ export const ConfirmView = (props: ConfirmViewProps) => {
 
       <div className="row justify-content-center">
         <div className="col-lg-10 col-md-8 col-lg-6">
-          <Card className={classes.card}>
+          <Card className="br3">
             <CardContent>
-              {errorMessage ? <div className={classes.errorMessage}>{errorMessage}</div> : null}
+              <ErrorMessage message={errorMessage} />
               <Form
                 onSubmit={onSubmit(setValues)}
                 defaultValues={values}>
@@ -114,15 +81,15 @@ export const ConfirmView = (props: ConfirmViewProps) => {
                   </div>
                   <div className="row">
                     <div className="col">
-                      <a onClick={() => onResend(values)}><p className={classes.resend}>Resend code?</p></a>
+                      <a onClick={() => onResend(values)}><p className="f5 mid-gray mt1">Resend code?</p></a>
                     </div>
                   </div>
                   <div className="row justify-content-end">
                     <div className="col-xs-auto">
-                      <Button className={classes.btn} color="primary" size="large" onClick={() => { }} variant="text">
+                      <Button className="ml1" color="primary" size="large" onClick={() => { }} variant="text">
                         Cancel
                       </Button>
-                      <Button className={classes.btn} color="primary" size="large" type="submit" variant="contained">
+                      <Button className="ml1" color="primary" size="large" type="submit" variant="contained">
                         Confirm
                       </Button>
                     </div>

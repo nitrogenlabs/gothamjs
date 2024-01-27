@@ -3,11 +3,11 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {yupResolver} from '@hookform/resolvers/yup';
-import React, {BaseSyntheticEvent, useCallback} from 'react';
+import {BaseSyntheticEvent, ReactNode, useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 
 export interface FormProps {
-  readonly children: React.ReactNode;
+  readonly children: ReactNode;
   readonly className?: string;
   readonly defaultValues?: any;
   readonly mode?: 'onSubmit' | 'onBlur' | 'onChange' | 'onTouched' | 'all';

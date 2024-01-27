@@ -2,10 +2,15 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Theme, ThemeOptions} from '@mui/material';
+import {SimplePaletteColorOptions, Theme, ThemeOptions} from '@mui/material';
 
-/* eslint-disable sort-keys */
-const palette: any = {
+export {Theme, ThemeOptions};
+
+const palette: ThemeOptions['palette'] = {
+  common: {
+    black: '#1d1d1d',
+    white: '#f1f1f1'
+  },
   error: {
     contrastText: '#fff',
     dark: '#c4272f',
@@ -17,12 +22,6 @@ const palette: any = {
     dark: '#035aa6',
     light: '#d5e5f2',
     main: '#4ea4d9'
-  },
-  neutral: {
-    contrastText: '#fff',
-    dark: '#1d1d1d',
-    light: '#f1f1f1',
-    main: '#565656'
   },
   primary: {
     contrastText: '#fff',
@@ -48,20 +47,16 @@ const palette: any = {
   }
 };
 
-export {Theme, ThemeOptions};
-
-export const breakpoints: any = {
-  values: {
-    xs: 0,
-    sm: 576,
-    md: 768,
-    lg: 992,
-    xl: 1200
-  }
-};
-
 export const defaultTheme: ThemeOptions = {
-  breakpoints,
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 576,
+      md: 768,
+      lg: 992,
+      xl: 1200
+    }
+  },
   components: {
     MuiInputAdornment: {
       styleOverrides: {
@@ -108,7 +103,7 @@ export const defaultTheme: ThemeOptions = {
         },
         outlined: {
           backgroundColor: 'transparent',
-          borderColor: palette.primary.main,
+          borderColor: (palette.primary as SimplePaletteColorOptions).main,
           borderRadius: 0,
           borderWidth: 1
         },
@@ -235,3 +230,7 @@ export const defaultTheme: ThemeOptions = {
     }
   }
 };
+
+declare module '@emotion/react' {
+  export interface Theme extends ThemeOptions {}
+}

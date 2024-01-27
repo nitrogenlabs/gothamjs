@@ -19,10 +19,12 @@
         "devDependencies": [
           "**/*.test.ts",
           "**/*.test.tsx",
-          "**/testUtils.tsx"
+          "**/testUtils.tsx",
+          "tailwind.config.js"
         ]
       }
     ],
+    "import/no-named-as-default": 0,
     "no-plusplus": 0
   }
 }

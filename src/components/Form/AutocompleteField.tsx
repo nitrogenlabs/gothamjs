@@ -6,21 +6,23 @@ import MaterialMenuItem from '@mui/material/MenuItem/MenuItem';
 import MaterialPaper from '@mui/material/Paper/Paper';
 import MaterialPopper from '@mui/material/Popper/Popper';
 import MaterialTextField from '@mui/material/TextField/TextField';
-import makeStyles from '@mui/styles/makeStyles';
+import {ClassNames} from '@emotion/react';
+import styled from '@emotion/styled';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import debounce from 'lodash/debounce';
-import React, {SyntheticEvent, useCallback, useRef, useState} from 'react';
+import {SyntheticEvent, useCallback, useRef, useState} from 'react';
 import ReactAutosuggest from 'react-autosuggest';
 import {useFormContext} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 
+const AutouggestStyled = styled(ReactAutosuggest)`
+  display: block;
+`;
+
 const useStyles: any = makeStyles((theme: any) => ({
   container: {
     position: 'relative'
-  },
-  listItem: {
-    flexDirection: 'row'
   },
   suggestion: {
     display: 'block'
@@ -96,7 +98,7 @@ export const renderSuggestion = (classes, valueKey) => (suggestion, {query, isHi
 
   return (
     <MaterialMenuItem selected={isHighlighted} component="div">
-      <div className={classes.listItem}>{renderItemLabel(parts)}</div>
+      <div className="flex-direction-row">{renderItemLabel(parts)}</div>
     </MaterialMenuItem >
   );
 };
@@ -174,77 +176,78 @@ export const AutocompleteField = (props: AutocompleteFieldProps) => {
   }, [name, valueKey]);
 
   return (
-    <>
-      <input {...register(name)} type="hidden" value={defaultValue as any} />
-      <ReactAutosuggest
-        id={`reactAutosuggest-${name}`}
-        inputProps={{
-          InputLabelProps: {
-            shrink: true
-          },
-          classes,
-          onBlur: onBlur(onBlurFn, getValues, setInputValue, name, valueKey),
-          onChange: onChange(onChangeFn, setInputValue),
-          onFocus: onFocus(onFocusFn, setInputValue, setValue, name),
-          label: label ? t(label) : undefined,
-          placeholder: placeholder ? t(placeholder) : undefined,
-          validate,
-          value: updatedValue,
-          valueKey
-        }}
-        getSuggestionValue={(suggestion) => getSelectedValue(suggestion, valueKey)}
-        onSuggestionSelected={onSuggestionSelectedFn}
-        onSuggestionsClearRequested={onSuggestionsClearRequestedFn}
-        onSuggestionsFetchRequested={onSuggestionsFetchRequestedFn}
-        renderInputComponent={({classes, ...remainingProps}) => {
-          let updatedProps;
+    <ClassNames>
+      {({css, cx}) => (
+        <>
+          <input {...register(name)} type="hidden" value={defaultValue as any} />
+          <ReactAutosuggest
+            id={`reactAutosuggest-${name}`}
+            inputProps={{
+              InputLabelProps: {
+                shrink: true
+              },
+              classes,
+              onBlur: onBlur(onBlurFn, getValues, setInputValue, name, valueKey),
+              onChange: onChange(onChangeFn, setInputValue),
+              onFocus: onFocus(onFocusFn, setInputValue, setValue, name),
+              label: label ? t(label) : undefined,
+              placeholder: placeholder ? t(placeholder) : undefined,
+              validate,
+              value: updatedValue,
+              valueKey
+            }}
+            getSuggestionValue={(suggestion) => getSelectedValue(suggestion, valueKey)}
+            onSuggestionSelected={onSuggestionSelectedFn}
+            onSuggestionsClearRequested={onSuggestionsClearRequestedFn}
+            onSuggestionsFetchRequested={onSuggestionsFetchRequestedFn}
+            renderInputComponent={({classes, ...remainingProps}) => {
+              let updatedProps;
 
-          if(errors[name]) {
-            const helperText = errors[name]?.message ? (
-              <div>{errors[name]?.message as string}</div>
-            ) : undefined;
-            updatedProps = {
-              ...remainingProps,
-              error: true,
-              helperText
-            };
-          } else {
-            updatedProps = {...remainingProps};
-          }
+              if(errors[name]) {
+                const helperText = errors[name]?.message ? (
+                  <div>{errors[name]?.message as string}</div>
+                ) : undefined;
+                updatedProps = {
+                  ...remainingProps,
+                  error: true,
+                  helperText
+                };
+              } else {
+                updatedProps = {...remainingProps};
+              }
 
-          return (
-            <MaterialTextField
-              fullWidth
-              InputProps={{
-                classes: {
-                  input: classes.input
-                },
-                inputRef
-              }}
-              {...updatedProps}
-              variant={variant} />
-          );
-        }}
-        renderSuggestion={renderSuggestion(classes, valueKey)}
-        renderSuggestionsContainer={({children, containerProps}) => {
-          const inputElement: any = inputRef.current;
-          return (
-            <MaterialPopper anchorEl={inputRef.current} open={!!children}>
-              <MaterialPaper
-                square
-                {...containerProps}
-                style={{width: inputElement ? inputElement.clientWidth : null}}>
-                {children}
-              </MaterialPaper>
-            </MaterialPopper>
-          );
-        }}
-        suggestions={suggestionList}
-        theme={{
-          suggestion: classes.suggestion,
-          suggestionsList: classes.suggestionsList
-        }}
-      />
-    </>
+              return (
+                <MaterialTextField
+                  fullWidth
+                  InputProps={{
+                    inputRef
+                  }}
+                  {...updatedProps}
+                  variant={variant} />
+              );
+            }}
+            renderSuggestion={renderSuggestion(classes, valueKey)}
+            renderSuggestionsContainer={({children, containerProps}) => {
+              const inputElement: any = inputRef.current;
+              return (
+                <MaterialPopper anchorEl={inputRef.current} open={!!children}>
+                  <MaterialPaper
+                    square
+                    {...containerProps}
+                    style={{width: inputElement ? inputElement.clientWidth : null}}>
+                    {children}
+                  </MaterialPaper>
+                </MaterialPopper>
+              );
+            }}
+            suggestions={suggestionList}
+            theme={{
+              suggestion: 'd-block',
+              suggestionsList: classes.suggestionsList
+            }}
+          />
+        </>
+      )}
+    </ClassNames>
   );
 };

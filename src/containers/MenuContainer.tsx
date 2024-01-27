@@ -5,37 +5,37 @@
 import {makeStyles} from '@mui/styles';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import isEmpty from 'lodash/isEmpty';
-import React, {useContext, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 
 import {SideBar, SideBarProps} from '../components/SideBar/SideBar';
-import {TopBar} from '../components/TopBar';
+import {TopBar} from '../components/TopBar/TopBar';
 import {GothamConstants} from '../constants/GothamConstants';
 import {GothamContext} from '../utils/GothamProvider';
 import {renderTransition} from '../utils/routeUtils';
 import {useRoute} from '../utils/viewUtils';
 import {DefaultContainerProps} from './DefaultContainer';
+import styled from '@emotion/styled';
 
-const useStyles: any = makeStyles((theme: any) => ({
-  container: {
-    bottom: 0,
-    display: 'flex',
-    flex: 1,
-    left: 0,
-    overflow: 'hidden',
-    position: 'absolute',
-    right: 0,
-    top: 64
-  },
-  content: {
-    backgroundColor: theme.palette.background.default,
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    minWidth: 0,
-    overflowY: 'auto',
-    position: 'relative'
-  }
-}));
+const ContainerStyled = styled.div`
+  bottom: 0,
+  display: 'flex',
+  flex: 1,
+  left: 0,
+  overflow: 'hidden',
+  position: 'absolute',
+  right: 0,
+  top: 64
+`;
+
+const ContentStyled = styled.div`
+  backgroundColor: theme.palette.background.default,
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'column',
+  minWidth: 0,
+  overflowY: 'auto',
+  position: 'relative'
+`;
 
 export const renderMenu = (props: SideBarProps, pathname: string): JSX.Element => {
   if(props) {
@@ -57,16 +57,12 @@ export interface MenuContainerProps extends DefaultContainerProps {
   readonly sideBar?: SideBarProps;
 }
 
-export const MenuContainer = (props: MenuContainerProps) => {
-  const {
-    Flux,
-    routes = [],
-    sideBar,
-    topBar = {}
-  } = props;
-  const classes = useStyles();
-
-  // Initial state
+export const MenuContainer: FC<MenuContainerProps> = ({
+  Flux,
+  routes = [],
+  sideBar,
+  topBar = {}
+}) => {
   const [sideBarProps, setSidebarProps] = useState(sideBar);
   const context: any = useContext(GothamContext);
   const {isAuth} = context;
@@ -79,12 +75,20 @@ export const MenuContainer = (props: MenuContainerProps) => {
   return (
     <>
       {topBarComponent}
-      <div className={classes.container}>
-        {renderMenu(sideBarProps, pathname)}
-        <div className={classes.content}>
+      <ContainerStyled>
+        {sideBarProps && {
+    let loadedProps = sideBarProps;
+
+    if(sideBarProps instanceof Function) {
+      loadedProps = sideBarProps();
+    }
+
+    return <SideBar {...loadedProps} pathname={pathname} />;
+  }}
+        <ContentStyled>
           {renderTransition(routes, Flux, {...props, isAuth})}
-        </div>
-      </div>
+        </ContentStyled>
+      </ContainerStyled>
     </>
   );
 };

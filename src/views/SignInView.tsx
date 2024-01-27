@@ -5,52 +5,21 @@
 import Button from '@mui/material/Button/Button';
 import Card from '@mui/material/Card/Card';
 import CardContent from '@mui/material/CardContent/CardContent';
-import {makeStyles} from '@mui/styles';
 import {useFluxListener, useState} from '@nlabs/arkhamjs-utils-react/lib';
-import * as React from 'react';
+import {FC} from 'react';
 
 import {Form} from '../components/Form/Form';
 import {TextField} from '../components/Form/TextField';
 import {PageHeader} from '../components/PageHeader';
-import {Theme} from '../config/theme';
 import {AuthConstants} from '../constants/AuthConstants';
 import {PageView, PageViewProps} from './PageView';
+import {ErrorMessage} from '../components/ErrorMessage/ErrorMessage';
 
-export interface LoginViewProps extends PageViewProps {
+export interface SignInViewProps extends PageViewProps {
   readonly logo?: JSX.Element;
-  readonly onLogin?: (username: string, password: string) => any;
-  readonly onSignup?: () => any;
+  readonly onSignIn?: (username: string, password: string) => void;
+  readonly onSignUp?: () => void;
 }
-
-const useStyles: any = makeStyles((theme: Theme) => ({
-  btn: {
-    marginLeft: 5
-  },
-  card: {
-    borderRadius: 10
-  },
-  errorMessage: {
-    backgroundColor: theme.palette.error.light,
-    borderRadius: 3,
-    color: theme.palette.error.dark,
-    fontSize: '14px',
-    marginBottom: 15,
-    padding: '10px 5px'
-  },
-  forgot: {
-    color: theme.palette.grey['400'],
-    fontSize: 12,
-    marginTop: 5
-  },
-  logo: {
-    alignItems: 'center',
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    marginBottom: 50,
-    marginTop: 30
-  }
-}));
 
 export const onSuccess = (): void => {
 };
@@ -73,42 +42,18 @@ export const onFailure = (setState) => ({error}): void => {
   setState({errorMessage});
 };
 
-export const onSubmit = (props) => (values): void => {
-  const {onLogin = () => { }} = props;
+export const onSubmit = ({onSignIn}) => (values): void => {
   const {password, username} = values;
-  onLogin(username, password);
+  onSignIn(username, password);
 };
 
-export const validate = (): any => {
-
-};
-
-export const renderLogo = (logo: JSX.Element, classes): JSX.Element => {
-  if(logo) {
-    return <div className={classes.logo}>{logo}</div>;
-  }
-
-  return null;
-};
-
-export const renderMessage = (message: string): JSX.Element => {
-  if(message) {
-    const classes = useStyles();
-    return <div className={classes.errorMessage}>{message}</div>;
-  }
-
-  return null;
-};
-
-export const SignInView = (props: LoginViewProps) => {
-  const {
-    logo,
-    name = 'signIn',
-    onSignup = () => { },
-    title = 'Sign In'
-  } = props;
-
-  // Initial state
+export const SignInView: FC<SignInViewProps> = ({
+  logo,
+  name = 'signIn',
+  onSignIn = () => { },
+  onSignUp = () => { },
+  title = 'Sign In'
+}) => {
   const [state, setState] = useState({
     account: {
       password: '',
@@ -118,10 +63,8 @@ export const SignInView = (props: LoginViewProps) => {
   });
   const {account, errorMessage} = state;
 
-  const classes = useStyles();
-
-  useFluxListener(AuthConstants.SIGNIN_SUCCESS, onSuccess);
-  useFluxListener(AuthConstants.SIGNIN_FAILED, onFailure(setState));
+  useFluxListener(AuthConstants.SIGN_IN_SUCCESS, onSuccess);
+  useFluxListener(AuthConstants.SIGN_IN_FAILED, onFailure(setState));
 
   return (
     <PageView name={name} title={title}>
@@ -135,12 +78,12 @@ export const SignInView = (props: LoginViewProps) => {
 
       <div className="row justify-content-center">
         <div className="col-md-8 col-lg-6">
-          <Card className={classes.card}>
+          <Card className="br3">
             <CardContent>
-              {renderLogo(logo, classes)}
-              {renderMessage(errorMessage)}
+              {logo && <div className="flex flex-auto flex-column items-center mb5 mt4">{logo}</div>}
+              <ErrorMessage message={errorMessage} />
               <Form
-                onSubmit={onSubmit(props)}
+                onSubmit={onSubmit({onSignIn})}
                 defaultValues={account}>
                 <div className="container">
                   <div className="row">
@@ -155,15 +98,15 @@ export const SignInView = (props: LoginViewProps) => {
                   </div>
                   <div className="row">
                     <div className="col">
-                      <p className={classes.forgot}>Forgot password?</p>
+                      <p className="f6 hover-mid-gray mt1">Forgot password?</p>
                     </div>
                   </div>
                   <div className="row justify-content-end">
                     <div className="col-xs-auto">
-                      <Button className={classes.btn} color="primary" size="large" onClick={onSignup} variant="text">
+                      <Button className="ml1" color="primary" size="large" onClick={onSignUp} variant="text">
                         Create new account
                       </Button>
-                      <Button className={classes.btn} color="primary" size="large" type="submit" variant="contained">
+                      <Button className="ml1" color="primary" size="large" type="submit" variant="contained">
                         Sign in
                       </Button>
                     </div>

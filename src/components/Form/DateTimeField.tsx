@@ -5,7 +5,7 @@
 import {DateOrTimeView} from '@mui/x-date-pickers';
 import {MobileDateTimePicker, MobileDateTimePickerProps} from '@mui/x-date-pickers/MobileDateTimePicker';
 import {DateTime} from 'luxon';
-import React, {FC} from 'react';
+import {FC} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 

@@ -1,16 +1,13 @@
 import MuiLink from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import isEmpty from 'lodash/isEmpty';
-import React from 'react';
 import {Link} from 'react-router-dom';
 
 export interface BreadcrumbLinkProps {
-  readonly classes?: any;
   readonly name: string;
   readonly path?: string;
 }
 
-export const BreadcrumbLink = ({classes, name, path}: BreadcrumbLinkProps) => (isEmpty(path)
+export const BreadcrumbLink = ({name, path}: BreadcrumbLinkProps) => (path
   ? <Typography color="textPrimary" variant="inherit">{name}</Typography>
-  : <MuiLink classes={classes} component={Link} to={path}>{name}</MuiLink>);
+  : <MuiLink component={Link} to={path}>{name}</MuiLink>);
 
