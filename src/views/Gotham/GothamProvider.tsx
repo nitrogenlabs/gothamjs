@@ -2,11 +2,10 @@
  * Copyright (c) 2024-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import '../../css/fonts.css';
-import '../../css/styles.css';
 import {Flux} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
+import {FluxProvider} from '@nlabs/arkhamjs-utils-react';
 import {FC, ReactNode, useEffect} from 'react';
 import {I18nextProvider} from 'react-i18next';
 
@@ -23,11 +22,11 @@ export interface GothamProviderProps {
 
 export const GothamProvider: FC<GothamProviderProps> = ({children, config, session}) => {
   const {
-    isAuth,
-    middleware,
-    name,
-    storageType,
-    stores,
+    isAuth = false,
+    middleware = [],
+    name = 'gotham',
+    storageType = 'session',
+    stores = [],
     translations = {translation: {}}
   } = config;
 
@@ -55,7 +54,9 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config, sessi
   return (
     <I18nextProvider i18n={i18n(translations)}>
       <GothamContext.Provider value={{Flux, isAuth, session}}>
-        {children}
+        <FluxProvider flux={Flux}>
+          {children}
+        </FluxProvider>
       </GothamContext.Provider>
     </I18nextProvider>
   );

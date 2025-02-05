@@ -1,9 +1,9 @@
+import styled from '@emotion/styled';
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import SvgIcon from '@mui/material/SvgIcon/SvgIcon';
-import styled from '@emotion/styled';
+import SvgIcon from '@mui/material/SvgIcon';
 
 import {Config} from '../../config/app';
 

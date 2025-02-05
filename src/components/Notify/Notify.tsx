@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import Slide from '@mui/material/Slide';
 import Snackbar, {SnackbarProps} from '@mui/material/Snackbar';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
-import {useState} from 'react';
+import {useState, type ReactElement, type ReactNode} from 'react';
 
 import {GothamConstants} from '../../constants/GothamConstants';
 import {Svg} from '../Svg/Svg';
@@ -17,14 +17,16 @@ export interface GothamNotifyAction {
   readonly onClick: (key) => any;
 }
 
+export type GothamSeverity = 'error' | 'info' | 'success' | 'warning';
+
 export interface GothamNotifyParams extends SnackbarProps {
   readonly actions?: GothamNotifyAction[];
-  readonly severity?: 'error' | 'info' | 'success' | 'warning'
+  readonly severity?: GothamSeverity;
 }
 
 export const Notify = () => {
   const [isOpen, setOpen] = useState(false);
-  const [notification, setNotification] = useState({});
+  const [notification, setNotification] = useState<GothamNotifyParams>({});
   const notifyClose = () => setOpen(false);
   const notifyOpen = ({
     actions = [],
@@ -50,11 +52,17 @@ export const Notify = () => {
 
     setNotification({
       ...restProps,
-      action,
-      autoHideDuration,
       message: severity ? (
-        <Alert onClose={notifyClose} severity="success" sx={{width: '100%'}}>{message}</Alert>
-      ) : message
+        <Alert
+          onClose={notifyClose}
+          severity={severity}
+          sx={{width: '100%'}}
+          variant="filled"
+        >
+            {message}
+          </Alert>
+      ) : message,
+      severity
     });
     setOpen(true);
   };
@@ -63,11 +71,24 @@ export const Notify = () => {
   useFluxListener(GothamConstants.NOTIFY_CLOSE, notifyClose);
 
   return (
-    <Snackbar
-      {...notification}
-      open={isOpen}
-      onClose={notifyClose}
-      TransitionComponent={TransitionUp}
-    />
+    !notification.severity
+      ? (
+          <Snackbar
+            {...notification}
+            open={isOpen}
+            onClose={notifyClose}
+            TransitionComponent={TransitionUp}
+          />
+        )
+      : (
+          <Snackbar
+            {...notification}
+            open={isOpen}
+            onClose={notifyClose}
+            TransitionComponent={TransitionUp}
+          >
+            {notification.message as ReactElement}
+          </Snackbar>
+        )
   );
 };

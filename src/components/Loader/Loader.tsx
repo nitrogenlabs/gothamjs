@@ -4,18 +4,18 @@
  */
 import styled from '@emotion/styled';
 
-import {Theme} from '../../config/theme';
+import {ThemeOptions, defaultTheme} from '../../config/theme';
 import {Svg} from '../Svg/Svg';
 
 export interface LoaderProps {
   readonly content?: string;
   readonly full?: boolean;
-  readonly theme?: Theme;
+  readonly theme?: ThemeOptions;
 }
 
 const LoaderStyled = styled.div`${({full, theme}: LoaderProps) => `
   align-items: center;
-  background-color: ${theme.palette.background.default};
+  background-color: ${theme?.palette?.background?.default || 'transparent'};
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -29,7 +29,7 @@ const LoaderStyled = styled.div`${({full, theme}: LoaderProps) => `
     position: fixed;
     top: 0;
     width: 100%;
-    zIndex: ${theme.zIndex.tooltip + 1}
+    zIndex: ${theme?.zIndex?.tooltip + 1 || 1000}
   ` : `
     position: relative;
   `}
@@ -38,14 +38,14 @@ const LoaderStyled = styled.div`${({full, theme}: LoaderProps) => `
 const LoaderTextStyled = styled.div`${({theme}: LoaderProps) => `
   font-size: 24;
   font-weight: 100;
-  margin-top: ${theme.spacing(1)};
+  margin-top: ${(theme?.spacing as any)?.(1) || 0}px;
 `}`;
 
 const LoaderThrobberStyled = styled.div`${({theme}: LoaderProps) => `
     animationName: $rotate;
     animationDuration: 750ms;
     animationIterationCount: infinite;
-    animationTimingFunction: ${theme.transitions.easing.easeInOut};
+    animationTimingFunction: ${theme?.transitions?.easing?.easeInOut || 'ease-in-out'};
     display: flex;
 
   @keyframes rotate: {
@@ -58,13 +58,13 @@ const LoaderThrobberStyled = styled.div`${({theme}: LoaderProps) => `
   }
 `}`;
 
-export const Loader = ({content, full}: LoaderProps) => (
-  <LoaderStyled full={full} id="loader">
-    <LoaderThrobberStyled>
+export const Loader = ({content, full, theme = defaultTheme}: LoaderProps) => (
+  <LoaderStyled full={full} id="loader" theme={theme}>
+    <LoaderThrobberStyled theme={theme}>
       <Svg name="loading" width={50} height={50} />
     </LoaderThrobberStyled>
-    {!content && (
-      <LoaderTextStyled>
+    {!!content && (
+      <LoaderTextStyled theme={theme}>
         {content}
       </LoaderTextStyled>
     )}

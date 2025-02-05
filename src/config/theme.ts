@@ -3,6 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {SimplePaletteColorOptions, Theme, ThemeOptions} from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 
 export {Theme, ThemeOptions};
 
@@ -57,7 +58,7 @@ export const breakpoints = {
   }
 };
 
-export const defaultTheme: ThemeOptions = {
+export const defaultTheme: ThemeOptions = createTheme({
   breakpoints,
   components: {
     MuiInputAdornment: {
@@ -231,7 +232,7 @@ export const defaultTheme: ThemeOptions = {
       lineHeight: 'inherit'
     }
   }
-};
+});
 
 declare module '@emotion/react' {
   export interface Theme extends ThemeOptions {}
