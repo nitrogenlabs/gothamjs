@@ -4,23 +4,17 @@
  */
 import {FluxFramework} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
-import React, {FC, ReactNode} from 'react';
+import {ReactNode} from 'react';
 import {Route, RouteProps, Routes} from 'react-router-dom';
 
 import {GothamActions} from '../actions/GothamActions';
-import {AuthRoute} from '../components/AuthRoute';
-import {LazyLoad} from '../components/LazyLoader';
-import {Loader} from '../components/Loader';
-import {DefaultContainer} from '../containers/DefaultContainer';
-import {MenuContainer} from '../containers/MenuContainer';
-import {GothamConfiguration, GothamRoute} from '../views/Gotham';
+import {AuthRoute} from '../components/AuthRoute/AuthRoute';
+import {LazyLoad} from '../components/LazyLoader/LazyLoader';
+import {Loader} from '../components/Loader/Loader';
+import {GothamConfiguration, GothamRoute} from '../views/Gotham/Gotham';
 import {lazyImport} from './lazyImport';
 
 const {NotFoundView} = lazyImport(() => import('../views/NotFoundView'), 'NotFoundView');
-const {ConfirmView} = lazyImport(() => import('../views/ConfirmView'), 'ConfirmView');
-const {HomeView} = lazyImport(() => import('../views/HomeView'), 'HomeView');
-const {SignInView} = lazyImport(() => import('../views/SignInView'), 'SignInView');
-const {MarkdownView} = lazyImport(() => import('../views/MarkdownView'), 'MarkdownView');
 
 export const fadeTransition = {
   atActive: {
@@ -42,27 +36,11 @@ export const parseRoute = (route: GothamRoute, props: any): ReactNode => {
   const viewProps: any = {loader: Loader, ...props};
 
   // Get component
-  if(!isEmpty(container)) {
-    // Built-in containers
-    switch(container) {
-      case 'menu':
-        return <MenuContainer {...viewProps} />;
-      default:
-        return <DefaultContainer {...viewProps} />;
-    }
-  } else if(!isEmpty(view)) {
+  if(view) {
     // Built-in views
     switch(view) {
-      case 'confirm':
-        return <LazyLoad component={ConfirmView} {...viewProps} />;
-      case 'home':
-        return <LazyLoad component={HomeView} {...viewProps} />;
-      case 'markdown':
-        return <LazyLoad component={MarkdownView} {...viewProps} />;
       case 'notfound':
         return <LazyLoad component={NotFoundView} {...viewProps} />;
-      case 'signIn':
-        return <LazyLoad component={SignInView} {...viewProps} />;
       default:
         return null;
     }
@@ -81,7 +59,7 @@ export const renderRoute = (
   route: GothamRoute,
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
-): JSX.Element => {
+): ReactNode => {
   const {isAuth: defaultIsAuth, titleBarSeparator} = gothamConfig;
   const {authenticate = false, exact = true, isAuth = defaultIsAuth, location, path, strict, sensitive} = route;
   const ReactRoute = authenticate ? AuthRoute : Route;
@@ -109,7 +87,7 @@ export const renderRoute = (
 };
 
 export const getRoutes = (routes, Flux: FluxFramework, gothamConfig: GothamConfiguration) =>
-  routes.reduce((renderedRoutes: JSX.Element[], route: GothamRoute) => {
+  routes.reduce((renderedRoutes: ReactNode[], route: GothamRoute) => {
     const {path, routes: nestedRoutes} = route;
     let routeList = [...renderedRoutes];
 
@@ -125,14 +103,13 @@ export const getRoutes = (routes, Flux: FluxFramework, gothamConfig: GothamConfi
     return routeList;
   }, []);
 
-
 export const renderRouteList = (
   routes: GothamRoute[] = [],
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
-): JSX.Element[] => {
+): ReactNode[] => {
   const {titleBarSeparator} = gothamConfig;
-  const gothamRoutes: JSX.Element[] = getRoutes(routes, Flux, gothamConfig);
+  const gothamRoutes: ReactNode[] = getRoutes(routes, Flux, gothamConfig);
 
   // See if the user has provided a view for no matches
   const notFound: GothamRoute = routes.find((route: GothamRoute) => route && route.path === '404');
@@ -154,7 +131,7 @@ export const renderSwitch = (
   routes: GothamRoute[] = [],
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
-): JSX.Element =>
+): ReactNode =>
   <Routes>{renderRouteList(routes, Flux, gothamConfig)}</Routes>;
 
 // View Transition
@@ -190,4 +167,4 @@ export const renderTransition = (
   routes: GothamRoute[] = [],
   Flux: FluxFramework,
   gothamConfig: GothamConfiguration
-): JSX.Element => <Routes>{renderRouteList(routes, Flux, gothamConfig)}</Routes>;
+): ReactNode => <Routes>{renderRouteList(routes, Flux, gothamConfig)}</Routes>;

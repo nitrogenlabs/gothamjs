@@ -25,7 +25,7 @@ export const navReplace = (history) => (data): void => {
   history.replace(path, params);
 };
 
-export const GothamRoute = (): JSX.Element => {
+export const GothamRoute = (): null => {
   const navigate = useNavigate();
 
   useFluxListener(GothamConstants.NAV_BACK, navBack(navigate));

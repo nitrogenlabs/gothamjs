@@ -1,0 +1,1 @@
+export type GothamSize = 'sm' | 'md' | 'lg';

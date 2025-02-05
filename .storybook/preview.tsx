@@ -1,22 +1,23 @@
 import type { Preview } from "@storybook/react";
 import React from "react";
-import {Gotham} from '../src/views/Gotham/Gotham';
+import {GothamProvider} from '../src/views/Gotham/GothamProvider';
+import {defaultGothamConfig} from '../src/views/Gotham/Gotham';
 
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <Gotham>
-      <div
-        style={{
-          alignItems: "center",
-          display: "flex",
-          height: "100vh",
-          justifyContent: "center",
-        }}
-      >
-        <Story />
-      </div>
-      </Gotham>
+      <GothamProvider config={defaultGothamConfig}>
+        <div
+          style={{
+            alignItems: "center",
+            display: "flex",
+            height: "100vh",
+            justifyContent: "center",
+          }}
+        >
+          <Story />
+        </div>
+      </GothamProvider>
     ),
   ],
   parameters: {

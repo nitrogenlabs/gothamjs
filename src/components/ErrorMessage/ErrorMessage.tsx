@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2024-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {FC} from 'react';
 
 export interface ErrorMessageProps {

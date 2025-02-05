@@ -3,13 +3,14 @@ const colors = require('tailwindcss/colors');
 
 module.exports = {
   content: ['./src/**/*.{js,tsx}'],
+  safelist: [{pattern: /./}],
   theme: {
     colors: {
       primary: colors.slate,
       secondary: colors.blue
     },
     fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
+      sans: ['Inter var', 'sans-serif'],
       serif: ['Merriweather', 'serif']
     },
     screens: {
@@ -22,9 +23,9 @@ module.exports = {
       1: '5px',
       2: '10px',
       3: '15px',
-      4: '20px',
-      5: '25px',
-      6: '30px'
+      4: '30px',
+      5: '50px',
+      6: '60px'
     },
     extend: {
       spacing: {

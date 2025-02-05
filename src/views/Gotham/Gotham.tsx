@@ -1,39 +1,26 @@
-import 'tachyons/css/tachyons.min.css';
-
-import createCache from '@emotion/cache';
-import {CacheProvider} from '@emotion/react';
-import CssBaseline from '@mui/material/CssBaseline';
-import {createTheme, StyledEngineProvider, ThemeProvider} from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import {LocalizationProvider} from '@mui/x-date-pickers';
-import {AdapterLuxon} from '@mui/x-date-pickers/AdapterLuxon';
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {ArkhamConstants, Flux, FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {useFluxListener, useFluxValue} from '@nlabs/arkhamjs-utils-react';
 import {Location} from 'history';
 import merge from 'lodash/merge';
-import React, {FC, useEffect, useState} from 'react';
-import {I18nextProvider} from 'react-i18next';
+import {FC, useEffect, useState, type ReactNode} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 
 import {GothamActions} from '../../actions/GothamActions';
-import {GlobalStyles, Loader} from '../../components';
 import {GothamRoute} from '../../components/GothamRouter/GothamRouter';
-import {Notify} from '../../components/Notify/Notify';
 import {Config} from '../../config/app';
-import {defaultTheme} from '../../config/theme';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {gothamApp} from '../../stores/gothamAppStore';
-import {GothamContext} from '../../utils/GothamProvider';
-import {i18n} from '../../utils/i18nUtil';
 import {renderTransition} from '../../utils/routeUtils';
 import {LoaderView} from '../LoaderView';
+import {GothamProvider} from './GothamProvider';
+import {Loader} from '../../components/Loader/Loader';
 
-/**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
- * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
- */
 export interface GothamProps {
   readonly classes?: any;
   readonly config?: GothamConfiguration;
@@ -90,11 +77,10 @@ export interface GothamConfiguration {
   readonly translations?: any;
 }
 
-export type GothamSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type GothamMenuType = 'header' | 'link';
 
 export interface GothamMenuItem {
-  readonly content?: (color: string) => JSX.Element;
+  readonly content?: (color: string) => ReactNode;
   readonly label?: string;
   readonly menu?: GothamMenuItem[];
   readonly path?: string;
@@ -147,22 +133,22 @@ export const signOut = async () => {
   GothamActions.navGoto('/signIn');
 };
 
+export const defaultGothamConfig: GothamConfiguration = {
+  baseUrl: '',
+  middleware: [],
+  routes: [],
+  storageType: 'session',
+  stores: [],
+  title: ''
+};
+
 export const Gotham: FC<GothamProps> = ({config: appConfig = {}}) => {
   const [isAppLoaded, setAppLoaded] = useState(false);
-  const defaultConfig: GothamConfiguration = {
-    baseUrl: '',
-    middleware: [],
-    routes: [],
-    storageType: 'session',
-    stores: [],
-    title: ''
-  };
 
   // Save config to app
-  const config: GothamConfiguration = merge(defaultConfig, appConfig);
+  const config: GothamConfiguration = merge(defaultGothamConfig, appConfig);
   Config.set(config);
   const {
-    displayMode = 'auto',
     middleware,
     name,
     storageType,
@@ -170,28 +156,6 @@ export const Gotham: FC<GothamProps> = ({config: appConfig = {}}) => {
     theme: configTheme = {},
     translations = {translation: {}}
   } = config;
-
-  // Create theme
-  let isDarkMode: boolean;
-
-  if(displayMode === 'auto') {
-    isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  } else {
-    isDarkMode = displayMode === 'dark';
-  }
-
-  const theme = React.useMemo(
-    () => {
-      const themeType = {
-        palette: {
-          type: isDarkMode ? 'dark' : 'light'
-        }
-      };
-      const {lightTheme, darkTheme} = configTheme;
-      return createTheme(merge(defaultTheme, themeType, isDarkMode ? darkTheme : lightTheme));
-    },
-    [isDarkMode],
-  );
 
   useFluxListener(ArkhamConstants.INIT, init(isAppLoaded, setAppLoaded, config));
   useFluxListener(GothamConstants.SIGN_OUT, signOut);
@@ -222,7 +186,7 @@ export const Gotham: FC<GothamProps> = ({config: appConfig = {}}) => {
     document.body.addEventListener('keyup', onKeyUp);
   }, []);
 
-  let content: JSX.Element;
+  let content: ReactNode;
   const {isAuth, routes = [], ...gothamConfig} = config;
 
   // Session
@@ -244,29 +208,11 @@ export const Gotham: FC<GothamProps> = ({config: appConfig = {}}) => {
     );
   }
 
-  const cache = createCache({
-    key: 'css',
-    prepend: true
-  });
-
   return (
-    <ThemeProvider theme={theme}>
-      <StyledEngineProvider injectFirst>
-        <CacheProvider value={cache}>
-          <CssBaseline />
-          <I18nextProvider i18n={i18n(translations)}>
-            <LocalizationProvider dateAdapter={AdapterLuxon}>
-              <GothamContext.Provider value={{Flux, isAuth, session}}>
-                <GlobalStyles />
-                {content}
-                <LoaderView />
-                <Notify />
-              </GothamContext.Provider>
-            </LocalizationProvider>
-          </I18nextProvider>
-        </CacheProvider>
-      </StyledEngineProvider>
-    </ThemeProvider >
+    <GothamProvider config={config} session={session}>
+      {content}
+      <LoaderView />
+    </GothamProvider >
   );
 };
 

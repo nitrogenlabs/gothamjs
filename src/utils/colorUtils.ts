@@ -1,3 +1,6 @@
+export type GothamColor = 'primary' | 'secondary' | 'tertiary' | 'slate' | 'gray' | 'zinc' | 'neutral' | 'stone' | 'red' | 'orange' | 'amber' | 'yellow' | 'lime' | 'green' | 'emerald' | 'teal' | 'cyan' | 'sky' | 'blue' | 'indigo' | 'violet' | 'purple' | 'fuchsia' | 'pink' | 'rose';
+export type GothamColorTone = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
+
 export const colorLuminance = (hexValue: string, luminance: number = 0): string => {
   // Validate hex string
   let hex: string = String(hexValue).replace(/[^0-9a-f]/gi, '');

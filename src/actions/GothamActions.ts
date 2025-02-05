@@ -5,10 +5,10 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 
-import {GothamNotifyParams} from '../components/Notify';
+import {GothamNotifyParams} from '../components/Notify/Notify';
 import {Config} from '../config/app';
 import {GothamConstants} from '../constants/GothamConstants';
-import {GothamConfiguration} from '../views/Gotham';
+import {GothamConfiguration} from '../views/Gotham/Gotham';
 
 export const GothamActions = {
   init: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.INITIALIZE}),
