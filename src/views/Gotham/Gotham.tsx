@@ -2,24 +2,25 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {FC, useEffect, useState, type ReactNode} from 'react';
+import {Location} from 'history';
+import merge from 'lodash/merge';
+import {BrowserRouter} from 'react-router-dom';
+
+import {GothamRoute} from '../../components/GothamRouter/GothamRouter';
+import {Loader} from '../../components/Loader/Loader';
 import {ArkhamConstants, Flux, FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {useFluxListener, useFluxValue} from '@nlabs/arkhamjs-utils-react';
-import {Location} from 'history';
-import merge from 'lodash/merge';
-import {FC, useEffect, useState, type ReactNode} from 'react';
-import {BrowserRouter} from 'react-router-dom';
-
+import {GothamProvider} from './GothamProvider';
 import {GothamActions} from '../../actions/GothamActions';
-import {GothamRoute} from '../../components/GothamRouter/GothamRouter';
 import {Config} from '../../config/app';
 import {GothamConstants} from '../../constants/GothamConstants';
-import {gothamApp} from '../../stores/gothamAppStore';
+import {LoaderView} from '../LoaderView/LoaderView';
+
 import {renderTransition} from '../../utils/routeUtils';
-import {LoaderView} from '../LoaderView';
-import {GothamProvider} from './GothamProvider';
-import {Loader} from '../../components/Loader/Loader';
+import {gothamApp} from '../../stores/gothamAppStore';
 
 export interface GothamProps {
   readonly classes?: any;

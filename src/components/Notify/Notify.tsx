@@ -1,11 +1,11 @@
+import {useState, type ReactElement, type ReactNode} from 'react';
+
 import Alert from '@mui/material/Alert/Alert';
 import Button from '@mui/material/Button/Button';
 import IconButton from '@mui/material/IconButton/IconButton';
 import Slide from '@mui/material/Slide';
 import Snackbar, {SnackbarProps} from '@mui/material/Snackbar';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
-import {useState, type ReactElement, type ReactNode} from 'react';
-
 import {GothamConstants} from '../../constants/GothamConstants';
 import {Svg} from '../Svg/Svg';
 

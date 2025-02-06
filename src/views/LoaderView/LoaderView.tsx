@@ -1,8 +1,8 @@
-import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import {useState} from 'react';
 
-import {Loader} from '../components/Loader/Loader';
-import {GothamConstants} from '../constants/GothamConstants';
+import {Loader} from '../../components/Loader/Loader';
+import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
+import {GothamConstants} from '../../constants/GothamConstants';
 
 export const toggleLoader = (setLoading, setLoaderContent) => ({content, isLoading}) => {
   setLoading(isLoading);

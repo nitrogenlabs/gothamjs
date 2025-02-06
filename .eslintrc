@@ -25,6 +25,46 @@
       }
     ],
     "import/no-named-as-default": 0,
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "#!",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
+            "pattern": "@*/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "/**/*|//*",
+            "group": "builtin",
+            "position": "after"
+          },
+          {
+            "pattern": "type *",
+            "group": "index",
+            "position": "after"
+          }
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
     "no-plusplus": 0
   }
 }

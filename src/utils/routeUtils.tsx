@@ -3,18 +3,18 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {FluxFramework} from '@nlabs/arkhamjs';
-import isEmpty from 'lodash/isEmpty';
 import {ReactNode} from 'react';
+import isEmpty from 'lodash/isEmpty';
 import {Route, RouteProps, Routes} from 'react-router-dom';
-
-import {GothamActions} from '../actions/GothamActions';
 import {AuthRoute} from '../components/AuthRoute/AuthRoute';
 import {LazyLoad} from '../components/LazyLoader/LazyLoader';
 import {Loader} from '../components/Loader/Loader';
+import {lazyImport} from './dynamicUtils';
+import {GothamActions} from '../actions/GothamActions';
 import {GothamConfiguration, GothamRoute} from '../views/Gotham/Gotham';
-import {lazyImport} from './lazyImport';
+import {MarkdownView} from '../views/MarkdownView/MarkdownView';
 
-const {NotFoundView} = lazyImport(() => import('../views/NotFoundView'), 'NotFoundView');
+const {NotFoundView} = lazyImport(() => import('../views/NotFoundView/NotFoundView'), 'NotFoundView');
 
 export const fadeTransition = {
   atActive: {
@@ -39,6 +39,8 @@ export const parseRoute = (route: GothamRoute, props: any): ReactNode => {
   if(view) {
     // Built-in views
     switch(view) {
+      case 'markdown':
+        return <LazyLoad component={MarkdownView} {...viewProps} />;
       case 'notfound':
         return <LazyLoad component={NotFoundView} {...viewProps} />;
       default:

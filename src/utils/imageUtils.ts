@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 export const convertFileToBase64 = (file: File, maxSize: number): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
