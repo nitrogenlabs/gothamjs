@@ -2,29 +2,17 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import {Svg} from './components/Svg/Svg';
-import {Gotham, GothamConfiguration, GothamRoute} from './views/Gotham/Gotham';
+import {Gotham} from './views/Gotham/Gotham';
 
-// Views
-const signIn: GothamRoute = {
-  path: '/signIn',
-  props: {
-    logo: <Svg name="gotham-logo" width={130} height={130} />,
-    onLogin: () => { },
-    onSignup: () => { },
-    title: 'Login'
-  },
-  view: 'signIn'
-};
+import type {GothamConfiguration} from './views/Gotham/GothamProvider';
 
-// CONFIGURATION
 const config: GothamConfiguration = {
   name: 'gothamjs',
   routes: [
     {
-      container: 'default',
       path: '/',
       props: {
         topBar: {
@@ -37,9 +25,10 @@ const config: GothamConfiguration = {
           transparentTextColor: '#fff'
         }
       },
+      view: 'home',
       routes: [
         {
-          path: '/',
+          path: '/home',
           props: {
             features: [
               {
@@ -109,46 +98,13 @@ const config: GothamConfiguration = {
               image: <Svg name="gotham-logo" width={130} height={130} />
             },
             title: 'Welcome'
-          },
-          view: 'home'
+          }
         },
-        signIn
-      ]
-    },
-    {
-      container: 'menu',
-      exact: false,
-      path: '/docs',
-      props: {
-        sideBar: {
-          menu: [
-            {label: 'Getting Started', url: '/docs/gettingStarted'},
-            {label: 'Containers', url: '/docs/containers'}
-          ]
-        }
-      },
-      routes: [
-        {
-          path: '/docs',
-          props: {
-            external: './docs/gettingStarted.md',
-            title: 'Getting Started'
-          },
-          view: 'markdown'
-        },
-        {
-          path: '/docs/containers',
-          props: {
-            external: './containers.md',
-            title: 'Containers'
-          },
-          view: 'markdown'
-        }
-      ]
+      ],
     }
   ],
   title: 'GothamJS'
 };
 
-// Render initial ReactJS code
-ReactDOM.render(<Gotham config={config} />, document.getElementById('app'));
+const root = createRoot(document.getElementById('app'));
+root.render(<Gotham config={config} />);

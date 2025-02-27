@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
  */
 import SvgIcon from '@mui/material/SvgIcon';
 
-import {Config} from '../../config/app';
+import {Config} from '../../config/appConfig';
 
 export interface SvgProps {
   readonly className?: string;

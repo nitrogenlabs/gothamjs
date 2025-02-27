@@ -10,13 +10,13 @@ import {MarkdownConstants} from './constants/MarkdownConstants';
 export {Flux} from '@nlabs/arkhamjs';
 export {useFormContext} from 'react-hook-form';
 export * from 'react-i18next';
-export {Link, NavLink} from 'react-router-dom';
+export {Link, NavLink} from 'react-router';
 
 export {Svg} from './components/Svg/Svg';
 export * from './views/Gotham/Gotham';
 export * from './utils/colorUtils';
 export * from './utils/imageUtils';
-export * from './utils/lazyImport';
+export * from './utils/dynamicUtils';
 export * from './utils/routeUtils';
 export * from './utils/useBreakpoint';
 export * from './utils/viewUtils';

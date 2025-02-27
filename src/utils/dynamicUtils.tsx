@@ -12,7 +12,10 @@ export const lazyImport = <T extends ComponentType<any>, I extends {[K2 in K]: T
 ): I => Object.create({[name]: lazy(() => factory().then((module) => ({default: module[name]})))});
 
 export const loadRemoteComponent = (url: string, exportName: string = 'default') => {
-  const {[exportName]: Component} = lazyImport(() => import(url), exportName);
+  const {[exportName]: Component} = lazyImport(
+    () => import(/* webpackIgnore: true */ url).then(module => ({[exportName]: module[exportName] || module.default})),
+    exportName
+  );
 
   return (props: any) => (
     <Suspense fallback={<Loader />}>

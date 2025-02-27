@@ -2,10 +2,14 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {FluxFramework} from '@nlabs/arkhamjs';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
-import {useNavigate} from 'react-router-dom';
+import {BrowserRouter, Routes, useNavigate} from 'react-router';
 
 import {GothamConstants} from '../../constants/GothamConstants';
+import {GothamConfiguration} from '../../views/Gotham/GothamProvider';
+import {renderRouteList} from '../../utils/routeUtils';
+import {FC, ReactNode} from 'react';
 
 export const navBack = (history) => (): void => {
   history.goBack();
@@ -25,7 +29,7 @@ export const navReplace = (history) => (data): void => {
   history.replace(path, params);
 };
 
-export const GothamRoute = (): null => {
+export const GothamRouteListeners: FC = (): null => {
   const navigate = useNavigate();
 
   useFluxListener(GothamConstants.NAV_BACK, navBack(navigate));
@@ -35,3 +39,40 @@ export const GothamRoute = (): null => {
 
   return null;
 };
+
+export type GothamRouteProps = {
+  readonly authenticate?: boolean;
+  readonly asyncComponent?: any;
+  readonly component?: any;
+  readonly container?: 'default' | 'menu';
+  readonly exact?: boolean;
+  readonly isAuth?: () => boolean;
+  readonly location?: Location;
+  readonly name?: string;
+  readonly path: string;
+  readonly props?: any;
+  readonly routes?: GothamRouteProps[];
+  readonly sensitive?: boolean;
+  readonly strict?: boolean;
+  readonly title?: string;
+  readonly view?: 'confirm' | 'default'| 'home' | 'markdown' | 'signIn' | 'notfound';
+};
+
+export type GothamRoutesProps = {
+  flux: FluxFramework;
+  gothamConfig: GothamConfiguration;
+  routes: GothamRouteProps[];
+};
+
+export const GothamRoutes: FC<GothamRoutesProps> = ({
+  flux,
+  gothamConfig,
+  routes
+}) => (
+  <BrowserRouter>
+    <GothamRouteListeners />
+    <Routes>
+      {renderRouteList(routes, flux, gothamConfig)}
+    </Routes>
+  </BrowserRouter>
+);

@@ -6,7 +6,7 @@ import {Flux} from '@nlabs/arkhamjs';
 import {FluxProvider} from '@nlabs/arkhamjs-utils-react';
 import {render, screen, waitFor} from '@testing-library/react';
 import {Form} from 'react-hook-form';
-import {MemoryRouter} from 'react-router-dom';
+import {MemoryRouter} from 'react-router';
 
 
 export const getTestElement = (name: string, index: number = 0) => screen.queryAllByTestId(name)[index];

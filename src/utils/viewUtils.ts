@@ -4,7 +4,7 @@
  */
 import qs from 'qs';
 import {useMemo} from 'react';
-import {Location, Navigation, useLocation, useNavigation, useParams, useMatches} from 'react-router-dom';
+import {Location, Navigation, useLocation, useNavigation, useParams, useMatches} from 'react-router';
 
 export interface AppRouter {
   readonly navigation: Navigation;

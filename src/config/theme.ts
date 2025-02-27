@@ -2,10 +2,10 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {SimplePaletteColorOptions, Theme, ThemeOptions} from '@mui/material';
+import {SimplePaletteColorOptions, type ThemeOptions} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 
-export {Theme, ThemeOptions};
+export {ThemeOptions};
 
 const palette: ThemeOptions['palette'] = {
   common: {
