@@ -42,7 +42,6 @@ export const GothamRouteListeners: FC = (): null => {
 
 export type GothamRouteProps = {
   readonly authenticate?: boolean;
-  readonly asyncComponent?: any;
   readonly component?: any;
   readonly container?: 'default' | 'menu';
   readonly exact?: boolean;

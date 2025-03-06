@@ -17,8 +17,8 @@ export interface SvgProps {
 
 const SvgIconStyled = styled(SvgIcon)`${({color, height, width}) => `
   color: ${color};
-  height: ${height};
-  width: ${width};
+  height: ${height}px;
+  width: ${width}px;
 `}`;
 
 export const Svg = ({className, color, height = 32, name, width = 32}: SvgProps) => (

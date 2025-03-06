@@ -12,14 +12,21 @@ export {useFormContext} from 'react-hook-form';
 export * from 'react-i18next';
 export {Link, NavLink} from 'react-router';
 
-export {Svg} from './components/Svg/Svg';
+export * from './components/Button/Button';
+export * from './components/Form/Form';
+export * from './components/FormField/FormField';
+export * from './components/Svg/Svg';
+export * from './components/TextField/TextField';
+
 export * from './views/Gotham/Gotham';
+export * from './views/Gotham/GothamProvider';
 export * from './utils/colorUtils';
 export * from './utils/imageUtils';
 export * from './utils/dynamicUtils';
 export * from './utils/routeUtils';
 export * from './utils/useBreakpoint';
 export * from './utils/viewUtils';
+
 export {
   AuthConstants,
   GothamActions,

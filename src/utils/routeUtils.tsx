@@ -4,7 +4,7 @@
  */
 import {FluxFramework} from '@nlabs/arkhamjs';
 import {ReactNode, useEffect} from 'react';
-import {Route, RouteProps, Routes} from 'react-router';
+import {Navigate, Route, RouteProps, Routes} from 'react-router';
 import React from 'react';
 
 import {AuthRoute} from '../components/AuthRoute/AuthRoute';
@@ -36,7 +36,13 @@ export const fadeTransition = {
 };
 
 export const parseRoute = (route: GothamRouteProps, props: any): ReactNode => {
-  const {asyncComponent, component: Component, path, view} = route;
+  const {
+    authenticate,
+    component,
+    isAuth,
+    path,
+    view
+  } = route;
   const viewProps: any = {loader: Loader, ...props};
 
   const RouteComponent = () => {
@@ -45,6 +51,11 @@ export const parseRoute = (route: GothamRouteProps, props: any): ReactNode => {
       const {titleBarSeparator} = props.gothamConfig;
       GothamActions.updateTitle(title, titleBarSeparator);
     }, [route.title, props.gothamConfig.titleBarSeparator]);
+
+
+    if(authenticate && !isAuth()) {
+      return <Navigate to="/signin" />;
+    }
 
     // Get component
     if(view) {
@@ -61,12 +72,10 @@ export const parseRoute = (route: GothamRouteProps, props: any): ReactNode => {
         default:
           return null;
       }
-    } else if(asyncComponent) {
+    } else if(component) {
+      console.log('component', {component: component()});
       // Create an async imported component
-      return <LazyLoad component={asyncComponent} {...viewProps} />;
-    } else if(Component) {
-      // Custom components
-      return <Component {...viewProps} />;
+      return <LazyLoad component={component} {...viewProps} />;
     }
 
     throw new Error(`Gotham Error: Route "${path}" is missing "component" property.`);
@@ -82,12 +91,12 @@ export const renderRoute = (
 ): ReactNode => {
   const {isAuth: defaultIsAuth} = gothamConfig;
   const {authenticate = false, isAuth = defaultIsAuth, path, ...restRouteProps} = route;
-  const ReactRoute = authenticate ? AuthRoute : Route;
+  // const ReactRoute = authenticate ? AuthRoute : Route;
   const {props: componentProps, ...routeProps} = route;
   const viewProps: any = {gothamConfig, Flux, ...routeProps, ...componentProps};
 
   return (
-    <ReactRoute
+    <Route
       key={path}
       path={path}
       element={parseRoute(route, viewProps)}

@@ -2,11 +2,10 @@
  * Copyright (c) 2024-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Flux, type FluxMiddlewareType, type FluxFramework, type FluxOptions, ArkhamConstants} from '@nlabs/arkhamjs';
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
-import {FluxProvider} from '@nlabs/arkhamjs-utils-react';
-import {FC, ReactNode, useEffect, useState} from 'react';
+import {useFlux} from '@nlabs/arkhamjs-utils-react';
+import {useEffect, useState} from 'react';
 import {I18nextProvider} from 'react-i18next';
 import merge from 'lodash/merge';
 
@@ -16,7 +15,11 @@ import {GothamContext} from '../../utils/GothamContext';
 import {i18n} from '../../utils/i18nUtil';
 import {GothamConstants} from '../../constants/GothamConstants';
 import {GothamActions} from '../../actions/GothamActions';
-import {type GothamRouteProps, GothamRoutes} from '../../components/GothamRouter/GothamRouter';
+import {GothamRoutes} from '../../components/GothamRouter/GothamRouter';
+
+import type {FC, ReactNode} from 'react';
+import type {FluxMiddlewareType, FluxFramework, FluxOptions} from '@nlabs/arkhamjs';
+import type {GothamRouteProps} from '../../components/GothamRouter/GothamRouter';
 
 export interface GothamProviderProps {
   readonly children?: ReactNode;
@@ -72,13 +75,14 @@ export const init = (setAppLoaded, config: GothamConfiguration) => (): void => {
   setAppLoaded(true);
 };
 
-export const signOut = async () => {
-  await Flux.clearAppData();
+export const signOut = (flux: FluxFramework) => async () => {
+  await flux.clearAppData();
   await GothamActions.loading(false);
   GothamActions.navGoto('/signIn');
 };
 
 export const GothamProvider: FC<GothamProviderProps> = ({children, config: appConfig}) => {
+  const flux = useFlux();
   const config: GothamConfiguration = merge(defaultGothamConfig, appConfig);
   const {
     isAuth,
@@ -94,7 +98,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   const [session, setSession] = useState({});
 
   useEffect(() => {
-    if(Flux) {
+    if(flux) {
       // ArkhamJS Middleware
       const env: string = Config.get('environment');
       const logger: Logger = new Logger({
@@ -104,7 +108,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
       // ArkhamJS Configuration
       const storage: BrowserStorage = new BrowserStorage({type: storageType});
 
-      Flux.init({
+      flux.init({
         middleware: [logger, ...middleware],
         name,
         // state: {app: {title}},
@@ -112,8 +116,8 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
         stores: [gothamApp, ...stores]
       });
 
-      Flux.on(GothamConstants.SIGN_OUT, signOut);
-      Flux.on(GothamConstants.UPDATE_SESSION, ({session}) => {
+      flux.on(GothamConstants.SIGN_OUT, signOut(flux));
+      flux.on(GothamConstants.UPDATE_SESSION, ({session}) => {
         setSession(session);
       });
     }
@@ -124,11 +128,9 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   console.log({routes});
   return (
     <I18nextProvider i18n={i18n(translations)}>
-      <GothamContext.Provider value={{Flux, isAuth, session}}>
-        <FluxProvider flux={Flux}>
-          <GothamRoutes flux={Flux} gothamConfig={config} routes={routes}/>
-          {children}
-        </FluxProvider>
+      <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
+        <GothamRoutes flux={flux} gothamConfig={config} routes={routes}/>
+        {children}
       </GothamContext.Provider>
     </I18nextProvider>
   );

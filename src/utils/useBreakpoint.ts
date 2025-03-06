@@ -2,12 +2,19 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+import {useTheme} from '@mui/material/styles';
 import throttle from 'lodash/throttle';
 import {useEffect, useState} from 'react';
 
-import {breakpoints} from '../config/theme';
-
 const getCurrentBreakpoint = (setBreakpoint) => (): void => {
+  const breakpoints = {
+    values: {
+      lg: 1200,
+      md: 900,
+      sm: 600,
+      xl: 1536
+    }
+  }
   const {values: {lg, md, sm, xl}} = breakpoints;
   const {innerWidth} = window;
 

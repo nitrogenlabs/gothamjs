@@ -11,7 +11,6 @@ type Story = StoryObj<typeof Loader>;
 
 export const Primary: Story = {
   args: {
-    content: 'Loading...',
-    full: true
+    content: 'Loading...'
   },
 };

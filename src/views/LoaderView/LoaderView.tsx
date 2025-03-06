@@ -22,5 +22,5 @@ export const LoaderView = () => {
     return null;
   }
 
-  return <Loader content={content} full />;
+  return <Loader content={content} />;
 };
