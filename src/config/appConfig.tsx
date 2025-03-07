@@ -6,15 +6,15 @@ import get from 'lodash/get';
 import merge from 'lodash/merge';
 
 export class Config {
-  static values: any = {};
+  static values: Record<string, unknown> = {};
 
-  static set(values: object): any {
+  static set(values: Record<string, unknown>): Record<string, unknown> {
     return merge(this.values, values);
   }
 
-  static get(path: string | string[], defaultValue?: any): any {
+  static get(path: string | string[], defaultValue?: unknown): unknown {
     const environment: string = process.env.NODE_ENV || 'development';
-    const configValues: object = {...this.values, environment};
+    const configValues: Record<string, unknown> = {...this.values, environment};
     return get(configValues, path, defaultValue);
   }
 }

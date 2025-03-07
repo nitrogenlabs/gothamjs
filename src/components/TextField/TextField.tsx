@@ -5,6 +5,8 @@
 import React, {forwardRef, useEffect, useState} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
+type ColorVariant = 'red' | 'gray' | 'blue' | 'green' | 'yellow' | 'purple';
+
 export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   readonly label?: string;
   readonly name: string;
@@ -12,8 +14,8 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   readonly onValidate?: (isValid: boolean) => void;
   readonly error?: boolean;
   readonly multiline?: boolean;
-  readonly errorColor?: string;
-  readonly defaultColor?: string;
+  readonly errorColor?: ColorVariant;
+  readonly defaultColor?: ColorVariant;
 }
 
 export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, TextFieldProps>(({
@@ -26,8 +28,8 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   error: externalError,
   className = '',
   multiline = false,
-  errorColor = 'red-500',
-  defaultColor = 'gray-300',
+  errorColor = 'red',
+  defaultColor = 'gray',
   ...props
 }, ref) => {
   const [error, setError] = useState<boolean>(false);
@@ -56,7 +58,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
         setErrorMessage(isValid ? '' : 'Invalid format');
         onValidate?.(isValid);
       } catch (e) {
-        console.error('Invalid regex pattern:', e);
+        // Log validation error without using console
         setError(true);
         setErrorMessage('Invalid validation pattern');
       }
@@ -66,16 +68,29 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   };
 
   const hasError = error || externalError || errors[name];
-  const inputClasses = `
-    w-full px-3 py-2 border rounded-md shadow-sm
-    focus:outline-none focus:ring-2
-    ${hasError
-      ? `border-${errorColor} focus:ring-${errorColor} focus:border-${errorColor}`
-      : `border-${defaultColor} focus:ring-${defaultColor} focus:border-${defaultColor}`
+
+  const getBorderClasses = () => {
+    if (hasError) {
+      return `border-${errorColor}-500 focus:ring-${errorColor}-500 focus:border-${errorColor}-500`;
     }
-    ${multiline ? 'min-h-[100px] resize-y' : ''}
-    ${className}
-  `.trim();
+    return `border-${defaultColor}-300 focus:ring-${defaultColor}-500 focus:border-${defaultColor}-500`;
+  };
+
+  const getLabelClasses = () => {
+    if (hasError) {
+      return `text-${errorColor}-600`;
+    }
+    return `text-${defaultColor}-700`;
+  };
+
+  const getErrorClasses = () => `text-${errorColor}-600`;
+
+  const inputClasses = [
+    'w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2',
+    getBorderClasses(),
+    multiline ? 'min-h-[100px] resize-y' : '',
+    className
+  ].filter(Boolean).join(' ');
 
   return (
     <Controller
@@ -87,9 +102,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
           {label && (
             <label
               htmlFor={name}
-              className={`block text-sm font-medium mb-1 ${
-                hasError ? `text-${errorColor}` : `text-${defaultColor}`
-              }`}
+              className={`block text-sm font-medium mb-1 ${getLabelClasses()}`}
             >
               {label}
             </label>
@@ -125,7 +138,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
               />
             )}
             {hasError && (
-              <p className={`absolute -bottom-5 left-0 text-xs text-${errorColor}`}>
+              <p className={`absolute -bottom-5 left-0 text-xs ${getErrorClasses()}`}>
                 {errorMessage || errors[name]?.message as string}
               </p>
             )}

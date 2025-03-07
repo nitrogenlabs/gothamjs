@@ -9,13 +9,13 @@
  * @constructor
  */
 export class GothamTimer {
-  timerId: any;
+  timerId: unknown;
   start: number = 0;
   remaining: number = 0;
   delay: number = 0;
-  callback: any;
+  callback: unknown;
 
-  constructor(delay: number, callback: any) {
+  constructor(delay: number, callback: unknown) {
     this.callback = callback;
     this.delay = delay;
     this.remaining = delay;
@@ -27,14 +27,14 @@ export class GothamTimer {
   }
 
   pause() {
-    clearTimeout(this.timerId);
+    clearTimeout(this.timerId as number);
     this.remaining -= (+(new Date()) - this.start);
   }
 
   resume() {
     this.start = +(new Date());
-    clearTimeout(this.timerId);
-    this.timerId = setTimeout(this.callback, this.remaining);
+    clearTimeout(this.timerId as number);
+    this.timerId = setTimeout(this.callback as () => void, this.remaining);
   }
 
   getTimeRemaining() {

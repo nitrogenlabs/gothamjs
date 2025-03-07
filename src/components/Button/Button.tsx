@@ -4,6 +4,7 @@ import {useTranslation} from 'react-i18next';
 
 import type {GothamColor, GothamColorTone} from '../../utils/colorUtils';
 import type {GothamSize} from '../../utils/sizeUtils';
+
 export type ButtonType = 'button' | 'reset' | 'submit';
 export type ButtonVariant = 'text' | 'contained' | 'outlined';
 

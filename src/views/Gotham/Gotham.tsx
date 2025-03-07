@@ -7,12 +7,12 @@ import {useEffect} from 'react';
 import {GothamProvider} from './GothamProvider';
 import {LoaderView} from '../LoaderView/LoaderView';
 
-import type {FC, ReactNode} from 'react';
 import type {GothamConfiguration, GothamStatus} from './GothamProvider';
+import type {FC, ReactNode} from 'react';
 
 export interface GothamProps {
   readonly children?: ReactNode;
-  readonly classes?: any;
+  readonly classes?: Record<string, string>;
   readonly config?: GothamConfiguration;
   readonly isAuth?: () => boolean;
 }
@@ -47,9 +47,9 @@ export interface GothamNotification {
 }
 
 export interface ContainerProviderProps {
-  children?: any;
-  navProps: any;
-  routeProps: any;
+  children?: ReactNode;
+  navProps: Record<string, unknown>;
+  routeProps: Record<string, unknown>;
 }
 
 export const onKeyUp = (event) => {

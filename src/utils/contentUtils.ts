@@ -4,7 +4,7 @@
  */
 import {get} from '@nlabs/rip-hunter';
 
-export const fetchJsonFromUrl = async <T = any>(url: string): Promise<T> => {
+export const fetchJsonFromUrl = async <T = unknown>(url: string): Promise<T> => {
   try {
     const response = await get(url);
     return response.data as T;
@@ -15,7 +15,7 @@ export const fetchJsonFromUrl = async <T = any>(url: string): Promise<T> => {
 
 export const parseTemplate = (
   markdown: string = '',
-  values: Record<string, any> = {}
+  values: Record<string, unknown> = {}
 ): string => {
   return markdown.replace(/\{\{(\w+)\}\}/g, (match, key) => {
     const value = values[key];

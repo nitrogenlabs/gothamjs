@@ -1,9 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
-
 import { Gotham } from './Gotham';
 
+import type { Meta, StoryObj } from '@storybook/react';
+
+
 const meta: Meta<typeof Gotham> = {
-  component: Gotham,
+  component: Gotham
 };
 
 export default meta;
@@ -14,13 +15,13 @@ export const Primary: Story = {
     config: {
       routes: [
         {
-          view: 'markdown',
           path: '/',
           props: {
-            content: '# Hello\n**Bold text**\n*Italic text*\n- List item',
-          }
-        },
+            content: '# Hello\n**Bold text**\n*Italic text*\n- List item'
+          },
+          view: 'markdown'
+        }
       ]
-    },
-  },
+    }
+  }
 };

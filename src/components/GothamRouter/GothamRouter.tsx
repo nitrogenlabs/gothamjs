@@ -7,9 +7,10 @@ import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import {BrowserRouter, Routes, useNavigate} from 'react-router';
 
 import {GothamConstants} from '../../constants/GothamConstants';
-import {GothamConfiguration} from '../../views/Gotham/GothamProvider';
 import {renderRouteList} from '../../utils/routeUtils';
-import {FC, ReactNode} from 'react';
+import {GothamConfiguration} from '../../views/Gotham/GothamProvider';
+
+import type {FC} from 'react';
 
 export const navBack = (history) => (): void => {
   history.goBack();
@@ -42,14 +43,14 @@ export const GothamRouteListeners: FC = (): null => {
 
 export type GothamRouteProps = {
   readonly authenticate?: boolean;
-  readonly component?: any;
+  readonly component?: React.ComponentType<Record<string, unknown>>;
   readonly container?: 'default' | 'menu';
   readonly exact?: boolean;
   readonly isAuth?: () => boolean;
   readonly location?: Location;
   readonly name?: string;
   readonly path: string;
-  readonly props?: any;
+  readonly props?: Record<string, unknown>;
   readonly routes?: GothamRouteProps[];
   readonly sensitive?: boolean;
   readonly strict?: boolean;

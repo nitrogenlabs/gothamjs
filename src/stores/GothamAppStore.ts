@@ -13,7 +13,7 @@ const initialState = {
   external: {}
 };
 
-export const gothamApp = (type: string, data: any, state: any = initialState): any => {
+export const gothamApp = (type: string, data: Record<string, unknown>, state: Record<string, unknown> = initialState): Record<string, unknown> => {
   switch(type) {
     case GothamConstants.INITIALIZE: {
       return set(state, 'external', {});

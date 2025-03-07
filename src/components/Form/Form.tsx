@@ -5,17 +5,18 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import {BaseSyntheticEvent, ReactNode, useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
+import * as Yup from 'yup';
 
 export interface FormProps {
   readonly children: ReactNode;
   readonly className?: string;
-  readonly defaultValues?: any;
+  readonly defaultValues?: Record<string, unknown>;
   readonly mode?: 'onSubmit' | 'onBlur' | 'onChange' | 'onTouched' | 'all';
   readonly name?: string;
-  readonly onChange?: (data: any) => any;
-  readonly onSubmit: (data: any, event: BaseSyntheticEvent, setError: any) => any;
-  readonly schema?: any;
-  readonly validate?: any;
+  readonly onChange?: (data: Record<string, unknown>) => void;
+  readonly onSubmit: (data: Record<string, unknown>, event: BaseSyntheticEvent, setError: (field: string, error: { type: string; message: string }) => void) => void;
+  readonly schema?: Yup.ObjectSchema<Record<string, unknown>>;
+  readonly validate?: (data: Record<string, unknown>) => void;
   readonly validateOnBlur?: boolean;
 }
 

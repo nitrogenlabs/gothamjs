@@ -6,10 +6,10 @@ import {Flux, type FluxFramework} from '@nlabs/arkhamjs';
 import {createContext} from 'react';
 
 export interface GothamContextProps {
-  readonly children?: any;
+  readonly children?: React.ReactNode;
   readonly Flux: FluxFramework;
   readonly isAuth?: () => boolean;
-  readonly session?: any;
+  readonly session?: Record<string, unknown>;
 }
 
 const initialContext: GothamContextProps = {Flux, isAuth: () => true, session: {}};

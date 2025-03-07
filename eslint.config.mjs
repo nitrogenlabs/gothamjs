@@ -33,7 +33,8 @@ export default tseslint.config([
             '**/*.test.ts*',
             '**/*.spec.ts*',
             'jest.setup.js',
-            '**/*.config.*'
+            '**/*.config.*',
+            '**/utils/testUtils.tsx'
           ],
           'peerDependencies': true
         }

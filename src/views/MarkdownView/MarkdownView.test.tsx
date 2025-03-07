@@ -39,10 +39,10 @@ describe('MarkdownView', () => {
 
     const markdownContainer = container.firstChild as HTMLElement;
     expect(markdownContainer).toHaveStyle({
-      width: '100%',
-      height: '100%',
       backgroundColor: 'transparent',
-      overflow: 'auto'
+      height: '100%',
+      overflow: 'auto',
+      width: '100%'
     });
   });
 });

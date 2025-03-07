@@ -5,26 +5,26 @@
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {useFlux} from '@nlabs/arkhamjs-utils-react';
+import merge from 'lodash/merge';
 import {useEffect, useState} from 'react';
 import {I18nextProvider} from 'react-i18next';
-import merge from 'lodash/merge';
 
+import {GothamActions} from '../../actions/GothamActions';
+import {GothamRoutes} from '../../components/GothamRouter/GothamRouter';
 import {Config} from '../../config/appConfig';
+import {GothamConstants} from '../../constants/GothamConstants';
 import {gothamApp} from '../../stores/gothamAppStore';
 import {GothamContext} from '../../utils/GothamContext';
 import {i18n} from '../../utils/i18nUtil';
-import {GothamConstants} from '../../constants/GothamConstants';
-import {GothamActions} from '../../actions/GothamActions';
-import {GothamRoutes} from '../../components/GothamRouter/GothamRouter';
 
-import type {FC, ReactNode} from 'react';
-import type {FluxMiddlewareType, FluxFramework, FluxOptions} from '@nlabs/arkhamjs';
 import type {GothamRouteProps} from '../../components/GothamRouter/GothamRouter';
+import type {FluxMiddlewareType, FluxFramework, FluxOptions} from '@nlabs/arkhamjs';
+import type {FC, ReactNode} from 'react';
 
 export interface GothamProviderProps {
   readonly children?: ReactNode;
-  readonly config: any;
-  readonly session?: any;
+  readonly config: GothamConfiguration;
+  readonly session?: Record<string, unknown>;
 }
 
 export type GothamPosition = 't' | 'tc' | 'tl' | 'tr' | 'b' | 'bc' | 'br' | 'bl';
@@ -41,14 +41,14 @@ export interface GothamConfiguration {
   readonly isAuth?: () => boolean;
   readonly middleware?: FluxMiddlewareType[];
   readonly name?: string;
-  readonly onInit?: () => any;
+  readonly onInit?: () => void;
   readonly routes?: GothamRouteProps[];
   readonly storageType?: 'local' | 'session';
-  readonly stores?: any[];
+  readonly stores?: Record<string, unknown>[];
   readonly title?: string;
   readonly titleBarSeparator?: string;
-  readonly theme?: any;
-  readonly translations?: any;
+  readonly theme?: Record<string, unknown>;
+  readonly translations?: Record<string, unknown>;
 }
 
 export const defaultGothamConfig: GothamConfiguration = {
@@ -94,13 +94,13 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
     translations
   } = config;
   // const {isAuth, routes = [], ...gothamConfig} = config;
-  Config.set(config);
+  Config.set(config as Record<string, unknown>);
   const [session, setSession] = useState({});
 
   useEffect(() => {
     if(flux) {
       // ArkhamJS Middleware
-      const env: string = Config.get('environment');
+      const env: string = Config.get('environment') as string;
       const logger: Logger = new Logger({
         debugLevel: env === 'development' ? LoggerDebugLevel.DISPATCH : LoggerDebugLevel.DISABLED
       });
@@ -125,7 +125,6 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
 
   // const existingSession = Flux.getState('user.session', {});
 
-  console.log({routes});
   return (
     <I18nextProvider i18n={i18n(translations)}>
       <GothamContext.Provider value={{Flux: flux, isAuth, session}}>

@@ -3,22 +3,30 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {FluxFramework} from '@nlabs/arkhamjs';
-import {ReactNode, useEffect} from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import {Navigate, Route, RouteProps, Routes} from 'react-router';
-import React from 'react';
 
-import {AuthRoute} from '../components/AuthRoute/AuthRoute';
-import {LazyLoad} from '../components/LazyLoader/LazyLoader';
-import {Loader} from '../components/Loader/Loader';
 import {lazyImport} from './dynamicUtils';
 import {GothamActions} from '../actions/GothamActions';
-import {MarkdownView} from '../views/MarkdownView/MarkdownView';
-import {DefaultView} from '../views/DefaultView/DefaultView';
-import {HomeView} from '../views/HomeView/HomeView';
-import {type GothamConfiguration} from '../views/Gotham/GothamProvider';
+import {AuthRoute} from '../components/AuthRoute/AuthRoute';
 import {GothamRouteProps} from '../components/GothamRouter/GothamRouter';
+import {LazyLoad} from '../components/LazyLoader/LazyLoader';
+import {Loader} from '../components/Loader/Loader';
+import {DefaultView} from '../views/DefaultView/DefaultView';
+import {type GothamConfiguration} from '../views/Gotham/GothamProvider';
+import {HomeView} from '../views/HomeView/HomeView';
+import {MarkdownView} from '../views/MarkdownView/MarkdownView';
 
 const {NotFoundView} = lazyImport(() => import('../views/NotFoundView/NotFoundView'), 'NotFoundView');
+
+export interface RouteViewProps {
+  loader?: typeof Loader;
+  gothamConfig: GothamConfiguration;
+  Flux: FluxFramework;
+  props?: Record<string, unknown>;
+  title?: string;
+  [key: string]: unknown;
+}
 
 export const fadeTransition = {
   atActive: {
@@ -35,7 +43,7 @@ export const fadeTransition = {
   }
 };
 
-export const parseRoute = (route: GothamRouteProps, props: any): ReactNode => {
+export const parseRoute = (route: GothamRouteProps, props: RouteViewProps): ReactNode => {
   const {
     authenticate,
     component,
@@ -43,7 +51,7 @@ export const parseRoute = (route: GothamRouteProps, props: any): ReactNode => {
     path,
     view
   } = route;
-  const viewProps: any = {loader: Loader, ...props};
+  const viewProps: RouteViewProps = {loader: Loader, ...props};
 
   const RouteComponent = () => {
     useEffect(() => {
@@ -73,8 +81,6 @@ export const parseRoute = (route: GothamRouteProps, props: any): ReactNode => {
           return null;
       }
     } else if(component) {
-      console.log('component', {component: component()});
-      // Create an async imported component
       return <LazyLoad component={component} {...viewProps} />;
     }
 
@@ -93,7 +99,7 @@ export const renderRoute = (
   const {authenticate = false, isAuth = defaultIsAuth, path, ...restRouteProps} = route;
   // const ReactRoute = authenticate ? AuthRoute : Route;
   const {props: componentProps, ...routeProps} = route;
-  const viewProps: any = {gothamConfig, Flux, ...routeProps, ...componentProps};
+  const viewProps: RouteViewProps = {Flux, gothamConfig, ...routeProps, ...componentProps};
 
   return (
     <Route
@@ -142,7 +148,7 @@ export const renderRouteList = (
 
   const render404 = <Route
     key="notFound"
-    element={parseRoute(notFoundRoute, {title}) as any}
+    element={parseRoute(notFoundRoute, {title} as RouteViewProps)}
   />;
 
   return [...gothamRoutes, render404];

@@ -1,4 +1,3 @@
-import {useState, type ReactElement, type ReactNode} from 'react';
 
 import Alert from '@mui/material/Alert/Alert';
 import Button from '@mui/material/Button/Button';
@@ -6,15 +5,19 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import Slide from '@mui/material/Slide';
 import Snackbar, {SnackbarProps} from '@mui/material/Snackbar';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
+import {useState} from 'react';
+
 import {GothamConstants} from '../../constants/GothamConstants';
 import {Svg} from '../Svg/Svg';
+
+import type {ReactElement} from 'react';
 
 export const TransitionUp = (props) => <Slide {...props} direction="up" />;
 
 export interface GothamNotifyAction {
   readonly icon?: string;
   readonly label?: string;
-  readonly onClick: (key) => any;
+  readonly onClick: (key: string) => void;
 }
 
 export type GothamSeverity = 'error' | 'info' | 'success' | 'warning';
@@ -59,8 +62,8 @@ export const Notify = () => {
           sx={{width: '100%'}}
           variant="filled"
         >
-            {message}
-          </Alert>
+          {message}
+        </Alert>
       ) : message,
       severity
     });
@@ -73,22 +76,22 @@ export const Notify = () => {
   return (
     !notification.severity
       ? (
-          <Snackbar
-            {...notification}
-            open={isOpen}
-            onClose={notifyClose}
-            TransitionComponent={TransitionUp}
-          />
-        )
+        <Snackbar
+          {...notification}
+          open={isOpen}
+          onClose={notifyClose}
+          TransitionComponent={TransitionUp}
+        />
+      )
       : (
-          <Snackbar
-            {...notification}
-            open={isOpen}
-            onClose={notifyClose}
-            TransitionComponent={TransitionUp}
-          >
-            {notification.message as ReactElement}
-          </Snackbar>
-        )
+        <Snackbar
+          {...notification}
+          open={isOpen}
+          onClose={notifyClose}
+          TransitionComponent={TransitionUp}
+        >
+          {notification.message as ReactElement}
+        </Snackbar>
+      )
   );
 };

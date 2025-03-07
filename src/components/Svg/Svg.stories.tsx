@@ -1,9 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
-
 import { Svg } from './Svg';
 
+import type { Meta, StoryObj } from '@storybook/react';
+
+
 const meta: Meta<typeof Svg> = {
-  component: Svg,
+  component: Svg
 };
 
 export default meta;
@@ -16,5 +17,5 @@ export const Primary: Story = {
     height: 100,
     name: 'test',
     width: 100
-  },
+  }
 };

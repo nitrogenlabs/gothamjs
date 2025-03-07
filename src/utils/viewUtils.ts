@@ -7,10 +7,10 @@ import {useMemo} from 'react';
 import {Location, Navigation, useLocation, useNavigation, useParams, useMatches} from 'react-router';
 
 export interface AppRouter {
-  readonly navigation: Navigation;
   readonly location: Location;
-  readonly matches: any;
-  readonly params: any;
+  readonly matches: unknown[];
+  readonly navigation: Navigation;
+  readonly params: unknown;
 }
 
 export const useRoute = (): AppRouter => {
@@ -20,9 +20,9 @@ export const useRoute = (): AppRouter => {
   const matches = useMatches();
 
   return useMemo(() => ({
-    navigation,
     location,
     matches,
+    navigation,
     params: {
       ...(location.state || {}),
       ...urlParams,
@@ -31,11 +31,11 @@ export const useRoute = (): AppRouter => {
   }), [navigation, location, matches, urlParams]);
 };
 
-export const parseNavUrl = (path: string, params: any): string => path
+export const parseNavUrl = (path: string, params: Record<string, unknown>): string => path
   .split('/')
   .reduce((list: string[], part: string) => {
     if(part.substr(0, 1) === ':') {
-      const value: any = params[part.substr(1)];
+      const value: unknown = params[part.substr(1)];
       return [...list, (value !== undefined) ? value : part];
     }
 

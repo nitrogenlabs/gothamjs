@@ -4,10 +4,10 @@ import ReactMarkdown from 'react-markdown';
 import {fetchJsonFromUrl, parseTemplate} from '../../utils/contentUtils';
 
 interface MarkdownViewProps {
+  className?: string;
   content?: string;
   url?: string;
-  values?: Record<string, any>;
-  className?: string;
+  values?: Record<string, unknown>;
 }
 
 export const MarkdownView: React.FC<MarkdownViewProps> = ({
@@ -23,7 +23,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
       try {
         if (url) {
           const data = await fetchJsonFromUrl(url);
-          setMarkdown(parseTemplate(data, values));
+          setMarkdown(parseTemplate(data as string, values));
         } else if (content) {
           setMarkdown(parseTemplate(content, values));
         }
@@ -38,10 +38,10 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
 
   return (
     <div className={`markdown-container ${className}`} style={{
-      width: '100%',
-      height: '100%',
       backgroundColor: 'transparent',
-      overflow: 'auto'
+      height: '100%',
+      overflow: 'auto',
+      width: '100%'
     }}>
       <ReactMarkdown>{markdown}</ReactMarkdown>
     </div>

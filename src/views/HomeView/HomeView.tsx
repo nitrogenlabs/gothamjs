@@ -77,18 +77,18 @@ export const HomeView: React.FC<HomeViewProps> = ({
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{mr: 2, display: {sm: 'none'}}}
+            sx={{display: {sm: 'none'}, mr: 2}}
           >
             <MenuIcon />
           </IconButton>
           <Typography
-            variant="h6"
             component="div"
-            sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
+            sx={{display: {sm: 'block', xs: 'none'}, flexGrow: 1}}
+            variant="h6"
           >
             {title}
           </Typography>
-          <Box sx={{display: {xs: 'none', sm: 'block'}}}>
+          <Box sx={{display: {sm: 'block', xs: 'none'}}}>
             {navItems.map(({label, path}) => (
               <IconButton
                 key={path}
@@ -110,9 +110,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
             keepMounted: true // Better open performance on mobile.
           }}
           sx={{
-            display: {xs: 'block', sm: 'none'},
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
+              display: {sm: 'none', xs: 'block'},
               width: drawerWidth
             }
           }}

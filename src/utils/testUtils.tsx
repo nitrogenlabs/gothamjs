@@ -8,6 +8,7 @@ import {render, screen, waitFor} from '@testing-library/react';
 import {Form} from 'react-hook-form';
 import {MemoryRouter} from 'react-router';
 
+import type {FormSubmitHandler} from 'react-hook-form';
 
 export const getTestElement = (name: string, index: number = 0) => screen.queryAllByTestId(name)[index];
 
@@ -15,7 +16,7 @@ export const renderWithProvider = async (Element, props = {}) => {
   const {
     mockRoute = '/',
     ...restProps
-  }: any = props;
+  }: Record<string, unknown> = props;
   Flux.init();
   jest.useFakeTimers();
 
@@ -34,13 +35,18 @@ export const renderWithProvider = async (Element, props = {}) => {
   return wrapper;
 };
 
+interface RenderFormProps {
+  mocks?: unknown;
+  onSubmit?: FormSubmitHandler<undefined>;
+  [key: string]: unknown;
+}
 
-export const renderWithForm = async (Element, props = {}) => {
+export const renderWithForm = async (Element, props: RenderFormProps = {}) => {
   const {
     mocks,
-    onSubmit = () => { },
+    onSubmit = () => {},
     ...restProps
-  }: any = props;
+  } = props;
 
   jest.useFakeTimers();
 

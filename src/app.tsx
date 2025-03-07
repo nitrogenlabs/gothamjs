@@ -25,7 +25,6 @@ const config: GothamConfiguration = {
           transparentTextColor: '#fff'
         }
       },
-      view: 'home',
       routes: [
         {
           path: '/home',
@@ -99,8 +98,9 @@ const config: GothamConfiguration = {
             },
             title: 'Welcome'
           }
-        },
+        }
       ],
+      view: 'home'
     }
   ],
   title: 'GothamJS'

@@ -4,10 +4,18 @@
  */
 import {lazy, Suspense, useMemo} from 'react';
 
+import type {Loader} from '../Loader/Loader';
+
+export interface RouteViewProps {
+  component: () => Promise<{default: React.ComponentType<Record<string, unknown>>}>;
+  loader?: typeof Loader;
+  props?: Record<string, unknown>;
+}
+
 export const LazyLoad = ({
   component,
-  props,
   loader: Loader,
+  props
 }) => {
   const LoadComponent = useMemo(() => {
     if(component) {
