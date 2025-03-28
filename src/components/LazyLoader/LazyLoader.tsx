@@ -5,25 +5,28 @@
 import {lazy, Suspense, useMemo} from 'react';
 
 import type {Loader} from '../Loader/Loader';
+import type {FC} from 'react';
 
-export interface RouteViewProps {
-  component: () => Promise<{default: React.ComponentType<Record<string, unknown>>}>;
+export interface LazyLoadProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: any;
   loader?: typeof Loader;
   props?: Record<string, unknown>;
 }
 
-export const LazyLoad = ({
+export const LazyLoad: FC<LazyLoadProps> = ({
   component,
   loader: Loader,
   props
 }) => {
-  const LoadComponent = useMemo(() => {
-    if(component) {
-      return lazy(() => component());
-    }
+  // const LoadComponent = useMemo(() => {
+  //   if(component) {
+  //     return lazy(() => component());
+  //   }
 
-    return null;
-  }, [component]);
+  //   return null;
+  // }, [component]);
+  const LoadComponent = lazy(() => component());
 
   return (
     <Suspense fallback={Loader ? <Loader /> : null}>

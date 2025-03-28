@@ -1,33 +1,40 @@
-import styled from '@emotion/styled';
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import SvgIcon, {type SvgIconPropsColorOverrides} from '@mui/material/SvgIcon';
+import clsx from 'clsx';
 
 import {Config} from '../../config/appConfig';
 
+import type {FC} from 'react';
+
 export interface SvgProps {
   readonly className?: string;
-  readonly color?: 'inherit' | 'action' | 'disabled' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
+  readonly color?: string;
   readonly height?: number;
   readonly name: string;
   readonly width?: number;
 }
 
-const SvgIconStyled = styled(SvgIcon)`${({color, height, width}) => `
-  color: ${color};
-  height: ${height}px;
-  width: ${width}px;
-`}`;
-
-export const Svg = ({className, color, height = 32, name, width = 32}: SvgProps) => (
-  <SvgIconStyled
-    className={className}
-    color={color}
-    height={height}
-    viewBox={`0 0 ${width} ${height}`}
-    width={width}>
-    <use href={`${Config.get('baseUrl')}/icons/icons.svg#${name}`} />
-  </SvgIconStyled>
-);
+export const Svg: FC<SvgProps> = ({
+  className,
+  color = 'inherit',
+  height = 32,
+  name,
+  width = 32
+}) => {
+  return (
+    <svg
+      className={clsx('w-full h-full', className)}
+      viewBox={`0 0 ${width} ${height}`}
+      style={{
+        color,
+        fill: color,
+        height: `${height}px`,
+        width: `${width}px`
+      }}
+    >
+      <use href={`${Config.get('baseUrl')}/icons/icons.svg#${name}`} />
+    </svg>
+  );
+};

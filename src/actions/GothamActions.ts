@@ -5,15 +5,30 @@
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
 import isEmpty from 'lodash/isEmpty';
 
+import {Config} from '../config/appConfig';
 import {GothamConstants} from '../constants/GothamConstants';
 import {GothamConfiguration} from '../views/Gotham/GothamProvider';
 
+import type {ReactElement} from 'react';
+
+export interface GothamNotifyAction {
+  readonly icon?: string;
+  readonly label?: string;
+  readonly onClick: (key: string) => void;
+}
+
+export type GothamSeverity = 'error' | 'info' | 'success' | 'warning';
+
 export interface GothamNotifyParams {
-  action?: string;
-  autoHideDuration?: number;
-  key?: string;
-  message: string;
-  variant?: 'error' | 'info' | 'success' | 'warning';
+  readonly actions?: GothamNotifyAction[];
+  readonly anchorOrigin?: {
+    horizontal: 'left' | 'center' | 'right';
+    vertical: 'top' | 'bottom';
+  };
+  readonly autoHideDuration?: number;
+  readonly key?: string;
+  readonly message?: ReactElement | string;
+  readonly severity?: GothamSeverity;
 }
 
 export interface NavParams {
@@ -31,21 +46,22 @@ export const GothamActions = {
     Flux.dispatch({params, path, type: GothamConstants.NAV_GOTO}),
   navReplace: (path: string, params?: Record<string, unknown>): Promise<FluxAction> =>
     Flux.dispatch({params, path, type: GothamConstants.NAV_REPLACE}),
-  notifyClose: (key: string): Promise<FluxAction> =>
-    Flux.dispatch({key, type: GothamConstants.NOTIFY_CLOSE}),
-  notifyOpen: (message: string, params: Partial<GothamNotifyParams> = {}): Promise<FluxAction> =>
-    Flux.dispatch({message, ...params, type: GothamConstants.NOTIFY_OPEN}),
+  notify: (params: GothamNotifyParams): Promise<FluxAction> =>
+    Flux.dispatch({...params, type: GothamConstants.NOTIFY_OPEN}),
+  notifyClose: (): Promise<FluxAction> =>
+    Flux.dispatch({type: GothamConstants.NOTIFY_CLOSE}),
   setConfig: (config: GothamConfiguration): Promise<FluxAction> =>
     Flux.dispatch({config, type: GothamConstants.SET_CONFIG}),
   signOut: (): Promise<FluxAction> =>
     Flux.dispatch({type: GothamConstants.SIGN_OUT}),
-  updateTitle: (title: string, separator: string = ' :: '): Promise<FluxAction> => {
-    const siteTitle: string = localStorage.getItem('siteTitle') || '';
+  updateTitle: (title: string, separator?: string): Promise<FluxAction> => {
+    const appTitle: string = Config.get('app.title', '') as string;
+    const titleSeparator: string = separator || Config.get('app.titleBarSeparator', '::') as string;
 
-    if(!isEmpty(title) && siteTitle !== title) {
-      document.title = `${title}${separator}${siteTitle}`;
+    if(!isEmpty(title) && appTitle !== title) {
+      document.title = [title, titleSeparator, appTitle].join(' ');
     } else {
-      document.title = siteTitle;
+      document.title = appTitle;
     }
 
     return Flux.dispatch({title, type: GothamConstants.UPDATE_TITLE});

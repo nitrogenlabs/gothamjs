@@ -1,52 +1,169 @@
-import {Button} from '@mui/material';
+import {useEffect} from 'react';
 
-import { Notify, type GothamSeverity } from './Notify';
+import {Notify} from './Notify';
+import {NotifyExample} from './NotifyExample';
 import {GothamActions} from '../../actions/GothamActions';
-import {gothamDecorator} from '../../utils/storyUtils';
 
-import type { Meta, StoryObj } from '@storybook/react';
-
+import type {Meta, StoryObj} from '@storybook/react';
 
 const meta: Meta<typeof Notify> = {
-  component: Notify
+  component: Notify,
+  decorators: [
+    (Story) => (
+      <div>
+        <Story />
+        <Notify />
+      </div>
+    )
+  ],
+  parameters: {
+    layout: 'fullscreen'
+  },
+  title: 'Components/Notify'
 };
 
 export default meta;
 type Story = StoryObj<typeof Notify>;
 
-const notifyButton = (message: string, severity: GothamSeverity) => (Story) => {
-  return (
-    <>
-      <Button onClick={() => GothamActions.notifyOpen(message, {variant: severity})}>{`Open ${message}`}</Button>
-      <Story />
-    </>
-  );
-};
+export const Basic: Story = {
+  render: () => {
+    useEffect(() => {
+      // Show notification when the story loads
+      GothamActions.notify({
+        autoHideDuration: 5000,
+        message: 'This is a basic notification'
+      });
 
-export const Info: Story = {
-  decorators: [
-    gothamDecorator,
-    notifyButton('Info', 'info')
-  ]
-};
+      return () => {
+        // Clean up when the story changes
+        GothamActions.notifyClose();
+      };
+    }, []);
 
-export const Error: Story = {
-  decorators: [
-    gothamDecorator,
-    notifyButton('Error', 'error')
-  ]
+    return null;
+  }
 };
 
 export const Success: Story = {
-  decorators: [
-    gothamDecorator,
-    notifyButton('Success', 'success')
-  ]
+  render: () => {
+    useEffect(() => {
+      GothamActions.notify({
+        message: 'Operation completed successfully',
+        severity: 'success'
+      });
+
+      return () => {
+        GothamActions.notifyClose();
+      };
+    }, []);
+
+    return null;
+  }
+};
+
+export const Error: Story = {
+  render: () => {
+    useEffect(() => {
+      GothamActions.notify({
+        message: 'An error occurred',
+        severity: 'error'
+      });
+
+      return () => {
+        GothamActions.notifyClose();
+      };
+    }, []);
+
+    return null;
+  }
 };
 
 export const Warning: Story = {
-  decorators: [
-    gothamDecorator,
-    notifyButton('Warning', 'warning')
-  ]
+  render: () => {
+    useEffect(() => {
+      GothamActions.notify({
+        message: 'This is a warning message',
+        severity: 'warning'
+      });
+
+      return () => {
+        GothamActions.notifyClose();
+      };
+    }, []);
+
+    return null;
+  }
+};
+
+export const Info: Story = {
+  render: () => {
+    useEffect(() => {
+      GothamActions.notify({
+        message: 'This is an informational message',
+        severity: 'info'
+      });
+
+      return () => {
+        GothamActions.notifyClose();
+      };
+    }, []);
+
+    return null;
+  }
+};
+
+export const TopRight: Story = {
+  render: () => {
+    useEffect(() => {
+      GothamActions.notify({
+        anchorOrigin: {
+          horizontal: 'right',
+          vertical: 'top'
+        },
+        message: 'This appears in the top right'
+      });
+
+      return () => {
+        GothamActions.notifyClose();
+      };
+    }, []);
+
+    return null;
+  }
+};
+
+export const WithActions: Story = {
+  render: () => {
+    useEffect(() => {
+      GothamActions.notify({
+        actions: [
+          {
+            label: 'Undo',
+            onClick: (key) => {
+              console.log('Undo clicked', key);
+              // Perform undo action
+            }
+          },
+          {
+            icon: 'close',
+            onClick: (key) => {
+              console.log('Close clicked', key);
+              GothamActions.notifyClose();
+            }
+          }
+        ],
+        message: 'Would you like to undo?'
+      });
+
+      return () => {
+        GothamActions.notifyClose();
+      };
+    }, []);
+
+    return null;
+  }
+};
+
+export const Examples: Story = {
+  render: () => <NotifyExample />
 };

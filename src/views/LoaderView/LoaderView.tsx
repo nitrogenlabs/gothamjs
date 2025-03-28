@@ -4,16 +4,22 @@ import {useState} from 'react';
 import {Loader} from '../../components/Loader/Loader';
 import {GothamConstants} from '../../constants/GothamConstants';
 
-export const toggleLoader = (setLoading, setLoaderContent) => ({content, isLoading}) => {
+
+export interface LoaderContent {
+  content?: string;
+  isLoading: boolean;
+}
+
+export const toggleLoader = (setLoading, setLoaderContent) => ({content, isLoading}: LoaderContent) => {
   setLoading(isLoading);
   setLoaderContent(content);
 };
 
 export const LoaderView = () => {
   const [isLoading, setLoading] = useState(false);
-  const [content, setLoaderContent] = useState();
+  const [content, setLoaderContent] = useState<string | undefined>();
 
-  useFluxListener(GothamConstants.LOADING, ({content, isLoading}) => {
+  useFluxListener(GothamConstants.LOADING, ({content, isLoading}: LoaderContent) => {
     setLoading(isLoading);
     setLoaderContent(content);
   });
@@ -22,5 +28,9 @@ export const LoaderView = () => {
     return null;
   }
 
-  return <Loader content={content} />;
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+      <Loader content={content} />
+    </div>
+  );
 };

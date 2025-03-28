@@ -2,190 +2,150 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {FluxFramework} from '@nlabs/arkhamjs';
-import React, {ReactNode, useEffect} from 'react';
-import {Navigate, Route, RouteProps, Routes} from 'react-router';
-
-import {lazyImport} from './dynamicUtils';
-import {GothamActions} from '../actions/GothamActions';
+// import {Flux, FluxFramework} from '@nlabs/arkhamjs';
+// import {ReactNode} from 'react';
 import {AuthRoute} from '../components/AuthRoute/AuthRoute';
-import {GothamRouteProps} from '../components/GothamRouter/GothamRouter';
-import {LazyLoad} from '../components/LazyLoader/LazyLoader';
-import {Loader} from '../components/Loader/Loader';
-import {DefaultView} from '../views/DefaultView/DefaultView';
-import {type GothamConfiguration} from '../views/Gotham/GothamProvider';
-import {HomeView} from '../views/HomeView/HomeView';
-import {MarkdownView} from '../views/MarkdownView/MarkdownView';
 
-const {NotFoundView} = lazyImport(() => import('../views/NotFoundView/NotFoundView'), 'NotFoundView');
+import type {RouteObject} from 'react-router';
 
-export interface RouteViewProps {
-  loader?: typeof Loader;
-  gothamConfig: GothamConfiguration;
-  Flux: FluxFramework;
-  props?: Record<string, unknown>;
-  title?: string;
-  [key: string]: unknown;
-}
+// import {lazyImport} from './dynamicUtils';
+// import {GothamActions} from '../actions/GothamActions';
+// import {GothamRoute} from '../components/GothamRoute/GothamRoute';
+// import {Loader} from '../components/Loader/Loader';
+// import {type GothamConfiguration} from '../views/Gotham/GothamProvider';
 
-export const fadeTransition = {
-  atActive: {
-    opacity: 1,
-    position: 'relative'
-  },
-  atEnter: {
-    opacity: 0,
-    position: 'absolute'
-  },
-  atLeave: {
-    opacity: 0,
-    position: 'absolute'
-  }
-};
+// import type {GothamRouteData} from '../types/gotham';
 
-export const parseRoute = (route: GothamRouteProps, props: RouteViewProps): ReactNode => {
-  const {
-    authenticate,
-    component,
-    isAuth,
-    path,
-    view
-  } = route;
-  const viewProps: RouteViewProps = {loader: Loader, ...props};
+// const {NotFoundView} = lazyImport(() => import('../views/NotFoundView/NotFoundView'), 'NotFoundView');
 
-  const RouteComponent = () => {
-    useEffect(() => {
-      const {title} = route;
-      const {titleBarSeparator} = props.gothamConfig;
-      GothamActions.updateTitle(title, titleBarSeparator);
-    }, [route.title, props.gothamConfig.titleBarSeparator]);
+// export interface RouteViewProps {
+//   loader?: typeof Loader;
+//   gothamConfig: GothamConfiguration;
+//   Flux: FluxFramework;
+//   props?: Record<string, unknown>;
+//   title?: string;
+//   [key: string]: unknown;
+// }
 
-
-    if(authenticate && !isAuth()) {
-      return <Navigate to="/signin" />;
-    }
-
-    // Get component
-    if(view) {
-      // Built-in views
-      switch(view) {
-        case 'default':
-          return <LazyLoad component={DefaultView} {...viewProps} />;
-        case 'home':
-          return <LazyLoad component={HomeView} {...viewProps} />;
-        case 'markdown':
-          return <LazyLoad component={MarkdownView} {...viewProps} />;
-        case 'notfound':
-          return <LazyLoad component={NotFoundView} {...viewProps} />;
-        default:
-          return null;
-      }
-    } else if(component) {
-      return <LazyLoad component={component} {...viewProps} />;
-    }
-
-    throw new Error(`Gotham Error: Route "${path}" is missing "component" property.`);
-  };
-
-  return <RouteComponent />;
-};
-
-export const renderRoute = (
-  route: GothamRouteProps,
-  Flux: FluxFramework,
-  gothamConfig: GothamConfiguration
-): ReactNode => {
-  const {isAuth: defaultIsAuth} = gothamConfig;
-  const {authenticate = false, isAuth = defaultIsAuth, path, ...restRouteProps} = route;
-  // const ReactRoute = authenticate ? AuthRoute : Route;
-  const {props: componentProps, ...routeProps} = route;
-  const viewProps: RouteViewProps = {Flux, gothamConfig, ...routeProps, ...componentProps};
-
-  return (
-    <Route
-      key={path}
-      path={path}
-      element={parseRoute(route, viewProps)}
-      index={path === '/'}
-      {...restRouteProps}
-    />
-  );
-};
-
-export const getRoutes = (routes, Flux: FluxFramework, gothamConfig: GothamConfiguration) =>
-  routes.reduce((renderedRoutes: ReactNode[], route: GothamRouteProps) => {
-    const {path, routes: nestedRoutes} = route;
-    let routeList = [...renderedRoutes];
-
-    // Only render routes that have a path and are not a custom error page.
-    if(!!path && isNaN(+(path))) {
-      routeList.push(renderRoute(route, Flux, gothamConfig));
-    }
-
-    if(nestedRoutes && nestedRoutes.length) {
-      routeList = routeList.concat(getRoutes(nestedRoutes, Flux, gothamConfig));
-    }
-
-    return routeList;
-  }, []);
-
-export const renderRouteList = (
-  routes: GothamRouteProps[] = [],
-  Flux: FluxFramework,
-  gothamConfig: GothamConfiguration
-): ReactNode[] => {
-  const {titleBarSeparator} = gothamConfig;
-  const gothamRoutes: ReactNode[] = getRoutes(routes, Flux, gothamConfig);
-
-  // See if the user has provided a view for no matches
-  const notFound: GothamRouteProps = routes.find((route: GothamRouteProps) => route && route.path === '404');
-
-  // If not, load the default view
-  const notFoundRoute: GothamRouteProps = {title: 'Page Not Found', ...notFound, view: 'notfound'};
-  const {title} = notFoundRoute;
-
-  GothamActions.updateTitle(title, titleBarSeparator);
-
-  const render404 = <Route
-    key="notFound"
-    element={parseRoute(notFoundRoute, {title} as RouteViewProps)}
-  />;
-
-  return [...gothamRoutes, render404];
-};
-
-export const renderSwitch = (
-  routes: GothamRouteProps[] = [],
-  Flux: FluxFramework,
-  gothamConfig: GothamConfiguration
-): ReactNode =>
-  <Routes>{renderRouteList(routes, Flux, gothamConfig)}</Routes>;
-
-// View Transition
-// const bounce = (val) => spring(val, {
-//   damping: 24,
-//   stiffness: 500
-// });
-
-// const mapStyles = (styles) => ({
-//   opacity: styles.opacity,
-//   transform: `scale(${styles.scale}) translate(0px, ${styles.translateY}px)`
-// });
-
-// const bounceTransition = {
+// export const fadeTransition = {
 //   atActive: {
-//     opacity: bounce(1),
-//     scale: bounce(1),
-//     translateY: bounce(0)
+//     opacity: 1,
+//     position: 'relative'
 //   },
 //   atEnter: {
 //     opacity: 0,
-//     scale: 1.01,
-//     translateY: -5
+//     position: 'absolute'
 //   },
 //   atLeave: {
-//     opacity: bounce(0),
-//     scale: bounce(0),
-//     translateY: bounce(10)
+//     opacity: 0,
+//     position: 'absolute'
 //   }
 // };
+
+// export const renderRoute = (
+//   route: GothamRouteData,
+//   Flux: FluxFramework,
+//   gothamConfig: GothamConfiguration
+// ): ReactNode => {
+//   const {authenticate = false, path, props: componentProps, ...restRouteProps} = route;
+//   const viewProps: RouteViewProps = {Flux, authenticate, gothamConfig, ...restRouteProps, ...componentProps};
+
+//   return (
+//     <Route
+//       key={path}
+//       path={path}
+//       element={<GothamRoute routeProps={route} viewProps={viewProps} />}
+//       index={path === '/'}
+//       {...restRouteProps}
+//     />
+//   );
+// };
+
+// export const getRoutes = (routes, Flux: FluxFramework, gothamConfig: GothamConfiguration) =>
+//   routes.reduce((renderedRoutes: ReactNode[], route: GothamRouteData) => {
+//     const {path, routes: nestedRoutes} = route;
+//     let routeList = [...renderedRoutes];
+
+//     // Only render routes that have a path and are not a custom error page.
+//     if(!!path && isNaN(+(path))) {
+//       routeList.push(renderRoute(route, Flux, gothamConfig));
+//     }
+
+//     if(nestedRoutes && nestedRoutes.length) {
+//       routeList = routeList.concat(getRoutes(nestedRoutes, Flux, gothamConfig));
+//     }
+
+//     return routeList;
+//   }, []);
+
+// export const renderRouteList = (
+//   routes: GothamRouteData[] = [],
+//   Flux: FluxFramework,
+//   gothamConfig: GothamConfiguration
+// ): ReactNode[] => {
+//   const {titleBarSeparator} = gothamConfig?.app || {};
+//   const gothamRoutes: ReactNode[] = getRoutes(routes, Flux, gothamConfig);
+
+//   // See if the user has provided a view for no matches
+//   const notFound: GothamRouteData = routes.find((route: GothamRouteData) => route && route.path === '404');
+
+//   // If not, load the default view
+//   const notFoundRoute: GothamRouteData = {title: 'Page Not Found', ...notFound, view: 'notfound'};
+//   const {title} = notFoundRoute;
+
+//   GothamActions.updateTitle(title, titleBarSeparator);
+
+//   const render404 = <Route
+//     key="notFound"
+//     element={<GothamRoute routeProps={notFoundRoute} viewProps={{title} as RouteViewProps} />}
+//   />;
+
+//   return [...gothamRoutes, render404];
+// };
+
+// export const renderSwitch = (
+//   routes: GothamRouteData[] = [],
+//   Flux: FluxFramework,
+//   gothamConfig: GothamConfiguration
+// ): ReactNode =>
+//   <Routes>{renderRouteList(routes, Flux, gothamConfig)}</Routes>;
+
+// Define a type for our custom route objects
+export type CustomRouteProps = RouteObject & {
+  readonly authenticate?: boolean;
+  readonly props?: Record<string, unknown>;
+  readonly routes?: CustomRouteProps[];
+}
+
+export const parseRoutes = (routes: CustomRouteProps[] = []): RouteObject[] => {
+  return routes.map(route => {
+    const {
+      authenticate,
+      element,
+      props,
+      routes: nestedRoutes,
+      ...standardRouteProps
+    } = route;
+
+    let routeElement = element;
+
+    console.log({authenticate});
+    if (authenticate) {
+      routeElement = <AuthRoute>{element}</AuthRoute>;
+    }
+
+    if (nestedRoutes?.length) {
+      return {
+        ...standardRouteProps,
+        children: parseRoutes(nestedRoutes),
+        element: routeElement
+      } as RouteObject;
+    }
+
+    return {
+      ...standardRouteProps,
+      element: routeElement
+    } as RouteObject;
+  });
+};
+

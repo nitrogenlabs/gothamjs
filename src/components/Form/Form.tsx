@@ -13,10 +13,10 @@ export interface FormProps {
   readonly defaultValues?: Record<string, unknown>;
   readonly mode?: 'onSubmit' | 'onBlur' | 'onChange' | 'onTouched' | 'all';
   readonly name?: string;
-  readonly onChange?: (data: Record<string, unknown>) => void;
-  readonly onSubmit: (data: Record<string, unknown>, event: BaseSyntheticEvent, setError: (field: string, error: { type: string; message: string }) => void) => void;
-  readonly schema?: Yup.ObjectSchema<Record<string, unknown>>;
-  readonly validate?: (data: Record<string, unknown>) => void;
+  readonly onChange?: (data: unknown) => void;
+  readonly onSubmit: (data: unknown, event: BaseSyntheticEvent, setError: (field: string, error: { type: string; message: string }) => void) => void;
+  readonly schema?: Yup.ObjectSchema<unknown>;
+  readonly validate?: (data: unknown) => void;
   readonly validateOnBlur?: boolean;
 }
 
@@ -35,7 +35,10 @@ export const Form = ({
   const methods = useForm({
     defaultValues,
     mode,
-    resolver: schema ? yupResolver(schema) : undefined
+    resolver: schema ? yupResolver(schema, {
+      abortEarly: false,
+      stripUnknown: true
+    }) : undefined
   });
   const {handleSubmit, setError} = methods;
   const handleFormSubmit = useCallback(
@@ -45,7 +48,12 @@ export const Form = ({
 
   return (
     <FormProvider {...methods}>
-      <form className={className} data-testid={`form-${name}`} onSubmit={handleFormSubmit}>
+      <form
+        className={className}
+        data-testid={`form-${name}`}
+        onSubmit={handleFormSubmit}
+        noValidate
+      >
         {children}
       </form>
     </FormProvider>

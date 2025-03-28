@@ -8,15 +8,13 @@ import {GothamConstants} from './constants/GothamConstants';
 import {MarkdownConstants} from './constants/MarkdownConstants';
 
 export {Flux} from '@nlabs/arkhamjs';
-export {useFormContext} from 'react-hook-form';
+export {Controller, useFormContext} from 'react-hook-form';
 export * from 'react-i18next';
-export {Link, NavLink} from 'react-router';
+export {Link, NavLink, Outlet, Route, Router, useNavigate} from 'react-router';
+export * as yup from 'yup';
+export {yupResolver} from '@hookform/resolvers/yup';
 
-export * from './components/Button/Button';
-export * from './components/Form/Form';
-export * from './components/FormField/FormField';
-export * from './components/Svg/Svg';
-export * from './components/TextField/TextField';
+export * from './components';
 
 export * from './views/Gotham/Gotham';
 export * from './views/Gotham/GothamProvider';
@@ -26,6 +24,8 @@ export * from './utils/dynamicUtils';
 export * from './utils/routeUtils';
 export * from './utils/useBreakpoint';
 export * from './utils/viewUtils';
+
+export type {GothamRouteData} from './types/gotham';
 
 export {
   AuthConstants,

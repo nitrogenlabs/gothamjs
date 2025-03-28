@@ -1,6 +1,7 @@
-import { Gotham } from './Gotham';
+import {Gotham} from './Gotham';
+import {MarkdownView} from '../MarkdownView/MarkdownView';
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react';
 
 
 const meta: Meta<typeof Gotham> = {
@@ -15,11 +16,11 @@ export const Primary: Story = {
     config: {
       routes: [
         {
+          element: <MarkdownView />,
           path: '/',
           props: {
             content: '# Hello\n**Bold text**\n*Italic text*\n- List item'
-          },
-          view: 'markdown'
+          }
         }
       ]
     }

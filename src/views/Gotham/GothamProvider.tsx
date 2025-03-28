@@ -8,18 +8,21 @@ import {useFlux} from '@nlabs/arkhamjs-utils-react';
 import merge from 'lodash/merge';
 import {useEffect, useState} from 'react';
 import {I18nextProvider} from 'react-i18next';
+import {createBrowserRouter, RouterProvider} from 'react-router';
 
+import {GothamRoot} from './GothamRoot';
 import {GothamActions} from '../../actions/GothamActions';
-import {GothamRoutes} from '../../components/GothamRouter/GothamRouter';
 import {Config} from '../../config/appConfig';
 import {GothamConstants} from '../../constants/GothamConstants';
-import {gothamApp} from '../../stores/gothamAppStore';
+import {gothamApp} from '../../stores/GothamAppStore';
 import {GothamContext} from '../../utils/GothamContext';
 import {i18n} from '../../utils/i18nUtil';
+import {parseRoutes} from '../../utils/routeUtils';
 
-import type {GothamRouteProps} from '../../components/GothamRouter/GothamRouter';
+import type {GothamRouteData} from '../../types/gotham';
 import type {FluxMiddlewareType, FluxFramework, FluxOptions} from '@nlabs/arkhamjs';
 import type {FC, ReactNode} from 'react';
+import type {RouteObject} from 'react-router';
 
 export interface GothamProviderProps {
   readonly children?: ReactNode;
@@ -34,33 +37,38 @@ export type GothamStatus = 'default' | 'error' | 'info' | 'success' | 'warning' 
 export type ThemeDisplayMode = 'auto' | 'dark' | 'light';
 
 export interface GothamConfiguration {
+  readonly app?: {
+    readonly logo?: string;
+    readonly name?: string;
+    readonly title?: string;
+    readonly titleBarSeparator?: string;
+  };
   readonly baseUrl?: string;
   readonly config?: FluxOptions;
   readonly displayMode?: ThemeDisplayMode;
   readonly flux?: FluxFramework;
   readonly isAuth?: () => boolean;
   readonly middleware?: FluxMiddlewareType[];
-  readonly name?: string;
   readonly onInit?: () => void;
-  readonly routes?: GothamRouteProps[];
+  readonly routes?: GothamRouteData[];
   readonly storageType?: 'local' | 'session';
-  readonly stores?: Record<string, unknown>[];
-  readonly title?: string;
-  readonly titleBarSeparator?: string;
+  readonly stores?: unknown[];
   readonly theme?: Record<string, unknown>;
   readonly translations?: Record<string, unknown>;
 }
 
 export const defaultGothamConfig: GothamConfiguration = {
+  app: {
+    name: 'gotham',
+    title: 'GothamJS'
+  },
   baseUrl: '',
   isAuth: () => false,
   middleware: [],
-  name: 'gotham',
   routes: [],
   storageType: 'session',
   stores: [],
   theme: {},
-  title: '',
   translations: {translation: {}}
 };
 
@@ -87,25 +95,34 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   const {
     isAuth,
     middleware,
-    name,
     routes = [],
     storageType,
     stores,
     translations
   } = config;
-  // const {isAuth, routes = [], ...gothamConfig} = config;
-  Config.set(config as Record<string, unknown>);
+  const name = config?.app?.name;
   const [session, setSession] = useState({});
+  const [router, setRouter] = useState<ReturnType<typeof createBrowserRouter> | undefined>();
 
   useEffect(() => {
+    Config.set(config as Record<string, unknown>);
+
+    const router = createBrowserRouter(
+      [
+        {
+          children: parseRoutes(routes as unknown as RouteObject[]),
+          element: <GothamRoot />
+        }
+      ]
+    );
+
+    setRouter(router);
+
     if(flux) {
-      // ArkhamJS Middleware
       const env: string = Config.get('environment') as string;
       const logger: Logger = new Logger({
         debugLevel: env === 'development' ? LoggerDebugLevel.DISPATCH : LoggerDebugLevel.DISABLED
       });
-
-      // ArkhamJS Configuration
       const storage: BrowserStorage = new BrowserStorage({type: storageType});
 
       flux.init({
@@ -123,12 +140,10 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
     }
   }, []);
 
-  // const existingSession = Flux.getState('user.session', {});
-
   return (
     <I18nextProvider i18n={i18n(translations)}>
       <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
-        <GothamRoutes flux={flux} gothamConfig={config} routes={routes}/>
+        {router && <RouterProvider router={router}/>}
         {children}
       </GothamContext.Provider>
     </I18nextProvider>

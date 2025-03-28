@@ -1,12 +1,10 @@
 import importPlugin from 'eslint-plugin-import';
-import tseslint from 'typescript-eslint';
+import * as tseslint from 'typescript-eslint';
 
 export default tseslint.config([
-  {
-    files: ['**/*.ts', '**/*.tsx']
-  },
   importPlugin.flatConfigs.recommended,
   {
+    files: ['**/*.ts', '**/*.tsx'],
     rules: {
       'comma-dangle': ['error', 'never'],
       'import/default': 'off',
@@ -34,7 +32,13 @@ export default tseslint.config([
             '**/*.spec.ts*',
             'jest.setup.js',
             '**/*.config.*',
-            '**/utils/testUtils.tsx'
+            '**/utils/testUtils.tsx',
+            '**/jest.setup.ts',
+            '**/jest.setup.ts',
+            '**/lex.config.js',
+            'eslint.config.mjs',
+            '.storybook/preview.tsx',
+            '.storybook/main.ts'
           ],
           'peerDependencies': true
         }
@@ -82,6 +86,7 @@ export default tseslint.config([
   },
   tseslint.configs.recommended,
   {
+    files: ['**/*.ts', '**/*.tsx'],
     rules: {
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-require-imports': 'off',

@@ -1,19 +1,18 @@
-import { Svg } from './Svg';
+import { Svg as SvgComponent } from './Svg';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-
-const meta: Meta<typeof Svg> = {
-  component: Svg
+const meta: Meta<typeof SvgComponent> = {
+  component: SvgComponent
 };
 
 export default meta;
-type Story = StoryObj<typeof Svg>;
+type Story = StoryObj<typeof SvgComponent>;
 
-export const Primary: Story = {
+export const Svg: Story = {
   args: {
     className: 'test',
-    color: 'red',
+    color: 'error',
     height: 100,
     name: 'test',
     width: 100

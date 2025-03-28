@@ -6,27 +6,20 @@ import { createRoot } from 'react-dom/client';
 
 import {Svg} from './components/Svg/Svg';
 import {Gotham} from './views/Gotham/Gotham';
+import {HomeView} from './views/HomeView/HomeView';
 
 import type {GothamConfiguration} from './views/Gotham/GothamProvider';
 
 const config: GothamConfiguration = {
-  name: 'gothamjs',
+  app: {
+    name: 'gothamjs',
+    title: 'GothamJS'
+  },
   routes: [
     {
-      path: '/',
-      props: {
-        topBar: {
-          logo: <Svg name="gotham" width={175} height={50} />,
-          menu: [
-            {label: 'Sign In', url: '/signIn'},
-            {label: 'Sign Up', url: '/signUp'}
-          ],
-          solidTextColor: '#fff',
-          transparentTextColor: '#fff'
-        }
-      },
-      routes: [
+      children: [
         {
+          element: <HomeView />,
           path: '/home',
           props: {
             features: [
@@ -100,10 +93,22 @@ const config: GothamConfiguration = {
           }
         }
       ],
-      view: 'home'
+      element: <HomeView />,
+      index: true,
+      path: '/',
+      props: {
+        topBar: {
+          logo: <Svg name="gotham" width={175} height={50} />,
+          menu: [
+            {label: 'Sign In', url: '/signIn'},
+            {label: 'Sign Up', url: '/signUp'}
+          ],
+          solidTextColor: '#fff',
+          transparentTextColor: '#fff'
+        }
+      }
     }
-  ],
-  title: 'GothamJS'
+  ]
 };
 
 const root = createRoot(document.getElementById('app'));
