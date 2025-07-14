@@ -37,8 +37,7 @@ export default tseslint.config([
             '**/jest.setup.ts',
             '**/lex.config.js',
             'eslint.config.mjs',
-            '.storybook/preview.tsx',
-            '.storybook/main.ts'
+            '.storybook/*',
           ],
           'peerDependencies': true
         }
@@ -82,7 +81,15 @@ export default tseslint.config([
         'minKeys': 2,
         'natural': false
       }]
-    }
+    },
+    ignores: [
+      '**/node_modules/**',
+      '**/lib/**',
+      '**/dist/**',
+      '**/build/**',
+      '**/coverage/**',
+      '**/.storybook/**'
+    ]
   },
   tseslint.configs.recommended,
   {

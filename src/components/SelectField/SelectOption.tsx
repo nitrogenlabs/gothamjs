@@ -1,5 +1,5 @@
 import { ListboxOption } from '@headlessui/react';
-import { CheckIcon } from '@heroicons/react/20/solid';
+import { Check } from 'lucide-react';
 
 import {Svg} from '../Svg/Svg';
 
@@ -25,7 +25,7 @@ export const SelectOption = ({ option }: SelectOptionProps) => (
     </div>
 
     <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-data-selected:hidden group-data-focus:text-white">
-      <CheckIcon aria-hidden="true" className="size-5" />
+      <Check aria-hidden="true" className="size-5" />
     </span>
   </ListboxOption>
 );

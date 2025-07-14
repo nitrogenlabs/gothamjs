@@ -7,24 +7,28 @@ import type {Meta, StoryObj} from '@storybook/react';
 
 const meta: Meta<typeof TextField> = {
   argTypes: {
-    borderClass: {
-      control: 'text',
-      description: 'The color of the border of the text field'
-    },
-    color: {
+    borderColor: {
       control: 'select',
-      defaultValue: 'neutral',
-      description: 'The color of the text field',
+      defaultValue: 'secondary',
+      description: 'The color of the border',
       options: gothamColors
+    },
+    borderType: {
+      control: 'select',
+      defaultValue: 'underline',
+      description: 'The type of border of the text field',
+      options: ['solid', 'rounded', 'none', 'underline']
     },
     hasError: {
       control: 'boolean',
       defaultValue: false,
       description: 'Whether the text field has an error'
     },
-    labelClass: {
-      control: 'text',
-      description: 'The class name of the label'
+    labelColor: {
+      control: 'select',
+      defaultValue: 'white',
+      description: 'The color of the label',
+      options: gothamColors
     },
     multiline: {
       control: 'boolean',
@@ -35,10 +39,22 @@ const meta: Meta<typeof TextField> = {
       control: 'text',
       description: 'The pattern of the text field'
     },
+    placeholderColor: {
+      control: 'select',
+      defaultValue: 'secondary',
+      description: 'The color of the placeholder',
+      options: gothamColors
+    },
     rows: {
       control: 'number',
       defaultValue: 1,
       description: 'The number of rows of the text field'
+    },
+    textColor: {
+      control: 'select',
+      defaultValue: 'white',
+      description: 'The color of the text',
+      options: gothamColors
     }
   },
   component: TextField,
@@ -72,25 +88,34 @@ type Story = StoryObj<typeof TextField>;
 
 export const Default: Story = {
   args: {
+    borderColor: 'secondary',
+    borderType: 'underline',
     disabled: false,
     error: false,
     label: 'Default TextField',
+    labelColor: 'black',
     name: 'default',
     placeholder: 'Textfield placeholder',
+    placeholderColor: 'secondary',
     required: true
   }
 };
 
 export const Multiline: Story = {
   args: {
+    borderColor: 'secondary',
+    borderType: 'solid',
     disabled: false,
     error: false,
     label: 'Default TextField',
+    labelColor: 'black',
     multiline: true,
     name: 'default',
     placeholder: 'Description',
+    placeholderColor: 'secondary',
     required: true,
-    rows: 1
+    rows: 1,
+    textColor: 'black'
   }
 };
 

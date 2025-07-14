@@ -5,20 +5,23 @@
 import React, {forwardRef} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
-import {InputField} from './InputField';
 import {ErrorMessage} from '../ErrorMessage/ErrorMessage';
+import {InputField} from '../InputField/InputField';
 import {Label} from '../Label/Label';
 
 import type {GothamColor} from '../../utils/colorUtils';
+import type{InputBorderType} from '../InputField/InputField';
 
 export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
-  readonly borderClass?: string;
+  readonly borderColor?: GothamColor;
+  readonly borderType?: InputBorderType;
   readonly className?: string;
   readonly color?: GothamColor;
   readonly defaultValue?: string;
   readonly error?: boolean;
   readonly errorColor?: GothamColor;
   readonly hasError?: boolean;
+  readonly inputClass?: string;
   readonly label?: string;
   readonly labelClass?: string;
   readonly labelColor?: GothamColor;
@@ -26,16 +29,20 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   readonly name: string;
   readonly onValidate?: (isValid: boolean) => void;
   readonly pattern?: string;
+  readonly placeholderColor?: GothamColor;
   readonly rows?: number;
+  readonly textColor?: GothamColor;
 }
 
 export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, TextFieldProps>(({
-  borderClass,
+  borderColor = 'black',
+  borderType,
   className,
   color = 'neutral',
   defaultValue = '',
   error: externalError,
   errorColor = 'error',
+  inputClass,
   label,
   labelClass = 'mb-1',
   labelColor = 'neutral',
@@ -44,6 +51,9 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   onChange: onChangeProp,
   onValidate,
   pattern,
+  placeholderColor = 'neutral',
+  rows,
+  textColor = 'neutral',
   value,
   ...restInputProps
 }, ref) => {
@@ -65,12 +75,16 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
             name={name} />
           <div className="relative">
             <InputField
-              className={borderClass}
+              borderColor={borderColor}
+              borderType={borderType}
+              className={inputClass}
               color={hasError ? 'error' : color}
               id={name}
               multiline={multiline}
               onBlur={onBlur}
               onChange={onChange}
+              placeholderColor={placeholderColor}
+              textColor={textColor}
               value={value}
               ref={(e) => {
                 fieldRef(e);

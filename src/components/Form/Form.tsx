@@ -2,10 +2,10 @@
  * Copyright (c) 2021-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {yupResolver} from '@hookform/resolvers/yup';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {BaseSyntheticEvent, ReactNode, useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
-import * as Yup from 'yup';
+import {z} from 'zod';
 
 export interface FormProps {
   readonly children: ReactNode;
@@ -15,7 +15,7 @@ export interface FormProps {
   readonly name?: string;
   readonly onChange?: (data: unknown) => void;
   readonly onSubmit: (data: unknown, event: BaseSyntheticEvent, setError: (field: string, error: { type: string; message: string }) => void) => void;
-  readonly schema?: Yup.ObjectSchema<unknown>;
+  readonly schema?: z.ZodSchema<unknown>;
   readonly validate?: (data: unknown) => void;
   readonly validateOnBlur?: boolean;
 }
@@ -35,10 +35,7 @@ export const Form = ({
   const methods = useForm({
     defaultValues,
     mode,
-    resolver: schema ? yupResolver(schema, {
-      abortEarly: false,
-      stripUnknown: true
-    }) : undefined
+    resolver: schema ? zodResolver(schema) : undefined
   });
   const {handleSubmit, setError} = methods;
   const handleFormSubmit = useCallback(

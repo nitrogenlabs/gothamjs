@@ -9,19 +9,20 @@ import {
   MenuItems,
   TransitionChild
 } from '@headlessui/react';
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
-import {
-  Bars3Icon,
-  BellIcon,
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
-  XMarkIcon
-} from '@heroicons/react/24/outline';
 import clsx from 'clsx';
+import {
+  ChevronDown,
+  Search,
+  Menu as Bars3,
+  Bell,
+  Calendar,
+  PieChart,
+  Files,
+  Folder,
+  Home,
+  Users,
+  X
+} from 'lucide-react';
 import {useState} from 'react';
 import {Outlet} from 'react-router';
 
@@ -31,12 +32,12 @@ import type {GothamConfiguration} from '../Gotham/GothamProvider';
 import type { ElementType, FC } from 'react';
 
 const sideMenuItems: MenuItems[] = [
-  { current: true, href: '#', icon: HomeIcon, name: 'Dashboard' },
-  { current: false, href: '#', icon: UsersIcon, name: 'Team' },
-  { current: false, href: '#', icon: FolderIcon, name: 'Projects' },
-  { current: false, href: '#', icon: CalendarIcon, name: 'Calendar' },
-  { current: false, href: '#', icon: DocumentDuplicateIcon, name: 'Documents' },
-  { current: false, href: '#', icon: ChartPieIcon, name: 'Reports' }
+  { current: true, href: '#', icon: Home, name: 'Dashboard' },
+  { current: false, href: '#', icon: Users, name: 'Team' },
+  { current: false, href: '#', icon: Folder, name: 'Projects' },
+  { current: false, href: '#', icon: Calendar, name: 'Calendar' },
+  { current: false, href: '#', icon: Files, name: 'Documents' },
+  { current: false, href: '#', icon: PieChart, name: 'Reports' }
 ];
 
 const userMenuItems: MenuItems[] = [
@@ -77,7 +78,7 @@ export const MenuView: FC<MenuViewProps> = () => {
               <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
                 <button type="button" onClick={() => setSidebarOpen(false)} className="-m-2.5 p-2.5">
                   <span className="sr-only">Close sidebar</span>
-                  <XMarkIcon aria-hidden="true" className="size-6 text-white" />
+                  <X aria-hidden="true" className="size-6 text-white" />
                 </button>
               </div>
             </TransitionChild>
@@ -148,7 +149,7 @@ export const MenuView: FC<MenuViewProps> = () => {
         <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:px-8">
           <button type="button" onClick={() => setSidebarOpen(true)} className="-m-2.5 p-2.5 text-gray-700 lg:hidden">
             <span className="sr-only">Open sidebar</span>
-            <Bars3Icon aria-hidden="true" className="size-6" />
+            <Bars3 aria-hidden="true" className="size-6" />
           </button>
 
           {/* Separator */}
@@ -163,7 +164,7 @@ export const MenuView: FC<MenuViewProps> = () => {
                 aria-label="Search"
                 className="col-start-1 row-start-1 block size-full bg-white pl-8 text-base text-gray-900 outline-hidden placeholder:text-gray-400 sm:text-sm/6"
               />
-              <MagnifyingGlassIcon
+              <Search
                 aria-hidden="true"
                 className="pointer-events-none col-start-1 row-start-1 size-5 self-center text-gray-400"
               />
@@ -171,7 +172,7 @@ export const MenuView: FC<MenuViewProps> = () => {
             <div className="flex items-center gap-x-4 lg:gap-x-6">
               <button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
                 <span className="sr-only">View notifications</span>
-                <BellIcon aria-hidden="true" className="size-6" />
+                <Bell aria-hidden="true" className="size-6" />
               </button>
 
               {/* Separator */}
@@ -190,7 +191,7 @@ export const MenuView: FC<MenuViewProps> = () => {
                     <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-gray-900">
                         Tom Cook
                     </span>
-                    <ChevronDownIcon aria-hidden="true" className="ml-2 size-5 text-gray-400" />
+                    <ChevronDown aria-hidden="true" className="ml-2 size-5 text-gray-400" />
                   </span>
                 </MenuButton>
                 <MenuItems

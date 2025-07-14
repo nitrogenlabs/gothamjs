@@ -2,7 +2,8 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-export type GothamColor = 'primary' | 'secondary' | 'tertiary' | 'link' | 'neutral' | 'white' | 'black' | 'error' | 'warning' | 'success' | 'info';
+export type GothamColor = 'primary' | 'secondary' | 'tertiary' | 'link' | 'neutral' | 'white' | 'black' | 'error' | 'warning' | 'success' | 'info' | 'transparent';
+
 export const colorLuminance = (hexValue: string, luminance: number = 0): string => {
   // Validate hex string
   let hex: string = String(hexValue).replace(/[^0-9a-f]/gi, '');
@@ -11,7 +12,6 @@ export const colorLuminance = (hexValue: string, luminance: number = 0): string 
     hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
   }
 
-  // Convert to decimal and change luminosity
   let rgb = '#';
   let color: string;
   let colorIdx: number;
@@ -38,6 +38,7 @@ export const gothamColors = [
   'success',
   'info'
 ] as const;
+
 export interface StyleClassOptions {
   readonly hasError?: boolean;
   readonly hasFocus?: boolean;
@@ -102,14 +103,14 @@ export const getTextClasses = (color: GothamColor, options: StyleClassOptions = 
       classes.push('focus:text-neutral-700 dark:focus:text-neutral-dark-300');
     }
   } else if (color === 'white') {
-    classes.push('text-white dark:text-black');
+    classes.push('text-white dark:text-white-dark');
 
     if(hasHover) {
-      classes.push('hover:text-white-700 dark:hover:text-black-dark-300');
+      classes.push('hover:text-white-300 dark:hover:text-white-dark-300');
     }
 
     if(hasFocus) {
-      classes.push('focus:text-white-700 dark:focus:text-black-dark-300');
+      classes.push('focus:text-white-700 dark:focus:text-white-dark-700');
     }
   } else if (color === 'error') {
     classes.push('text-error dark:text-error-dark');
@@ -151,11 +152,130 @@ export const getTextClasses = (color: GothamColor, options: StyleClassOptions = 
     classes.push('text-black dark:text-white');
 
     if(hasHover) {
-      classes.push('hover:text-black dark:hover:text-white');
+      classes.push('hover:text-black dark:hover:text-black-dark');
     }
 
     if(hasFocus) {
-      classes.push('focus:text-black dark:focus:text-white');
+      classes.push('focus:text-black-900 dark:focus:text-black-dark-900');
+    }
+  }
+
+  return classes.join(' ');
+};
+
+
+export const getPlaceholderClasses = (color: GothamColor, options: StyleClassOptions = {}) => {
+  const {
+    hasFocus = false,
+    hasHover = false
+  } = options;
+  const classes = [];
+
+  if (color === 'primary') {
+    classes.push('placeholder:text-primary dark:placeholder:text-primary-dark');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-primary-700 dark:hover:placeholder:text-primary-dark-300');
+    }
+
+    if(hasFocus) {
+      classes.push('focus:placeholder:text-primary-700 dark:focus:placeholder:text-primary-dark-300');
+    }
+  } else if (color === 'secondary') {
+    classes.push('placeholder:text-secondary dark:placeholder:text-secondary-dark');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-secondary-700 dark:hover:placeholder:text-secondary-dark-300');
+    }
+
+    if(hasFocus) {
+      classes.push('focus:placeholder:text-secondary-700 dark:focus:placeholder:text-secondary-dark-300');
+    }
+  } else if (color === 'tertiary') {
+    classes.push('placeholder:text-tertiary dark:placeholder:text-tertiary-dark');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-tertiary-700 dark:hover:placeholder:text-tertiary-dark-300');
+    }
+
+    if(hasFocus) {
+      classes.push('focus:placeholder:text-tertiary-700 dark:focus:placeholder:text-tertiary-dark-300');
+    }
+  } else if(color === 'link') {
+    classes.push('placeholder:text-link dark:placeholder:text-link-dark');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-link-700 dark:hover:placeholder:text-link-dark-300');
+    }
+
+    if(hasFocus) {
+      classes.push('focus:placeholder:text-link-700 dark:focus:placeholder:text-link-dark-300');
+    }
+  } else if (color === 'neutral') {
+    classes.push('placeholder:text-neutral dark:placeholder:text-neutral-dark');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-neutral-700 dark:hover:placeholder:text-neutral-dark-300');
+    }
+
+    if(hasFocus) {
+      classes.push('focus:placeholder:text-neutral-700 dark:focus:placeholder:text-neutral-dark-300');
+    }
+  } else if (color === 'white') {
+    classes.push('placeholder:text-white dark:placeholder:text-black');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-white-700 dark:hover:placeholder:text-black-dark-300');
+    }
+
+    if(hasFocus) {
+      classes.push('focus:placeholder:text-white-700 dark:focus:placeholder:text-black-dark-300');
+    }
+  } else if (color === 'error') {
+    classes.push('placeholder:text-error dark:placeholder:text-error-dark');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-error-700 dark:hover:placeholder:text-error-dark-300');
+    }
+
+    if(hasFocus) {
+      classes.push('focus:placeholder:text-error-700 dark:focus:placeholder:text-error-dark-300');
+    }
+  } else if (color === 'warning') {
+    classes.push('placeholder:text-warning dark:placeholder:text-warning-dark');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-warning-700 dark:hover:placeholder:text-warning-dark-300');
+    }
+  } else if (color === 'success') {
+    classes.push('placeholder:text-success dark:placeholder:text-success-dark');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-success-700 dark:hover:placeholder:text-success-dark-300');
+    }
+
+    if(hasFocus) {
+      classes.push('focus:placeholder:text-success-700 dark:focus:placeholder:text-success-dark-300');
+    }
+  } else if (color === 'info') {
+    classes.push('placeholder:text-info dark:placeholder:text-info-dark');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-info-700 dark:hover:placeholder:text-info-dark-300');
+    }
+
+    if(hasFocus) {
+      classes.push('focus:placeholder:text-info-700 dark:focus:placeholder:text-info-dark-300');
+    }
+  } else {
+    classes.push('placeholder:text-black dark:placeholder:text-white');
+
+    if(hasHover) {
+      classes.push('hover:placeholder:text-black dark:hover:placeholder:text-white');
+    }
+
+    if(hasFocus) {
+      classes.push('focus:placeholder:text-black dark:focus:placeholder:text-white');
     }
   }
 
@@ -384,6 +504,7 @@ export const getCheckedClasses = (color: GothamColor) => {
 
   return classes.join(' ');
 };
+
 export const getBackgroundClasses = (color: GothamColor, options: StyleClassOptions = {}) => {
   const {
     hasFocus = false,
@@ -451,11 +572,12 @@ export const getBackgroundClasses = (color: GothamColor, options: StyleClassOpti
     if(hasFocus) {
       classes.push('focus:bg-black-700 dark:focus:bg-white-dark-300');
     }
+  } else if (color === 'transparent') {
+    classes.push('bg-transparent');
   }
 
   return classes.join(' ');
 };
-
 
 export const getBackgroundViewClasses = (color: GothamColor, options: StyleClassOptions = {}) => {
   const {

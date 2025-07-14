@@ -9,6 +9,7 @@ import {DatePicker} from './DatePicker';
 import {useIsMobile} from '../../hooks/useIsMobile';
 import {getOutlineClasses} from '../../utils/colorUtils';
 import {ErrorMessage} from '../ErrorMessage/ErrorMessage';
+import {InputField, type InputFieldProps} from '../InputField/InputField';
 import {Label} from '../Label/Label';
 
 import type {GothamColor} from '../../utils/colorUtils';
@@ -59,6 +60,7 @@ export const DateField = forwardRef<HTMLInputElement, DateFieldProps>(({
     [color, hasError]
   );
   const inputClasses = [
+    'bg-white/30 dark:bg-black/30',
     disabled ? 'text-neutral/30 dark:text-neutral-dark/30 outline-neutral/30 dark:outline-neutral-dark/30' : outlineClasses,
     className
   ].filter(Boolean).join(' ');
@@ -133,13 +135,13 @@ export const DateField = forwardRef<HTMLInputElement, DateFieldProps>(({
             label={label}
             name={name} />
           <div className="relative">
-            <input
-              {...props}
+            <InputField
+              {...props as Omit<InputFieldProps, 'onChange'>}
               ref={inputRef}
               disabled={disabled}
               value={formatDateForInput(field.value)}
-              onChange={(e) => {
-                const timestamp = parseInputDate(e.target.value);
+              onChange={(changeEvent) => {
+                const timestamp = parseInputDate(changeEvent.target.value);
                 field.onChange(timestamp);
 
                 if (isDateValid(timestamp)) {

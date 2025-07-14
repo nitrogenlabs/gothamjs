@@ -11,8 +11,8 @@ export {Flux} from '@nlabs/arkhamjs';
 export {Controller, useFormContext} from 'react-hook-form';
 export * from 'react-i18next';
 export {Link, NavLink, Outlet, Route, Router, useNavigate} from 'react-router';
-export * as yup from 'yup';
-export {yupResolver} from '@hookform/resolvers/yup';
+export {z} from 'zod';
+export {zodResolver} from '@hookform/resolvers/zod';
 
 export * from './components';
 

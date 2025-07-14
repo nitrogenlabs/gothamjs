@@ -46,7 +46,7 @@
     --color-gray-800: oklch(0.278 0.033 256.848);
     --color-gray-900: oklch(0.21 0.034 264.665);
     --color-neutral-700: #1a1a1a;
-    --color-black: #090909;
+    --color-black: #323232;
     --color-white: #f7f7f7;
     --spacing: 4px;
     --container-xs: 20rem;
@@ -103,6 +103,8 @@
     --color-primary-dark-300: #a98fff;
     --color-secondary-dark: #324c9f;
     --color-secondary-dark-300: #6279c2;
+    --color-white-dark: #dcd3ff;
+    --color-black-dark: #10101c;
     --color-link-dark: #598cf1;
     --color-link-dark-300: #8ab1ff;
     --color-neutral-dark: #f7f7f7;
@@ -743,6 +745,10 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
   }
+  .border-b-2 {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 2px;
+  }
   .border-black {
     border-color: var(--color-black);
   }
@@ -854,6 +860,9 @@
   .bg-white {
     background-color: var(--color-white);
   }
+  .bg-white\/30 {
+    background-color: color-mix(in oklab, var(--color-white) 30%, transparent);
+  }
   .bg-yellow-100 {
     background-color: var(--color-yellow-100);
   }
@@ -917,9 +926,6 @@
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
   }
-  .py-1\.5 {
-    padding-block: calc(var(--spacing) * 1.5);
-  }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
@@ -934,9 +940,6 @@
   }
   .pt-5 {
     padding-top: calc(var(--spacing) * 5);
-  }
-  .pr-2 {
-    padding-right: calc(var(--spacing) * 2);
   }
   .pr-4 {
     padding-right: calc(var(--spacing) * 4);
@@ -1095,6 +1098,9 @@
   .text-yellow-800 {
     color: var(--color-yellow-800);
   }
+  .underline {
+    text-decoration-line: underline;
+  }
   .opacity-0 {
     opacity: 0%;
   }
@@ -1133,9 +1139,6 @@
   .ring-black {
     --tw-ring-color: var(--color-black);
   }
-  .ring-black\/5 {
-    --tw-ring-color: color-mix(in oklab, var(--color-black) 5%, transparent);
-  }
   .ring-gray-900\/5 {
     --tw-ring-color: color-mix(in oklab, var(--color-gray-900) 5%, transparent);
   }
@@ -1154,17 +1157,11 @@
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
   }
-  .-outline-offset-1 {
-    outline-offset: calc(1px * -1);
-  }
   .outline-black {
     outline-color: var(--color-black);
   }
   .outline-error {
     outline-color: var(--color-error);
-  }
-  .outline-gray-300 {
-    outline-color: var(--color-gray-300);
   }
   .outline-info {
     outline-color: var(--color-info);
@@ -1222,6 +1219,10 @@
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
   }
+  .outline-none {
+    --tw-outline-style: none;
+    outline-style: none;
+  }
   .outline-solid {
     --tw-outline-style: solid;
     outline-style: solid;
@@ -1246,14 +1247,64 @@
       font-weight: var(--font-weight-semibold);
     }
   }
+  .placeholder\:text-black {
+    &::placeholder {
+      color: var(--color-black);
+    }
+  }
   .placeholder\:text-black\/50 {
     &::placeholder {
       color: color-mix(in oklab, var(--color-black) 50%, transparent);
     }
   }
+  .placeholder\:text-error {
+    &::placeholder {
+      color: var(--color-error);
+    }
+  }
   .placeholder\:text-gray-400 {
     &::placeholder {
       color: var(--color-gray-400);
+    }
+  }
+  .placeholder\:text-info {
+    &::placeholder {
+      color: var(--color-info);
+    }
+  }
+  .placeholder\:text-link {
+    &::placeholder {
+      color: var(--color-link);
+    }
+  }
+  .placeholder\:text-neutral {
+    &::placeholder {
+      color: var(--color-neutral);
+    }
+  }
+  .placeholder\:text-primary {
+    &::placeholder {
+      color: var(--color-primary);
+    }
+  }
+  .placeholder\:text-secondary {
+    &::placeholder {
+      color: var(--color-secondary);
+    }
+  }
+  .placeholder\:text-success {
+    &::placeholder {
+      color: var(--color-success);
+    }
+  }
+  .placeholder\:text-warning {
+    &::placeholder {
+      color: var(--color-warning);
+    }
+  }
+  .placeholder\:text-white {
+    &::placeholder {
+      color: var(--color-white);
     }
   }
   .before\:absolute {
@@ -1346,6 +1397,16 @@
   .checked\:bg-warning-700 {
     &:checked {
       background-color: var(--color-warning-700);
+    }
+  }
+  .autofill\:bg-transparent {
+    &:autofill {
+      background-color: transparent;
+    }
+  }
+  .autofill\:bg-none {
+    &:autofill {
+      background-image: none;
     }
   }
   .hover\:border-black {
@@ -1635,6 +1696,93 @@
       }
     }
   }
+  .hover\:placeholder\:text-black {
+    &:hover {
+      @media (hover: hover) {
+        &::placeholder {
+          color: var(--color-black);
+        }
+      }
+    }
+  }
+  .hover\:placeholder\:text-error-700 {
+    &:hover {
+      @media (hover: hover) {
+        &::placeholder {
+          color: var(--color-error-700);
+        }
+      }
+    }
+  }
+  .hover\:placeholder\:text-info-700 {
+    &:hover {
+      @media (hover: hover) {
+        &::placeholder {
+          color: var(--color-info-700);
+        }
+      }
+    }
+  }
+  .hover\:placeholder\:text-link-700 {
+    &:hover {
+      @media (hover: hover) {
+        &::placeholder {
+          color: var(--color-link-700);
+        }
+      }
+    }
+  }
+  .hover\:placeholder\:text-neutral-700 {
+    &:hover {
+      @media (hover: hover) {
+        &::placeholder {
+          color: var(--color-neutral-700);
+        }
+      }
+    }
+  }
+  .hover\:placeholder\:text-primary-700 {
+    &:hover {
+      @media (hover: hover) {
+        &::placeholder {
+          color: var(--color-primary-700);
+        }
+      }
+    }
+  }
+  .hover\:placeholder\:text-secondary-700 {
+    &:hover {
+      @media (hover: hover) {
+        &::placeholder {
+          color: var(--color-secondary-700);
+        }
+      }
+    }
+  }
+  .hover\:placeholder\:text-success-700 {
+    &:hover {
+      @media (hover: hover) {
+        &::placeholder {
+          color: var(--color-success-700);
+        }
+      }
+    }
+  }
+  .hover\:placeholder\:text-warning-700 {
+    &:hover {
+      @media (hover: hover) {
+        &::placeholder {
+          color: var(--color-warning-700);
+        }
+      }
+    }
+  }
+  .focus\:border-b-3 {
+    &:focus {
+      border-bottom-style: var(--tw-border-style);
+      border-bottom-width: 3px;
+    }
+  }
   .focus\:border-black {
     &:focus {
       border-color: var(--color-black);
@@ -1683,11 +1831,6 @@
   .focus\:bg-secondary-700 {
     &:focus {
       background-color: var(--color-secondary-700);
-    }
-  }
-  .focus\:text-black {
-    &:focus {
-      color: var(--color-black);
     }
   }
   .focus\:text-error-700 {
@@ -1757,21 +1900,10 @@
       }
     }
   }
-  .focus\:outline-2 {
-    &:focus {
-      outline-style: var(--tw-outline-style);
-      outline-width: 2px;
-    }
-  }
   .focus\:outline-3 {
     &:focus {
       outline-style: var(--tw-outline-style);
       outline-width: 3px;
-    }
-  }
-  .focus\:-outline-offset-2 {
-    &:focus {
-      outline-offset: calc(2px * -1);
     }
   }
   .focus\:outline-black {
@@ -1818,6 +1950,62 @@
   .focus\:ring-inset {
     &:focus {
       --tw-ring-inset: inset;
+    }
+  }
+  .focus\:placeholder\:text-black {
+    &:focus {
+      &::placeholder {
+        color: var(--color-black);
+      }
+    }
+  }
+  .focus\:placeholder\:text-error-700 {
+    &:focus {
+      &::placeholder {
+        color: var(--color-error-700);
+      }
+    }
+  }
+  .focus\:placeholder\:text-info-700 {
+    &:focus {
+      &::placeholder {
+        color: var(--color-info-700);
+      }
+    }
+  }
+  .focus\:placeholder\:text-link-700 {
+    &:focus {
+      &::placeholder {
+        color: var(--color-link-700);
+      }
+    }
+  }
+  .focus\:placeholder\:text-neutral-700 {
+    &:focus {
+      &::placeholder {
+        color: var(--color-neutral-700);
+      }
+    }
+  }
+  .focus\:placeholder\:text-primary-700 {
+    &:focus {
+      &::placeholder {
+        color: var(--color-primary-700);
+      }
+    }
+  }
+  .focus\:placeholder\:text-secondary-700 {
+    &:focus {
+      &::placeholder {
+        color: var(--color-secondary-700);
+      }
+    }
+  }
+  .focus\:placeholder\:text-success-700 {
+    &:focus {
+      &::placeholder {
+        color: var(--color-success-700);
+      }
     }
   }
   .focus-visible\:outline {
@@ -2136,199 +2324,264 @@
     }
   }
   .dark\:border-error-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       border-color: var(--color-error-dark);
     }
   }
   .dark\:border-info-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       border-color: var(--color-info-dark);
     }
   }
   .dark\:border-neutral-dark\/70 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       border-color: color-mix(in oklab, var(--color-neutral-dark) 70%, transparent);
     }
   }
   .dark\:border-primary-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       border-color: var(--color-primary-dark);
     }
   }
   .dark\:border-secondary-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       border-color: var(--color-secondary-dark);
     }
   }
   .dark\:border-success-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       border-color: var(--color-success-dark);
     }
   }
   .dark\:border-warning-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       border-color: var(--color-warning-dark);
     }
   }
   .dark\:border-white {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       border-color: var(--color-white);
     }
   }
   .dark\:bg-background-primary-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       background-color: var(--color-background-primary-dark);
     }
   }
   .dark\:bg-background-secondary-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       background-color: var(--color-background-secondary-dark);
     }
   }
   .dark\:bg-black {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       background-color: var(--color-black);
     }
   }
+  .dark\:bg-black\/30 {
+    &:where(.dark, .dark *) {
+      background-color: color-mix(in oklab, var(--color-black) 30%, transparent);
+    }
+  }
   .dark\:bg-neutral-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       background-color: var(--color-neutral-dark);
     }
   }
   .dark\:bg-primary-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       background-color: var(--color-primary-dark);
     }
   }
   .dark\:bg-secondary-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       background-color: var(--color-secondary-dark);
     }
   }
   .dark\:bg-white {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       background-color: var(--color-white);
     }
   }
-  .dark\:text-black {
-    @media (prefers-color-scheme: dark) {
-      color: var(--color-black);
-    }
-  }
   .dark\:text-error-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: var(--color-error-dark);
     }
   }
   .dark\:text-gray-600 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: var(--color-gray-600);
     }
   }
   .dark\:text-info-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: var(--color-info-dark);
     }
   }
   .dark\:text-link-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: var(--color-link-dark);
     }
   }
   .dark\:text-neutral-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: var(--color-neutral-dark);
     }
   }
   .dark\:text-neutral-dark\/30 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: color-mix(in oklab, var(--color-neutral-dark) 30%, transparent);
     }
   }
   .dark\:text-primary-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: var(--color-primary-dark);
     }
   }
   .dark\:text-secondary-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: var(--color-secondary-dark);
     }
   }
   .dark\:text-success-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: var(--color-success-dark);
     }
   }
   .dark\:text-warning-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: var(--color-warning-dark);
     }
   }
   .dark\:text-white {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       color: var(--color-white);
     }
   }
-  .dark\:ring-white\/5 {
-    @media (prefers-color-scheme: dark) {
-      --tw-ring-color: color-mix(in oklab, var(--color-white) 5%, transparent);
+  .dark\:text-white-dark {
+    &:where(.dark, .dark *) {
+      color: var(--color-white-dark);
     }
   }
   .dark\:outline-error-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       outline-color: var(--color-error-dark);
     }
   }
   .dark\:outline-info-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       outline-color: var(--color-info-dark);
     }
   }
   .dark\:outline-neutral-dark\/30 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       outline-color: color-mix(in oklab, var(--color-neutral-dark) 30%, transparent);
     }
   }
   .dark\:outline-primary-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       outline-color: var(--color-primary-dark);
     }
   }
   .dark\:outline-secondary-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       outline-color: var(--color-secondary-dark);
     }
   }
   .dark\:outline-success-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       outline-color: var(--color-success-dark);
     }
   }
   .dark\:outline-warning-dark {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       outline-color: var(--color-warning-dark);
     }
   }
   .dark\:outline-white {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       outline-color: var(--color-white);
     }
   }
-  .dark\:outline-white\/5 {
-    @media (prefers-color-scheme: dark) {
-      outline-color: color-mix(in oklab, var(--color-white) 5%, transparent);
+  .dark\:placeholder\:text-black {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-black);
+      }
+    }
+  }
+  .dark\:placeholder\:text-error-dark {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-error-dark);
+      }
+    }
+  }
+  .dark\:placeholder\:text-info-dark {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-info-dark);
+      }
+    }
+  }
+  .dark\:placeholder\:text-link-dark {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-link-dark);
+      }
+    }
+  }
+  .dark\:placeholder\:text-neutral-dark {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-neutral-dark);
+      }
+    }
+  }
+  .dark\:placeholder\:text-primary-dark {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-primary-dark);
+      }
+    }
+  }
+  .dark\:placeholder\:text-secondary-dark {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-secondary-dark);
+      }
+    }
+  }
+  .dark\:placeholder\:text-success-dark {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-success-dark);
+      }
+    }
+  }
+  .dark\:placeholder\:text-warning-dark {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-warning-dark);
+      }
+    }
+  }
+  .dark\:placeholder\:text-white {
+    &:where(.dark, .dark *) {
+      &::placeholder {
+        color: var(--color-white);
+      }
     }
   }
   .dark\:placeholder\:text-white\/50 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &::placeholder {
         color: color-mix(in oklab, var(--color-white) 50%, transparent);
       }
     }
   }
   .dark\:before\:bg-black {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &::before {
         content: var(--tw-content);
         background-color: var(--color-black);
@@ -2336,91 +2589,91 @@
     }
   }
   .dark\:checked\:border-error-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         border-color: var(--color-error-dark-300);
       }
     }
   }
   .dark\:checked\:border-neutral-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         border-color: var(--color-neutral-dark-300);
       }
     }
   }
   .dark\:checked\:border-primary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         border-color: var(--color-primary-dark-300);
       }
     }
   }
   .dark\:checked\:border-secondary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         border-color: var(--color-secondary-dark-300);
       }
     }
   }
   .dark\:checked\:border-success-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         border-color: var(--color-success-dark-300);
       }
     }
   }
   .dark\:checked\:border-warning-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         border-color: var(--color-warning-dark-300);
       }
     }
   }
   .dark\:checked\:bg-error-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: var(--color-error-dark-300);
       }
     }
   }
   .dark\:checked\:bg-neutral-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: var(--color-neutral-dark-300);
       }
     }
   }
   .dark\:checked\:bg-primary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: var(--color-primary-dark-300);
       }
     }
   }
   .dark\:checked\:bg-secondary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: var(--color-secondary-dark-300);
       }
     }
   }
   .dark\:checked\:bg-success-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: var(--color-success-dark-300);
       }
     }
   }
   .dark\:checked\:bg-warning-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:checked {
         background-color: var(--color-warning-dark-300);
       }
     }
   }
   .dark\:hover\:border-error-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           border-color: var(--color-error-dark-300);
@@ -2429,7 +2682,7 @@
     }
   }
   .dark\:hover\:border-info-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           border-color: var(--color-info-dark-300);
@@ -2438,7 +2691,7 @@
     }
   }
   .dark\:hover\:border-primary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           border-color: var(--color-primary-dark-300);
@@ -2447,7 +2700,7 @@
     }
   }
   .dark\:hover\:border-secondary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           border-color: var(--color-secondary-dark-300);
@@ -2456,7 +2709,7 @@
     }
   }
   .dark\:hover\:border-success-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           border-color: var(--color-success-dark-300);
@@ -2465,7 +2718,7 @@
     }
   }
   .dark\:hover\:border-warning-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           border-color: var(--color-warning-dark-300);
@@ -2474,7 +2727,7 @@
     }
   }
   .dark\:hover\:border-white {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           border-color: var(--color-white);
@@ -2483,7 +2736,7 @@
     }
   }
   .dark\:hover\:bg-neutral-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           background-color: var(--color-neutral-dark-300);
@@ -2492,7 +2745,7 @@
     }
   }
   .dark\:hover\:bg-primary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           background-color: var(--color-primary-dark-300);
@@ -2501,7 +2754,7 @@
     }
   }
   .dark\:hover\:bg-secondary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           background-color: var(--color-secondary-dark-300);
@@ -2509,8 +2762,17 @@
       }
     }
   }
+  .dark\:hover\:text-black-dark {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          color: var(--color-black-dark);
+        }
+      }
+    }
+  }
   .dark\:hover\:text-error-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           color: var(--color-error-dark-300);
@@ -2519,7 +2781,7 @@
     }
   }
   .dark\:hover\:text-info-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           color: var(--color-info-dark-300);
@@ -2528,7 +2790,7 @@
     }
   }
   .dark\:hover\:text-link-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           color: var(--color-link-dark-300);
@@ -2537,7 +2799,7 @@
     }
   }
   .dark\:hover\:text-neutral-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           color: var(--color-neutral-dark-300);
@@ -2546,7 +2808,7 @@
     }
   }
   .dark\:hover\:text-primary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           color: var(--color-primary-dark-300);
@@ -2555,7 +2817,7 @@
     }
   }
   .dark\:hover\:text-secondary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           color: var(--color-secondary-dark-300);
@@ -2564,7 +2826,7 @@
     }
   }
   .dark\:hover\:text-success-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           color: var(--color-success-dark-300);
@@ -2573,7 +2835,7 @@
     }
   }
   .dark\:hover\:text-warning-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           color: var(--color-warning-dark-300);
@@ -2581,17 +2843,8 @@
       }
     }
   }
-  .dark\:hover\:text-white {
-    @media (prefers-color-scheme: dark) {
-      &:hover {
-        @media (hover: hover) {
-          color: var(--color-white);
-        }
-      }
-    }
-  }
   .dark\:hover\:outline-error-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           outline-color: var(--color-error-dark-300);
@@ -2600,7 +2853,7 @@
     }
   }
   .dark\:hover\:outline-info-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           outline-color: var(--color-info-dark-300);
@@ -2609,7 +2862,7 @@
     }
   }
   .dark\:hover\:outline-primary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           outline-color: var(--color-primary-dark-300);
@@ -2618,7 +2871,7 @@
     }
   }
   .dark\:hover\:outline-secondary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           outline-color: var(--color-secondary-dark-300);
@@ -2627,7 +2880,7 @@
     }
   }
   .dark\:hover\:outline-success-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           outline-color: var(--color-success-dark-300);
@@ -2636,7 +2889,7 @@
     }
   }
   .dark\:hover\:outline-warning-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           outline-color: var(--color-warning-dark-300);
@@ -2645,7 +2898,7 @@
     }
   }
   .dark\:hover\:outline-white {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:hover {
         @media (hover: hover) {
           outline-color: var(--color-white);
@@ -2653,197 +2906,361 @@
       }
     }
   }
+  .dark\:hover\:placeholder\:text-error-dark-300 {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          &::placeholder {
+            color: var(--color-error-dark-300);
+          }
+        }
+      }
+    }
+  }
+  .dark\:hover\:placeholder\:text-info-dark-300 {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          &::placeholder {
+            color: var(--color-info-dark-300);
+          }
+        }
+      }
+    }
+  }
+  .dark\:hover\:placeholder\:text-link-dark-300 {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          &::placeholder {
+            color: var(--color-link-dark-300);
+          }
+        }
+      }
+    }
+  }
+  .dark\:hover\:placeholder\:text-neutral-dark-300 {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          &::placeholder {
+            color: var(--color-neutral-dark-300);
+          }
+        }
+      }
+    }
+  }
+  .dark\:hover\:placeholder\:text-primary-dark-300 {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          &::placeholder {
+            color: var(--color-primary-dark-300);
+          }
+        }
+      }
+    }
+  }
+  .dark\:hover\:placeholder\:text-secondary-dark-300 {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          &::placeholder {
+            color: var(--color-secondary-dark-300);
+          }
+        }
+      }
+    }
+  }
+  .dark\:hover\:placeholder\:text-success-dark-300 {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          &::placeholder {
+            color: var(--color-success-dark-300);
+          }
+        }
+      }
+    }
+  }
+  .dark\:hover\:placeholder\:text-warning-dark-300 {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          &::placeholder {
+            color: var(--color-warning-dark-300);
+          }
+        }
+      }
+    }
+  }
+  .dark\:hover\:placeholder\:text-white {
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          &::placeholder {
+            color: var(--color-white);
+          }
+        }
+      }
+    }
+  }
   .dark\:focus\:border-error-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         border-color: var(--color-error-dark-300);
       }
     }
   }
   .dark\:focus\:border-info-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         border-color: var(--color-info-dark-300);
       }
     }
   }
   .dark\:focus\:border-primary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         border-color: var(--color-primary-dark-300);
       }
     }
   }
   .dark\:focus\:border-secondary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         border-color: var(--color-secondary-dark-300);
       }
     }
   }
   .dark\:focus\:border-success-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         border-color: var(--color-success-dark-300);
       }
     }
   }
   .dark\:focus\:border-warning-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         border-color: var(--color-warning-dark-300);
       }
     }
   }
   .dark\:focus\:border-white {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         border-color: var(--color-white);
       }
     }
   }
   .dark\:focus\:bg-neutral-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         background-color: var(--color-neutral-dark-300);
       }
     }
   }
   .dark\:focus\:bg-primary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         background-color: var(--color-primary-dark-300);
       }
     }
   }
   .dark\:focus\:bg-secondary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         background-color: var(--color-secondary-dark-300);
       }
     }
   }
   .dark\:focus\:text-error-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         color: var(--color-error-dark-300);
       }
     }
   }
   .dark\:focus\:text-info-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         color: var(--color-info-dark-300);
       }
     }
   }
   .dark\:focus\:text-link-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         color: var(--color-link-dark-300);
       }
     }
   }
   .dark\:focus\:text-neutral-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         color: var(--color-neutral-dark-300);
       }
     }
   }
   .dark\:focus\:text-primary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         color: var(--color-primary-dark-300);
       }
     }
   }
   .dark\:focus\:text-secondary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         color: var(--color-secondary-dark-300);
       }
     }
   }
   .dark\:focus\:text-success-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         color: var(--color-success-dark-300);
       }
     }
   }
-  .dark\:focus\:text-white {
-    @media (prefers-color-scheme: dark) {
-      &:focus {
-        color: var(--color-white);
-      }
-    }
-  }
   .dark\:focus\:outline-error-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         outline-color: var(--color-error-dark-300);
       }
     }
   }
   .dark\:focus\:outline-info-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         outline-color: var(--color-info-dark-300);
       }
     }
   }
   .dark\:focus\:outline-primary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         outline-color: var(--color-primary-dark-300);
       }
     }
   }
   .dark\:focus\:outline-secondary-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         outline-color: var(--color-secondary-dark-300);
       }
     }
   }
   .dark\:focus\:outline-success-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         outline-color: var(--color-success-dark-300);
       }
     }
   }
   .dark\:focus\:outline-warning-dark-300 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         outline-color: var(--color-warning-dark-300);
       }
     }
   }
   .dark\:focus\:outline-white {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:focus {
         outline-color: var(--color-white);
       }
     }
   }
+  .dark\:focus\:placeholder\:text-error-dark-300 {
+    &:where(.dark, .dark *) {
+      &:focus {
+        &::placeholder {
+          color: var(--color-error-dark-300);
+        }
+      }
+    }
+  }
+  .dark\:focus\:placeholder\:text-info-dark-300 {
+    &:where(.dark, .dark *) {
+      &:focus {
+        &::placeholder {
+          color: var(--color-info-dark-300);
+        }
+      }
+    }
+  }
+  .dark\:focus\:placeholder\:text-link-dark-300 {
+    &:where(.dark, .dark *) {
+      &:focus {
+        &::placeholder {
+          color: var(--color-link-dark-300);
+        }
+      }
+    }
+  }
+  .dark\:focus\:placeholder\:text-neutral-dark-300 {
+    &:where(.dark, .dark *) {
+      &:focus {
+        &::placeholder {
+          color: var(--color-neutral-dark-300);
+        }
+      }
+    }
+  }
+  .dark\:focus\:placeholder\:text-primary-dark-300 {
+    &:where(.dark, .dark *) {
+      &:focus {
+        &::placeholder {
+          color: var(--color-primary-dark-300);
+        }
+      }
+    }
+  }
+  .dark\:focus\:placeholder\:text-secondary-dark-300 {
+    &:where(.dark, .dark *) {
+      &:focus {
+        &::placeholder {
+          color: var(--color-secondary-dark-300);
+        }
+      }
+    }
+  }
+  .dark\:focus\:placeholder\:text-success-dark-300 {
+    &:where(.dark, .dark *) {
+      &:focus {
+        &::placeholder {
+          color: var(--color-success-dark-300);
+        }
+      }
+    }
+  }
+  .dark\:focus\:placeholder\:text-white {
+    &:where(.dark, .dark *) {
+      &:focus {
+        &::placeholder {
+          color: var(--color-white);
+        }
+      }
+    }
+  }
   .dark\:disabled\:border-white\/40 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:disabled {
         border-color: color-mix(in oklab, var(--color-white) 40%, transparent);
       }
     }
   }
   .dark\:disabled\:bg-black\/50 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:disabled {
         background-color: color-mix(in oklab, var(--color-black) 50%, transparent);
       }
     }
   }
   .dark\:disabled\:before\:bg-white\/50 {
-    @media (prefers-color-scheme: dark) {
+    &:where(.dark, .dark *) {
       &:disabled {
         &::before {
           content: var(--tw-content);
@@ -2865,6 +3282,12 @@
       }
     }
   }
+}
+input:-internal-autofill-selected, input:-internal-autofill-selected:hover , input:-internal-autofill-selected:focus, input:-internal-autofill-selected:active, input:-internal-autofill-selected:focus-visible, input:-internal-autofill-selected:focus-within, input:-internal-autofill-previewed, input:-internal-autofill-previewed:hover, input:-internal-autofill-previewed:focus, input:-internal-autofill-previewed:active, input:-internal-autofill-previewed:focus-visible, input:-internal-autofill-previewed:focus-within, input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, textarea:-internal-autofill-selected, textarea:-internal-autofill-previewed, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-internal-autofill-selected, select:-internal-autofill-previewed, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
+  background-color: inherit !important;
+  -webkit-background-composite: unset !important;
+  -webkit-box-shadow: inherit inset !important;
+  -webkit-text-fill-color: inherit !important;
 }
 @property --tw-translate-x {
   syntax: "*";
