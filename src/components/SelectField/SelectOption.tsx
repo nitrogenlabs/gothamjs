@@ -1,7 +1,7 @@
 import { ListboxOption } from '@headlessui/react';
 import { Check } from 'lucide-react';
 
-import {Svg} from '../Svg/Svg';
+import {Svg} from '../Svg/Svg.js';
 
 export type SelectOptionProps = {
   readonly option: {

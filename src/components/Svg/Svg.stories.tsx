@@ -1,6 +1,6 @@
-import { Svg as SvgComponent } from './Svg';
+import { Svg as SvgComponent } from './Svg.js';
 
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@nlabs/lex/storybook';
 
 const meta: Meta<typeof SvgComponent> = {
   component: SvgComponent

@@ -1,4 +1,4 @@
-import {GothamActions} from '../../actions/GothamActions';
+import {GothamActions} from '../../actions/GothamActions.js';
 
 export const NotifyExample = () => {
   // Basic notification

@@ -1,6 +1,6 @@
-import { Loader } from './Loader';
+import { Loader } from './Loader.js';
 
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@nlabs/lex/storybook';
 
 
 const meta: Meta<typeof Loader> = {

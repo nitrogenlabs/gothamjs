@@ -1,6 +1,6 @@
-import { ErrorMessage } from './ErrorMessage';
+import { ErrorMessage } from './ErrorMessage.js';
 
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@nlabs/lex/storybook';
 
 const meta: Meta<typeof ErrorMessage> = {
   component: ErrorMessage

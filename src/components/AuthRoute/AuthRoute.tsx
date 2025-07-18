@@ -4,7 +4,7 @@
  */
 import {Navigate, useLocation} from 'react-router';
 
-import {Config} from '../../config/appConfig';
+import {Config} from '../../config/appConfig.js';
 
 export const AuthRoute = ({ children }) => {
   const location = useLocation();

@@ -1,18 +1,18 @@
 'use client';
 
 import { Label, Listbox, ListboxButton, ListboxOptions } from '@headlessui/react';
-import {cn} from '@nlabs/utils';
+import {cn} from '@nlabs/utils/strings/cn';
 import { ChevronsUpDown } from 'lucide-react';
 import { useMemo, useState, type FC } from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
-import {SelectOption, SelectOptionProps} from './SelectOption';
-import {useIsMobile} from '../../hooks/useIsMobile';
-import {getBackgroundClasses, getOutlineClasses, getTextClasses} from '../../utils/colorUtils';
-import {InputBorderType, getInputBorderClass} from '../InputField/InputField';
-import {Svg} from '../Svg/Svg';
+import {SelectOption, SelectOptionProps} from './SelectOption.js';
+import {useIsMobile} from '../../hooks/useIsMobile.js';
+import {getBackgroundClasses, getOutlineClasses, getTextClasses} from '../../utils/colorUtils.js';
+import {InputBorderType, getInputBorderClass} from '../InputField/InputField.js';
+import {Svg} from '../Svg/Svg.js';
 
-import type {GothamColor} from '../../utils/colorUtils';
+import type {GothamColor} from '../../utils/colorUtils.js';
 
 export type SelectFieldProps = {
   readonly backgroundColor?: GothamColor;

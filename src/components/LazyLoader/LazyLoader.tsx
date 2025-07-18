@@ -4,7 +4,7 @@
  */
 import {lazy, Suspense, useMemo} from 'react';
 
-import type {Loader} from '../Loader/Loader';
+import type {Loader} from '../Loader/Loader.js';
 import type {FC} from 'react';
 
 export interface LazyLoadProps {

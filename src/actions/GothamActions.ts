@@ -2,13 +2,14 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Flux, FluxAction} from '@nlabs/arkhamjs';
-import {isEmpty} from '@nlabs/utils';
+import {Flux} from '@nlabs/arkhamjs';
+import {isEmpty} from '@nlabs/utils/checks/isEmpty';
 
-import {Config} from '../config/appConfig';
-import {GothamConstants} from '../constants/GothamConstants';
-import {GothamConfiguration} from '../views/Gotham/GothamProvider';
+import {Config} from '../config/appConfig.js';
+import {GothamConstants} from '../constants/GothamConstants.js';
+import {GothamConfiguration} from '../views/Gotham/GothamProvider.js';
 
+import type {FluxAction} from '@nlabs/arkhamjs';
 import type {ReactElement} from 'react';
 
 export interface GothamNotifyAction {

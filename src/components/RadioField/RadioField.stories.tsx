@@ -1,9 +1,9 @@
 import {FormProvider, useForm} from 'react-hook-form';
 
-import {RadioField} from './RadioField';
-import {gothamColors} from '../../utils/colorUtils';
+import {RadioField} from './RadioField.js';
+import {gothamColors} from '../../utils/colorUtils.js';
 
-import type {Meta, StoryObj} from '@storybook/react-webpack5';
+import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
 const meta: Meta<typeof RadioField> = {
   argTypes: {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import {fetchJsonFromUrl, parseTemplate} from '../../utils/contentUtils';
+import {fetchJsonFromUrl, parseTemplate} from '../../utils/contentUtils.js';
 
 
 interface MarkdownViewProps {

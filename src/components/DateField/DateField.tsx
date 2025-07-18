@@ -5,14 +5,14 @@
 import {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
-import {DatePicker} from './DatePicker';
-import {useIsMobile} from '../../hooks/useIsMobile';
-import {getOutlineClasses} from '../../utils/colorUtils';
-import {ErrorMessage} from '../ErrorMessage/ErrorMessage';
-import {InputField, type InputFieldProps} from '../InputField/InputField';
-import {Label} from '../Label/Label';
+import {DatePicker} from './DatePicker.js';
+import {useIsMobile} from '../../hooks/useIsMobile.js';
+import {getOutlineClasses} from '../../utils/colorUtils.js';
+import {ErrorMessage} from '../ErrorMessage/ErrorMessage.js';
+import {InputField, type InputFieldProps} from '../InputField/InputField.js';
+import {Label} from '../Label/Label.js';
 
-import type {GothamColor} from '../../utils/colorUtils';
+import type {GothamColor} from '../../utils/colorUtils.js';
 
 export interface DateFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   readonly className?: string;

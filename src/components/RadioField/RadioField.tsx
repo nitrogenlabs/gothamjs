@@ -1,8 +1,8 @@
-import {cn} from '@nlabs/utils';
+import {cn} from '@nlabs/utils/strings/cn';
 import {useMemo, type FC} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
-import {getCheckedClasses, type GothamColor} from '../../utils/colorUtils';
+import {getCheckedClasses, type GothamColor} from '../../utils/colorUtils.js';
 
 export interface RadioFieldItem {
   readonly description?: string;

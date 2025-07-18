@@ -4,7 +4,7 @@
  */
 import {ComponentType, Suspense, lazy} from 'react';
 
-import {Loader} from '../components/Loader/Loader';
+import {Loader} from '../components/Loader/Loader.js';
 
 export const lazyImport = <T extends ComponentType<unknown>, I extends {[K2 in K]: T}, K extends keyof I>(
   factory: () => Promise<I>,

@@ -28,7 +28,7 @@ const config = {
     '@storybook/addon-themes'
   ],
   framework: {
-    name: '@storybook/react-webpack5',
+    name: '@nlabs/lex/storybook',
     options: {
       builder: {
         useSWC: true

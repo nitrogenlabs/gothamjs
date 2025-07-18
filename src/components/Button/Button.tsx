@@ -1,11 +1,11 @@
-import {cn} from '@nlabs/utils';
+import {cn} from '@nlabs/utils/strings/cn';
 import {forwardRef} from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {getBackgroundClasses, getBorderClasses, getTextClasses} from '../../utils/colorUtils';
+import {getBackgroundClasses, getBorderClasses, getTextClasses} from '../../utils/colorUtils.js';
 
-import type {GothamColor} from '../../utils/colorUtils';
-import type {GothamSize} from '../../utils/sizeUtils';
+import type {GothamColor} from '../../utils/colorUtils.js';
+import type {GothamSize} from '../../utils/sizeUtils.js';
 import type {ReactNode} from 'react';
 
 export type ButtonType = 'button' | 'reset' | 'submit';

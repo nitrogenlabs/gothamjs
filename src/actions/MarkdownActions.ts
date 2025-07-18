@@ -2,10 +2,11 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Flux, FluxAction} from '@nlabs/arkhamjs';
+import {Flux} from '@nlabs/arkhamjs';
 
-import {MarkdownConstants} from '../constants/MarkdownConstants';
+import {MarkdownConstants} from '../constants/MarkdownConstants.js';
 
+import type {FluxAction} from '@nlabs/arkhamjs';
 
 // import {get} from '@nlabs/rip-hunter';
 // import js from 'highlight.js/lib/languages/javascript';

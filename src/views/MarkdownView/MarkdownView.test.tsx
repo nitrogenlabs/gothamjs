@@ -1,6 +1,6 @@
 import {render, screen} from '@nlabs/lex/test-react';
 
-import {MarkdownView} from './MarkdownView';
+import {MarkdownView} from './MarkdownView.js';
 
 jest.mock('react-markdown', () => ({
   __esModule: true,

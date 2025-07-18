@@ -9,7 +9,7 @@ import {
   MenuItems,
   TransitionChild
 } from '@headlessui/react';
-import {cn} from '@nlabs/utils';
+import {cn} from '@nlabs/utils/strings/cn';
 import {
   ChevronDown,
   Search,
@@ -26,9 +26,9 @@ import {
 import {useState} from 'react';
 import {Outlet} from 'react-router';
 
-import {Config} from '../../config/appConfig';
+import {Config} from '../../config/appConfig.js';
 
-import type {GothamConfiguration} from '../Gotham/GothamProvider';
+import type {GothamConfiguration} from '../Gotham/GothamProvider.js';
 import type { ElementType, FC } from 'react';
 
 const sideMenuItems: MenuItems[] = [

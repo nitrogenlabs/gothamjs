@@ -2,9 +2,9 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {cn} from '@nlabs/utils';
+import {cn} from '@nlabs/utils/strings/cn';
 
-import {Config} from '../../config/appConfig';
+import {Config} from '../../config/appConfig.js';
 
 import type {FC} from 'react';
 

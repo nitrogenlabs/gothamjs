@@ -4,11 +4,11 @@
  */
 import { createRoot } from 'react-dom/client';
 
-import {Svg} from './components/Svg/Svg';
-import {Gotham} from './views/Gotham/Gotham';
-import {HomeView} from './views/HomeView/HomeView';
+import {Svg} from './components/Svg/Svg.js';
+import {Gotham} from './views/Gotham/Gotham.js';
+import {HomeView} from './views/HomeView/HomeView.js';
 
-import type {GothamConfiguration} from './views/Gotham/GothamProvider';
+import type {GothamConfiguration} from './views/Gotham/GothamProvider.js';
 
 const config: GothamConfiguration = {
   app: {

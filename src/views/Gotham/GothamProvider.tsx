@@ -2,25 +2,26 @@
  * Copyright (c) 2024-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
+import {LoggerDebugLevel} from '@nlabs/arkhamjs';
+import {Logger} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {useFlux} from '@nlabs/arkhamjs-utils-react';
-import {merge} from '@nlabs/utils';
+import {merge} from '@nlabs/utils/objects/merge';
 import {useEffect, useState} from 'react';
 import {I18nextProvider} from 'react-i18next';
 import {createBrowserRouter, RouterProvider} from 'react-router';
 
-import {GothamRoot} from './GothamRoot';
-import {GothamActions} from '../../actions/GothamActions';
-import {Config} from '../../config/appConfig';
-import {GothamConstants} from '../../constants/GothamConstants';
-import {gothamApp} from '../../stores/GothamAppStore';
-import {GothamContext} from '../../utils/GothamContext';
-import {i18n} from '../../utils/i18nUtil';
-import {parseRoutes} from '../../utils/routeUtils';
+import {GothamRoot} from './GothamRoot.js';
+import {GothamActions} from '../../actions/GothamActions.js';
+import {Config} from '../../config/appConfig.js';
+import {GothamConstants} from '../../constants/GothamConstants.js';
+import {gothamApp} from '../../stores/GothamAppStore.js';
+import {GothamContext} from '../../utils/GothamContext.js';
+import {i18n} from '../../utils/i18nUtil.js';
+import {parseRoutes} from '../../utils/routeUtils.js';
 
-import type {GothamRouteData} from '../../types/gotham';
-import type {FluxMiddlewareType, FluxFramework, FluxOptions} from '@nlabs/arkhamjs';
+import type {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
+import type {GothamRouteData} from '../../types/gotham.js';
 import type {FC, ReactNode} from 'react';
 import type {RouteObject} from 'react-router';
 

@@ -6,8 +6,7 @@ import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import {Suspense, type FC} from 'react';
 import {Outlet, useNavigate} from 'react-router';
 
-import {GothamConstants} from '../../constants/GothamConstants';
-
+import {GothamConstants} from '../../constants/GothamConstants.js';
 
 export const navBack = (history) => (): void => {
   history.goBack();

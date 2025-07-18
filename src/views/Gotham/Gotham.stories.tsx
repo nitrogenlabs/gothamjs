@@ -1,7 +1,7 @@
-import {Gotham} from './Gotham';
-import {MarkdownView} from '../MarkdownView/MarkdownView';
+import {Gotham} from './Gotham.js';
+import {MarkdownView} from '../MarkdownView/MarkdownView.js';
 
-import type {Meta, StoryObj} from '@storybook/react-webpack5';
+import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
 
 const meta: Meta<typeof Gotham> = {

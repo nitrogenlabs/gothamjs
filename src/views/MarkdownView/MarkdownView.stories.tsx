@@ -1,6 +1,6 @@
-import { MarkdownView } from './MarkdownView';
+import { MarkdownView } from './MarkdownView.js';
 
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta, StoryObj } from '@nlabs/lex/storybook';
 
 
 const meta: Meta<typeof MarkdownView> = {

@@ -4,10 +4,10 @@
  */
 import {useEffect} from 'react';
 
-import {GothamProvider} from './GothamProvider';
-import {LoaderView} from '../LoaderView/LoaderView';
+import {GothamProvider} from './GothamProvider.js';
+import {LoaderView} from '../LoaderView/LoaderView.js';
 
-import type {GothamConfiguration, GothamStatus} from './GothamProvider';
+import type {GothamConfiguration, GothamStatus} from './GothamProvider.js';
 import type {FC, ReactNode} from 'react';
 
 export interface GothamProps {

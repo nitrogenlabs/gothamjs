@@ -4,9 +4,9 @@
  */
 import {useMemo} from 'react';
 
-import {getErrorClasses} from '../../utils/colorUtils';
+import {getErrorClasses} from '../../utils/colorUtils.js';
 
-import type {GothamColor} from '../../utils/colorUtils';
+import type {GothamColor} from '../../utils/colorUtils.js';
 import type {FC} from 'react';
 
 export interface ErrorMessageProps {

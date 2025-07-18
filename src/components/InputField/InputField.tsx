@@ -1,8 +1,8 @@
 /**
- * Copyright (c) 2025-Present, Nitrogen Labs, Inc.
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {cn} from '@nlabs/utils';
+import {cn} from '@nlabs/utils/strings/cn';
 import {forwardRef, useMemo} from 'react';
 
 import {
@@ -10,9 +10,9 @@ import {
   getOutlineClasses,
   getPlaceholderClasses,
   getTextClasses
-} from '../../utils/colorUtils';
+} from '../../utils/colorUtils.js';
 
-import type {GothamColor} from '../../utils/colorUtils';
+import type {GothamColor} from '../../utils/colorUtils.js';
 import type {InputHTMLAttributes, Ref, TextareaHTMLAttributes} from 'react';
 
 export type InputBorderType = 'solid' | 'rounded' | 'none' | 'underline';

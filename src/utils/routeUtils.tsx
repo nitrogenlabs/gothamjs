@@ -4,7 +4,7 @@
  */
 // import {Flux, FluxFramework} from '@nlabs/arkhamjs';
 // import {ReactNode} from 'react';
-import {AuthRoute} from '../components/AuthRoute/AuthRoute';
+import {AuthRoute} from '../components/AuthRoute/AuthRoute.js';
 
 import type {RouteObject} from 'react-router';
 

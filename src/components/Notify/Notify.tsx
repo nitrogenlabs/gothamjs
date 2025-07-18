@@ -1,10 +1,10 @@
 import {Transition} from '@headlessui/react';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
-import {cn} from '@nlabs/utils';
+import {cn} from '@nlabs/utils/strings/cn';
 import {useState, useEffect, Fragment} from 'react';
 
-import {GothamConstants} from '../../constants/GothamConstants';
-import {Svg} from '../Svg/Svg';
+import {GothamConstants} from '../../constants/GothamConstants.js';
+import {Svg} from '../Svg/Svg.js';
 
 import type {ReactElement} from 'react';
 

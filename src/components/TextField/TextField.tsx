@@ -5,12 +5,12 @@
 import React, {forwardRef} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
-import {ErrorMessage} from '../ErrorMessage/ErrorMessage';
-import {InputField} from '../InputField/InputField';
-import {Label} from '../Label/Label';
+import {ErrorMessage} from '../ErrorMessage/ErrorMessage.js';
+import {InputField} from '../InputField/InputField.js';
+import {Label} from '../Label/Label.js';
 
-import type {GothamColor} from '../../utils/colorUtils';
-import type{InputBorderType} from '../InputField/InputField';
+import type {GothamColor} from '../../utils/colorUtils.js';
+import type{InputBorderType} from '../InputField/InputField.js';
 
 export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   readonly borderColor?: GothamColor;

@@ -1,7 +1,7 @@
-import {Button as ButtonComponent} from './Button';
-import {gothamColors} from '../../utils/colorUtils';
+import {Button as ButtonComponent} from './Button.js';
+import {gothamColors} from '../../utils/colorUtils.js';
 
-import type {Meta, StoryObj} from '@storybook/react-webpack5';
+import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
 const meta: Meta<typeof ButtonComponent> = {
   argTypes: {

@@ -1,10 +1,10 @@
 import {useEffect} from 'react';
 
-import {Notify} from './Notify';
-import {NotifyExample} from './NotifyExample';
-import {GothamActions} from '../../actions/GothamActions';
+import {Notify} from './Notify.js';
+import {NotifyExample} from './NotifyExample.js';
+import {GothamActions} from '../../actions/GothamActions.js';
 
-import type {Meta, StoryObj} from '@storybook/react-webpack5';
+import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
 const meta: Meta<typeof Notify> = {
   component: Notify,

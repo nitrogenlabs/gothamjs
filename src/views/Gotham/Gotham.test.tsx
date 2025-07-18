@@ -4,7 +4,7 @@
  */
 import {render} from '@nlabs/lex/test-react';
 
-import {Gotham} from './Gotham';
+import {Gotham} from './Gotham.js';
 
 describe('Gotham', () => {
   let rendered;
