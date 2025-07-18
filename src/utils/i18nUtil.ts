@@ -5,7 +5,10 @@
 import {createInstance} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
-export const i18n = (resources) => {
+import type {Resource} from 'i18next';
+import type {I18nextProviderProps} from 'react-i18next';
+
+export const i18n = (resources: Resource): I18nextProviderProps => {
   const i18next = createInstance();
   i18next
     .use(initReactI18next)
@@ -32,6 +35,6 @@ export const i18n = (resources) => {
       returnObjects: true
     });
 
-  return i18next;
+  return {i18n: i18next} as I18nextProviderProps;
 };
 

@@ -3,9 +3,12 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {zodResolver} from '@hookform/resolvers/zod';
-import {BaseSyntheticEvent, ReactNode, useCallback} from 'react';
+import {useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import {z} from 'zod';
+
+
+import type {BaseSyntheticEvent, ReactNode} from 'react';
 
 export interface FormProps {
   readonly children: ReactNode;
@@ -15,7 +18,7 @@ export interface FormProps {
   readonly name?: string;
   readonly onChange?: (data: unknown) => void;
   readonly onSubmit: (data: unknown, event: BaseSyntheticEvent, setError: (field: string, error: { type: string; message: string }) => void) => void;
-  readonly schema?: z.ZodSchema<unknown>;
+  readonly schema?: z.ZodSchema<Record<string, unknown>>;
   readonly validate?: (data: unknown) => void;
   readonly validateOnBlur?: boolean;
 }
@@ -27,19 +30,17 @@ export const Form = ({
   mode = 'onBlur',
   name = 'default',
   schema,
-  onChange,
-  onSubmit,
-  validate,
-  validateOnBlur
+  onSubmit
 }: FormProps) => {
   const methods = useForm({
     defaultValues,
     mode,
+    // @ts-ignore - Type compatibility issues between zod versions
     resolver: schema ? zodResolver(schema) : undefined
   });
   const {handleSubmit, setError} = methods;
   const handleFormSubmit = useCallback(
-    handleSubmit((data, event) => onSubmit(data, event, setError)),
+    handleSubmit((data, event) => onSubmit(data, event as BaseSyntheticEvent, setError)),
     []
   );
 

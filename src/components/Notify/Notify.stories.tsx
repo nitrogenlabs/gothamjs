@@ -1,8 +1,8 @@
 import {useEffect} from 'react';
 
+import {GothamActions} from '../../actions/GothamActions.js';
 import {Notify} from './Notify.js';
 import {NotifyExample} from './NotifyExample.js';
-import {GothamActions} from '../../actions/GothamActions.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
@@ -40,7 +40,7 @@ export const Basic: Story = {
       };
     }, []);
 
-    return null;
+    return <></>;
   }
 };
 
@@ -57,7 +57,7 @@ export const Success: Story = {
       };
     }, []);
 
-    return null;
+    return <></>;
   }
 };
 
@@ -74,7 +74,7 @@ export const Error: Story = {
       };
     }, []);
 
-    return null;
+    return <></>;
   }
 };
 
@@ -91,7 +91,7 @@ export const Warning: Story = {
       };
     }, []);
 
-    return null;
+    return <></>;
   }
 };
 
@@ -108,7 +108,7 @@ export const Info: Story = {
       };
     }, []);
 
-    return null;
+    return <></>;
   }
 };
 
@@ -128,7 +128,7 @@ export const TopRight: Story = {
       };
     }, []);
 
-    return null;
+    return <></>;
   }
 };
 
@@ -160,7 +160,7 @@ export const WithActions: Story = {
       };
     }, []);
 
-    return null;
+    return <></>;
   }
 };
 

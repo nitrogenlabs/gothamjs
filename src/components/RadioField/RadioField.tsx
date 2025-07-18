@@ -1,4 +1,4 @@
-import {cn} from '@nlabs/utils/strings/cn';
+import {cn} from '@nlabs/utils';
 import {useMemo, type FC} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
@@ -28,7 +28,7 @@ export const RadioField: FC<RadioFieldProps> = ({
   optionClass = 'cursor-pointer relative size-4 appearance-none rounded-full border border-neutral/70 dark:border-neutral-dark/70 bg-white dark:bg-black before:absolute before:inset-1 before:rounded-full before:bg-white dark:before:bg-black not-checked:before:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary disabled:border-black/40 dark:disabled:border-white/40 disabled:bg-white/50 dark:disabled:bg-black/50 disabled:before:bg-black/40 dark:disabled:before:bg-white/50 forced-colors:appearance-auto forced-colors:before:hidden',
   options
 }) => {
-  const {control, formState: {errors}, clearErrors, trigger} = useFormContext();
+  const {control, trigger} = useFormContext();
   const optionClasses = useMemo(
     () => cn(optionClass, getCheckedClasses(color)),
     [color, optionClass]

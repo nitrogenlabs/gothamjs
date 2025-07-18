@@ -2,8 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {get} from '@nlabs/utils/objects/get';
-import {merge} from '@nlabs/utils/objects/merge';
+import {get, merge} from '@nlabs/utils';
 
 export class Config {
   static values: Record<string, unknown> = {};

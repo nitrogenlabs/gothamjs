@@ -50,7 +50,7 @@ export const getTextClasses = (color: GothamColor, options: StyleClassOptions = 
     hasFocus = false,
     hasHover = false
   } = options;
-  const classes = [];
+  const classes: string[] = [];
 
   if (color === 'primary') {
     classes.push('text-primary dark:text-primary-dark');
@@ -169,7 +169,7 @@ export const getPlaceholderClasses = (color: GothamColor, options: StyleClassOpt
     hasFocus = false,
     hasHover = false
   } = options;
-  const classes = [];
+  const classes: string[] = [];
 
   if (color === 'primary') {
     classes.push('placeholder:text-primary dark:placeholder:text-primary-dark');
@@ -299,7 +299,7 @@ export const getBorderClasses = (color: GothamColor, options: StyleClassOptions 
     hasFocus = false,
     hasHover = false
   } = options;
-  const classes = [];
+  const classes: string[] = [];
 
   if (color === 'primary') {
     classes.push('border-primary dark:border-primary-dark');
@@ -392,7 +392,7 @@ export const getOutlineClasses = (color: GothamColor, options: StyleClassOptions
     hasFocus = false,
     hasHover = false
   } = options;
-  const classes = [];
+  const classes: string[] = [];
 
   if (color === 'primary') {
     classes.push('outline-primary dark:outline-primary-dark');
@@ -480,7 +480,7 @@ export const getOutlineClasses = (color: GothamColor, options: StyleClassOptions
 };
 
 export const getCheckedClasses = (color: GothamColor) => {
-  const classes = [];
+  const classes: string[] = [];
 
   if (color === 'primary') {
     classes.push('checked:border-primary-700 dark:checked:border-primary-dark-300 checked:bg-primary-700 dark:checked:bg-primary-dark-300');
@@ -510,7 +510,7 @@ export const getBackgroundClasses = (color: GothamColor, options: StyleClassOpti
     hasFocus = false,
     hasHover = false
   } = options;
-  const classes = [];
+  const classes: string[] = [];
 
   if (color === 'primary') {
     classes.push('bg-primary dark:bg-primary-dark');
@@ -584,7 +584,7 @@ export const getBackgroundViewClasses = (color: GothamColor, options: StyleClass
     hasFocus = false,
     hasHover = false
   } = options;
-  const classes = [];
+  const classes: string[] = [];
 
   if (color === 'primary') {
     classes.push('bg-background-primary dark:bg-background-primary-dark');

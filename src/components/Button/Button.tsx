@@ -1,12 +1,12 @@
-import {cn} from '@nlabs/utils/strings/cn';
+import {cn} from '@nlabs/utils';
 import {forwardRef} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {getBackgroundClasses, getBorderClasses, getTextClasses} from '../../utils/colorUtils.js';
 
+import type {ReactNode} from 'react';
 import type {GothamColor} from '../../utils/colorUtils.js';
 import type {GothamSize} from '../../utils/sizeUtils.js';
-import type {ReactNode} from 'react';
 
 export type ButtonType = 'button' | 'reset' | 'submit';
 export type ButtonVariant = 'text' | 'contained' | 'outlined';
@@ -37,7 +37,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   hasShadow = false,
   icon,
   isLoading = false,
-  label,
+  label = '',
   onClick = () => {},
   size = 'md',
   type = 'button',
@@ -45,7 +45,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   ...restBtnProps
 }, ref) => {
   const {t} = useTranslation();
-  const classes = [];
+  const classes: string[] = [];
 
   if(variant) {
     classes.push(...[
@@ -128,7 +128,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     );
   }
 
-  let buttonNotification = null;
+  let buttonNotification: ReactNode | null = null;
 
   if(hasNotification) {
     buttonNotification = (

@@ -10,7 +10,7 @@ import {InputField} from '../InputField/InputField.js';
 import {Label} from '../Label/Label.js';
 
 import type {GothamColor} from '../../utils/colorUtils.js';
-import type{InputBorderType} from '../InputField/InputField.js';
+import type {InputBorderType} from '../InputField/InputField.js';
 
 export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   readonly borderColor?: GothamColor;
@@ -43,7 +43,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   error: externalError,
   errorColor = 'error',
   inputClass,
-  label,
+  label = '',
   labelClass = 'mb-1',
   labelColor = 'neutral',
   multiline = false,

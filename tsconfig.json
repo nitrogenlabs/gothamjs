@@ -1,43 +1,51 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "allowJs": false,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "declaration": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSourceMap": true,
     "jsx": "react-jsx",
     "lib": [
+      "esnext",
       "dom",
-      "esnext"
+      "dom.iterable"
     ],
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noImplicitAny": false,
+    "noImplicitOverride": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": false,
-    "outDir": "./lib",
+    "noUncheckedIndexedAccess": false,
+    "noUnusedLocals": true,
+    "outDir": "lib",
     "pretty": true,
-    "removeComments": true,
-    "rootDir": "./src",
-    "skipLibCheck": true,
-    "target": "es5",
+    "resolveJsonModule": true,
+    "skipLibCheck": false,
+    "strict": false,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "target": "esnext",
     "typeRoots": [
+      "../../node_modules/@types",
       "node_modules/@types",
       "node_modules/json-d-ts"
     ],
     "types": [
       "jest",
       "node"
-    ]
+    ],
+    "useDefineForClassFields": true,
+    "verbatimModuleSyntax": false
   },
   "exclude": [
-    "./lib",
-    "./node_modules"
+    "node_modules",
+    "lib"
   ],
   "include": [
-    "./src",
-    ".storybook"
+    "src/**/*"
   ]
 }

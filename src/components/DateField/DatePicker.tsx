@@ -4,7 +4,7 @@
  */
 import {useEffect, useState} from 'react';
 
-import type {FC} from 'react';
+import type {FC, ReactNode} from 'react';
 
 interface DatePickerProps {
   initialDate?: number;
@@ -124,7 +124,7 @@ export const DatePicker: FC<DatePickerProps> = ({
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
   const firstDayOfMonth = getFirstDayOfMonth(currentYear, currentMonth);
 
-  const days = [];
+  const days: ReactNode[] = [];
   // Add empty cells for days before the first day of the month
   for (let i = 0; i < firstDayOfMonth; i++) {
     days.push(<div key={`empty-${i}`} className="h-8 w-8"></div>);

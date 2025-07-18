@@ -5,7 +5,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router';
 
-const drawerWidth = 240;
 const navItems = [
   { label: 'Home', path: '/' },
   { label: 'About', path: '/about' },

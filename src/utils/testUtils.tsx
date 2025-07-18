@@ -22,7 +22,7 @@ export const renderWithProvider: any = async (Element, props = {}) => {
 
   const wrapper = render(
     <FluxProvider flux={Flux} >
-      <MemoryRouter initialEntries={[mockRoute]} initialIndex={0} >
+      <MemoryRouter initialEntries={[mockRoute as string]} initialIndex={0} >
         <Element {...restProps} />
       </MemoryRouter>
     </FluxProvider>

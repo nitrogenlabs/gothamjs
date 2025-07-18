@@ -2,16 +2,14 @@
  * Copyright (c) 2024-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {LoggerDebugLevel} from '@nlabs/arkhamjs';
-import {Logger} from '@nlabs/arkhamjs-middleware-logger';
+import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {useFlux} from '@nlabs/arkhamjs-utils-react';
-import {merge} from '@nlabs/utils/objects/merge';
+import {merge} from '@nlabs/utils';
 import {useEffect, useState} from 'react';
 import {I18nextProvider} from 'react-i18next';
 import {createBrowserRouter, RouterProvider} from 'react-router';
 
-import {GothamRoot} from './GothamRoot.js';
 import {GothamActions} from '../../actions/GothamActions.js';
 import {Config} from '../../config/appConfig.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
@@ -19,11 +17,13 @@ import {gothamApp} from '../../stores/GothamAppStore.js';
 import {GothamContext} from '../../utils/GothamContext.js';
 import {i18n} from '../../utils/i18nUtil.js';
 import {parseRoutes} from '../../utils/routeUtils.js';
+import {GothamRoot} from './GothamRoot.js';
 
 import type {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
-import type {GothamRouteData} from '../../types/gotham.js';
+import type {Resource} from 'i18next';
 import type {FC, ReactNode} from 'react';
 import type {RouteObject} from 'react-router';
+import type {GothamRouteData} from '../../types/gotham.js';
 
 export interface GothamProviderProps {
   readonly children?: ReactNode;
@@ -127,11 +127,11 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
       const storage: BrowserStorage = new BrowserStorage({type: storageType});
 
       flux.init({
-        middleware: [logger, ...middleware],
+        middleware: [logger, ...(middleware || [])],
         name,
         // state: {app: {title}},
         storage,
-        stores: [gothamApp, ...stores]
+        stores: [gothamApp, ...(stores || [])]
       });
 
       flux.on(GothamConstants.SIGN_OUT, signOut(flux));
@@ -142,7 +142,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   }, []);
 
   return (
-    <I18nextProvider i18n={i18n(translations)}>
+    <I18nextProvider {...i18n(translations as Resource)}>
       <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
         {router && <RouterProvider router={router}/>}
         {children}

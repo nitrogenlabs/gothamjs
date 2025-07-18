@@ -3,7 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {useMemo} from 'react';
-import {cn} from '@nlabs/utils/strings/cn';
+import {cn} from '@nlabs/utils';
 
 import {getTextClasses} from '../../utils/colorUtils.js';
 

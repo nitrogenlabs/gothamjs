@@ -1,16 +1,16 @@
 'use client';
 
-import { Label, Listbox, ListboxButton, ListboxOptions } from '@headlessui/react';
-import {cn} from '@nlabs/utils/strings/cn';
-import { ChevronsUpDown } from 'lucide-react';
-import { useMemo, useState, type FC } from 'react';
+import {Label, Listbox, ListboxButton, ListboxOptions} from '@headlessui/react';
+import {cn} from '@nlabs/utils';
+import {ChevronsUpDown} from 'lucide-react';
+import {useMemo, useState, type FC} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
-import {SelectOption, SelectOptionProps} from './SelectOption.js';
 import {useIsMobile} from '../../hooks/useIsMobile.js';
 import {getBackgroundClasses, getOutlineClasses, getTextClasses} from '../../utils/colorUtils.js';
 import {InputBorderType, getInputBorderClass} from '../InputField/InputField.js';
 import {Svg} from '../Svg/Svg.js';
+import {SelectOption, SelectOptionProps} from './SelectOption.js';
 
 import type {GothamColor} from '../../utils/colorUtils.js';
 
@@ -42,8 +42,8 @@ export const SelectField: FC<SelectFieldProps> = ({
   options
 }) => {
   const isMobile = useIsMobile();
-  const {control, formState: {errors}, clearErrors, trigger} = useFormContext();
-  const [selected, setSelected] = useState<SelectOptionProps['option']>(options?.find((option) => option.value === defaultValue));
+  const {control, trigger} = useFormContext();
+  const [selected, setSelected] = useState<SelectOptionProps['option']>(options?.find((option) => option?.value === defaultValue) as SelectOptionProps['option']);
   // const selectClasses = useMemo(() => cn(
   //   className,
   //   borderType === 'underline' ? 'bg-transparent' : 'bg-white/30 dark:bg-black/30',
@@ -67,8 +67,8 @@ export const SelectField: FC<SelectFieldProps> = ({
     'col-start-1 row-start-1 size-5 self-center justify-self-end sm:size-4',
     getTextClasses(color)
   ), [color]);
-  const onChange = (value) => {
-    setSelected(options?.find((option) => option.value === value));
+  const onChange = (value: string) => {
+    setSelected(options?.find((option) => option?.value === value) as SelectOptionProps['option']);
     trigger(name);
   };
 
@@ -86,7 +86,7 @@ export const SelectField: FC<SelectFieldProps> = ({
           </select>
         ) : (
           <div className="flex flex-col w-full">
-            <Listbox value={selected} onChange={onChange}>
+            <Listbox value={selected} onChange={(value) => onChange(value as unknown as string)}>
               <Label className={labelClasses}>
                 {label}
               </Label>

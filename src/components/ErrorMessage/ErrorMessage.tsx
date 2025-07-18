@@ -6,8 +6,8 @@ import {useMemo} from 'react';
 
 import {getErrorClasses} from '../../utils/colorUtils.js';
 
-import type {GothamColor} from '../../utils/colorUtils.js';
 import type {FC} from 'react';
+import type {GothamColor} from '../../utils/colorUtils.js';
 
 export interface ErrorMessageProps {
   readonly color?: GothamColor;
@@ -19,7 +19,7 @@ export const ErrorMessage: FC<ErrorMessageProps> = ({color, message}) => {
     return null;
   }
 
-  const errorClasses = useMemo(() => getErrorClasses(color), [color]);
+  const errorClasses = useMemo(() => getErrorClasses(color as GothamColor), [color]);
 
   return (
     <p className={`absolute -bottom-5 left-5 text-xs ${errorClasses}`}>

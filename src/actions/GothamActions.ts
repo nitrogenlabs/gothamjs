@@ -3,7 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {Flux} from '@nlabs/arkhamjs';
-import {isEmpty} from '@nlabs/utils/checks/isEmpty';
+import {isEmpty} from '@nlabs/utils';
 
 import {Config} from '../config/appConfig.js';
 import {GothamConstants} from '../constants/GothamConstants.js';

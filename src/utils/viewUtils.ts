@@ -2,9 +2,9 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {qs} from '@nlabs/utils/strings/qs';
+import {qs} from '@nlabs/utils';
 import {useMemo} from 'react';
-import {Location, Navigation, useLocation, useNavigation, useParams, useMatches} from 'react-router';
+import {Location, Navigation, useLocation, useMatches, useNavigation, useParams} from 'react-router';
 
 export interface AppRouter {
   readonly location: Location;
@@ -34,9 +34,9 @@ export const useRoute = (): AppRouter => {
 export const parseNavUrl = (path: string, params: Record<string, unknown>): string => path
   .split('/')
   .reduce((list: string[], part: string) => {
-    if(part.substr(0, 1) === ':') {
-      const value: unknown = params[part.substr(1)];
-      return [...list, (value !== undefined) ? value : part];
+    if(part.substring(0, 1) === ':') {
+      const value = params[part.substring(1)];
+      return [...list, value !== undefined ? value : part] as string[];
     }
 
     return [...list, part];

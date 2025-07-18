@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import { createRoot } from 'react-dom/client';
+import {createRoot} from 'react-dom/client';
 
 import {Svg} from './components/Svg/Svg.js';
 import {Gotham} from './views/Gotham/Gotham.js';
@@ -111,5 +111,5 @@ const config: GothamConfiguration = {
   ]
 };
 
-const root = createRoot(document.getElementById('app'));
+const root = createRoot(document.getElementById('app') as HTMLElement);
 root.render(<Gotham config={config} />);

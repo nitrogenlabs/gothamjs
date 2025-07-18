@@ -1,7 +1,7 @@
 import {Transition} from '@headlessui/react';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
-import {cn} from '@nlabs/utils/strings/cn';
-import {useState, useEffect, Fragment} from 'react';
+import {cn} from '@nlabs/utils';
+import {Fragment, useEffect, useState} from 'react';
 
 import {GothamConstants} from '../../constants/GothamConstants.js';
 import {Svg} from '../Svg/Svg.js';
@@ -95,7 +95,6 @@ export const Notify = () => {
 
   const notifyClose = () => setOpen(false);
 
-  // Handle auto-hide duration
   useEffect(() => {
     if (isOpen && notification.autoHideDuration) {
       if (timeoutId) {
@@ -115,7 +114,7 @@ export const Notify = () => {
       };
     }
 
-    return null;
+    return undefined;
   }, [isOpen, notification.autoHideDuration]);
 
   const notifyOpen = ({
@@ -148,7 +147,7 @@ export const Notify = () => {
 
     setNotification({
       ...restProps,
-      actions,
+      actions: [action as GothamNotifyAction],
       anchorOrigin,
       autoHideDuration,
       message: severity ? (
@@ -167,7 +166,6 @@ export const Notify = () => {
   useFluxListener(GothamConstants.NOTIFY_OPEN, notifyOpen);
   useFluxListener(GothamConstants.NOTIFY_CLOSE, notifyClose);
 
-  // Position classes based on anchorOrigin
   const positionClasses = (() => {
     const {horizontal = 'left', vertical = 'bottom'} = notification.anchorOrigin || {};
 

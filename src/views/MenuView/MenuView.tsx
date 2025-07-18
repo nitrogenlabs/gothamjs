@@ -9,17 +9,17 @@ import {
   MenuItems,
   TransitionChild
 } from '@headlessui/react';
-import {cn} from '@nlabs/utils/strings/cn';
+import {cn} from '@nlabs/utils';
 import {
-  ChevronDown,
-  Search,
   Menu as Bars3,
   Bell,
   Calendar,
-  PieChart,
+  ChevronDown,
   Files,
   Folder,
   Home,
+  PieChart,
+  Search,
   Users,
   X
 } from 'lucide-react';
@@ -28,8 +28,8 @@ import {Outlet} from 'react-router';
 
 import {Config} from '../../config/appConfig.js';
 
+import type {ElementType, FC} from 'react';
 import type {GothamConfiguration} from '../Gotham/GothamProvider.js';
-import type { ElementType, FC } from 'react';
 
 const sideMenuItems: MenuItems[] = [
   { current: true, href: '#', icon: Home, name: 'Dashboard' },
@@ -59,7 +59,7 @@ export interface MenuViewProps {
 
 export const MenuView: FC<MenuViewProps> = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const app: GothamConfiguration['app'] = Config.get('app');
+  const app: GothamConfiguration['app'] = Config.get('app') as GothamConfiguration['app'];
 
   return (
     <div>
@@ -104,7 +104,7 @@ export const MenuView: FC<MenuViewProps> = () => {
                           'group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold'
                         )}
                       >
-                        <item.icon aria-hidden="true" className="size-6 shrink-0" />
+                        {item.icon && <item.icon aria-hidden="true" className="size-6 shrink-0" />}
                         {item.name}
                       </a>
                     </li>
@@ -136,7 +136,7 @@ export const MenuView: FC<MenuViewProps> = () => {
                     'group flex gap-x-3 rounded-md p-3 text-sm/6 font-semibold'
                   )}
                 >
-                  <item.icon aria-hidden="true" className="size-6 shrink-0" />
+                  {item.icon && <item.icon aria-hidden="true" className="size-6 shrink-0" />}
                   <span className="sr-only">{item.name}</span>
                 </a>
               </li>
