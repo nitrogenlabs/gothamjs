@@ -4,7 +4,7 @@ import {Notify} from './Notify';
 import {NotifyExample} from './NotifyExample';
 import {GothamActions} from '../../actions/GothamActions';
 
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react-webpack5';
 
 const meta: Meta<typeof Notify> = {
   component: Notify,

@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {render} from '@testing-library/react';
+import {render} from '@nlabs/lex/test-react';
 
 import {Svg} from './Svg';
 

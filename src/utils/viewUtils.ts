@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import qs from 'qs';
+import {qs} from '@nlabs/utils';
 import {useMemo} from 'react';
 import {Location, Navigation, useLocation, useNavigation, useParams, useMatches} from 'react-router';
 

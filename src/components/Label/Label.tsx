@@ -3,7 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {useMemo} from 'react';
 
 import {getTextClasses} from '../../utils/colorUtils';
@@ -35,7 +35,7 @@ export const Label: FC<LabelProps> = ({
 
   return (
     <label
-      className={clsx(className, labelClasses)}
+      className={cn(className, labelClasses)}
       htmlFor={name}
     >
       {label}

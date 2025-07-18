@@ -3,7 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {Flux, FluxAction} from '@nlabs/arkhamjs';
-import isEmpty from 'lodash/isEmpty';
+import {isEmpty} from '@nlabs/utils';
 
 import {Config} from '../config/appConfig';
 import {GothamConstants} from '../constants/GothamConstants';

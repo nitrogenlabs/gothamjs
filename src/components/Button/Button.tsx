@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {forwardRef} from 'react';
 import {useTranslation} from 'react-i18next';
 
@@ -141,7 +141,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
 
   return (
     <button
-      className={clsx(...classes, className)}
+      className={cn(...classes, className)}
       data-testid={`button-${label || children}`}
       disabled={isLoading || disabled}
       onClick={onClick}

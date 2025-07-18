@@ -4,7 +4,7 @@
  */
 import {Flux} from '@nlabs/arkhamjs';
 import {FluxProvider} from '@nlabs/arkhamjs-utils-react';
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor} from '@nlabs/lex/test-react';
 import {Form} from 'react-hook-form';
 import {MemoryRouter} from 'react-router';
 
@@ -12,7 +12,7 @@ import type {FormSubmitHandler} from 'react-hook-form';
 
 export const getTestElement = (name: string, index: number = 0) => screen.queryAllByTestId(name)[index];
 
-export const renderWithProvider = async (Element, props = {}) => {
+export const renderWithProvider: any = async (Element, props = {}) => {
   const {
     mockRoute = '/',
     ...restProps
@@ -41,7 +41,7 @@ interface RenderFormProps {
   [key: string]: unknown;
 }
 
-export const renderWithForm = async (Element, props: RenderFormProps = {}) => {
+export const renderWithForm: any = async (Element, props: RenderFormProps = {}) => {
   const {
     mocks,
     onSubmit = () => {},

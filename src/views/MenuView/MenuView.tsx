@@ -9,7 +9,7 @@ import {
   MenuItems,
   TransitionChild
 } from '@headlessui/react';
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {
   ChevronDown,
   Search,
@@ -97,7 +97,7 @@ export const MenuView: FC<MenuViewProps> = () => {
                     <li key={item.name}>
                       <a
                         href={item.href}
-                        className={clsx(
+                        className={cn(
                           item.current
                             ? 'bg-gray-800 text-white'
                             : 'text-gray-400 hover:bg-gray-800 hover:text-white',
@@ -131,7 +131,7 @@ export const MenuView: FC<MenuViewProps> = () => {
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className={clsx(
+                  className={cn(
                     item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white',
                     'group flex gap-x-3 rounded-md p-3 text-sm/6 font-semibold'
                   )}

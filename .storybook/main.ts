@@ -1,81 +1,71 @@
-import type { StorybookConfig } from '@storybook/react-webpack5';
-
-const config: StorybookConfig = {
+const config = {
   addons: [
+    '@storybook/addon-docs',
     '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    '@storybook/addon-styling',
+    '@storybook/addon-postcss',
+    {
+      name: '@storybook/addon-styling-webpack',
+      options: {
+        rules: [
+          {
+            test: /\.css$/,
+            use: [
+              'style-loader',
+              'css-loader',
+              {
+                loader: 'postcss-loader',
+                options: {
+                  postcssOptions: {
+                    config: 'node_modules/@nlabs/lex/postcss.config.js',
+                  },
+                },
+              }
+            ]
+          }
+        ]
+      }
+    },
     '@storybook/addon-themes'
   ],
-  babel: async (options) => ({
-    ...options,
-    babelrc: false
-  }),
   framework: {
     name: '@storybook/react-webpack5',
     options: {
       builder: {
         useSWC: true
-      }
+      },
     }
   },
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(ts|tsx)'],
-  webpackFinal: async (config) => ({
-    ...config,
-    module: {
-      ...config.module,
-      rules: [
-        ...config.module?.rules || [],
-        {
-          loader: require.resolve('babel-loader'),
-          options: {
-            babelrc: false,
-            plugins: [
-              ['@babel/plugin-proposal-nullish-coalescing-operator'],
-              ['@babel/plugin-proposal-optional-chaining']
-            ],
-            presets: [
-              '@babel/preset-typescript',
-              [
-                '@babel/preset-react',
-                {
-                  runtime: 'automatic'
+  stories: ['../src/**/*.stories.@(js|ts|tsx)', '../src/**/*.mdx'],
+  webpackFinal: async (config) => {
+    return {
+      ...config,
+      module: {
+        ...config.module,
+        rules: [
+          ...(config.module?.rules || []),
+          {
+            test: /\.(ts|tsx)$/,
+            use: [
+              {
+                loader: 'babel-loader',
+                options: {
+                  presets: [
+                    '/Users/nitrog7/Development/gothamjs/node_modules/@babel/preset-typescript',
+                    [
+                      '/Users/nitrog7/Development/gothamjs/node_modules/@babel/preset-react',
+                      {
+                        runtime: 'automatic'
+                      }
+                    ]
+                  ]
                 }
-              ]
+              }
             ]
-          },
-          test: /\.(ts|tsx)$/
-        }
-        // {
-        //   test: /\.css$/,
-        //   use: [
-        //     require.resolve('style-loader'),
-        //     require.resolve('css-loader'),
-        //     {
-        //       loader: require.resolve('postcss-loader'),
-        //       options: {
-        //         postcssOptions: {
-        //           plugins: [
-        //             require('@tailwindcss/postcss')
-        //             // require('autoprefixer')
-        //           ]
-        //         }
-        //       }
-        //     }
-        //   ]
-        // }
-      ]
-    },
-    resolve: {
-      ...config.resolve,
-      extensions: ['.js', '.ts', '.tsx'],
-      plugins: [
-        ...(config.resolve?.plugins || [])
-      ]
-    },
-    stats: 'verbose'
-  })
+          }
+        ]
+      }
+    };
+  }
 };
 
 export default config;

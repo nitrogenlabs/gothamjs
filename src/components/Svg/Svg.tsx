@@ -2,7 +2,7 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 
 import {Config} from '../../config/appConfig';
 
@@ -25,7 +25,7 @@ export const Svg: FC<SvgProps> = ({
 }) => {
   return (
     <svg
-      className={clsx('w-full h-full', className)}
+      className={cn('w-full h-full', className)}
       viewBox={`0 0 ${width} ${height}`}
       style={{
         color,

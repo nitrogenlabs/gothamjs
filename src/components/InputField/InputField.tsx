@@ -2,7 +2,7 @@
  * Copyright (c) 2025-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {forwardRef, useMemo} from 'react';
 
 import {
@@ -39,7 +39,7 @@ export const getInputBorderClass = (
   borderColor: GothamColor,
   textColor: GothamColor,
   placeholderColor: GothamColor
-) => clsx(
+) => cn(
   baseClasses[borderType],
   getTextClasses(textColor),
   borderType === 'underline'
@@ -67,7 +67,7 @@ export const InputField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Inp
   );
 
   const inputClasses = useMemo(
-    () => clsx(
+    () => cn(
       className,
       disabled ? 'text-neutral/30 dark:text-neutral-dark/30 outline-neutral/30 dark:outline-neutral-dark/30' : borderClasses,
       multiline && 'min-h-[100px] resize-y'

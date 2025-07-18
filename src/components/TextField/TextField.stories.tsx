@@ -3,7 +3,7 @@ import {FormProvider, useForm} from 'react-hook-form';
 import {TextField} from './TextField';
 import {gothamColors} from '../../utils/colorUtils';
 
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react-webpack5';
 
 const meta: Meta<typeof TextField> = {
   argTypes: {

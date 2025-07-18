@@ -1,7 +1,7 @@
 'use client';
 
 import { Label, Listbox, ListboxButton, ListboxOptions } from '@headlessui/react';
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import { ChevronsUpDown } from 'lucide-react';
 import { useMemo, useState, type FC } from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
@@ -44,26 +44,26 @@ export const SelectField: FC<SelectFieldProps> = ({
   const isMobile = useIsMobile();
   const {control, formState: {errors}, clearErrors, trigger} = useFormContext();
   const [selected, setSelected] = useState<SelectOptionProps['option']>(options?.find((option) => option.value === defaultValue));
-  // const selectClasses = useMemo(() => clsx(
+  // const selectClasses = useMemo(() => cn(
   //   className,
   //   borderType === 'underline' ? 'bg-transparent' : 'bg-white/30 dark:bg-black/30',
   //   getOutlineClasses(color, {hasFocus: true, hasHover: true})
   // ), [backgroundColor, className, color]);
-  const selectClasses = useMemo(() => clsx(
+  const selectClasses = useMemo(() => cn(
     'flex relative w-full',
     getInputBorderClass(borderType, borderColor, color, 'transparent'), className), [borderType, borderColor, color, className]
   );
-  const labelClasses = useMemo(() => clsx(
+  const labelClasses = useMemo(() => cn(
     labelClass,
     'block text-sm/6 font-medium',
     getTextClasses(labelColor)
   ), [labelClass, labelColor]);
-  const optionsClasses = useMemo(() => clsx(
+  const optionsClasses = useMemo(() => cn(
     'absolute z-10 max-h-56 w-full overflow-auto rounded-md py-1 text-base focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm',
     getBackgroundClasses('white'),
     getOutlineClasses(color, {hasFocus: true, hasHover: true})
   ), [backgroundColor, color]);
-  const chevronClasses = useMemo(() => clsx(
+  const chevronClasses = useMemo(() => cn(
     'col-start-1 row-start-1 size-5 self-center justify-self-end sm:size-4',
     getTextClasses(color)
   ), [color]);
@@ -91,7 +91,7 @@ export const SelectField: FC<SelectFieldProps> = ({
                 {label}
               </Label>
               <select {...field} hidden value={selected?.value} />
-              <div className={clsx('flex flex-col relative w-full', {'mt-2': label})}>
+              <div className={cn('flex flex-col relative w-full', {'mt-2': label})}>
                 <ListboxButton className={selectClasses}>
                   <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
                     {selected?.image && <img alt="" src={selected.image} className="size-5 shrink-0 rounded-full" />}

@@ -1,6 +1,6 @@
 import {Transition} from '@headlessui/react';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {useState, useEffect, Fragment} from 'react';
 
 import {GothamConstants} from '../../constants/GothamConstants';
@@ -32,7 +32,7 @@ const Button = ({children, onClick, className = ''}) => (
   <button
     type="button"
     onClick={onClick}
-    className={clsx(
+    className={cn(
       'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm',
       'text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
       className
@@ -47,7 +47,7 @@ const IconButton = ({children, onClick, className = ''}) => (
   <button
     type="button"
     onClick={onClick}
-    className={clsx(
+    className={cn(
       'p-1 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
       className
     )}
@@ -66,7 +66,7 @@ const Alert = ({children, severity, onClose}) => {
   };
 
   return (
-    <div className={clsx(
+    <div className={cn(
       'rounded-md p-4 w-full flex items-center justify-between',
       bgColors[severity] || 'bg-gray-500',
       'text-white'
@@ -198,7 +198,7 @@ export const Notify = () => {
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className={clsx(
+      <div className={cn(
         'fixed z-50 max-w-sm w-full shadow-lg rounded-lg pointer-events-auto overflow-hidden',
         positionClasses
       )}>

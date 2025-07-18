@@ -5,7 +5,7 @@
 import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {useFlux} from '@nlabs/arkhamjs-utils-react';
-import merge from 'lodash/merge';
+import {merge} from '@nlabs/utils';
 import {useEffect, useState} from 'react';
 import {I18nextProvider} from 'react-i18next';
 import {createBrowserRouter, RouterProvider} from 'react-router';

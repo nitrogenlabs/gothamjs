@@ -12,8 +12,8 @@
       "dom",
       "esnext"
     ],
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": false,

@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {useMemo, type FC} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
@@ -30,7 +30,7 @@ export const RadioField: FC<RadioFieldProps> = ({
 }) => {
   const {control, formState: {errors}, clearErrors, trigger} = useFormContext();
   const optionClasses = useMemo(
-    () => clsx(optionClass, getCheckedClasses(color)),
+    () => cn(optionClass, getCheckedClasses(color)),
     [color, optionClass]
   );
   return (
