@@ -1,5 +1,5 @@
-import {Button as ButtonComponent} from './Button.js';
 import {gothamColors} from '../../utils/colorUtils.js';
+import {Button as ButtonComponent} from './Button.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
