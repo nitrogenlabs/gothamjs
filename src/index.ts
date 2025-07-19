@@ -7,23 +7,23 @@ import {AuthConstants} from './constants/AuthConstants.js';
 import {GothamConstants} from './constants/GothamConstants.js';
 import {MarkdownConstants} from './constants/MarkdownConstants.js';
 
+export {zodResolver} from '@hookform/resolvers/zod';
 export {Flux} from '@nlabs/arkhamjs';
 export {Controller, useFormContext} from 'react-hook-form';
 export * from 'react-i18next';
 export {Link, NavLink, Outlet, Route, Router, useNavigate} from 'react-router';
 export {z} from 'zod';
-export {zodResolver} from '@hookform/resolvers/zod';
 
 export * from './components/index.js';
 
-export * from './views/Gotham/Gotham.js';
-export * from './views/Gotham/GothamProvider.js';
 export * from './utils/colorUtils.js';
-export * from './utils/imageUtils.js';
 export * from './utils/dynamicUtils.js';
+export * from './utils/imageUtils.js';
 export * from './utils/routeUtils.js';
 export * from './utils/useBreakpoint.js';
 export * from './utils/viewUtils.js';
+export * from './views/Gotham/Gotham.js';
+export * from './views/Gotham/GothamProvider.js';
 
 export type {GothamRouteData} from './types/gotham.js';
 

@@ -22,6 +22,7 @@ GothamJS is an all-inclusive React framework that unifies UI components, navigat
 - **Responsive Design**: Mobile-first components that adapt beautifully to any screen size
 - **Internationalization**: Built-in i18n support for multilingual applications
 - **Authentication Flows**: Ready-to-use authentication UI components and routing guards
+- **Icon Library**: Complete Lucide React icon set available for use throughout your application
 
 ## 🚀 Getting Started
 
@@ -70,6 +71,57 @@ root.render(<Gotham config={config} />);
 ## 🧩 Components
 
 GothamJS provides a rich set of components to accelerate your development:
+
+### Icons
+
+GothamJS includes the complete [Lucide React](https://lucide.dev/) icon library, providing you with over 1000+ beautifully designed, customizable icons that follow a consistent design language.
+
+#### Why Lucide React?
+
+- **Consistent Design**: All icons follow the same design principles and stroke width
+- **Customizable**: Easy to customize size, color, stroke width, and other properties
+- **Accessible**: Built with accessibility in mind, including proper ARIA attributes
+- **Tree Shakeable**: Only the icons you import are included in your bundle
+- **TypeScript Support**: Full type definitions for all icons
+- **Active Development**: Regularly updated with new icons and improvements
+
+#### Quick Reference
+
+- **Icon Gallery**: [Browse all available icons](https://lucide.dev/icons/)
+- **Documentation**: [Lucide React documentation](https://lucide.dev/guide/packages/lucide-react)
+- **GitHub**: [Lucide project on GitHub](https://github.com/lucide-icons/lucide)
+
+#### Usage
+
+```jsx
+import { Camera, Heart, Star, Settings, LucideLoader } from '@nlabs/gothamjs/icons';
+
+const MyComponent = () => (
+  <div>
+    <Camera size={24} />
+    <Heart size={24} color="red" />
+    <Star size={24} fill="yellow" />
+    <Settings size={24} />
+    <LucideLoader size={24} /> {/* Use LucideLoader to avoid conflict with GothamJS Loader component */}
+  </div>
+);
+```
+
+#### Icon Properties
+
+All Lucide React icons support these common properties:
+
+```jsx
+<Camera
+  size={24}           // Icon size in pixels
+  color="currentColor" // Icon color
+  strokeWidth={2}     // Stroke width
+  fill="none"         // Fill color
+  className="my-icon" // CSS classes
+/>
+```
+
+> **Note**: The `Loader` icon from Lucide React is exported as `LucideLoader` to avoid conflicts with GothamJS's `Loader` component.
 
 ### Form Components
 

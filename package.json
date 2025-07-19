@@ -8,6 +8,16 @@
   "module": "lib/index.js",
   "browser": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./icons": {
+      "import": "./lib/icons/index.js",
+      "types": "./lib/icons/index.d.ts"
+    }
+  },
   "keywords": [
     "arkhamjs",
     "documentation",
@@ -31,12 +41,11 @@
     "url": "https://github.com/nitrogenlabs/gothamjs/issues"
   },
   "scripts": {
-    "build": "lex compile --remove --config ./tsconfig.json",
+    "build": "lex compile --remove --config ./tsconfig.build.json",
     "clean": "lex clean",
     "dev": "lex dev",
-    "lint": "lex lint",
+    "lint": "lex lint --fix",
     "prepublishOnly": "npm test && npm run build",
-    "production": "lex build",
     "publish:major": "npm version major && npm run publish:tags && npm publish",
     "publish:minor": "npm version minor && npm run publish:tags && npm publish",
     "publish:patch": "npm version patch && npm run publish:tags && npm publish",
