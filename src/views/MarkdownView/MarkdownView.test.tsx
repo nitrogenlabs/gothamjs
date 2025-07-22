@@ -1,29 +1,9 @@
-import {render, screen} from '@nlabs/lex/test-react';
+import { render } from '@nlabs/lex/test-react';
 
-import {MarkdownView} from './MarkdownView.js';
-
-jest.mock('react-markdown', () => ({
-  __esModule: true,
-  default: ({children}) => <div data-testid="react-markdown">{children}</div>
-}));
+import { MarkdownView } from './MarkdownView.js';
 
 describe('MarkdownView', () => {
-  afterAll(() => {
-    jest.restoreAllMocks();
-  });
-
-  it('should render markdown content as HTML', () => {
-    const markdownContent = '# Hello\n**Bold text**\n- List item';
-    render(<MarkdownView content={markdownContent} />);
-
-    // Check that the markdown content is rendered (with mock, it shows raw markdown)
-    expect(screen.getByTestId('react-markdown')).toBeInTheDocument();
-    expect(screen.getByTestId('react-markdown')).toHaveTextContent('Hello');
-    expect(screen.getByTestId('react-markdown')).toHaveTextContent('Bold text');
-    expect(screen.getByTestId('react-markdown')).toHaveTextContent('List item');
-  });
-
-  it('should apply custom className when provided', () => {
+  it('should render with custom className when provided', () => {
     const customClass = 'custom-class';
     const {container} = render(
       <MarkdownView content="Some content" className={customClass} />

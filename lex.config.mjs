@@ -2,6 +2,7 @@ export default {
   entryJs: 'app.tsx',
   gitUrl: 'https://github.com/nitrogenlabs/gothamjs',
   jest: {
+    extensionsToTreatAsEsm: ['.ts', '.tsx'],
     moduleNameMapper: {
       '^@nlabs/utils$': '<rootDir>/node_modules/@nlabs/utils',
       '^@nlabs/utils/strings/cn$': '<rootDir>/node_modules/@nlabs/utils/lib/strings/cn/cn.js',
@@ -13,7 +14,6 @@ export default {
       '^@nlabs/utils/strings/qs$': '<rootDir>/node_modules/@nlabs/utils/lib/strings/qs/qs.js',
       '^react$': '<rootDir>/node_modules/react',
       '^react-dom$': '<rootDir>/node_modules/react-dom',
-      '^react-markdown$': '<rootDir>/node_modules/@nlabs/lex/emptyModule.js',
       '\\.(css|jpg|png|svg|txt)$': '<rootDir>/node_modules/@nlabs/lex/emptyModule.js'
     },
     testEnvironment: 'jsdom',

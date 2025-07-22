@@ -1,5 +1,6 @@
-// Add TextEncoder and TextDecoder polyfills for Jest environment
-const {TextEncoder, TextDecoder} = require('util');
+import {jest} from '@jest/globals';
+import {TextDecoder, TextEncoder} from 'util';
+
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
