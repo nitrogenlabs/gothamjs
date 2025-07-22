@@ -16,6 +16,10 @@
     "./icons": {
       "import": "./lib/icons/index.js",
       "types": "./lib/icons/index.d.ts"
+    },
+    "./router": {
+      "import": "./lib/router/index.js",
+      "types": "./lib/router/index.d.ts"
     }
   },
   "keywords": [
