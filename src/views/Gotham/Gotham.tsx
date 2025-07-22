@@ -4,11 +4,11 @@
  */
 import {useEffect} from 'react';
 
-import {GothamProvider} from './GothamProvider.js';
 import {LoaderView} from '../LoaderView/LoaderView.js';
+import {GothamProvider} from './GothamProvider.js';
 
-import type {GothamConfiguration, GothamStatus} from './GothamProvider.js';
 import type {FC, ReactNode} from 'react';
+import type {GothamConfiguration, GothamStatus} from './GothamProvider.js';
 
 export interface GothamProps {
   readonly children?: ReactNode;
@@ -61,6 +61,8 @@ export const onKeyUp = (event) => {
 export const Gotham: FC<GothamProps> = ({children, config = {}}) => {
   useEffect(() => {
     document.body.addEventListener('keyup', onKeyUp);
+
+    return () => document.body.removeEventListener('keyup', onKeyUp);
   }, []);
 
   return (

@@ -46,6 +46,7 @@
   },
   "scripts": {
     "build": "lex compile --remove --config ./tsconfig.build.json",
+    "build:dev": "NODE_ENV=development lex compile --remove --config ./tsconfig.build.json",
     "clean": "lex clean",
     "dev": "lex dev",
     "lint": "lex lint --fix",

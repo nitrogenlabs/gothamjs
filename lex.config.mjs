@@ -1,5 +1,8 @@
 export default {
   entryJs: 'app.tsx',
+  esbuild: {
+    minify: process.env.NODE_ENV === 'production'
+  },
   gitUrl: 'https://github.com/nitrogenlabs/gothamjs',
   jest: {
     extensionsToTreatAsEsm: ['.ts', '.tsx'],
