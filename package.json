@@ -20,6 +20,10 @@
     "./router": {
       "import": "./lib/router/index.js",
       "types": "./lib/router/index.d.ts"
+    },
+    "./form": {
+      "import": "./lib/form/index.js",
+      "types": "./lib/form/index.d.ts"
     }
   },
   "keywords": [
