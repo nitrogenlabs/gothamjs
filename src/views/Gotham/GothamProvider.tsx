@@ -73,15 +73,13 @@ export const defaultGothamConfig: GothamConfiguration = {
   translations: {translation: {}}
 };
 
-export const init = (setAppLoaded, config: GothamConfiguration) => (): void => {
+export const init = (config: GothamConfiguration) => (): void => {
   const {onInit} = config;
   GothamActions.init();
 
   if(onInit) {
     onInit();
   }
-
-  setAppLoaded(true);
 };
 
 export const signOut = (flux: FluxFramework) => async () => {
@@ -139,6 +137,8 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
         setSession(session);
       });
     }
+
+    init(config);
   }, []);
 
   return (

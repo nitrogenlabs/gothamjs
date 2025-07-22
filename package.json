@@ -67,7 +67,7 @@
     "@headlessui/react": "^2.2.4",
     "@hookform/resolvers": "^5.1.1",
     "@nlabs/rip-hunter": "^3.0.0",
-    "@nlabs/utils": "^2.7.5",
+    "@nlabs/utils": "^2.7.6",
     "autosuggest-highlight": "^3.3.4",
     "cropperjs": "^2.0.0",
     "hast-util-sanitize": "5.0.2",
