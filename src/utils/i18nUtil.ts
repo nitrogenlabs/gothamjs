@@ -1,40 +1,12 @@
 /**
- * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyright (c) 2025-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {createInstance} from 'i18next';
-import {initReactI18next} from 'react-i18next';
+import {t} from 'i18next';
 
-import type {Resource} from 'i18next';
-import type {I18nextProviderProps} from 'react-i18next';
-
-export const i18n = (resources: Resource): I18nextProviderProps => {
-  const i18next = createInstance();
-  i18next
-    .use(initReactI18next)
-    .init({
-      fallbackNS: 'translation',
-      interpolation: {
-        escapeValue: false,
-        format(value, format) {
-          if(format === 'array') {
-            if(value?.length > 1) {
-              const last = ` and ${value.pop()}`;
-              return value.join(',  ') + last;
-            }
-          }
-          return value;
-        }
-      },
-      lng: 'en',
-      react: {
-        transKeepBasicHtmlNodesFor: ['br', 'h1', 'h2', 'h3', 'i', 'li', 'p', 'strong', 'u', 'ul'],
-        transSupportBasicHtmlNodes: true
-      },
-      resources,
-      returnObjects: true
-    });
-
-  return {i18n: i18next} as I18nextProviderProps;
-};
-
+export const i18n = (
+  key: string | string[],
+  defaultValue?: string,
+  options?: Record<string, unknown>,
+  locale?: string
+): string => t(key, options);

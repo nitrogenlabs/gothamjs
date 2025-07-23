@@ -10,7 +10,6 @@ import {MarkdownConstants} from './constants/MarkdownConstants.js';
 export {zodResolver} from '@hookform/resolvers/zod';
 export {Flux} from '@nlabs/arkhamjs';
 export {Controller, useFormContext} from 'react-hook-form';
-export * from 'react-i18next';
 export {Link, NavLink, Outlet, Route, Router, useNavigate} from 'react-router';
 export {z} from 'zod';
 

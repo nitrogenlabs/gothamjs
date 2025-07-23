@@ -1,4 +1,5 @@
 # GothamJS: The Complete Front-End UI Framework
+
 ## Seamlessly integrating components, routing, state management, and transitions
 
 > A comprehensive front-end UI framework that handles everything from component rendering to routing and smooth transitions with minimal configuration.
@@ -305,18 +306,14 @@ const config = {
 };
 
 // In your component
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
-const MyComponent = () => {
-  const { t } = useTranslation();
-
-  return (
-    <div>
-      <h1>{t('greeting', { name: 'User' })}</h1>
-      <Button label={t('buttons.submit')} />
-    </div>
-  );
-};
+const MyComponent = () => (
+  <div>
+    <h1>{t('greeting', { name: 'User' })}</h1>
+    <Button label={t('buttons.submit')} />
+  </div>
+);
 ```
 
 ## 🎨 Theming

@@ -6,6 +6,7 @@ import {Logger, LoggerDebugLevel} from '@nlabs/arkhamjs-middleware-logger';
 import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {useFlux} from '@nlabs/arkhamjs-utils-react';
 import {merge} from '@nlabs/utils';
+import i18n from 'i18next';
 import {useEffect, useState} from 'react';
 import {I18nextProvider} from 'react-i18next';
 import {createBrowserRouter, RouterProvider} from 'react-router';
@@ -15,12 +16,10 @@ import {Config} from '../../config/appConfig.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
 import {gothamApp} from '../../stores/GothamAppStore.js';
 import {GothamContext} from '../../utils/GothamContext.js';
-import {i18n} from '../../utils/i18nUtil.js';
 import {parseRoutes} from '../../utils/routeUtils.js';
 import {GothamRoot} from './GothamRoot.js';
 
 import type {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
-import type {Resource} from 'i18next';
 import type {FC, ReactNode} from 'react';
 import type {RouteObject} from 'react-router';
 import type {GothamRouteData} from '../../types/gotham.js';
@@ -56,6 +55,7 @@ export interface GothamConfiguration {
   readonly stores?: unknown[];
   readonly theme?: Record<string, unknown>;
   readonly translations?: Record<string, unknown>;
+  readonly i18n?: typeof i18n;
 }
 
 export const defaultGothamConfig: GothamConfiguration = {
@@ -97,7 +97,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
     routes = [],
     storageType,
     stores,
-    translations
+    i18n
   } = config;
   const name = config?.app?.name;
   const [session, setSession] = useState({});
@@ -141,12 +141,21 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
     init(config);
   }, []);
 
+  if(i18n) {
+    return (
+      <I18nextProvider i18n={i18n}>
+        <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
+          {router && <RouterProvider router={router}/>}
+          {children}
+        </GothamContext.Provider>
+      </I18nextProvider>
+    );
+  }
+
   return (
-    <I18nextProvider {...i18n(translations as Resource)}>
-      <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
-        {router && <RouterProvider router={router}/>}
-        {children}
-      </GothamContext.Provider>
-    </I18nextProvider>
+    <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
+      {router && <RouterProvider router={router}/>}
+      {children}
+    </GothamContext.Provider>
   );
 };
