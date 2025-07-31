@@ -8,6 +8,9 @@
     "lib",
     "./node_modules",
     "./src/**/*.test.ts",
-    "./src/**/*.test.tsx"
+    "./src/**/*.test.tsx",
+    "./src/**/*.stories.ts",
+    "./src/**/*.stories.tsx",
+    "./.storybook"
   ]
 }

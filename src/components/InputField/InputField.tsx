@@ -12,8 +12,8 @@ import {
   getTextClasses
 } from '../../utils/colorUtils.js';
 
-import type {GothamColor} from '../../utils/colorUtils.js';
 import type {InputHTMLAttributes, Ref, TextareaHTMLAttributes} from 'react';
+import type {GothamColor} from '../../utils/colorUtils.js';
 
 export type InputBorderType = 'solid' | 'rounded' | 'none' | 'underline';
 
@@ -22,6 +22,7 @@ export interface InputFieldProps extends Omit<InputHTMLAttributes<HTMLInputEleme
   readonly borderType?: InputBorderType;
   readonly className?: string;
   readonly id?: string;
+  readonly label?: string;
   readonly multiline?: boolean;
   readonly placeholderColor?: GothamColor;
   readonly textColor?: GothamColor;
@@ -56,6 +57,7 @@ export const InputField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Inp
   borderType = 'solid',
   className,
   disabled = false,
+  label,
   multiline = false,
   placeholderColor = 'neutral',
   textColor = 'neutral',

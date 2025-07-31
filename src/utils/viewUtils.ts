@@ -34,7 +34,7 @@ export const useRoute = (): AppRouter => {
 export const parseNavUrl = (path: string, params: Record<string, unknown>): string => path
   .split('/')
   .reduce((list: string[], part: string) => {
-    if(part.substring(0, 1) === ':') {
+    if(part?.substring(0, 1) === ':') {
       const value = params[part.substring(1)];
       return [...list, value !== undefined ? value : part] as string[];
     }

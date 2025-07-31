@@ -9,6 +9,7 @@ import {ErrorMessage} from '../ErrorMessage/ErrorMessage.js';
 import {InputField} from '../InputField/InputField.js';
 import {Label} from '../Label/Label.js';
 
+import {useTranslation} from 'react-i18next';
 import type {GothamColor} from '../../utils/colorUtils.js';
 import type {InputBorderType} from '../InputField/InputField.js';
 
@@ -51,16 +52,18 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   onChange: onChangeProp,
   onValidate,
   pattern,
+  placeholder = '',
   placeholderColor = 'neutral',
   rows,
   textColor = 'neutral',
   value,
   ...restInputProps
 }, ref) => {
+  const {t} = useTranslation();
   const {control, formState: {errors}} = useFormContext();
   const formError = errors?.[name];
   const hasError = !!formError;
-
+  const placeholderText = t(placeholder);
   return (
     <Controller
       control={control}
@@ -83,6 +86,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
               multiline={multiline}
               onBlur={onBlur}
               onChange={onChange}
+              placeholder={placeholderText}
               placeholderColor={placeholderColor}
               textColor={textColor}
               value={value}

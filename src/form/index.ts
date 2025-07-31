@@ -16,6 +16,7 @@ export {
 export {zodResolver} from '@hookform/resolvers/zod';
 export {z} from 'zod';
 
+export {Button} from '../components/Button/Button.js';
 export {DateField} from '../components/DateField/DateField.js';
 export {Form} from '../components/Form/Form.js';
 export {InputField} from '../components/InputField/InputField.js';
