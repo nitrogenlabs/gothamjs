@@ -4,7 +4,6 @@
  */
 import {useEffect} from 'react';
 
-import {LoaderView} from '../LoaderView/LoaderView.js';
 import {GothamProvider} from './GothamProvider.js';
 
 import type {FC, ReactNode} from 'react';
@@ -58,7 +57,7 @@ export const onKeyUp = (event) => {
   }
 };
 
-export const Gotham: FC<GothamProps> = ({children, config = {}}) => {
+export const Gotham: FC<GothamProps> = ({config = {}}) => {
   useEffect(() => {
     document.body.addEventListener('keyup', onKeyUp);
 
@@ -66,10 +65,7 @@ export const Gotham: FC<GothamProps> = ({children, config = {}}) => {
   }, []);
 
   return (
-    <GothamProvider config={config}>
-      {children}
-      <LoaderView />
-    </GothamProvider >
+    <GothamProvider config={config}/>
   );
 };
 

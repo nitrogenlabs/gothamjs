@@ -16,12 +16,13 @@ import {Config} from '../../config/appConfig.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
 import {gothamApp} from '../../stores/GothamAppStore.js';
 import {GothamContext} from '../../utils/GothamContext.js';
+import {parseRoutes} from '../../utils/routeUtils.js';
+import {GothamRoot} from './GothamRoot.js';
 
 import type {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import type {FC, ReactNode} from 'react';
 import type {GothamRouteData} from '../../types/gotham.js';
-import {parseRoutes, type CustomRouteProps} from '../../utils/routeUtils.js';
-import {GothamRoot} from './GothamRoot.js';
+import type {CustomRouteProps} from '../../utils/routeUtils.js';
 
 export interface GothamProviderProps {
   readonly children?: ReactNode;
@@ -30,9 +31,7 @@ export interface GothamProviderProps {
 }
 
 export type GothamPosition = 't' | 'tc' | 'tl' | 'tr' | 'b' | 'bc' | 'br' | 'bl';
-
 export type GothamStatus = 'default' | 'error' | 'info' | 'success' | 'warning' | number;
-
 export type ThemeDisplayMode = 'auto' | 'dark' | 'light';
 
 export interface GothamConfiguration {
@@ -144,8 +143,9 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
     return (
       <I18nextProvider i18n={i18n}>
         <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
-          {router && <RouterProvider router={router}/>}
-          {children}
+          <div>
+            <RouterProvider router={router}/>
+          </div>
         </GothamContext.Provider>
       </I18nextProvider>
     );
@@ -153,8 +153,9 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
 
   return (
     <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
-      {router && <RouterProvider router={router}/>}
-      {children}
+      <div>
+        <RouterProvider router={router}/>
+      </div>
     </GothamContext.Provider>
   );
 };

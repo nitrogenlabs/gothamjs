@@ -6,6 +6,7 @@ import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import {Outlet, useNavigate} from 'react-router';
 
 import {GothamConstants} from '../../constants/GothamConstants.js';
+import {LoaderView} from '../LoaderView/LoaderView.js';
 
 import type {FC} from 'react';
 
@@ -35,5 +36,10 @@ export const GothamRoot: FC = () => {
   useFluxListener(GothamConstants.NAV_GOTO, navGoto(navigate));
   useFluxListener(GothamConstants.NAV_REPLACE, navReplace(navigate));
 
-  return <Outlet/>;
+  return (
+    <>
+      <Outlet/>
+      <LoaderView />
+    </>
+  );
 };

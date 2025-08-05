@@ -16,7 +16,6 @@ export {z} from 'zod';
 export * from './components/index.js';
 
 export * from './utils/colorUtils.js';
-export * from './utils/dynamicUtils.js';
 export * from './utils/imageUtils.js';
 export * from './utils/routeUtils.js';
 export * from './utils/useBreakpoint.js';
