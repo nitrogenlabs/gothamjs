@@ -83,7 +83,7 @@
     "highlight.js": "^11.11.1",
     "history": "^5.3.0",
     "i18next": "^25.3.2",
-    "lucide-react": "^0.535.0",
+    "lucide-react": "^0.536.0",
     "luxon": "^3.7.1",
     "react-autosuggest": "^10.1.0",
     "react-cropper": "^2.3.3",
@@ -101,9 +101,9 @@
     "@nlabs/arkhamjs-middleware-logger": "^3.30.4",
     "@nlabs/arkhamjs-storage-browser": "^3.30.4",
     "@nlabs/arkhamjs-utils-react": "^3.32.5",
-    "@nlabs/lex": "1.49.1",
+    "@nlabs/lex": "1.49.3",
     "@types/history": "^5.0.0",
-    "@types/jest": "^29.5.14",
+    "@types/jest": "^30.0.0",
     "@types/luxon": "^3.7.1",
     "@types/node": "^24.1.0",
     "@types/react": "^19.1.9",
@@ -111,7 +111,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "tailwindcss": "^4.1.11",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "peerDependencies": {
     "@nlabs/arkhamjs": "^3.31.4",

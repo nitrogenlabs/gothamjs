@@ -108,14 +108,12 @@ export const Notify = () => {
       setTimeoutId(id);
 
       return () => {
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-        }
+        clearTimeout(id);
       };
     }
 
     return undefined;
-  }, [isOpen, notification.autoHideDuration]);
+  }, [isOpen, notification.autoHideDuration, timeoutId]);
 
   const notifyOpen = ({
     actions = [],

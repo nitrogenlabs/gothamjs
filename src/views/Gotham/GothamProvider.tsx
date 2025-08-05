@@ -7,7 +7,7 @@ import {BrowserStorage} from '@nlabs/arkhamjs-storage-browser';
 import {useFlux} from '@nlabs/arkhamjs-utils-react';
 import {merge} from '@nlabs/utils';
 import i18n from 'i18next';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {I18nextProvider} from 'react-i18next';
 import {createBrowserRouter, RouterProvider} from 'react-router';
 
@@ -16,13 +16,12 @@ import {Config} from '../../config/appConfig.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
 import {gothamApp} from '../../stores/GothamAppStore.js';
 import {GothamContext} from '../../utils/GothamContext.js';
-import {parseRoutes} from '../../utils/routeUtils.js';
-import {GothamRoot} from './GothamRoot.js';
 
 import type {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import type {FC, ReactNode} from 'react';
-import type {RouteObject} from 'react-router';
 import type {GothamRouteData} from '../../types/gotham.js';
+import {parseRoutes, type CustomRouteProps} from '../../utils/routeUtils.js';
+import {GothamRoot} from './GothamRoot.js';
 
 export interface GothamProviderProps {
   readonly children?: ReactNode;
@@ -101,21 +100,21 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   } = config;
   const name = config?.app?.name;
   const [session, setSession] = useState({});
-  const [router, setRouter] = useState<ReturnType<typeof createBrowserRouter> | undefined>();
-
-  useEffect(() => {
-    Config.set(config as Record<string, unknown>);
-
-    const router = createBrowserRouter(
+  const router = useMemo(() => {
+    return createBrowserRouter(
       [
         {
-          children: parseRoutes(routes as unknown as RouteObject[]),
-          element: <GothamRoot />
+          Component: GothamRoot,
+          children: parseRoutes(routes as unknown as CustomRouteProps[]),
+          index: false,
+          path: '/'
         }
       ]
     );
+  }, [routes]);
 
-    setRouter(router);
+  useEffect(() => {
+    Config.set(config as Record<string, unknown>);
 
     if(flux) {
       const env: string = Config.get('environment') as string;
@@ -139,7 +138,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
     }
 
     init(config);
-  }, []);
+  }, [flux, config, middleware, name, storageType, stores]);
 
   if(i18n) {
     return (
