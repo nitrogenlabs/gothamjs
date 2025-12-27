@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Gotham should render 1`] = `
 {
@@ -6,13 +6,17 @@ exports[`Gotham should render 1`] = `
   "baseElement": <body>
     <div>
       <div>
-        Home Page
+        <div>
+          Home Page
+        </div>
       </div>
     </div>
   </body>,
   "container": <div>
     <div>
-      Home Page
+      <div>
+        Home Page
+      </div>
     </div>
   </div>,
   "debug": [Function],

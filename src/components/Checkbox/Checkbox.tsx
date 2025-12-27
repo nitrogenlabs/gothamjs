@@ -35,8 +35,6 @@ export const Checkbox = ({
   );
   const checkboxId = id || name || label.toLowerCase().replace(/\s+/g, '-');
   const descriptionId = description ? `${checkboxId}-description` : undefined;
-
-  console.log({defaultValue});
   const baseCheckboxClasses = `
     col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white
     checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600

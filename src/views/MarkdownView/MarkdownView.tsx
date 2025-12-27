@@ -11,6 +11,13 @@ interface MarkdownViewProps {
   values?: Record<string, unknown>;
 }
 
+const defaultStyles: React.CSSProperties = {
+  backgroundColor: 'transparent',
+  height: '100%',
+  overflow: 'auto',
+  width: '100%'
+};
+
 export const MarkdownView: React.FC<MarkdownViewProps> = ({
   className = '',
   content,
@@ -38,12 +45,7 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
   }, [url, content, values]);
 
   return (
-    <div className={`markdown-container ${className}`} style={{
-      backgroundColor: 'transparent',
-      height: '100%',
-      overflow: 'auto',
-      width: '100%'
-    }}>
+    <div className={`markdown-container ${className}`.trim()} style={defaultStyles}>
       <ReactMarkdown>{markdown}</ReactMarkdown>
     </div>
   );

@@ -7,7 +7,6 @@ import {useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import {z} from 'zod';
 
-
 import type {BaseSyntheticEvent, ReactNode} from 'react';
 
 export interface FormProps<T> {
@@ -42,8 +41,12 @@ export const Form = <T extends Record<string, unknown>>({
   });
   const {handleSubmit, setError, formState: {errors: formErrors}} = methods;
   const handleFormSubmit = useCallback(
-    handleSubmit((data, event) => onSubmit(data, event as BaseSyntheticEvent, setError)),
-    []
+    (event: BaseSyntheticEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+      handleSubmit((data, submitEvent) => onSubmit(data, submitEvent as BaseSyntheticEvent, setError))(event);
+    },
+    [handleSubmit, onSubmit, setError]
   );
 
   const allErrors = {...formErrors, ...errors};

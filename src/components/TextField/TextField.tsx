@@ -2,14 +2,14 @@
  * Copyright (c) 2025-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import React, {forwardRef} from 'react';
+import {forwardRef} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
+import {useTranslation} from '../../i18n/index.js';
 
 import {ErrorMessage} from '../ErrorMessage/ErrorMessage.js';
 import {InputField} from '../InputField/InputField.js';
 import {Label} from '../Label/Label.js';
 
-import {useTranslation} from 'react-i18next';
 import type {GothamColor} from '../../utils/colorUtils.js';
 import type {InputBorderType} from '../InputField/InputField.js';
 

@@ -292,10 +292,10 @@ GothamActions.notifyClose();
 
 ### Internationalization
 
-GothamJS includes i18next for internationalization:
+GothamJS includes i18next for internationalization. You can import i18n utilities directly from GothamJS:
 
 ```jsx
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@nlabs/gothamjs';
 
 const MyComponent = () => {
   const { t, i18n } = useTranslation();
@@ -313,6 +313,16 @@ const MyComponent = () => {
     </div>
   );
 };
+```
+
+You can also import other i18n utilities:
+
+```jsx
+import { useTranslation, Trans, i18n } from '@nlabs/gothamjs';
+
+// useTranslation - Hook for translation
+// Trans - Component for complex translations
+// i18n - Direct access to i18next instance
 ```
 
 ## Next Steps

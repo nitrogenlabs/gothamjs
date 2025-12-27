@@ -1,6 +1,6 @@
-import { render } from '@nlabs/lex/test-react';
+import {render} from '@nlabs/lex/test-react';
 
-import { MarkdownView } from './MarkdownView.js';
+import {MarkdownView} from './MarkdownView.js';
 
 describe('MarkdownView', () => {
   it('should render with custom className when provided', () => {
@@ -24,11 +24,10 @@ describe('MarkdownView', () => {
     const {container} = render(<MarkdownView content="Some content" />);
 
     const markdownContainer = container.firstChild as HTMLElement;
-    expect(markdownContainer).toHaveStyle({
-      backgroundColor: 'transparent',
-      height: '100%',
-      overflow: 'auto',
-      width: '100%'
-    });
+    const styles = markdownContainer.getAttribute('style');
+    expect(styles).toContain('background-color: transparent');
+    expect(styles).toContain('height: 100%');
+    expect(styles).toContain('overflow: auto');
+    expect(styles).toContain('width: 100%');
   });
 });

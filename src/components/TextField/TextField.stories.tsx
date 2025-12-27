@@ -1,7 +1,10 @@
+import React from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
+import {I18nextProvider, initReactI18next} from 'react-i18next';
+import {i18n} from '../../i18n/index.js';
 
-import {TextField} from './TextField.js';
 import {gothamColors} from '../../utils/colorUtils.js';
+import {TextField} from './TextField.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
@@ -61,12 +64,36 @@ const meta: Meta<typeof TextField> = {
   decorators: [
     (Story) => {
       const methods = useForm();
+
+      // Initialize i18n for Storybook
+      const storyI18n = i18n.createInstance();
+      storyI18n
+        .use(initReactI18next)
+        .init({
+          resources: {
+            en: {
+              translation: {
+                'Textfield placeholder': 'Textfield placeholder',
+                'Enter email address': 'Enter email address',
+                'Description': 'Description'
+              }
+            }
+          },
+          lng: 'en',
+          fallbackLng: 'en',
+          interpolation: {
+            escapeValue: false,
+          },
+        });
+
       return (
-        <FormProvider {...methods}>
-          <div className="p-4 max-w-md">
-            <Story />
-          </div>
-        </FormProvider>
+        <I18nextProvider i18n={storyI18n}>
+          <FormProvider {...methods}>
+            <div className="p-4 max-w-md">
+              <Story />
+            </div>
+          </FormProvider>
+        </I18nextProvider>
       );
     }
   ],

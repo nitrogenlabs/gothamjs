@@ -306,14 +306,18 @@ const config = {
 };
 
 // In your component
-import { t } from 'i18next';
+import { useTranslation } from '@nlabs/gothamjs';
 
-const MyComponent = () => (
-  <div>
-    <h1>{t('greeting', { name: 'User' })}</h1>
-    <Button label={t('buttons.submit')} />
-  </div>
-);
+const MyComponent = () => {
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <h1>{t('greeting', { name: 'User' })}</h1>
+      <Button label={t('buttons.submit')} />
+    </div>
+  );
+};
 ```
 
 ## 🎨 Theming

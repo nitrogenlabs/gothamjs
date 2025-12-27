@@ -15,6 +15,19 @@ const config: GothamConfiguration = {
     name: 'gothamjs',
     title: 'GothamJS'
   },
+  translations: {
+    en: {
+      translation: {
+        // Basic translations to prevent i18n warnings
+        placeholder: 'Enter text...',
+        submit: 'Submit',
+        cancel: 'Cancel',
+        loading: 'Loading...',
+        error: 'Error',
+        success: 'Success'
+      }
+    }
+  },
   routes: [
     {
       children: [

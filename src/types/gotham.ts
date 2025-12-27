@@ -13,6 +13,7 @@ export type GothamRouteData = RouteProps & {
   readonly props?: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly children?: any ; // GothamRouteData[];
+  readonly index?: boolean;
   // readonly sensitive?: boolean;
   // readonly strict?: boolean;
   // readonly title?: string;

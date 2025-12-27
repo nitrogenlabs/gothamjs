@@ -8,7 +8,7 @@ import {useFlux} from '@nlabs/arkhamjs-utils-react';
 import {merge} from '@nlabs/utils';
 import i18n from 'i18next';
 import {useEffect, useMemo, useState} from 'react';
-import {I18nextProvider} from 'react-i18next';
+import {I18nextProvider, initReactI18next} from 'react-i18next';
 import {createBrowserRouter, RouterProvider} from 'react-router';
 
 import {GothamActions} from '../../actions/GothamActions.js';
@@ -95,7 +95,8 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
     routes = [],
     storageType,
     stores,
-    i18n
+    i18n: providedI18n,
+    translations
   } = config;
   const name = config?.app?.name;
   const [session, setSession] = useState({});
@@ -111,6 +112,33 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
       ]
     );
   }, [routes]);
+
+    // Initialize i18next if translations are provided but no i18n instance is given
+  const i18nInstance = useMemo(() => {
+    if (providedI18n) {
+      return providedI18n;
+    }
+
+    if (translations && Object.keys(translations).length > 0) {
+      // Create a new i18next instance and initialize it
+      const newI18n = i18n.createInstance();
+
+      newI18n
+        .use(initReactI18next)
+        .init({
+          resources: translations as Record<string, Record<string, Record<string, string>>>,
+          lng: 'en', // default language
+          fallbackLng: 'en',
+          interpolation: {
+            escapeValue: false, // React already escapes values
+          },
+        });
+
+      return newI18n;
+    }
+
+    return null;
+  }, [providedI18n, translations]);
 
   useEffect(() => {
     Config.set(config as Record<string, unknown>);
@@ -139,9 +167,9 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
     init(config);
   }, [flux, config, middleware, name, storageType, stores]);
 
-  if(i18n) {
+  if(i18nInstance) {
     return (
-      <I18nextProvider i18n={i18n}>
+      <I18nextProvider i18n={i18nInstance}>
         <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
           <div>
             <RouterProvider router={router}/>

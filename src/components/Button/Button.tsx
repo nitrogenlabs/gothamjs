@@ -1,7 +1,7 @@
 import {cn} from '@nlabs/utils';
 import {forwardRef} from 'react';
-import {useTranslation} from 'react-i18next';
 
+import {useTranslation} from '../../i18n/index.js';
 import {getBackgroundClasses, getBorderClasses, getTextClasses} from '../../utils/colorUtils.js';
 
 import type {ReactNode} from 'react';

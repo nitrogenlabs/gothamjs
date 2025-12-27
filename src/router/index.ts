@@ -5,6 +5,7 @@
 
 export {
   Await,
+  BrowserRouter,
   createBrowserRouter,
   createHashRouter,
   createMemoryRouter,

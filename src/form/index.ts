@@ -16,12 +16,14 @@ export {
 export {zodResolver} from '@hookform/resolvers/zod';
 export {z} from 'zod';
 
-export {Button} from '../components/Button/Button.js';
-export {DateField} from '../components/DateField/DateField.js';
-export {Form} from '../components/Form/Form.js';
-export {InputField} from '../components/InputField/InputField.js';
-export {RadioField} from '../components/RadioField/RadioField.js';
-export {SelectField} from '../components/SelectField/SelectField.js';
-export {SelectOption} from '../components/SelectField/SelectOption.js';
-export {TextField} from '../components/TextField/TextField.js';
+export * from '../components/Button/Button.js';
+export * from '../components/Checkbox/Checkbox.js';
+export * from '../components/DateField/DateField.js';
+export * from '../components/Form/Form.js';
+export * from '../components/Input/Input.js';
+export * from '../components/InputField/InputField.js';
+export * from '../components/RadioField/RadioField.js';
+export * from '../components/SelectField/SelectField.js';
+export * from '../components/SelectField/SelectOption.js';
+export * from '../components/TextField/TextField.js';
 

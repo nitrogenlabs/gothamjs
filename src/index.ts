@@ -23,6 +23,8 @@ export * from './utils/viewUtils.js';
 export * from './views/Gotham/Gotham.js';
 export * from './views/Gotham/GothamProvider.js';
 
+export * from './i18n/index.js';
+
 export type {GothamRouteData} from './types/gotham.js';
 
 export {
@@ -31,3 +33,4 @@ export {
   GothamConstants,
   MarkdownConstants
 };
+

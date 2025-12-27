@@ -10,18 +10,27 @@
   "types": "lib/index.d.ts",
   "exports": {
     ".": {
+      "default": "./lib/index.js",
       "import": "./lib/index.js",
       "types": "./lib/index.d.ts"
     },
     "./icons": {
+      "default": "./lib/icons/index.js",
       "import": "./lib/icons/index.js",
       "types": "./lib/icons/index.d.ts"
     },
+    "./i18n": {
+      "default": "./lib/i18n/index.js",
+      "import": "./lib/i18n/index.js",
+      "types": "./lib/i18n/index.d.ts"
+    },
     "./router": {
+      "default": "./lib/router/index.js",
       "import": "./lib/router/index.js",
       "types": "./lib/router/index.d.ts"
     },
     "./form": {
+      "default": "./lib/form/index.js",
       "import": "./lib/form/index.js",
       "types": "./lib/form/index.d.ts"
     }
@@ -73,45 +82,45 @@
   ],
   "dependencies": {
     "@date-io/luxon": "3.2.0",
-    "@headlessui/react": "^2.2.7",
-    "@hookform/resolvers": "^5.2.1",
+    "@headlessui/react": "^2.2.9",
+    "@hookform/resolvers": "^5.2.2",
     "@nlabs/rip-hunter": "^3.0.2",
-    "@nlabs/utils": "^2.8.4",
+    "@nlabs/utils": "^2.8.6",
     "autosuggest-highlight": "^3.3.4",
-    "cropperjs": "^2.0.1",
+    "cropperjs": "^2.1.0",
     "hast-util-sanitize": "5.0.2",
     "highlight.js": "^11.11.1",
     "history": "^5.3.0",
-    "i18next": "^25.3.2",
-    "lucide-react": "^0.536.0",
-    "luxon": "^3.7.1",
+    "i18next": "^25.7.3",
+    "lucide-react": "^0.562.0",
+    "luxon": "^3.7.2",
     "react-autosuggest": "^10.1.0",
     "react-cropper": "^2.3.3",
-    "react-hook-form": "^7.61.1",
-    "react-i18next": "^15.6.1",
+    "react-hook-form": "^7.69.0",
+    "react-i18next": "^16.5.0",
     "react-markdown": "^10.1.0",
-    "react-router": "^7.7.1",
-    "react-tag-autocomplete": "^7.5.0",
+    "react-router": "^7.11.0",
+    "react-tag-autocomplete": "^7.5.1",
     "react-transition-group": "^4.4.5",
     "rehype-react": "^8.0.0",
-    "zod": "^4.0.14"
+    "zod": "^4.2.1"
   },
   "devDependencies": {
-    "@nlabs/arkhamjs": "^3.31.7",
-    "@nlabs/arkhamjs-middleware-logger": "^3.30.4",
-    "@nlabs/arkhamjs-storage-browser": "^3.30.4",
-    "@nlabs/arkhamjs-utils-react": "^3.32.5",
-    "@nlabs/lex": "1.49.3",
+    "@nlabs/arkhamjs": "^3.31.9",
+    "@nlabs/arkhamjs-middleware-logger": "^3.30.6",
+    "@nlabs/arkhamjs-storage-browser": "^3.30.6",
+    "@nlabs/arkhamjs-utils-react": "^3.32.7",
+    "@nlabs/lex": "1.52.13",
     "@types/history": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/luxon": "^3.7.1",
-    "@types/node": "^24.1.0",
-    "@types/react": "^19.1.9",
-    "@types/react-dom": "^19.1.7",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "tailwindcss": "^4.1.11",
-    "typescript": "^5.9.2"
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "@nlabs/arkhamjs": "^3.31.4",
@@ -122,7 +131,17 @@
     "react-dom": "*"
   },
   "overrides": {
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "cross-spawn": "^7.0.3",
+    "got": "^13.0.0",
+    "http-cache-semantics": "^4.1.1",
+    "http-proxy-middleware": "^3.0.3",
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.31",
+    "semver-regex": "^4.0.5",
+    "tmp": "^0.2.1",
+    "cheerio": "^1.0.0",
+    "lodash.pick": "npm:lodash@^4.17.21"
   }
 }

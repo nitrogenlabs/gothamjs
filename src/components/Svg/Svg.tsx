@@ -23,6 +23,9 @@ export const Svg: FC<SvgProps> = ({
   name,
   width = 32
 }) => {
+  const baseUrl = Config.get('baseUrl', '');
+  const iconPath = baseUrl ? `${baseUrl}/icons/icons.svg#${name}` : `/icons/icons.svg#${name}`;
+
   return (
     <svg
       className={cn('w-full h-full', className)}
@@ -34,7 +37,7 @@ export const Svg: FC<SvgProps> = ({
         width: `${width}px`
       }}
     >
-      <use href={`${Config.get('baseUrl')}/icons/icons.svg#${name}`} />
+      <use href={iconPath} />
     </svg>
   );
 };
