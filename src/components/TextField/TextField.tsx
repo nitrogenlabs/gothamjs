@@ -60,49 +60,72 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   ...restInputProps
 }, ref) => {
   const {t} = useTranslation();
-  const {control, formState: {errors}} = useFormContext();
+  const {control, formState: {errors}, trigger} = useFormContext();
   const formError = errors?.[name];
-  const hasError = !!formError;
-  const placeholderText = t(placeholder);
+  const hasError = !!formError || !!externalError;
+  const placeholderText = placeholder ? t(placeholder) : '';
   return (
     <Controller
       control={control}
       name={name}
       defaultValue={defaultValue}
-      render={({field: {onBlur, onChange, ref: fieldRef, value}}) => (
-        <div className="flex flex-col w-full">
-          <Label
-            className={labelClass}
-            color={labelColor}
-            label={label}
-            name={name} />
-          <div className="relative">
-            <InputField
-              borderColor={borderColor}
-              borderType={borderType}
-              className={inputClass}
-              color={hasError ? 'error' : color}
-              id={name}
-              multiline={multiline}
-              onBlur={onBlur}
-              onChange={onChange}
-              placeholder={placeholderText}
-              placeholderColor={placeholderColor}
-              textColor={textColor}
-              value={value}
-              ref={(e) => {
-                fieldRef(e);
+      render={({field: {onBlur, onChange, ref: fieldRef, value}}) => {
+        const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+          onChange(e);
+          if (onChangeProp) {
+            onChangeProp(e);
+          }
+          // Trigger validation on change if needed
+          if (onValidate && pattern) {
+            const isValid = new RegExp(pattern).test(e.target.value);
+            onValidate(isValid);
+          }
+        };
 
-                if (ref && typeof ref === 'object') {
-                  ref.current = e;
-                }
-              }}
-              {...restInputProps}
+        const handleBlur = () => {
+          onBlur();
+          // Trigger field validation on blur
+          trigger(name);
+        };
+
+        return (
+          <div className="flex flex-col w-full">
+            <Label
+              className={labelClass}
+              color={labelColor}
+              label={label}
+              name={name}
             />
-            <ErrorMessage message={formError?.message as string} color={errorColor} />
+            <div className="relative">
+              <InputField
+                borderColor={borderColor}
+                borderType={borderType}
+                className={inputClass}
+                color={hasError ? 'error' : color}
+                id={name}
+                multiline={multiline}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder={placeholderText}
+                placeholderColor={placeholderColor}
+                textColor={textColor}
+                value={value}
+                ref={(e) => {
+                  fieldRef(e);
+                  if (ref && typeof ref === 'object') {
+                    ref.current = e;
+                  }
+                }}
+                {...restInputProps}
+              />
+              <ErrorMessage
+                message={formError?.message as string || (externalError ? 'Invalid input' : undefined)}
+                color={errorColor}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        );
+      }}
     />
   );
 });

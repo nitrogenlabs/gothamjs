@@ -124,7 +124,65 @@ All Lucide React icons support these common properties:
 
 > **Note**: The `Loader` icon from Lucide React is exported as `LucideLoader` to avoid conflicts with GothamJS's `Loader` component.
 
-### Form Components
+### Optimized Form Components
+
+GothamJS provides optimized form components with automatic validation, accessibility features, and performance optimizations:
+
+```jsx
+import { Form, TextField, FormButton } from '@nlabs/gothamjs';
+import { z } from 'zod';
+
+// Define your form schema with Zod
+const loginSchema = z.object({
+  email: z.string().email('Please enter a valid email'),
+  password: z.string().min(8, 'Password must be at least 8 characters')
+});
+
+const LoginForm = () => (
+  <Form
+    schema={loginSchema}
+    onSubmit={handleSubmit}
+    showErrors={true}        // Show form-level errors at top
+    mode="onBlur"            // Validate on blur for better UX
+  >
+    {({isSubmitting, disabled}) => (
+      <>
+        <TextField
+          name="email"
+          label="Email"
+          type="email"
+          placeholder="Enter your email"
+          required
+        />
+        <TextField
+          name="password"
+          label="Password"
+          type="password"
+          placeholder="Enter your password"
+          required
+        />
+        <FormButton
+          type="submit"
+          variant="contained"
+          color="primary"
+          label="Sign In"
+        />
+      </>
+    )}
+  </Form>
+);
+```
+
+#### Key Features:
+
+- **Automatic Validation**: Integrated Zod schema validation with react-hook-form
+- **Performance Optimized**: Efficient re-rendering and validation triggering
+- **Accessibility**: Proper ARIA attributes and form structure
+- **Loading States**: Automatic submit button disabling during form submission
+- **Error Handling**: Both field-level and form-level error display
+- **Type Safety**: Full TypeScript support with inferred types
+
+### Legacy Form Components
 
 ```jsx
 import { Form, TextField, Button } from '@nlabs/gothamjs';
