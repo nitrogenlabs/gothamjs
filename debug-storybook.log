@@ -1,0 +1,26 @@
+[06:11:15.856] [INFO] storybook v10.1.10
+[06:11:16.140] [DEBUG] Getting package.json info for /Users/nitrog7/Development/gothamjs/package.json...
+[06:11:16.887] [INFO] Starting...
+[06:11:16.923] [WARN] No story files found for the specified pattern: src/**/*.mdx
+[06:11:17.124] [DEBUG] Starting preview..
+[06:11:17.144] [INFO] Addon-docs: using MDX3
+[06:11:17.175] [INFO] => [@storybook/addon-styling-webpack] Applying custom Storybook webpack configuration styling.
+[06:11:17.176] [INFO] => [@storybook/addon-styling-webpack] Replacing Storybook's webpack rules for styles with given rules.
+[06:11:17.177] [INFO] Using default Webpack5 setup
+[06:11:17.672] [DEBUG] Using tsconfig paths for react-docgen
+[06:11:23.976] [ERROR] Failed to build the preview
+[06:11:23.984] [WARN] Force closed preview build
+[06:11:23.984] [ERROR] [38;2;241;97;97mSB_BUILDER-WEBPACK5_0003 (WebpackCompilationError): There were problems when compiling your code with Webpack.
+Run Storybook with --debug-webpack for more information.[39m
+    at starter (file://./node_modules/@storybook/builder-webpack5/dist/index.js:799:11)
+    at starter.next (<anonymous>)
+    at Module.start (file://./node_modules/@storybook/builder-webpack5/dist/index.js:857:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async storybookDevServer (file://./node_modules/storybook/dist/core-server/index.js:6806:82)
+    at async buildOrThrow (file://./node_modules/storybook/dist/core-server/index.js:5555:12)
+    at async buildDevStandalone (file://./node_modules/storybook/dist/core-server/index.js:7208:66)
+    at async withTelemetry (file://./node_modules/storybook/dist/_node-chunks/chunk-PGCRO4IZ.js:209:12)
+    at async dev (file://./node_modules/storybook/dist/bin/core.js:2734:3)
+    at async _Command.<anonymous> (file://./node_modules/storybook/dist/bin/core.js:2801:92)
+[06:11:23.985] [WARN] Broken build, fix the error above.
+You may need to refresh the browser.
