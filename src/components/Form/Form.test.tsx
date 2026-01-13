@@ -2,7 +2,7 @@
  * Copyright (c) 2021-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {z} from 'zod';
 
 import {Form} from './Form.js';
@@ -19,9 +19,13 @@ describe('Form', () => {
         schema={testSchema}
         onSubmit={() => {}}
       >
-        <input name="email" defaultValue="invalid-email" />
-        <input name="password" defaultValue="short" />
-        <button type="submit">Submit</button>
+        {(methods) => (
+          <>
+            <input {...methods.register('email')} defaultValue="invalid-email" />
+            <input {...methods.register('password')} defaultValue="short" />
+            <button type="submit">Submit</button>
+          </>
+        )}
       </Form>
     );
 
@@ -29,20 +33,30 @@ describe('Form', () => {
     expect(screen.queryByRole('list')).not.toBeInTheDocument();
   });
 
-  it('should show errors at top when showErrors is true', () => {
+  it('should show errors at top when showErrors is true', async () => {
     render(
       <Form
         schema={testSchema}
         showErrors={true}
         onSubmit={() => {}}
       >
-        <input name="email" defaultValue="invalid-email" />
-        <input name="password" defaultValue="short" />
-        <button type="submit">Submit</button>
+        {(methods) => (
+          <>
+            <input {...methods.register('email')} defaultValue="invalid-email" />
+            <input {...methods.register('password')} defaultValue="short" />
+            <button type="submit">Submit</button>
+          </>
+        )}
       </Form>
     );
 
+    // Submit the form to trigger validation
+    const submitButton = screen.getByRole('button', { name: 'Submit' });
+    fireEvent.click(submitButton);
+
     // Should show error list at top when prop is true
-    expect(screen.getByRole('list')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByRole('list')).toBeInTheDocument();
+    });
   });
 });

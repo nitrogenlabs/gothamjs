@@ -13,7 +13,7 @@
 
 GothamJS is an all-inclusive React framework that unifies UI components, navigation, state management, and transitions into one cohesive system. Built by Nitrogen Labs, GothamJS eliminates the need to piece together multiple libraries, providing developers with a consistent, integrated solution for all front-end UI needs.
 
-## ✨ Key Features
+## Key Features
 
 - **Unified Component Library**: Beautifully designed, fully customizable UI components with consistent styling and behavior
 - **Seamless Routing & Transitions**: Built-in navigation system with smooth page transitions and animations
@@ -38,8 +38,8 @@ yarn add @nlabs/gothamjs
 Create your first GothamJS application:
 
 ```jsx
-import { createRoot } from 'react-dom/client';
-import { Gotham } from '@nlabs/gothamjs';
+import {createRoot} from 'react-dom/client';
+import {Gotham} from '@nlabs/gothamjs';
 
 // Define your application configuration
 const config = {
@@ -69,7 +69,130 @@ const root = createRoot(document.getElementById('app'));
 root.render(<Gotham config={config} />);
 ```
 
-## 🧩 Components
+## CSS and Styling
+
+GothamJS uses Tailwind CSS with custom theme variables for consistent styling. To use GothamJS components with proper styling in your project, you need to import the GothamJS theme CSS.
+
+### Importing GothamJS Styles
+
+```css
+/* Import GothamJS theme CSS in your main CSS file */
+@import '@nlabs/gothamjs/styles/tailwind.css';
+```
+
+### Tailwind CSS v4 Configuration
+
+Since GothamJS uses Tailwind CSS v4, configuration is done via CSS custom properties instead of a `tailwind.config.js` file. The GothamJS theme CSS already includes all the necessary color variables.
+
+If you need to customize the theme further, you can override the CSS custom properties in your own CSS:
+
+```css
+/* In your main CSS file, after importing GothamJS styles */
+@import '@nlabs/gothamjs/styles/tailwind.css';
+
+/* Override GothamJS theme variables */
+@theme {
+  --color-primary: #your-custom-primary;
+  --color-secondary: #your-custom-secondary;
+}
+```
+
+### Content Paths
+
+Tailwind CSS still needs to know which files to scan for class usage. Configure this in your build tool:
+
+#### Webpack Configuration
+```js
+// webpack.config.js
+module.exports = {
+  // ... other webpack config
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  require('tailwindcss')({
+                    content: [
+                      './src/**/*.{js,ts,jsx,tsx}',
+                      './node_modules/@nlabs/gothamjs/lib/**/*.{js,ts,jsx,tsx}'
+                    ]
+                  })
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+};
+```
+
+#### Lex Configuration
+```js
+// lex.config.mjs
+export default {
+  // ... other config
+  tailwindCssPath: './src/styles/main.css',
+  tailwindContent: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@nlabs/gothamjs/lib/**/*.{js,ts,jsx,tsx}'
+  ]
+};
+```
+
+#### Vite Configuration
+```js
+// vite.config.js
+export default {
+  css: {
+    postcss: {
+      plugins: [
+        require('tailwindcss')({
+          content: [
+            './src/**/*.{js,ts,jsx,tsx}',
+            './node_modules/@nlabs/gothamjs/lib/**/*.{js,ts,jsx,tsx}'
+          ]
+        })
+      ]
+    }
+  }
+}
+```
+
+### What Gets Imported
+
+The GothamJS theme CSS includes:
+
+- **Custom Color Palette**: Primary, secondary, neutral, success, error, warning, and info colors
+- **Dark Mode Support**: Automatic dark mode variants for all colors
+- **Typography**: Inter font family with proper font weights
+- **Autofill Styles**: Browser autofill styling fixes for form inputs
+- **Base Styles**: Essential CSS resets and utilities
+
+### Using GothamJS Colors in Your Components
+
+```jsx
+// GothamJS colors are available as Tailwind classes
+<div className="bg-primary text-white dark:bg-primary-dark dark:text-black-dark">
+  Styled with GothamJS theme
+</div>
+
+// Or use them in custom CSS
+.my-component {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+```
+
+## Components
 
 GothamJS provides a rich set of components to accelerate your development:
 
@@ -246,13 +369,13 @@ import { Button, Notify, Loader } from '@nlabs/gothamjs';
 <Loader size="md" />
 ```
 
-## 📊 State Management
+## State Management
 
 GothamJS uses ArkhamJS, a Flux implementation, for state management:
 
 ```jsx
-import { useFlux } from '@nlabs/arkhamjs-utils-react';
-import { GothamActions } from '@nlabs/gothamjs';
+import {useFlux} from '@nlabs/arkhamjs-utils-react';
+import {GothamActions} from '@nlabs/gothamjs';
 
 const MyComponent = () => {
   const flux = useFlux();
@@ -290,7 +413,7 @@ const MyComponent = () => {
 };
 ```
 
-## 🌐 Routing
+## Routing
 
 GothamJS simplifies routing with React Router integration:
 
@@ -323,7 +446,7 @@ const config = {
 };
 ```
 
-## 🔒 Authentication
+## Authentication
 
 GothamJS provides built-in authentication support:
 
@@ -341,7 +464,7 @@ const config = {
 };
 ```
 
-## 🌍 Internationalization
+## Internationalization
 
 Easy internationalization with i18next:
 
@@ -364,7 +487,7 @@ const config = {
 };
 
 // In your component
-import { useTranslation } from '@nlabs/gothamjs';
+import {useTranslation} from '@nlabs/gothamjs';
 
 const MyComponent = () => {
   const { t } = useTranslation();
@@ -378,7 +501,7 @@ const MyComponent = () => {
 };
 ```
 
-## 🎨 Theming
+## Theming
 
 GothamJS supports light/dark mode and custom themes:
 
@@ -395,7 +518,7 @@ const config = {
 };
 ```
 
-## 🔧 Configuration
+## Configuration
 
 GothamJS is highly configurable:
 
@@ -418,7 +541,7 @@ const config = {
 };
 ```
 
-## 💼 Why Choose GothamJS?
+## Why Choose GothamJS?
 
 - **UI Consistency**: Create visually cohesive applications with a unified design language
 - **Developer Experience**: Spend less time wiring up libraries and more time building features
@@ -428,15 +551,110 @@ const config = {
 - **Rapid Development**: Go from concept to production with significantly less boilerplate code
 - **TypeScript Support**: Full type definitions for enhanced developer experience
 
-## 📚 Learn More
+## Learn More
 
 Visit our [official documentation](http://gothamjs.io) for comprehensive guides, API references, and examples.
 
-## 📦 Related Packages
+## Using with Lex
 
-- [@nlabs/arkhamjs](https://github.com/nitrogenlabs/arkhamjs) - Flux implementation
-- [@nlabs/lex](https://github.com/nitrogenlabs/lex) - Build and development tools
+GothamJS works seamlessly with [Lex](https://github.com/nitrogenlabs/lex), Nitrogen Labs' build and development toolkit. Lex provides optimized building, testing, and development workflows for projects using GothamJS.
 
-## 📄 License
+### Installation
+
+```bash
+# Install Lex globally
+npm install -g @nlabs/lex
+
+# Or install locally in your project
+npm install --save-dev @nlabs/lex
+```
+
+### Lex Configuration
+
+Create a `lex.config.mjs` file in your project root:
+
+```js
+export default {
+  entryJs: 'src/index.tsx',     // Your main entry point
+  outputPath: './dist',         // Build output directory
+  useTypescript: true,          // Enable TypeScript support
+  jest: {
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+    testEnvironment: 'jsdom'
+  }
+};
+```
+
+### Development Workflow
+
+```bash
+# Start development server with hot reload
+lex dev
+
+# Build for production
+lex compile
+
+# Run tests
+lex test
+
+# Lint and fix code
+lex lint --fix
+
+# Update dependencies
+lex update --interactive
+```
+
+### Integration with GothamJS
+
+Lex automatically detects GothamJS projects and configures Tailwind CSS integration. Your `lex.config.mjs` will include:
+
+```js
+export default {
+  // ... other config
+  tailwindCssPath: './src/styles/main.css',  // Your main CSS file
+  // Lex will automatically include GothamJS in content paths
+};
+```
+
+### Build Optimization
+
+Lex optimizes GothamJS builds by:
+
+- **Tree Shaking**: Removes unused GothamJS components from your bundle
+- **CSS Optimization**: Processes Tailwind CSS with GothamJS theme variables
+- **TypeScript Compilation**: Optimized compilation with proper type checking
+- **Asset Handling**: Automatic copying of GothamJS assets and fonts
+
+### Example Project Structure
+
+```
+my-gothamjs-app/
+├── src/
+│   ├── index.tsx
+│   ├── App.tsx
+│   ├── styles/
+│   │   └── main.css
+│   └── components/
+├── lex.config.mjs
+├── package.json
+└── tsconfig.json
+```
+
+### CSS Setup with Lex
+
+In your `src/styles/main.css`:
+
+```css
+@import '@nlabs/gothamjs/styles/tailwind.css';
+
+/* Your custom styles */
+@theme {
+  /* Override GothamJS theme variables if needed */
+}
+```
+
+Lex will automatically process this CSS file and include it in your build output.
+
+## License
 
 GothamJS is [MIT licensed](./LICENSE).

@@ -2,9 +2,10 @@
  * Copyright (c) 2025-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {forwardRef} from 'react';
+import {forwardRef, useState} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {useTranslation} from '../../i18n/index.js';
+import {Eye, EyeOff} from '../../icons/index.js';
 
 import {ErrorMessage} from '../ErrorMessage/ErrorMessage.js';
 import {InputField} from '../InputField/InputField.js';
@@ -32,7 +33,9 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   readonly pattern?: string;
   readonly placeholderColor?: GothamColor;
   readonly rows?: number;
+  readonly showPasswordToggle?: boolean;
   readonly textColor?: GothamColor;
+  readonly type?: string;
 }
 
 export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, TextFieldProps>(({
@@ -55,7 +58,9 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   placeholder = '',
   placeholderColor = 'neutral',
   rows,
+  showPasswordToggle = false,
   textColor = 'neutral',
+  type = 'text',
   value,
   ...restInputProps
 }, ref) => {
@@ -64,6 +69,8 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   const formError = errors?.[name];
   const hasError = !!formError || !!externalError;
   const placeholderText = placeholder ? t(placeholder) : '';
+  const [showPassword, setShowPassword] = useState(false);
+  const [isTouched, setIsTouched] = useState(false);
   return (
     <Controller
       control={control}
@@ -71,22 +78,33 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
       defaultValue={defaultValue}
       render={({field: {onBlur, onChange, ref: fieldRef, value}}) => {
         const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+          if (!isTouched && e.target.value !== value) {
+            setIsTouched(true);
+          }
           onChange(e);
           if (onChangeProp) {
             onChangeProp(e);
           }
-          // Trigger validation on change if needed
+
           if (onValidate && pattern) {
             const isValid = new RegExp(pattern).test(e.target.value);
             onValidate(isValid);
           }
         };
 
+        const handleFocus = () => {
+          setIsTouched(true);
+        };
+
         const handleBlur = () => {
           onBlur();
-          // Trigger field validation on blur
-          trigger(name);
+
+          if (isTouched) {
+            trigger(name);
+          }
         };
+
+        const inputType = type === 'password' && showPassword ? 'text' : type;
 
         return (
           <div className="flex flex-col w-full">
@@ -106,9 +124,11 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
                 multiline={multiline}
                 onBlur={handleBlur}
                 onChange={handleChange}
+                onFocus={handleFocus}
                 placeholder={placeholderText}
                 placeholderColor={placeholderColor}
                 textColor={textColor}
+                type={inputType}
                 value={value}
                 ref={(e) => {
                   fieldRef(e);
@@ -118,6 +138,22 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
                 }}
                 {...restInputProps}
               />
+              {type === 'password' && showPasswordToggle && (
+                <button
+                  type="button"
+                  className={`absolute inset-y-0 flex items-center ${
+                    borderType === 'underline' ? 'right-0 pr-3' : 'right-0 pr-3.5'
+                  } text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300`}
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              )}
               <ErrorMessage
                 message={formError?.message as string || (externalError ? 'Invalid input' : undefined)}
                 color={errorColor}

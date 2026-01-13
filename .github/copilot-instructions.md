@@ -57,6 +57,12 @@ GothamJS is a comprehensive React-based UI framework that integrates components,
 - Base URL set to `./src` for clean imports
 - Export types alongside implementations
 
+### Comments
+- Do not write comments in code except for TODOs, copyrights, and lint disables
+- Variables and code should be self-explanatory with clear, descriptive names
+- Use meaningful variable names that explain their purpose
+- Structure code to be readable without additional comments
+
 ### Component Structure
 ```tsx
 export interface ComponentProps {

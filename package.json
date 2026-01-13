@@ -33,6 +33,9 @@
       "default": "./lib/form/index.js",
       "import": "./lib/form/index.js",
       "types": "./lib/form/index.d.ts"
+    },
+    "./styles/tailwind.css": {
+      "default": "./lib/styles/tailwind.css"
     }
   },
   "keywords": [
@@ -96,8 +99,8 @@
     "luxon": "^3.7.2",
     "react-autosuggest": "^10.1.0",
     "react-cropper": "^2.3.3",
-    "react-hook-form": "^7.70.0",
-    "react-i18next": "^16.5.1",
+    "react-hook-form": "^7.71.0",
+    "react-i18next": "^16.5.2",
     "react-markdown": "^10.1.0",
     "react-router": "^7.12.0",
     "react-tag-autocomplete": "^7.5.1",
@@ -110,12 +113,12 @@
     "@nlabs/arkhamjs-middleware-logger": "^3.30.6",
     "@nlabs/arkhamjs-storage-browser": "^3.30.6",
     "@nlabs/arkhamjs-utils-react": "^3.32.7",
-    "@nlabs/lex": "1.52.20",
+    "@nlabs/lex": "1.52.23",
     "@types/history": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/luxon": "^3.7.1",
-    "@types/node": "^25.0.3",
-    "@types/react": "^19.2.7",
+    "@types/node": "^25.0.7",
+    "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
