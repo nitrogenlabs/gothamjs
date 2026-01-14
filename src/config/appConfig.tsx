@@ -12,7 +12,7 @@ export class Config {
   }
 
   static get(path: string | string[], defaultValue?: unknown): unknown {
-    const environment: string = process.env.NODE_ENV || 'development';
+    const environment: string = (globalThis as any).process?.env?.NODE_ENV || 'development';
     const configValues: Record<string, unknown> = {...this.values, environment};
     return get(configValues, path, defaultValue);
   }

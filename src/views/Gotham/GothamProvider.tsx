@@ -41,6 +41,7 @@ export interface GothamConfiguration {
     readonly title?: string;
     readonly titleBarSeparator?: string;
   };
+  readonly authRoute?: string;
   readonly baseUrl?: string;
   readonly config?: FluxOptions;
   readonly displayMode?: ThemeDisplayMode;
@@ -61,6 +62,7 @@ export const defaultGothamConfig: GothamConfiguration = {
     name: 'gotham',
     title: 'GothamJS'
   },
+  authRoute: '/',
   baseUrl: '',
   isAuth: () => false,
   middleware: [],
@@ -83,7 +85,9 @@ export const init = (config: GothamConfiguration) => (): void => {
 export const signOut = (flux: FluxFramework) => async () => {
   await flux.clearAppData();
   await GothamActions.loading(false);
-  GothamActions.navGoto('/signIn');
+
+  const authRoute = Config.get('authRoute', '/') as string;
+  GothamActions.navGoto(authRoute);
 };
 
 export const GothamProvider: FC<GothamProviderProps> = ({children, config: appConfig}) => {
@@ -101,6 +105,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   const name = config?.app?.name;
   const [session, setSession] = useState({});
   const router = useMemo(() => {
+    console.log({routes});
     return createBrowserRouter(
       [
         {

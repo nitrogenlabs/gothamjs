@@ -91,7 +91,7 @@ const Alert = ({children, severity, onClose}) => {
 export const Notify = () => {
   const [isOpen, setOpen] = useState(false);
   const [notification, setNotification] = useState<GothamNotifyParams>({});
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const [timeoutId, setTimeoutId] = useState<number | null>(null);
 
   const notifyClose = () => setOpen(false);
 
@@ -206,7 +206,7 @@ export const Notify = () => {
                   {notification.message}
                 </div>
                 {notification.actions?.length && (
-                  <div className="ml-4 flex-shrink-0 flex">
+                  <div className="ml-4 shrink-0 flex">
                     {notification.actions.map(({icon, label, onClick}, index) => (
                       <Fragment key={index}>
                         {icon ? (

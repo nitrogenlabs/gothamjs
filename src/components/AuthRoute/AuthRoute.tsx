@@ -9,9 +9,12 @@ import {Config} from '../../config/appConfig.js';
 export const AuthRoute = ({ children }) => {
   const location = useLocation();
   const isAuth = Config.get('isAuth', () => false) as () => boolean;
+  const authRoute = Config.get('authRoute', '/') as string;
 
-  console.log({isAuth: isAuth && isAuth()});
-  return isAuth && isAuth()
-    ? children
-    : <Navigate to={`/signIn?redirect=${location.pathname}${location.search}`} replace />;
+  if (isAuth && isAuth()) {
+    return children;
+  }
+
+  const redirect = encodeURIComponent(`${location.pathname}${location.search}${location.hash}`);
+  return <Navigate to={`${authRoute}?redirect=${redirect}`} replace />;
 };
