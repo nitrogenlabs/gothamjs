@@ -10,7 +10,18 @@ describe('AuthRoute', () => {
   });
 
   it('redirects to /signIn with encoded redirect query param when not authenticated', () => {
-    jest.spyOn(Config, 'get').mockReturnValue(() => false);
+    const originalGet = Config.get;
+    jest.spyOn(Config, 'get').mockImplementation((key: string | string[], _def?: any) => {
+      if(key === 'isAuth') {
+        return () => false;
+      }
+
+      if(key === 'authRoute') {
+        return '/signIn';
+      }
+
+      return originalGet(key as any, _def);
+    });
 
     render(
       <MemoryRouter initialEntries={["/foo?bar=1#baz"]}>

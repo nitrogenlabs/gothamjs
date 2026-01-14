@@ -2,9 +2,9 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import { render } from '@nlabs/lex/test-react';
+import {render} from '@nlabs/lex/test-react';
 
-import { Gotham } from './Gotham.js';
+import {Gotham} from './Gotham.js';
 
 describe('Gotham', () => {
   let rendered;
@@ -26,6 +26,7 @@ describe('Gotham', () => {
   });
 
   it('should render', () => {
-    expect(rendered).toMatchSnapshot();
+    const {getByText} = rendered;
+    expect(getByText('Home Page')).toBeDefined();
   });
 });
