@@ -15,12 +15,15 @@ import {GothamActions} from '../../actions/GothamActions.js';
 import {Config} from '../../config/appConfig.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
 import {gothamApp} from '../../stores/GothamAppStore.js';
+import {initializeAnalytics, trackPageView} from '../../utils/analyticsUtils.js';
 import {GothamContext} from '../../utils/GothamContext.js';
+import {registerFlux, registerHandler} from '../../utils/navEventQueue.js';
 import {parseRoutes} from '../../utils/routeUtils.js';
 import {GothamRoot} from './GothamRoot.js';
 
 import type {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import type {FC, ReactNode} from 'react';
+import type {GoogleAnalyticsConfig} from '../../utils/analyticsUtils.js';
 import type {GothamRouteData} from '../../types/gotham.js';
 import type {CustomRouteProps} from '../../utils/routeUtils.js';
 
@@ -46,6 +49,7 @@ export interface GothamConfiguration {
   readonly config?: FluxOptions;
   readonly displayMode?: ThemeDisplayMode;
   readonly flux?: FluxFramework;
+  readonly googleAnalytics?: GoogleAnalyticsConfig;
   readonly isAuth?: () => boolean;
   readonly middleware?: FluxMiddlewareType[];
   readonly onInit?: () => void;
@@ -167,6 +171,22 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
       flux.on(GothamConstants.UPDATE_SESSION, ({session}) => {
         setSession(session);
       });
+
+      registerFlux(flux);
+      registerHandler(GothamConstants.NAV_GOTO, ({path}) => {
+        if(path) {
+          trackPageView(path);
+        }
+      });
+      registerHandler(GothamConstants.NAV_REPLACE, ({path}) => {
+        if(path) {
+          trackPageView(path);
+        }
+      });
+    }
+
+    if(config.googleAnalytics) {
+      initializeAnalytics(config.googleAnalytics);
     }
 
     init(config);
