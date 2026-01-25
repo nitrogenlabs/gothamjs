@@ -2,7 +2,6 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {useCallback} from 'react';
 
 export interface GoogleAnalyticsConfig {
   readonly googleAnalyticsId?: string;
@@ -242,31 +241,11 @@ export const setUserProperties = (properties: Record<string, unknown>): void => 
 };
 
 export const useAnalytics = (): AnalyticsHook => {
-  const memoizedTrackPageView = useCallback((path?: string, title?: string) => {
-    trackPageView(path, title);
-  }, []);
-
-  const memoizedTrackEvent = useCallback((eventName: string, params?: Record<string, unknown>) => {
-    trackEvent(eventName, params);
-  }, []);
-
-  const memoizedTrackClick = useCallback((elementName: string, params?: Record<string, unknown>) => {
-    trackClick(elementName, params);
-  }, []);
-
-  const memoizedSetUserId = useCallback((userId: string) => {
-    setUserId(userId);
-  }, []);
-
-  const memoizedSetUserProperties = useCallback((properties: Record<string, unknown>) => {
-    setUserProperties(properties);
-  }, []);
-
   return {
-    trackPageView: memoizedTrackPageView,
-    trackEvent: memoizedTrackEvent,
-    trackClick: memoizedTrackClick,
-    setUserId: memoizedSetUserId,
-    setUserProperties: memoizedSetUserProperties
+    trackPageView,
+    trackEvent,
+    trackClick,
+    setUserId,
+    setUserProperties
   };
 };

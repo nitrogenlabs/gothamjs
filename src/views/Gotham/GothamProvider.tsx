@@ -175,7 +175,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
       registerFlux(flux);
       
       const handleNavigation = ({path}: {path?: string}) => {
-        if(path && path.length > 0) {
+        if(path) {
           trackPageView(path);
         }
       };
