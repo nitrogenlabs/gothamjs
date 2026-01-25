@@ -89,8 +89,8 @@ const loadGtagScript = (googleAnalyticsId: string): Promise<void> => {
       
       script.onload = () => {
         window.dataLayer = window.dataLayer || [];
-        window.gtag = function gtag() {
-          window.dataLayer?.push(arguments);
+        window.gtag = function gtag(...gtagArgs: unknown[]) {
+          window.dataLayer?.push(gtagArgs);
         };
 
         window.gtag('js', new Date());
@@ -121,8 +121,10 @@ const loadGtagScript = (googleAnalyticsId: string): Promise<void> => {
 
 export const initializeAnalytics = (config: GoogleAnalyticsConfig): void => {
   analyticsConfig = {
-    ...config,
-    enabled: config.enabled !== false
+    enabled: config.enabled ?? true,
+    googleAnalyticsId: config.googleAnalyticsId,
+    anonymizeIp: config.anonymizeIp,
+    debug: config.debug
   };
 
   if(!isEnabled()) {

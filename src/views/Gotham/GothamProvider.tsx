@@ -173,16 +173,15 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
       });
 
       registerFlux(flux);
-      registerHandler(GothamConstants.NAV_GOTO, ({path}) => {
-        if(path) {
+      
+      const handleNavigation = ({path}: {path?: string}) => {
+        if(path && path.length > 0) {
           trackPageView(path);
         }
-      });
-      registerHandler(GothamConstants.NAV_REPLACE, ({path}) => {
-        if(path) {
-          trackPageView(path);
-        }
-      });
+      };
+      
+      registerHandler(GothamConstants.NAV_GOTO, handleNavigation);
+      registerHandler(GothamConstants.NAV_REPLACE, handleNavigation);
     }
 
     if(config.googleAnalytics) {
