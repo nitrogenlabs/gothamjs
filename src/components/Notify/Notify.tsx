@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
+ * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
+ */
 import {Transition} from '@headlessui/react';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import {cn} from '@nlabs/utils';
@@ -30,13 +34,13 @@ export interface GothamNotifyParams {
 // Custom Button component
 const Button = ({children, onClick, className = ''}) => (
   <button
-    type="button"
-    onClick={onClick}
     className={cn(
       'inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm',
       'text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
       className
     )}
+    onClick={onClick}
+    type="button"
   >
     {children}
   </button>
@@ -45,12 +49,12 @@ const Button = ({children, onClick, className = ''}) => (
 // Custom IconButton component
 const IconButton = ({children, onClick, className = ''}) => (
   <button
-    type="button"
-    onClick={onClick}
     className={cn(
       'p-1 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
       className
     )}
+    onClick={onClick}
+    type="button"
   >
     {children}
   </button>
@@ -74,13 +78,13 @@ const Alert = ({children, severity, onClose}) => {
       <div>{children}</div>
       {onClose && (
         <button
-          type="button"
-          onClick={onClose}
           className="ml-auto -mx-1.5 -my-1.5 rounded-md p-1.5 inline-flex text-white hover:bg-opacity-20 hover:bg-black focus:outline-none focus:ring-2 focus:ring-white"
+          onClick={onClose}
+          type="button"
         >
           <span className="sr-only">Dismiss</span>
-          <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path clipRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" fillRule="evenodd" />
           </svg>
         </button>
       )}
@@ -96,8 +100,8 @@ export const Notify = () => {
   const notifyClose = () => setOpen(false);
 
   useEffect(() => {
-    if (isOpen && notification.autoHideDuration) {
-      if (timeoutId) {
+    if(isOpen && notification.autoHideDuration) {
+      if(timeoutId) {
         clearTimeout(timeoutId);
       }
 
@@ -120,7 +124,7 @@ export const Notify = () => {
     autoHideDuration = 3000,
     message,
     severity,
-    anchorOrigin = { horizontal: 'left', vertical: 'bottom' },
+    anchorOrigin = {horizontal: 'left', vertical: 'bottom'},
     ...restProps
   }: GothamNotifyParams) => {
     let action;
@@ -185,7 +189,6 @@ export const Notify = () => {
 
   return (
     <Transition
-      show={isOpen}
       as={Fragment}
       enter="transform ease-out duration-300 transition"
       enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
@@ -193,6 +196,7 @@ export const Notify = () => {
       leave="transition ease-in duration-100"
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
+      show={isOpen}
     >
       <div className={cn(
         'fixed z-50 max-w-sm w-full shadow-lg rounded-lg pointer-events-auto overflow-hidden',

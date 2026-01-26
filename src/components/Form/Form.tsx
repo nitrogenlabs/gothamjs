@@ -2,7 +2,7 @@
  * Copyright (c) 2021-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {zodResolver} from '@hookform/resolvers/zod';
+import {zodResolver} from '@hookform/resolvers/zod/dist/index.js';
 import {useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import {z} from 'zod';
@@ -18,7 +18,11 @@ export interface FormProps<T> {
   readonly mode?: 'onSubmit' | 'onBlur' | 'onChange' | 'onTouched' | 'all';
   readonly name?: string;
   readonly onChange?: (data: unknown) => void;
-  readonly onSubmit: (data: T, event: BaseSyntheticEvent, setError: (field: string, error: { type: string; message: string }) => void) => void;
+  readonly onSubmit: (
+    data: T,
+    event: BaseSyntheticEvent,
+    setError: (field: string, error: { type: string; message: string }) => void
+  ) => void;
   readonly schema?: z.ZodSchema<T>;
   readonly showErrors?: boolean;
   readonly validate?: (data: unknown) => void;
@@ -46,7 +50,7 @@ export const Form = <T extends Record<string, unknown>>({
   const {errors: formErrors, isSubmitting} = formState;
   const handleFormSubmit = useCallback(
     (event: BaseSyntheticEvent) => {
-      if (isSubmitting || disabled) {
+      if(isSubmitting || disabled) {
         event.preventDefault();
         return;
       }
@@ -61,18 +65,18 @@ export const Form = <T extends Record<string, unknown>>({
   const allErrors = {...formErrors, ...errors};
 
   // Extract error messages from various error structures
-  const getErrorMessages = (errorObj: Record<string, unknown>): string[] => {
-    return Object.values(errorObj).flatMap((error) => {
-      if (typeof error === 'string') return error;
-      if (typeof error === 'object' && error && 'message' in error) {
-        return (error as {message: string}).message;
-      }
-      if (typeof error === 'object' && error && 'root' in error && typeof error.root === 'object' && error.root && 'message' in error.root) {
-        return (error.root as {message: string}).message;
-      }
-      return [];
-    }).filter(Boolean);
-  };
+  const getErrorMessages = (errorObj: Record<string, unknown>): string[] => Object.values(errorObj).flatMap((error) => {
+    if(typeof error === 'string') {
+      return error;
+    }
+    if(typeof error === 'object' && error && 'message' in error) {
+      return (error as {message: string}).message;
+    }
+    if(typeof error === 'object' && error && 'root' in error && typeof error.root === 'object' && error.root && 'message' in error.root) {
+      return (error.root as {message: string}).message;
+    }
+    return [];
+  }).filter(Boolean);
 
   const errorMessages = getErrorMessages(allErrors);
 
@@ -81,14 +85,14 @@ export const Form = <T extends Record<string, unknown>>({
       <form
         className={className}
         data-testid={`form-${name}`}
-        onSubmit={handleFormSubmit}
         noValidate
+        onSubmit={handleFormSubmit}
       >
         {showErrors && errorMessages.length > 0 && (
           <div
+            aria-live="polite"
             className="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
             role="alert"
-            aria-live="polite"
           >
             <ul className="list-disc list-inside">
               {errorMessages.map((message, index) => (

@@ -2,10 +2,9 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
+
 import {useEffect} from 'react';
-
 import {GothamProvider} from './GothamProvider.js';
-
 import type {FC, ReactNode} from 'react';
 import type {GothamConfiguration, GothamStatus} from './GothamProvider.js';
 

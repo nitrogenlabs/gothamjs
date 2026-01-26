@@ -3,7 +3,6 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {render} from '@nlabs/lex/test-react';
-
 import {Svg} from './Svg.js';
 
 describe('Svg', () => {

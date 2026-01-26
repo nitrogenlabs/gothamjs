@@ -10,7 +10,6 @@ import i18n from 'i18next';
 import {useEffect, useMemo, useState} from 'react';
 import {I18nextProvider, initReactI18next} from 'react-i18next';
 import {createBrowserRouter, RouterProvider} from 'react-router';
-
 import {GothamActions} from '../../actions/GothamActions.js';
 import {Config} from '../../config/appConfig.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
@@ -20,11 +19,10 @@ import {GothamContext} from '../../utils/GothamContext.js';
 import {registerFlux, registerHandler} from '../../utils/navEventQueue.js';
 import {parseRoutes} from '../../utils/routeUtils.js';
 import {GothamRoot} from './GothamRoot.js';
-
 import type {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import type {FC, ReactNode} from 'react';
-import type {GoogleAnalyticsConfig} from '../../utils/analyticsUtils.js';
 import type {GothamRouteData} from '../../types/gotham.js';
+import type {GoogleAnalyticsConfig} from '../../utils/analyticsUtils.js';
 import type {CustomRouteProps} from '../../utils/routeUtils.js';
 
 export interface GothamProviderProps {
@@ -122,25 +120,25 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
     );
   }, [routes]);
 
-    // Initialize i18next if translations are provided but no i18n instance is given
+  // Initialize i18next if translations are provided but no i18n instance is given
   const i18nInstance = useMemo(() => {
-    if (providedI18n) {
+    if(providedI18n) {
       return providedI18n;
     }
 
-    if (translations && Object.keys(translations).length > 0) {
+    if(translations && Object.keys(translations).length > 0) {
       // Create a new i18next instance and initialize it
       const newI18n = i18n.createInstance();
 
       newI18n
         .use(initReactI18next)
         .init({
-          resources: translations as Record<string, Record<string, Record<string, string>>>,
-          lng: 'en', // default language
           fallbackLng: 'en',
           interpolation: {
-            escapeValue: false, // React already escapes values
+            escapeValue: false // React already escapes values
           },
+          lng: 'en', // default language
+          resources: translations as Record<string, Record<string, Record<string, string>>>
         });
 
       return newI18n;
@@ -173,13 +171,12 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
       });
 
       registerFlux(flux);
-      
       const handleNavigation = ({path}: {path?: string}) => {
         if(path) {
           trackPageView(path);
         }
       };
-      
+
       registerHandler(GothamConstants.NAV_GOTO, handleNavigation);
       registerHandler(GothamConstants.NAV_REPLACE, handleNavigation);
     }

@@ -5,13 +5,10 @@
 import {renderHook} from '@testing-library/react';
 import {
   initializeAnalytics,
-  trackPageView,
   trackEvent,
-  trackClick,
-  setUserId,
-  setUserProperties,
+  trackPageView,
   useAnalytics
-} from './analyticsUtils';
+} from './analyticsUtils.js';
 
 describe('analyticsUtils', () => {
   let mockGtag: jest.Mock;
@@ -22,10 +19,10 @@ describe('analyticsUtils', () => {
   beforeEach(() => {
     mockGtag = jest.fn();
     mockDataLayer = [];
-    
+
     delete (window as {gtag?: unknown}).gtag;
     delete (window as {dataLayer?: unknown}).dataLayer;
-    
+
     appendChildSpy = jest.spyOn(document.head, 'appendChild');
     createElementSpy = jest.spyOn(document, 'createElement');
 
@@ -53,13 +50,14 @@ describe('analyticsUtils', () => {
         setTimeout(() => {
           window.dataLayer = mockDataLayer;
           window.gtag = mockGtag;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
-          
+
           expect(mockGtag).toHaveBeenCalledWith('js', expect.any(Date));
           expect(mockGtag).toHaveBeenCalledWith('config', 'G-TEST123', {});
+
           done();
         }, 0);
         return element;
@@ -80,6 +78,7 @@ describe('analyticsUtils', () => {
       initializeAnalytics(config);
 
       expect(createElementSpy).not.toHaveBeenCalled();
+
       expect(appendChildSpy).not.toHaveBeenCalled();
     });
 
@@ -91,13 +90,14 @@ describe('analyticsUtils', () => {
       initializeAnalytics(config);
 
       expect(createElementSpy).not.toHaveBeenCalled();
+
       expect(appendChildSpy).not.toHaveBeenCalled();
     });
 
     it('should enable IP anonymization when configured', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
         anonymizeIp: true,
+        googleAnalyticsId: 'G-TEST123',
         enabled: true
       };
 
@@ -105,12 +105,13 @@ describe('analyticsUtils', () => {
         setTimeout(() => {
           window.dataLayer = mockDataLayer;
           window.gtag = mockGtag;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
-          
+
           expect(mockGtag).toHaveBeenCalledWith('config', 'G-TEST123', {anonymize_ip: true});
+
           done();
         }, 0);
         return element;
@@ -147,25 +148,26 @@ describe('analyticsUtils', () => {
 
     it('should track page view with provided path and title', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
         setTimeout(() => {
           window.gtag = mockGtag;
           window.dataLayer = mockDataLayer;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
 
           trackPageView('/test-path', 'Test Title');
-          
+
           expect(mockGtag).toHaveBeenCalledWith('event', 'page_view', {
             page_path: '/test-path',
             page_title: 'Test Title'
           });
+
           done();
         }, 0);
         return element;
@@ -188,25 +190,26 @@ describe('analyticsUtils', () => {
       });
 
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
         setTimeout(() => {
           window.gtag = mockGtag;
           window.dataLayer = mockDataLayer;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
 
           trackPageView();
-          
+
           expect(mockGtag).toHaveBeenCalledWith('event', 'page_view', {
             page_path: '/current-path',
             page_title: 'Current Title'
           });
+
           done();
         }, 0);
         return element;
@@ -217,8 +220,8 @@ describe('analyticsUtils', () => {
 
     it('should not track when analytics is disabled', () => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: false
+        enabled: false,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       initializeAnalytics(config);
@@ -236,22 +239,23 @@ describe('analyticsUtils', () => {
 
     it('should track custom event with parameters', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
         setTimeout(() => {
           window.gtag = mockGtag;
           window.dataLayer = mockDataLayer;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
 
           trackEvent('button_click', {button_name: 'signup'});
-          
+
           expect(mockGtag).toHaveBeenCalledWith('event', 'button_click', {button_name: 'signup'});
+
           done();
         }, 0);
         return element;
@@ -262,22 +266,23 @@ describe('analyticsUtils', () => {
 
     it('should track event without parameters', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
         setTimeout(() => {
           window.gtag = mockGtag;
           window.dataLayer = mockDataLayer;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
 
           trackEvent('custom_event');
-          
+
           expect(mockGtag).toHaveBeenCalledWith('event', 'custom_event', undefined);
+
           done();
         }, 0);
         return element;
@@ -288,8 +293,8 @@ describe('analyticsUtils', () => {
 
     it('should not track when analytics is disabled', () => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: false
+        enabled: false,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       initializeAnalytics(config);
@@ -307,24 +312,25 @@ describe('analyticsUtils', () => {
 
     it('should track click with element name', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
         setTimeout(() => {
           window.gtag = mockGtag;
           window.dataLayer = mockDataLayer;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
 
           trackClick('CTA Button');
-          
+
           expect(mockGtag).toHaveBeenCalledWith('event', 'click', {
             element_name: 'CTA Button'
           });
+
           done();
         }, 0);
         return element;
@@ -335,25 +341,26 @@ describe('analyticsUtils', () => {
 
     it('should track click with additional parameters', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
         setTimeout(() => {
           window.gtag = mockGtag;
           window.dataLayer = mockDataLayer;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
 
           trackClick('CTA Button', {location: 'header'});
-          
+
           expect(mockGtag).toHaveBeenCalledWith('event', 'click', {
             element_name: 'CTA Button',
             location: 'header'
           });
+
           done();
         }, 0);
         return element;
@@ -371,22 +378,23 @@ describe('analyticsUtils', () => {
 
     it('should set user ID', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
         setTimeout(() => {
           window.gtag = mockGtag;
           window.dataLayer = mockDataLayer;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
 
           setUserId('user-12345');
-          
+
           expect(mockGtag).toHaveBeenCalledWith('set', {user_id: 'user-12345'});
+
           done();
         }, 0);
         return element;
@@ -404,22 +412,23 @@ describe('analyticsUtils', () => {
 
     it('should set user properties', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
         setTimeout(() => {
           window.gtag = mockGtag;
           window.dataLayer = mockDataLayer;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
 
           setUserProperties({plan: 'premium', country: 'US'});
-          
+
           expect(mockGtag).toHaveBeenCalledWith('set', 'user_properties', {plan: 'premium', country: 'US'});
+
           done();
         }, 0);
         return element;
@@ -442,23 +451,24 @@ describe('analyticsUtils', () => {
 
     it('should call trackEvent when used', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
         setTimeout(() => {
           window.gtag = mockGtag;
           window.dataLayer = mockDataLayer;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
 
           const {result} = renderHook(() => useAnalytics());
           result.current.trackEvent('hook_event', {test: true});
-          
+
           expect(mockGtag).toHaveBeenCalledWith('event', 'hook_event', {test: true});
+
           done();
         }, 0);
         return element;
@@ -471,8 +481,8 @@ describe('analyticsUtils', () => {
   describe('event queue', () => {
     it('should queue events before initialization and flush after', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       trackPageView('/early-page');
@@ -482,7 +492,7 @@ describe('analyticsUtils', () => {
         setTimeout(() => {
           window.gtag = mockGtag;
           window.dataLayer = mockDataLayer;
-          
+
           if(element.onload) {
             element.onload(new Event('load'));
           }
@@ -493,6 +503,7 @@ describe('analyticsUtils', () => {
               page_title: ''
             });
             expect(mockGtag).toHaveBeenCalledWith('event', 'early_event', {value: 1});
+
             done();
           }, 100);
         }, 0);
@@ -516,9 +527,9 @@ describe('analyticsUtils', () => {
 
     it('should log debug messages when debug is enabled', () => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
+        debug: true,
         enabled: true,
-        debug: true
+        googleAnalyticsId: 'G-TEST123'
       };
 
       initializeAnalytics(config);
@@ -528,9 +539,9 @@ describe('analyticsUtils', () => {
 
     it('should not log debug messages when debug is disabled', () => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
+        debug: false,
         enabled: true,
-        debug: false
+        googleAnalyticsId: 'G-TEST123'
       };
 
       initializeAnalytics(config);

@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import {MemoryRouter, Route, Routes} from 'react-router';
 
 import {Config} from '../../config/appConfig.js';
-import {AuthRoute} from './AuthRoute';
+import {AuthRoute} from './AuthRoute.js';
 
 describe('AuthRoute', () => {
   afterEach(() => {
@@ -24,15 +24,16 @@ describe('AuthRoute', () => {
     });
 
     render(
-      <MemoryRouter initialEntries={["/foo?bar=1#baz"]}>
+      <MemoryRouter initialEntries={['/foo?bar=1#baz']}>
         <Routes>
-          <Route path="/signIn" element={<div data-testid="signin">Sign In</div>} />
-          <Route path="/foo" element={<AuthRoute><div>Protected</div></AuthRoute>} />
+          <Route element={<div data-testid="signin">Sign In</div>} path="/signIn" />
+          <Route element={<AuthRoute><div>Protected</div></AuthRoute>} path="/foo" />
         </Routes>
       </MemoryRouter>
     );
 
     const signIn = screen.getByTestId('signin');
+
     expect(signIn).toBeDefined();
   });
 });

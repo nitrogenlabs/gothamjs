@@ -30,6 +30,7 @@ declare global {
   }
 }
 
+
 let analyticsConfig: GoogleAnalyticsConfig = {
   enabled: false
 };
@@ -37,19 +38,23 @@ let isInitialized: boolean = false;
 let isScriptLoaded: boolean = false;
 let eventQueue: QueuedEvent[] = [];
 
+// For testing: reset internal state
+export const resetAnalyticsTestState = (): void => {
+  analyticsConfig = {enabled: false};
+  isInitialized = false;
+  isScriptLoaded = false;
+  eventQueue = [];
+};
+
 const log = (...args: unknown[]): void => {
   if(analyticsConfig.debug) {
     console.log('[Analytics]', ...args);
   }
 };
 
-const isEnabled = (): boolean => {
-  return analyticsConfig.enabled === true && !!analyticsConfig.googleAnalyticsId;
-};
+const isEnabled = (): boolean => analyticsConfig.enabled === true && !!analyticsConfig.googleAnalyticsId;
 
-const isBrowser = (): boolean => {
-  return typeof window !== 'undefined';
-};
+const isBrowser = (): boolean => typeof window !== 'undefined';
 
 const flushQueue = (): void => {
   if(eventQueue.length === 0) {
@@ -69,61 +74,59 @@ const flushQueue = (): void => {
   eventQueue = [];
 };
 
-const loadGtagScript = (googleAnalyticsId: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    if(!isBrowser()) {
-      reject(new Error('Window object not available'));
-      return;
-    }
+const loadGtagScript = (googleAnalyticsId: string): Promise<void> => new Promise((resolve, reject) => {
+  if(!isBrowser()) {
+    reject(new Error('Window object not available'));
+    return;
+  }
 
-    if(isScriptLoaded) {
+  if(isScriptLoaded) {
+    resolve();
+    return;
+  }
+
+  try {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`;
+
+    script.onload = () => {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function gtag(...gtagArgs: unknown[]) {
+        window.dataLayer?.push(gtagArgs);
+      };
+
+      window.gtag('js', new Date());
+
+      const gtagConfig: Record<string, unknown> = {};
+
+      if(analyticsConfig.anonymizeIp) {
+        gtagConfig.anonymize_ip = true;
+      }
+
+      window.gtag('config', googleAnalyticsId, gtagConfig);
+
+      isScriptLoaded = true;
+      log('Google Analytics script loaded');
       resolve();
-      return;
-    }
+    };
 
-    try {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`;
-      
-      script.onload = () => {
-        window.dataLayer = window.dataLayer || [];
-        window.gtag = function gtag(...gtagArgs: unknown[]) {
-          window.dataLayer?.push(gtagArgs);
-        };
+    script.onerror = () => {
+      reject(new Error('Failed to load Google Analytics script'));
+    };
 
-        window.gtag('js', new Date());
-
-        const gtagConfig: Record<string, unknown> = {};
-        
-        if(analyticsConfig.anonymizeIp) {
-          gtagConfig.anonymize_ip = true;
-        }
-
-        window.gtag('config', googleAnalyticsId, gtagConfig);
-        
-        isScriptLoaded = true;
-        log('Google Analytics script loaded');
-        resolve();
-      };
-
-      script.onerror = () => {
-        reject(new Error('Failed to load Google Analytics script'));
-      };
-
-      document.head.appendChild(script);
-    } catch(error) {
-      reject(error);
-    }
-  });
-};
+    document.head.appendChild(script);
+  } catch(error) {
+    reject(error);
+  }
+});
 
 export const initializeAnalytics = (config: GoogleAnalyticsConfig): void => {
   analyticsConfig = {
-    enabled: config.enabled ?? true,
-    googleAnalyticsId: config.googleAnalyticsId,
     anonymizeIp: config.anonymizeIp,
-    debug: config.debug
+    debug: config.debug,
+    enabled: config.enabled ?? true,
+    googleAnalyticsId: config.googleAnalyticsId
   };
 
   if(!isEnabled()) {
@@ -172,8 +175,8 @@ export const trackPageView = (path?: string, title?: string): void => {
   if(!isInitialized || !isScriptLoaded) {
     log('Queueing pageview:', pagePath);
     eventQueue.push({
-      type: 'pageview',
-      args: [pagePath, pageTitle]
+      args: [pagePath, pageTitle],
+      type: 'pageview'
     });
     return;
   }
@@ -196,8 +199,8 @@ export const trackEvent = (eventName: string, params?: Record<string, unknown>):
   if(!isInitialized || !isScriptLoaded) {
     log('Queueing event:', eventName, params);
     eventQueue.push({
-      type: 'event',
-      args: [eventName, params]
+      args: [eventName, params],
+      type: 'event'
     });
     return;
   }
@@ -240,12 +243,10 @@ export const setUserProperties = (properties: Record<string, unknown>): void => 
   }
 };
 
-export const useAnalytics = (): AnalyticsHook => {
-  return {
-    trackPageView,
-    trackEvent,
-    trackClick,
-    setUserId,
-    setUserProperties
-  };
-};
+export const useAnalytics = (): AnalyticsHook => ({
+  setUserId,
+  setUserProperties,
+  trackClick,
+  trackEvent,
+  trackPageView
+});

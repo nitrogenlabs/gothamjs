@@ -3,9 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {cn} from '@nlabs/utils';
-
 import {Config} from '../../config/appConfig.js';
-
 import type {FC} from 'react';
 
 export interface SvgProps {
@@ -29,13 +27,13 @@ export const Svg: FC<SvgProps> = ({
   return (
     <svg
       className={cn('w-full h-full', className)}
-      viewBox={`0 0 ${width} ${height}`}
       style={{
         color,
         fill: color,
         height: `${height}px`,
         width: `${width}px`
       }}
+      viewBox={`0 0 ${width} ${height}`}
     >
       <use href={iconPath} />
     </svg>

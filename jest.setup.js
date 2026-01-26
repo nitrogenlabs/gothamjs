@@ -1,6 +1,7 @@
 import {jest} from '@jest/globals';
 import '@testing-library/jest-dom';
 import {TextDecoder, TextEncoder} from 'util';
+
 // Make the imported `jest` available as a global for tests that expect the jest global (ESM)
 globalThis.jest = jest;
 

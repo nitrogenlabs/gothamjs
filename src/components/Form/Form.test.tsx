@@ -4,7 +4,6 @@
  */
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {z} from 'zod';
-
 import {Form} from './Form.js';
 
 const testSchema = z.object({
@@ -16,8 +15,8 @@ describe('Form', () => {
   it('should not show errors at top by default', () => {
     render(
       <Form
-        schema={testSchema}
         onSubmit={() => {}}
+        schema={testSchema}
       >
         {(methods) => (
           <>
@@ -36,9 +35,9 @@ describe('Form', () => {
   it('should show errors at top when showErrors is true', async () => {
     render(
       <Form
+        onSubmit={() => {}}
         schema={testSchema}
         showErrors={true}
-        onSubmit={() => {}}
       >
         {(methods) => (
           <>
@@ -51,7 +50,7 @@ describe('Form', () => {
     );
 
     // Submit the form to trigger validation
-    const submitButton = screen.getByRole('button', { name: 'Submit' });
+    const submitButton = screen.getByRole('button', {name: 'Submit'});
     fireEvent.click(submitButton);
 
     // Should show error list at top when prop is true

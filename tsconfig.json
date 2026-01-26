@@ -1,4 +1,5 @@
 {
+  "allowDefaultProject": true,
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./src",
@@ -48,6 +49,7 @@
     "**/*.stories.tsx"
   ],
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "jest.setup.js"
   ]
 }

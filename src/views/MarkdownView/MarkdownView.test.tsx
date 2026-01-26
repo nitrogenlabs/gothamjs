@@ -6,10 +6,11 @@ describe('MarkdownView', () => {
   it('should render with custom className when provided', () => {
     const customClass = 'custom-class';
     const {container} = render(
-      <MarkdownView content="Some content" className={customClass} />
+      <MarkdownView className={customClass} content="Some content" />
     );
 
     const markdownContainer = container.firstChild as HTMLElement;
+
     expect(markdownContainer).toHaveClass('markdown-container', customClass);
   });
 
@@ -17,6 +18,7 @@ describe('MarkdownView', () => {
     const {container} = render(<MarkdownView content="Some content" />);
 
     const markdownContainer = container.firstChild as HTMLElement;
+
     expect(markdownContainer).toHaveClass('markdown-container');
   });
 
@@ -25,6 +27,7 @@ describe('MarkdownView', () => {
 
     const markdownContainer = container.firstChild as HTMLElement;
     const styles = markdownContainer.getAttribute('style');
+
     expect(styles).toContain('background-color: transparent');
     expect(styles).toContain('height: 100%');
     expect(styles).toContain('overflow: auto');

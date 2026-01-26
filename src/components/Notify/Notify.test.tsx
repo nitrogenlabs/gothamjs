@@ -9,11 +9,13 @@ import {Notify} from './Notify.js';
 describe('Notify', () => {
   it('should render without crashing', () => {
     const {container} = render(<Notify />);
+
     expect(container).toBeDefined();
   });
 
   it('should not display notification initially', () => {
     const {queryByRole} = render(<Notify />);
+
     expect(queryByRole('alert')).not.toBeInTheDocument();
   });
 
