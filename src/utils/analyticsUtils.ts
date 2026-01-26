@@ -74,7 +74,7 @@ const flushQueue = (): void => {
 
   eventQueue.forEach(({type, args}) => {
     if(type === 'pageview') {
-      trackPageView(...(args as [string?, string?]));
+      trackPageView(...(args as [string?, string?, Record<string, unknown>?]));
     } else if(type === 'event') {
       trackEvent(...(args as [string, Record<string, unknown>?]));
     }
@@ -181,7 +181,7 @@ export const initializeAnalytics = (config: GoogleAnalyticsConfig): void => {
     });
 };
 
-export const trackPageView = (path?: string, title?: string): void => {
+export const trackPageView = (path?: string, title?: string, params?: Record<string, unknown>): void => {
   if(!isEnabled()) {
     return;
   }
@@ -192,7 +192,7 @@ export const trackPageView = (path?: string, title?: string): void => {
   if(!isInitialized || !isScriptLoaded) {
     log('Queueing pageview:', pagePath);
     eventQueue.push({
-      args: [pagePath, pageTitle],
+      args: [pagePath, pageTitle, params],
       type: 'pageview'
     });
     return;
@@ -203,7 +203,8 @@ export const trackPageView = (path?: string, title?: string): void => {
   if(window.gtag) {
     window.gtag('event', 'page_view', {
       page_path: pagePath,
-      page_title: pageTitle
+      page_title: pageTitle,
+      ...params
     });
   }
 };

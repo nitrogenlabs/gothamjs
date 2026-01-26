@@ -14,9 +14,9 @@ import {GothamActions} from '../../actions/GothamActions.js';
 import {Config} from '../../config/appConfig.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
 import {gothamApp} from '../../stores/GothamAppStore.js';
-import {initializeAnalytics, trackPageView} from '../../utils/analyticsUtils.js';
+import {initializeAnalytics} from '../../utils/analyticsUtils.js';
 import {GothamContext} from '../../utils/GothamContext.js';
-import {registerFlux, registerHandler} from '../../utils/navEventQueue.js';
+import {registerFlux} from '../../utils/navEventQueue.js';
 import {parseRoutes} from '../../utils/routeUtils.js';
 import {GothamRoot} from './GothamRoot.js';
 import type {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
@@ -171,14 +171,6 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
       });
 
       registerFlux(flux);
-      const handleNavigation = ({path}: {path?: string}) => {
-        if(path) {
-          trackPageView(path);
-        }
-      };
-
-      registerHandler(GothamConstants.NAV_GOTO, handleNavigation);
-      registerHandler(GothamConstants.NAV_REPLACE, handleNavigation);
     }
 
     if(config.googleAnalytics) {
