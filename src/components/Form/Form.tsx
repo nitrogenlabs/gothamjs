@@ -2,7 +2,7 @@
  * Copyright (c) 2021-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {zodResolver} from '@hookform/resolvers/zod/dist/index.js';
+import {zodResolver} from '@hookform/resolvers/zod/dist/zod.js';
 import {useCallback} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import {z} from 'zod';

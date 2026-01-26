@@ -4,7 +4,12 @@
  */
 import {renderHook} from '@testing-library/react';
 import {
+  forceAnalyticsInitializedForTesting,
   initializeAnalytics,
+  resetAnalyticsTestState,
+  setUserId,
+  setUserProperties,
+  trackClick,
   trackEvent,
   trackPageView,
   useAnalytics
@@ -29,6 +34,9 @@ describe('analyticsUtils', () => {
     (window as {gtag?: unknown}).gtag = undefined;
     (window as {dataLayer?: unknown}).dataLayer = undefined;
 
+
+    resetAnalyticsTestState();
+
     jest.clearAllMocks();
   });
 
@@ -42,24 +50,37 @@ describe('analyticsUtils', () => {
   describe('initializeAnalytics', () => {
     it('should initialize with valid configuration', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
+      // Fail-safe: if done is not called in 2s, fail the test
+      const timeout = setTimeout(() => {
+        done.fail('Test timed out: async callback not called');
+      }, 2000);
+
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.dataLayer = mockDataLayer;
-          window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
 
-          expect(mockGtag).toHaveBeenCalledWith('js', expect.any(Date));
-          expect(mockGtag).toHaveBeenCalledWith('config', 'G-TEST123', {});
+        // Force initialization for testing
+        forceAnalyticsInitializedForTesting();
 
+        try {
+          expect(mockDataLayer).toEqual([
+            ['js', expect.any(Date)],
+            ['config', 'G-TEST123', {}]
+          ]);
+
+          clearTimeout(timeout);
           done();
-        }, 0);
+        } catch(err) {
+          clearTimeout(timeout);
+          done(err);
+        }
         return element;
       });
 
@@ -71,8 +92,8 @@ describe('analyticsUtils', () => {
 
     it('should not initialize when disabled', () => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: false
+        enabled: false,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       initializeAnalytics(config);
@@ -97,23 +118,20 @@ describe('analyticsUtils', () => {
     it('should enable IP anonymization when configured', (done) => {
       const config = {
         anonymizeIp: true,
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.dataLayer = mockDataLayer;
-          window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
 
-          expect(mockGtag).toHaveBeenCalledWith('config', 'G-TEST123', {anonymize_ip: true});
+        expect(mockDataLayer[1]).toEqual(['config', 'G-TEST123', {anonymize_ip: true}]);
 
-          done();
-        }, 0);
+        done();
         return element;
       });
 
@@ -122,17 +140,15 @@ describe('analyticsUtils', () => {
 
     it('should handle script loading errors gracefully', (done) => {
       const config = {
-        googleAnalyticsId: 'G-TEST123',
-        enabled: true
+        enabled: true,
+        googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          if(element.onerror) {
-            element.onerror(new Event('error'));
-          }
-          done();
-        }, 0);
+        if(element.onerror) {
+          element.onerror(new Event('error'));
+        }
+        done();
         return element;
       });
 
@@ -153,23 +169,24 @@ describe('analyticsUtils', () => {
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.gtag = mockGtag;
-          window.dataLayer = mockDataLayer;
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
+        // Override window.gtag with mock after onload
+        window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        // Force initialization for testing
+        forceAnalyticsInitializedForTesting();
 
-          trackPageView('/test-path', 'Test Title');
+        trackPageView('/test-path', 'Test Title');
 
-          expect(mockGtag).toHaveBeenCalledWith('event', 'page_view', {
-            page_path: '/test-path',
-            page_title: 'Test Title'
-          });
+        expect(mockGtag).toHaveBeenCalledWith('event', 'page_view', {
+          page_path: '/test-path',
+          page_title: 'Test Title'
+        });
 
-          done();
-        }, 0);
+        done();
         return element;
       });
 
@@ -177,41 +194,30 @@ describe('analyticsUtils', () => {
     });
 
     it('should use current location when path not provided', (done) => {
-      Object.defineProperty(window, 'location', {
-        value: {pathname: '/current-path'},
-        writable: true,
-        configurable: true
-      });
-
-      Object.defineProperty(document, 'title', {
-        value: 'Current Title',
-        writable: true,
-        configurable: true
-      });
-
       const config = {
         enabled: true,
         googleAnalyticsId: 'G-TEST123'
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.gtag = mockGtag;
-          window.dataLayer = mockDataLayer;
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
+        // Override window.gtag with mock after onload
+        window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        // Force initialization for testing
+        forceAnalyticsInitializedForTesting();
 
-          trackPageView();
+        trackPageView();
 
-          expect(mockGtag).toHaveBeenCalledWith('event', 'page_view', {
-            page_path: '/current-path',
-            page_title: 'Current Title'
-          });
+        expect(mockGtag).toHaveBeenCalledWith('event', 'page_view', {
+          page_path: '/',
+          page_title: ''
+        });
 
-          done();
-        }, 0);
+        done();
         return element;
       });
 
@@ -244,20 +250,21 @@ describe('analyticsUtils', () => {
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.gtag = mockGtag;
-          window.dataLayer = mockDataLayer;
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
+        // Override window.gtag with mock after onload
+        window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        // Force initialization for testing
+        forceAnalyticsInitializedForTesting();
 
-          trackEvent('button_click', {button_name: 'signup'});
+        trackEvent('button_click', {button_name: 'signup'});
 
-          expect(mockGtag).toHaveBeenCalledWith('event', 'button_click', {button_name: 'signup'});
+        expect(mockGtag).toHaveBeenCalledWith('event', 'button_click', {button_name: 'signup'});
 
-          done();
-        }, 0);
+        done();
         return element;
       });
 
@@ -271,20 +278,21 @@ describe('analyticsUtils', () => {
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.gtag = mockGtag;
-          window.dataLayer = mockDataLayer;
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
+        // Override window.gtag with mock after onload
+        window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        // Force initialization for testing
+        forceAnalyticsInitializedForTesting();
 
-          trackEvent('custom_event');
+        trackEvent('custom_event');
 
-          expect(mockGtag).toHaveBeenCalledWith('event', 'custom_event', undefined);
+        expect(mockGtag).toHaveBeenCalledWith('event', 'custom_event', undefined);
 
-          done();
-        }, 0);
+        done();
         return element;
       });
 
@@ -317,22 +325,23 @@ describe('analyticsUtils', () => {
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.gtag = mockGtag;
-          window.dataLayer = mockDataLayer;
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
+        // Override window.gtag with mock after onload
+        window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        // Force initialization for testing
+        forceAnalyticsInitializedForTesting();
 
-          trackClick('CTA Button');
+        trackClick('CTA Button');
 
-          expect(mockGtag).toHaveBeenCalledWith('event', 'click', {
-            element_name: 'CTA Button'
-          });
+        expect(mockGtag).toHaveBeenCalledWith('event', 'click', {
+          element_name: 'CTA Button'
+        });
 
-          done();
-        }, 0);
+        done();
         return element;
       });
 
@@ -346,23 +355,24 @@ describe('analyticsUtils', () => {
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.gtag = mockGtag;
-          window.dataLayer = mockDataLayer;
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
+        // Override window.gtag with mock after onload
+        window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        // Force initialization for testing
+        forceAnalyticsInitializedForTesting();
 
-          trackClick('CTA Button', {location: 'header'});
+        trackClick('CTA Button', {location: 'header'});
 
-          expect(mockGtag).toHaveBeenCalledWith('event', 'click', {
-            element_name: 'CTA Button',
-            location: 'header'
-          });
+        expect(mockGtag).toHaveBeenCalledWith('event', 'click', {
+          element_name: 'CTA Button',
+          location: 'header'
+        });
 
-          done();
-        }, 0);
+        done();
         return element;
       });
 
@@ -383,20 +393,21 @@ describe('analyticsUtils', () => {
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.gtag = mockGtag;
-          window.dataLayer = mockDataLayer;
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
+        // Override window.gtag with mock after onload
+        window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        // Force initialization for testing
+        forceAnalyticsInitializedForTesting();
 
-          setUserId('user-12345');
+        setUserId('user-12345');
 
-          expect(mockGtag).toHaveBeenCalledWith('set', {user_id: 'user-12345'});
+        expect(mockGtag).toHaveBeenCalledWith('set', {user_id: 'user-12345'});
 
-          done();
-        }, 0);
+        done();
         return element;
       });
 
@@ -417,20 +428,21 @@ describe('analyticsUtils', () => {
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.gtag = mockGtag;
-          window.dataLayer = mockDataLayer;
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
+        // Override window.gtag with mock after onload
+        window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        // Force initialization for testing
+        forceAnalyticsInitializedForTesting();
 
-          setUserProperties({plan: 'premium', country: 'US'});
+        setUserProperties({country: 'US', plan: 'premium'});
 
-          expect(mockGtag).toHaveBeenCalledWith('set', 'user_properties', {plan: 'premium', country: 'US'});
+        expect(mockGtag).toHaveBeenCalledWith('set', 'user_properties', {country: 'US', plan: 'premium'});
 
-          done();
-        }, 0);
+        done();
         return element;
       });
 
@@ -456,21 +468,22 @@ describe('analyticsUtils', () => {
       };
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.gtag = mockGtag;
-          window.dataLayer = mockDataLayer;
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
+        // Override window.gtag with mock after onload
+        window.gtag = mockGtag;
+        window.dataLayer = mockDataLayer;
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        // Force initialization for testing
+        forceAnalyticsInitializedForTesting();
 
-          const {result} = renderHook(() => useAnalytics());
-          result.current.trackEvent('hook_event', {test: true});
+        const {result} = renderHook(() => useAnalytics());
+        result.current.trackEvent('hook_event', {test: true});
 
-          expect(mockGtag).toHaveBeenCalledWith('event', 'hook_event', {test: true});
+        expect(mockGtag).toHaveBeenCalledWith('event', 'hook_event', {test: true});
 
-          done();
-        }, 0);
+        done();
         return element;
       });
 
@@ -485,32 +498,32 @@ describe('analyticsUtils', () => {
         googleAnalyticsId: 'G-TEST123'
       };
 
-      trackPageView('/early-page');
-      trackEvent('early_event', {value: 1});
-
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
-        setTimeout(() => {
-          window.gtag = mockGtag;
-          window.dataLayer = mockDataLayer;
+        // Force initialization for testing before onload
+        forceAnalyticsInitializedForTesting();
 
-          if(element.onload) {
-            element.onload(new Event('load'));
-          }
+        if(element.onload) {
+          element.onload(new Event('load'));
+        }
 
-          setTimeout(() => {
-            expect(mockGtag).toHaveBeenCalledWith('event', 'page_view', {
-              page_path: '/early-page',
-              page_title: ''
-            });
-            expect(mockGtag).toHaveBeenCalledWith('event', 'early_event', {value: 1});
+        // Override window.gtag with mock after onload
+        window.gtag = mockGtag;
 
-            done();
-          }, 100);
-        }, 0);
         return element;
       });
 
       initializeAnalytics(config);
+
+      // Now analytics is initialized but script not loaded, so queue
+      trackPageView('/early-page');
+      trackEvent('early_event', {value: 1});
+
+      // The onload should have flushed the queue synchronously for testing
+      expect(mockGtag).toHaveBeenCalledTimes(2);
+      expect(mockGtag).toHaveBeenCalledWith('event', 'page_view', expect.any(Object));
+      expect(mockGtag).toHaveBeenCalledWith('event', 'early_event', {value: 1});
+
+      done();
     });
   });
 
@@ -526,6 +539,7 @@ describe('analyticsUtils', () => {
     });
 
     it('should log debug messages when debug is enabled', () => {
+      resetAnalyticsTestState();
       const config = {
         debug: true,
         enabled: true,

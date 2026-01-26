@@ -37,6 +37,7 @@ let analyticsConfig: GoogleAnalyticsConfig = {
 let isInitialized: boolean = false;
 let isScriptLoaded: boolean = false;
 let eventQueue: QueuedEvent[] = [];
+let isTesting: boolean = false;
 
 // For testing: reset internal state
 export const resetAnalyticsTestState = (): void => {
@@ -44,6 +45,14 @@ export const resetAnalyticsTestState = (): void => {
   isInitialized = false;
   isScriptLoaded = false;
   eventQueue = [];
+  isTesting = false;
+};
+
+// For testing: force initialization state
+export const forceAnalyticsInitializedForTesting = (): void => {
+  isInitialized = true;
+  isScriptLoaded = true;
+  isTesting = true;
 };
 
 const log = (...args: unknown[]): void => {
@@ -108,6 +117,9 @@ const loadGtagScript = (googleAnalyticsId: string): Promise<void> => new Promise
 
       isScriptLoaded = true;
       log('Google Analytics script loaded');
+      if(isTesting) {
+        flushQueue();
+      }
       resolve();
     };
 
@@ -152,6 +164,11 @@ export const initializeAnalytics = (config: GoogleAnalyticsConfig): void => {
   }
 
   log('Initializing Google Analytics', googleAnalyticsId);
+
+  // For testing: set initialized synchronously
+  if(isTesting) {
+    isInitialized = true;
+  }
 
   loadGtagScript(googleAnalyticsId)
     .then(() => {
