@@ -72,6 +72,7 @@ describe('analyticsUtils', () => {
         try {
           expect(mockDataLayer).toEqual([
             ['js', expect.any(Date)],
+            ['consent', 'default', {ad_storage: 'denied', analytics_storage: 'granted'}],
             ['config', 'G-TEST123', {}]
           ]);
 
@@ -129,7 +130,8 @@ describe('analyticsUtils', () => {
           element.onload(new Event('load'));
         }
 
-        expect(mockDataLayer[1]).toEqual(['config', 'G-TEST123', {anonymize_ip: true}]);
+        // Index 2 is the config call (after js and consent)
+        expect(mockDataLayer[2]).toEqual(['config', 'G-TEST123', {anonymize_ip: true}]);
 
         done();
         return element;

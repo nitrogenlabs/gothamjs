@@ -57,10 +57,12 @@ To find your Google Analytics Measurement ID:
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `googleAnalyticsId` | `string` | `undefined` | Your Google Analytics Measurement ID (required to enable analytics) |
+| `adStorage` | `'granted' \| 'denied'` | `'denied'` | Consent mode for advertising storage |
+| `analyticsStorage` | `'granted' \| 'denied'` | `'granted'` | Consent mode for analytics storage |
 | `anonymizeIp` | `boolean` | `false` | Enable IP anonymization for privacy compliance (GDPR) |
-| `enabled` | `boolean` | `true` | Enable or disable analytics tracking |
 | `debug` | `boolean` | `false` | Enable debug logging to console |
+| `enabled` | `boolean` | `true` | Enable or disable analytics tracking |
+| `googleAnalyticsId` | `string` | `undefined` | Your Google Analytics Measurement ID (required to enable analytics) |
 
 ### Example Configuration
 
@@ -74,13 +76,15 @@ const devConfig = {
   }
 };
 
-// Production environment with IP anonymization
+// Production environment with IP anonymization and consent mode
 const prodConfig = {
   googleAnalytics: {
-    googleAnalyticsId: 'G-XXXXXXXXXX',
-    anonymizeIp: true,
+    adStorage: 'denied',
+    analyticsStorage: 'granted',
+    debug: false,
     enabled: true,
-    debug: false
+    anonymizeIp: true,
+    googleAnalyticsId: 'G-XXXXXXXXXX'
   }
 };
 
@@ -136,7 +140,7 @@ const handleSignup = () => {
     method: 'email',
     plan: 'premium'
   });
-  
+
   // Your signup logic...
 };
 
@@ -170,7 +174,7 @@ const MyComponent = () => {
       variant: 'primary'
     });
   };
-  
+
   const handleNavClick = (link) => {
     trackClick('Navigation Link', {
       destination: link,
@@ -243,6 +247,70 @@ const MyComponent = () => {
 - **Type Safety**: Full TypeScript support with proper type definitions
 - **React Best Practices**: Follows React hooks patterns and conventions
 
+## Integration with Google Tag Manager (GTM)
+
+If you're using Google Tag Manager (GTM) to manage analytics, **do not include both GTM and a separate gtag.js snippet**. This causes duplicate tracking and conflicts.
+
+### Recommended Setup
+
+If you have a GTM container:
+
+1. **Remove the standalone gtag.js snippet** from your HTML:
+```html
+<!-- Remove this ❌ -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+```
+
+2. **Keep only the GTM container snippet** in your HTML:
+```html
+<!-- Keep this ✓ -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-XXXXXXXXXX');</script>
+<!-- End Google Tag Manager -->
+```
+
+3. **Configure GothamJS without analytics** in your app (GTM will handle all tracking via its tags):
+```jsx
+const config = {
+  // ... other config
+  googleAnalytics: {
+    enabled: false  // Let GTM handle analytics
+  }
+};
+```
+
+### Why This Matters
+
+- **Prevents duplicate tracking**: Two tracking implementations count the same event twice
+- **Fixes DebugView**: GTM's DebugView only sees data from GTM's tags
+- **Simplifies setup**: One source of truth for analytics configuration
+- **Better event management**: Configure all events in GTM UI, not in code
+
+### Alternative: Use GothamJS Analytics Without GTM
+
+If you're not using GTM, GothamJS analytics is self-contained:
+
+```jsx
+const config = {
+  googleAnalytics: {
+    googleAnalyticsId: 'G-XXXXXXXXXX',
+    enabled: true
+  }
+};
+```
+
+No additional gtag snippets or GTM containers needed.
+
 ## Advanced Usage
 
 ### Setting User ID
@@ -261,7 +329,7 @@ const handleLogin = (user) => {
 // Using the hook
 const LoginComponent = () => {
   const {setUserId} = useAnalytics();
-  
+
   const handleLogin = async (credentials) => {
     const user = await loginUser(credentials);
     setUserId(user.id);
@@ -289,7 +357,7 @@ setUserProperties({
 // Using the hook
 const ProfileComponent = () => {
   const {setUserProperties} = useAnalytics();
-  
+
   const updateProfile = (profile) => {
     setUserProperties({
       account_type: profile.type,
@@ -339,6 +407,24 @@ const App = () => {
 ```
 
 ## Privacy Considerations
+
+### Consent Mode
+
+Enable Google Analytics Consent Mode to respect user privacy choices:
+
+```jsx
+const config = {
+  googleAnalytics: {
+    googleAnalyticsId: 'G-XXXXXXXXXX',
+    analyticsStorage: 'granted',  // Allow analytics data collection
+    adStorage: 'denied'           // Deny advertising data collection
+  }
+};
+```
+
+Consent values:
+- `'granted'`: Allow data collection for this storage type
+- `'denied'`: Deny data collection for this storage type
 
 ### IP Anonymization
 

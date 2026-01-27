@@ -4,10 +4,12 @@
  */
 
 export interface GoogleAnalyticsConfig {
-  readonly googleAnalyticsId?: string;
+  readonly adStorage?: 'granted' | 'denied';
+  readonly analyticsStorage?: 'granted' | 'denied';
   readonly anonymizeIp?: boolean;
-  readonly enabled?: boolean;
   readonly debug?: boolean;
+  readonly enabled?: boolean;
+  readonly googleAnalyticsId?: string;
 }
 
 export interface AnalyticsHook {
@@ -106,6 +108,10 @@ const loadGtagScript = (googleAnalyticsId: string): Promise<void> => new Promise
       };
 
       window.gtag('js', new Date());
+      window.gtag('consent', 'default', {
+        ad_storage: analyticsConfig.adStorage ?? 'denied',
+        analytics_storage: analyticsConfig.analyticsStorage ?? 'granted'
+      });
 
       const gtagConfig: Record<string, unknown> = {};
 
