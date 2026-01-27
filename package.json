@@ -120,8 +120,8 @@
     "@types/node": "^25.0.10",
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   },
@@ -134,8 +134,8 @@
     "react-dom": "*"
   },
   "overrides": {
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "cross-spawn": "^7.0.3",
     "got": "^13.0.0",
     "http-cache-semantics": "^4.1.1",
