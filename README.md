@@ -97,9 +97,20 @@ If you need to customize the theme further, you can override the CSS custom prop
 }
 ```
 
-### Content Paths
+### Source Detection (Tailwind v4.2)
 
-Tailwind CSS still needs to know which files to scan for class usage. Configure this in your build tool:
+Tailwind v4.2 uses source detection instead of `content` arrays in JavaScript config.
+GothamJS already includes `@source` for its own components, and your app can add sources in CSS when needed:
+
+```css
+/* src/styles/main.css */
+@import '@nlabs/gothamjs/styles/tailwind.css';
+
+/* Optional: explicit app source paths (useful in monorepos/non-standard layouts) */
+@source "../**/*.{js,jsx,ts,tsx}";
+```
+
+For PostCSS, use the Tailwind v4 plugin package (`@tailwindcss/postcss`):
 
 #### Webpack Configuration
 ```js
@@ -118,12 +129,7 @@ module.exports = {
             options: {
               postcssOptions: {
                 plugins: [
-                  require('tailwindcss')({
-                    content: [
-                      './src/**/*.{js,ts,jsx,tsx}',
-                      './node_modules/@nlabs/gothamjs/lib/**/*.{js,ts,jsx,tsx}'
-                    ]
-                  })
+                  require('@tailwindcss/postcss')
                 ]
               }
             }
@@ -140,11 +146,7 @@ module.exports = {
 // lex.config.mjs
 export default {
   // ... other config
-  tailwindCssPath: './src/styles/main.css',
-  tailwindContent: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nlabs/gothamjs/lib/**/*.{js,ts,jsx,tsx}'
-  ]
+  tailwindCssPath: './src/styles/main.css'
 };
 ```
 
@@ -155,12 +157,7 @@ export default {
   css: {
     postcss: {
       plugins: [
-        require('tailwindcss')({
-          content: [
-            './src/**/*.{js,ts,jsx,tsx}',
-            './node_modules/@nlabs/gothamjs/lib/**/*.{js,ts,jsx,tsx}'
-          ]
-        })
+        require('@tailwindcss/postcss')
       ]
     }
   }
@@ -651,7 +648,6 @@ Lex automatically detects GothamJS projects and configures Tailwind CSS integrat
 export default {
   // ... other config
   tailwindCssPath: './src/styles/main.css',  // Your main CSS file
-  // Lex will automatically include GothamJS in content paths
 };
 ```
 

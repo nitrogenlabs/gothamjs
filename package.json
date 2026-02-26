@@ -8,6 +8,12 @@
   "module": "lib/index.js",
   "browser": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "styles",
+    "README.md",
+    "LICENSE"
+  ],
   "exports": {
     ".": {
       "default": "./lib/index.js",
@@ -35,7 +41,7 @@
       "types": "./lib/form/index.d.ts"
     },
     "./styles/tailwind.css": {
-      "default": "./lib/styles/tailwind.css"
+      "default": "./styles/tailwind.css"
     }
   },
   "keywords": [
@@ -61,8 +67,8 @@
     "url": "https://github.com/nitrogenlabs/gothamjs/issues"
   },
   "scripts": {
-    "build": "lex compile --remove --config ./tsconfig.build.json",
-    "build:dev": "NODE_ENV=development lex compile --remove --config ./tsconfig.build.json",
+    "build": "npm run sync:styles && lex compile --remove --config ./tsconfig.build.json",
+    "build:dev": "npm run sync:styles && NODE_ENV=development lex compile --remove --config ./tsconfig.build.json",
     "clean": "lex clean",
     "dev": "lex dev",
     "lint": "lex lint --fix",
@@ -76,6 +82,7 @@
     "update": "lex update --interactive",
     "watch": "lex compile -w",
     "storybook": "lex storybook",
+    "sync:styles": "node -e \"const fs = require('fs'); fs.mkdirSync('styles', { recursive: true }); fs.copyFileSync('src/styles/tailwind.css', 'styles/tailwind.css');\"",
     "tailwind:build": "npx tailwindcss --cwd ./src -i ./styles/tailwind.css -o ./styles/index.css",
     "tailwind:watch": "npx tailwindcss --cwd ./src -i ./styles/tailwind.css -o ./styles/index.css --watch"
   },
@@ -94,15 +101,15 @@
     "hast-util-sanitize": "5.0.2",
     "highlight.js": "^11.11.1",
     "history": "^5.3.0",
-    "i18next": "^25.8.0",
-    "lucide-react": "^0.563.0",
+    "i18next": "^25.8.13",
+    "lucide-react": "^0.575.0",
     "luxon": "^3.7.2",
     "react-autosuggest": "^10.1.0",
     "react-cropper": "^2.3.3",
-    "react-hook-form": "^7.71.1",
-    "react-i18next": "^16.5.3",
+    "react-hook-form": "^7.71.2",
+    "react-i18next": "^16.5.4",
     "react-markdown": "^10.1.0",
-    "react-router": "^7.13.0",
+    "react-router": "^7.13.1",
     "react-tag-autocomplete": "^7.5.1",
     "react-transition-group": "^4.4.5",
     "rehype-react": "^8.0.0",
@@ -113,16 +120,16 @@
     "@nlabs/arkhamjs-middleware-logger": "^3.30.6",
     "@nlabs/arkhamjs-storage-browser": "^3.30.6",
     "@nlabs/arkhamjs-utils-react": "^3.32.7",
-    "@nlabs/lex": "1.53.15",
+    "@nlabs/lex": "1.55.0",
     "@types/history": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/luxon": "^3.7.1",
-    "@types/node": "^25.0.10",
-    "@types/react": "^19.2.9",
+    "@types/node": "^25.3.1",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
