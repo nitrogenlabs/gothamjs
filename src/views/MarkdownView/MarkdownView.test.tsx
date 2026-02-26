@@ -1,3 +1,4 @@
+/* @vitest-environment jsdom */
 import {render} from '@nlabs/lex/test-react';
 
 import {MarkdownView} from './MarkdownView.js';

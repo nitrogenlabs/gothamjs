@@ -1,9 +1,10 @@
+/* @vitest-environment jsdom */
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {GothamActions} from './GothamActions.js';
 import {GothamConstants} from '../constants/GothamConstants.js';
+import {GothamActions} from './GothamActions.js';
 
 import type {FluxAction} from '@nlabs/arkhamjs';
 

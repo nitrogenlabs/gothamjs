@@ -1,17 +1,19 @@
+/* @vitest-environment jsdom */
 import {render, screen} from '@testing-library/react';
 import {MemoryRouter, Route, Routes} from 'react-router';
+import {vi} from 'vitest';
 
 import {Config} from '../../config/appConfig.js';
 import {AuthRoute} from './AuthRoute.js';
 
 describe('AuthRoute', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('redirects to /signIn with encoded redirect query param when not authenticated', () => {
     const originalGet = Config.get;
-    jest.spyOn(Config, 'get').mockImplementation((key: string | string[], _def?: any) => {
+    vi.spyOn(Config, 'get').mockImplementation((key: string | string[], _def?: any) => {
       if(key === 'isAuth') {
         return () => false;
       }

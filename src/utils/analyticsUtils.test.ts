@@ -1,8 +1,11 @@
+/* @vitest-environment jsdom */
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {renderHook} from '@testing-library/react';
+import {type Mock, type MockInstance, vi} from 'vitest';
+
 import {
   forceAnalyticsInitializedForTesting,
   initializeAnalytics,
@@ -16,20 +19,20 @@ import {
 } from './analyticsUtils.js';
 
 describe('analyticsUtils', () => {
-  let mockGtag: jest.Mock;
+  let mockGtag: Mock;
   let mockDataLayer: unknown[];
-  let appendChildSpy: jest.SpyInstance;
-  let createElementSpy: jest.SpyInstance;
+  let appendChildSpy: MockInstance;
+  let createElementSpy: MockInstance;
 
   beforeEach(() => {
-    mockGtag = jest.fn();
+    mockGtag = vi.fn();
     mockDataLayer = [];
 
     delete (window as {gtag?: unknown}).gtag;
     delete (window as {dataLayer?: unknown}).dataLayer;
 
-    appendChildSpy = jest.spyOn(document.head, 'appendChild');
-    createElementSpy = jest.spyOn(document, 'createElement');
+    appendChildSpy = vi.spyOn(document.head, 'appendChild');
+    createElementSpy = vi.spyOn(document, 'createElement');
 
     (window as {gtag?: unknown}).gtag = undefined;
     (window as {dataLayer?: unknown}).dataLayer = undefined;
@@ -37,7 +40,7 @@ describe('analyticsUtils', () => {
 
     resetAnalyticsTestState();
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterEach(() => {
@@ -56,7 +59,7 @@ describe('analyticsUtils', () => {
 
       // Fail-safe: if done is not called in 2s, fail the test
       const timeout = setTimeout(() => {
-        done.fail('Test timed out: async callback not called');
+        done(new Error('Test timed out: async callback not called'));
       }, 2000);
 
       appendChildSpy.mockImplementation((element: HTMLScriptElement) => {
@@ -494,7 +497,7 @@ describe('analyticsUtils', () => {
   });
 
   describe('event queue', () => {
-    it('should queue events before initialization and flush after', (done) => {
+    it('should queue events before initialization and flush after', () => {
       const config = {
         enabled: true,
         googleAnalyticsId: 'G-TEST123'
@@ -525,15 +528,14 @@ describe('analyticsUtils', () => {
       expect(mockGtag).toHaveBeenCalledWith('event', 'page_view', expect.any(Object));
       expect(mockGtag).toHaveBeenCalledWith('event', 'early_event', {value: 1});
 
-      done();
     });
   });
 
   describe('debug mode', () => {
-    let consoleLogSpy: jest.SpyInstance;
+    let consoleLogSpy: MockInstance;
 
     beforeEach(() => {
-      consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+      consoleLogSpy = vi.spyOn(console, 'log').mockImplementation();
     });
 
     afterEach(() => {

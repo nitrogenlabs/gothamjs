@@ -1,8 +1,10 @@
+/* @vitest-environment jsdom */
 /**
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {render} from '@nlabs/lex/test-react';
+import '@testing-library/jest-dom/vitest';
 
 import {Notify} from './Notify.js';
 
