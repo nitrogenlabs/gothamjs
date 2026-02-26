@@ -41,7 +41,7 @@
       "types": "./lib/form/index.d.ts"
     },
     "./styles/tailwind.css": {
-      "default": "./styles/tailwind.css"
+      "default": "./lib/styles/tailwind.css"
     }
   },
   "keywords": [
@@ -67,24 +67,24 @@
     "url": "https://github.com/nitrogenlabs/gothamjs/issues"
   },
   "scripts": {
-    "build": "npm run sync:styles && lex compile --remove --config ./tsconfig.build.json",
-    "build:dev": "npm run sync:styles && NODE_ENV=development lex compile --remove --config ./tsconfig.build.json",
+    "build": "lex compile --remove --config ./tsconfig.build.json && npm run sync:tailwind-lib",
+    "build:dev": "NODE_ENV=development lex compile --remove --config ./tsconfig.build.json && npm run sync:tailwind-lib",
     "clean": "lex clean",
-    "dev": "lex dev",
+    "dev": "npm run sync:tailwind-lib && lex dev",
     "lint": "lex lint --fix",
     "prepublishOnly": "npm test && npm run build",
     "publish:major": "npm version major && npm run publish:tags && npm publish",
     "publish:minor": "npm version minor && npm run publish:tags && npm publish",
     "publish:patch": "npm version patch && npm run publish:tags && npm publish",
     "publish:tags": "git push --tags && git push origin HEAD",
-    "start": "lex dev -r -o",
+    "start": "npm run sync:tailwind-lib && lex dev -r -o",
     "test": "lex test",
     "update": "lex update --interactive",
     "watch": "lex compile -w",
-    "storybook": "lex storybook",
-    "sync:styles": "node -e \"const fs = require('fs'); fs.mkdirSync('styles', { recursive: true }); fs.copyFileSync('src/styles/tailwind.css', 'styles/tailwind.css');\"",
-    "tailwind:build": "npx tailwindcss --cwd ./src -i ./styles/tailwind.css -o ./styles/index.css",
-    "tailwind:watch": "npx tailwindcss --cwd ./src -i ./styles/tailwind.css -o ./styles/index.css --watch"
+    "storybook": "npm run sync:tailwind-lib && lex storybook",
+    "sync:tailwind-lib": "node -e \"const fs=require('fs'); fs.mkdirSync('./lib/styles',{recursive:true}); fs.copyFileSync('./src/styles/tailwind.css','./lib/styles/tailwind.css');\"",
+    "tailwind:build": "npx @tailwindcss/cli -i ./src/styles/tailwind.css -o ./src/styles/index.css",
+    "tailwind:watch": "npx @tailwindcss/cli -i ./src/styles/tailwind.css -o ./src/styles/index.css --watch"
   },
   "browserslist": [
     "> 5%",
