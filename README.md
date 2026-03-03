@@ -193,6 +193,18 @@ The GothamJS theme CSS includes:
 
 GothamJS provides a rich set of components to accelerate your development:
 
+### Chat Components
+
+GothamJS now includes a first-party chat UI module based on the `react-chat-elements` component set.
+
+```tsx
+// Option 1: Namespace import from root package
+import {Chat} from '@nlabs/gothamjs';
+
+// Option 2: Direct chat subpath import
+import {ChatList, MessageBox, MessageList} from '@nlabs/gothamjs/chat';
+```
+
 ### Icons
 
 GothamJS includes the complete [Lucide React](https://lucide.dev/) icon library, providing you with over 1000+ beautifully designed, customizable icons that follow a consistent design language.

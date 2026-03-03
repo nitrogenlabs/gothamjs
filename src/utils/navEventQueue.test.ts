@@ -1,5 +1,5 @@
-import {clear, registerFlux, registerHandler} from './navEventQueue';
 import {GothamConstants} from '../constants/GothamConstants.js';
+import {clear, registerFlux, registerHandler} from './navEventQueue';
 
 describe('navEventQueue', () => {
   beforeEach(() => clear());

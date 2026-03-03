@@ -527,7 +527,6 @@ describe('analyticsUtils', () => {
       expect(mockGtag).toHaveBeenCalledTimes(2);
       expect(mockGtag).toHaveBeenCalledWith('event', 'page_view', expect.any(Object));
       expect(mockGtag).toHaveBeenCalledWith('event', 'early_event', {value: 1});
-
     });
   });
 

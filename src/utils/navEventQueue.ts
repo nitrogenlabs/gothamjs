@@ -15,12 +15,12 @@ export const registerHandler = (type: string, handler: Handler): void => {
   handlers.set(type, handler);
 
   const queued = queue.get(type);
-  if (queued && queued.length) {
+  if(queued && queued.length) {
     // Flush queued items
-    queued.forEach(item => {
+    queued.forEach((item) => {
       try {
         handler(item);
-      } catch (e) {
+      } catch(e) {
         // swallow errors to avoid breaking app init
       }
     });
@@ -34,14 +34,16 @@ export const clear = (): void => {
 };
 
 export const registerFlux = (flux: any): void => {
-  if (!flux || typeof flux.on !== 'function') return;
+  if(!flux || typeof flux.on !== 'function') {
+    return;
+  }
 
   const capture = (type: string) => (data: any) => {
     const handler = handlers.get(type);
-    if (handler) {
+    if(handler) {
       try {
         handler(data);
-      } catch (e) {
+      } catch(e) {
         // ignore
       }
     } else {

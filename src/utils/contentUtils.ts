@@ -8,7 +8,7 @@ export const fetchJsonFromUrl = async <T = unknown>(url: string): Promise<T> => 
   try {
     const response = await get(url);
     return response.data as T;
-  } catch (error) {
+  } catch(error) {
     throw new Error(`Failed to fetch JSON from ${url}: ${error.message}`);
   }
 };
@@ -16,9 +16,7 @@ export const fetchJsonFromUrl = async <T = unknown>(url: string): Promise<T> => 
 export const parseTemplate = (
   markdown: string = '',
   values: Record<string, unknown> = {}
-): string => {
-  return markdown.replace(/\{\{(\w+)\}\}/g, (match, key) => {
-    const value = values[key];
-    return value !== undefined ? String(value) : match;
-  });
-};
+): string => markdown.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+  const value = values[key];
+  return value !== undefined ? String(value) : match;
+});

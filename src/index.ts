@@ -14,6 +14,7 @@ export {Link, NavLink, Outlet, Route, Router, useNavigate} from 'react-router';
 export {z} from 'zod';
 
 export * from './components/index.js';
+export * as Chat from './components/Chat/index.js';
 
 export * from './utils/analyticsUtils.js';
 export * from './utils/colorUtils.js';
@@ -34,4 +35,3 @@ export {
   GothamConstants,
   MarkdownConstants
 };
-

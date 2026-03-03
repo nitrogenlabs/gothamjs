@@ -1,7 +1,10 @@
 import {cn} from '@nlabs/utils';
-import {useMemo, type InputHTMLAttributes} from 'react';
+import {useMemo} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
-import {getCheckedClasses} from '../../utils/colorUtils';
+
+import {getCheckedClasses} from '../../utils/colorUtils.js';
+
+import type {InputHTMLAttributes} from 'react';
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'className' | 'defaultValue'> {
   color?: 'primary' | 'secondary' | 'error' | 'success' | 'warning';

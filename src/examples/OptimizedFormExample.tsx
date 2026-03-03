@@ -13,13 +13,12 @@ const userProfileSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   age: z.number().min(18, 'Must be at least 18 years old').max(120, 'Please enter a valid age'),
   bio: z.string().max(500, 'Bio must be less than 500 characters').optional(),
-  agreeToTerms: z.boolean().refine(val => val === true, 'You must agree to the terms')
+  agreeToTerms: z.boolean().refine((val) => val === true, 'You must agree to the terms')
 });
 
 type UserProfile = z.infer<typeof userProfileSchema>;
 
 export const OptimizedFormExample = () => {
-
   const handleSubmit = async (data: UserProfile) => {
     console.log('Form submitted successfully:', data);
     // Handle success (show notification, redirect, etc.)

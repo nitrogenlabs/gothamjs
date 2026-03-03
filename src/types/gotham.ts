@@ -9,9 +9,9 @@ export type GothamRouteData = RouteProps & {
   // readonly location?: Location;
   // readonly name?: string;
   // readonly path?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   readonly props?: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   readonly children?: any ; // GothamRouteData[];
   readonly index?: boolean;
   // readonly sensitive?: boolean;
