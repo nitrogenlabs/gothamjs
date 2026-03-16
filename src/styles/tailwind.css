@@ -99,8 +99,10 @@ input:-internal-autofill-selected,
   select:-webkit-autofill,
   select:-webkit-autofill:hover,
   select:-webkit-autofill:focus {
-    background-color: inherit !important;
-    -webkit-background-composite: unset !important;
-    -webkit-box-shadow: inherit inset !important;
-    -webkit-text-fill-color: inherit !important;
+    -webkit-box-shadow: 0 0 0 1000px transparent inset;
+    box-shadow: 0 0 0 1000px transparent inset;
+    -webkit-text-fill-color: inherit;
+    caret-color: inherit;
+    color: inherit;
+    transition: background-color 9999s ease-in-out 0s;
   }

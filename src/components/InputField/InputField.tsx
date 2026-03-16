@@ -25,6 +25,7 @@ export interface InputFieldProps extends Omit<InputHTMLAttributes<HTMLInputEleme
   readonly label?: string;
   readonly multiline?: boolean;
   readonly placeholderColor?: GothamColor;
+  readonly textFillColor?: string;
   readonly textColor?: GothamColor;
 }
 
@@ -60,6 +61,8 @@ export const InputField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Inp
   label,
   multiline = false,
   placeholderColor = 'neutral',
+  style,
+  textFillColor,
   textColor = 'neutral',
   ...inputProps
 }, ref) => {
@@ -77,12 +80,26 @@ export const InputField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Inp
     [className, borderClasses, disabled, multiline]
   );
 
+  const inputStyle = useMemo(() => {
+    if(!textFillColor) {
+      return style;
+    }
+
+    return {
+      ...style,
+      WebkitTextFillColor: textFillColor,
+      caretColor: textFillColor,
+      color: textFillColor
+    };
+  }, [style, textFillColor]);
+
   return multiline ? (
     <textarea
       {...inputProps as TextareaHTMLAttributes<HTMLTextAreaElement>}
       className={inputClasses}
       disabled={disabled}
       ref={ref as Ref<HTMLTextAreaElement>}
+      style={inputStyle}
     />
   ) : (
     <input
@@ -90,6 +107,7 @@ export const InputField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Inp
       className={inputClasses}
       disabled={disabled}
       ref={ref as Ref<HTMLInputElement>}
+      style={inputStyle}
     />
   );
 });

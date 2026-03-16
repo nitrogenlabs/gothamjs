@@ -34,6 +34,7 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   readonly placeholderColor?: GothamColor;
   readonly rows?: number;
   readonly showPasswordToggle?: boolean;
+  readonly textFillColor?: string;
   readonly textColor?: GothamColor;
   readonly type?: string;
 }
@@ -59,6 +60,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   placeholderColor = 'neutral',
   rows,
   showPasswordToggle = false,
+  textFillColor,
   textColor = 'neutral',
   type = 'text',
   value,
@@ -128,6 +130,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
                 placeholder={placeholderText}
                 placeholderColor={placeholderColor}
                 textColor={textColor}
+                textFillColor={textFillColor}
                 type={inputType}
                 value={value}
                 ref={(e) => {

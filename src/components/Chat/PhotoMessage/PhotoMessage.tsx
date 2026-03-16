@@ -1,7 +1,13 @@
-import {IPhotoMessageProps, IProgressOptions} from '../type';
+import {
+  CircleAlert as Alert02Icon,
+  CloudDownload as CloudDownloadIcon
+} from 'lucide-react';
+
+import {ProgressCircle} from '../Circle/Circle.js';
 import './PhotoMessage.css';
 
 import type {FC} from 'react';
+import type {IPhotoMessageProps, IProgressOptions} from '../type';
 
 export const PhotoMessage: FC<IPhotoMessageProps> = (props) => {
   const progressOptions = {

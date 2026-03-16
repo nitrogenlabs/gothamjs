@@ -1281,6 +1281,9 @@
     --tw-blur: blur(8px);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
+  .filter {
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
@@ -3510,10 +3513,12 @@
   }
 }
 input:-internal-autofill-selected, input:-internal-autofill-selected:hover , input:-internal-autofill-selected:focus, input:-internal-autofill-selected:active, input:-internal-autofill-selected:focus-visible, input:-internal-autofill-selected:focus-within, input:-internal-autofill-previewed, input:-internal-autofill-previewed:hover, input:-internal-autofill-previewed:focus, input:-internal-autofill-previewed:active, input:-internal-autofill-previewed:focus-visible, input:-internal-autofill-previewed:focus-within, input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, textarea:-internal-autofill-selected, textarea:-internal-autofill-previewed, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-internal-autofill-selected, select:-internal-autofill-previewed, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
-  background-color: inherit !important;
-  -webkit-background-composite: unset !important;
-  -webkit-box-shadow: inherit inset !important;
-  -webkit-text-fill-color: inherit !important;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  box-shadow: 0 0 0 1000px transparent inset;
+  -webkit-text-fill-color: inherit;
+  caret-color: inherit;
+  color: inherit;
+  transition: background-color 9999s ease-in-out 0s;
 }
 @property --tw-translate-x {
   syntax: "*";
