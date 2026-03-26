@@ -22,7 +22,6 @@ import {SpotifyMessage} from '../SpotifyMessage/SpotifyMessage.js';
 import {SystemMessage} from '../SystemMessage/SystemMessage.js';
 import {formatRelativeDate} from '../utils/formatRelativeDate.js';
 import {VideoMessage} from '../VideoMessage/VideoMessage.js';
-import './MessageBox.css';
 
 import type {FC} from 'react';
 import type {MessageBoxType} from '../type';

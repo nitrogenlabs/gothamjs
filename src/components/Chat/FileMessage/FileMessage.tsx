@@ -5,7 +5,6 @@ import {
 } from 'lucide-react';
 
 import {ProgressCircle} from '../Circle/Circle.js';
-import './FileMessage.css';
 
 import type {FC} from 'react';
 import type {IFileMessageProps} from '../type';

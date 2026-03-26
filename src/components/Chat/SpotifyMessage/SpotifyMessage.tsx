@@ -1,4 +1,3 @@
-import './SpotifyMessage.css';
 
 import type {FC} from 'react';
 import type {ISpotifyMessageProps} from '../type';

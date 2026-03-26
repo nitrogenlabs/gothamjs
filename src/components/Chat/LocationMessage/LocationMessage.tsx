@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 
 import {ILocationMessageProps} from '../type';
-import './LocationMessage.css';
 
 import type {FC} from 'react';
 

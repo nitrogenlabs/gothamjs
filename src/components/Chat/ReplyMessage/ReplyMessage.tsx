@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 
-import './ReplyMessage.css';
 
 import type {FC} from 'react';
 import type {IReplyMessageProps} from '../type';

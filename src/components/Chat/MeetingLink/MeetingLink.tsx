@@ -1,4 +1,3 @@
-import './MeetingLink.css';
 
 import type {FC} from 'react';
 import type {IMeetingLinkMessageProps, MeetingLinkActionButtons} from '../type';

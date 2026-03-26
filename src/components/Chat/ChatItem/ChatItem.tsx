@@ -11,7 +11,6 @@ import {useEffect, useState} from 'react';
 import {Avatar} from '../Avatar/Avatar.js';
 import {IChatItemProps} from '../type';
 import {formatRelativeDate} from '../utils/formatRelativeDate.js';
-import './ChatItem.css';
 
 import type {FC, Key} from 'react';
 

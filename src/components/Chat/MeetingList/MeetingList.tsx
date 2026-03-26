@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 
 import {MeetingItem} from '../MeetingItem/MeetingItem.js';
-import './MeetingList.css';
 
 import type {FC, Key} from 'react';
 import type {IMeetingListProps, MeetingListEvent} from '../type';

@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import {useState} from 'react';
 
 import {Button} from '../Button/Button.js';
-import './Dropdown.css';
 
 import type {FC} from 'react';
 import type {IDropdownItemType, IDropdownProps} from '../type';

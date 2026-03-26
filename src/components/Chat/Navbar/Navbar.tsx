@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 
 import {INavbarProps} from '../type';
-import './Navbar.css';
 
 import type {FC} from 'react';
 

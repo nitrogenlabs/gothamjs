@@ -1,5 +1,4 @@
 import {IAudioMessageProps} from '../type';
-import './AudioMessage.css';
 
 import type {FC} from 'react';
 

@@ -12,7 +12,6 @@ import {useState} from 'react';
 import {Avatar} from '../Avatar/Avatar.js';
 import {Dropdown} from '../Dropdown/Dropdown.js';
 import {formatRelativeDate} from '../utils/formatRelativeDate.js';
-import './MeetingMessage.css';
 
 import type {FC} from 'react';
 import type {IMeetingMessageProps, MeetingMessageEvent} from '../type';

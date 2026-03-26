@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 
-import './SystemMessage.css';
 
 import type {FC} from 'react';
 import type {ISystemMessageProps} from '../type';

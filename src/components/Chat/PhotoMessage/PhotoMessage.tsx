@@ -4,7 +4,6 @@ import {
 } from 'lucide-react';
 
 import {ProgressCircle} from '../Circle/Circle.js';
-import './PhotoMessage.css';
 
 import type {FC} from 'react';
 import type {IPhotoMessageProps, IProgressOptions} from '../type';

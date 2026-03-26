@@ -3,7 +3,6 @@ import {ChevronDown as ArrowDown01Icon} from 'lucide-react';
 import {useEffect, useRef, useState} from 'react';
 
 import {MessageBox} from '../MessageBox/MessageBox.js';
-import './MessageList.css';
 
 import type {FC, Key} from 'react';
 import type {IMessageListProps, MessageListEvent} from '../type';

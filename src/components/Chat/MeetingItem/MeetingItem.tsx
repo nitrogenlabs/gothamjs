@@ -8,7 +8,6 @@ import {
 import {Avatar} from '../Avatar/Avatar.js';
 import {IMeetingItemProps} from '../type.js';
 import {formatRelativeDate} from '../utils/formatRelativeDate.js';
-import './MeetingItem.css';
 
 import type {FC} from 'react';
 

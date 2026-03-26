@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import {useEffect} from 'react';
 
 import {IAvatarProps} from '../type';
-import './Avatar.css';
 
 import type {FC} from 'react';
 

@@ -5,7 +5,6 @@ import {
 } from 'lucide-react';
 
 import {ProgressCircle} from '../Circle/Circle.js';
-import './VideoMessage.css';
 
 import type {FC} from 'react';
 import type {IProgressOptions, IVideoMessageProps} from '../type';

@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 
 import {Button} from '../Button/Button.js';
-import './Popup.css';
 
 import type {FC} from 'react';
 import type {IPopupProps} from '../type';

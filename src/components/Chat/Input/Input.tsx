@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import {useEffect} from 'react';
 
-import './Input.css';
 
 import type {FC} from 'react';
 import type {IInputProps} from '../type.js';

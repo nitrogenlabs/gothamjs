@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 
 import {IButtonProps} from '../type';
-import './Button.css';
 
 import type {FC} from 'react';
 

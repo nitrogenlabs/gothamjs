@@ -205,6 +205,8 @@ import {Chat} from '@nlabs/gothamjs';
 import {ChatList, MessageBox, MessageList} from '@nlabs/gothamjs/chat';
 ```
 
+Chat components inherit their runtime styles from GothamJS's Tailwind v4 stylesheet, so import [`@nlabs/gothamjs/styles/tailwind.css`](#installation) once at your app entrypoint.
+
 ### Icons
 
 GothamJS includes the complete [Lucide React](https://lucide.dev/) icon library, providing you with over 1000+ beautifully designed, customizable icons that follow a consistent design language.

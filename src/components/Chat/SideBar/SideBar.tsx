@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 
-import './SideBar.css';
 
 import type {FC} from 'react';
 import type {ISideBarProps} from '../type';

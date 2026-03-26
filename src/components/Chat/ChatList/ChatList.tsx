@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 
 import {ChatItem} from '../ChatItem/ChatItem.js';
-import './ChatList.css';
 
 import type {Dispatch, FC, Key, SetStateAction} from 'react';
 import type {ChatListEvent, IChatListProps} from '../type';
