@@ -95,21 +95,14 @@ const Alert = ({children, severity, onClose}) => {
 export const Notify = () => {
   const [isOpen, setOpen] = useState(false);
   const [notification, setNotification] = useState<GothamNotifyParams>({});
-  const [timeoutId, setTimeoutId] = useState<number | null>(null);
 
   const notifyClose = () => setOpen(false);
 
   useEffect(() => {
     if(isOpen && notification.autoHideDuration) {
-      if(timeoutId) {
-        clearTimeout(timeoutId);
-      }
-
       const id = setTimeout(() => {
         setOpen(false);
       }, notification.autoHideDuration);
-
-      setTimeoutId(id);
 
       return () => {
         clearTimeout(id);
@@ -117,7 +110,7 @@ export const Notify = () => {
     }
 
     return undefined;
-  }, [isOpen, notification.autoHideDuration, timeoutId]);
+  }, [isOpen, notification.autoHideDuration]);
 
   const notifyOpen = ({
     actions = [],

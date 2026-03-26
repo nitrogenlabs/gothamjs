@@ -6,6 +6,7 @@ import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import {useEffect} from 'react';
 import {Outlet, useLocation, useNavigate} from 'react-router';
 
+import {Notify} from '../../components/Notify/Notify.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
 import {trackPageView} from '../../utils/analyticsUtils.js';
 import {LoaderView} from '../LoaderView/LoaderView.js';
@@ -51,6 +52,7 @@ export const GothamRoot: FC = () => {
   return (
     <>
       <Outlet/>
+      <Notify />
       <LoaderView />
     </>
   );
