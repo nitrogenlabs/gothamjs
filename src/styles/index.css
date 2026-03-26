@@ -785,10 +785,6 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
   }
-  .border-b-2 {
-    border-bottom-style: var(--tw-border-style);
-    border-bottom-width: 2px;
-  }
   .border-black {
     border-color: var(--color-black);
   }
@@ -1917,12 +1913,6 @@
           color: var(--color-warning-700);
         }
       }
-    }
-  }
-  .focus\:border-b-3 {
-    &:focus {
-      border-bottom-style: var(--tw-border-style);
-      border-bottom-width: 3px;
     }
   }
   .focus\:border-black {

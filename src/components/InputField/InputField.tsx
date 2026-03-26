@@ -33,7 +33,7 @@ export const baseClasses = {
   none: '',
   rounded: 'w-full rounded-md outline-1 outline-solid focus:outline-3 px-3.5 py-2 sm:text-sm sm:leading-6 bg-white/30 dark:bg-black/30',
   solid: 'w-full outline-1 outline-solid focus:outline-3 px-3.5 py-2 sm:text-sm sm:leading-6 bg-white/30 dark:bg-black/30',
-  underline: 'w-full border-b-2 focus:border-b-3 autofill:bg-transparent outline-none py-2 sm:text-sm sm:leading-6'
+  underline: 'w-full border-b autofill:bg-transparent outline-none py-2 sm:text-sm sm:leading-6'
 };
 
 export const getInputBorderClass = (
