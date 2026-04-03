@@ -6,8 +6,6 @@ import {Flux} from '@nlabs/arkhamjs';
 
 import {MarkdownConstants} from '../constants/MarkdownConstants.js';
 
-import type {FluxAction} from '@nlabs/arkhamjs';
-
 // import {get} from '@nlabs/rip-hunter';
 // import js from 'highlight.js/lib/languages/javascript';
 // import rehypeReact from 'rehype-react';
@@ -28,11 +26,11 @@ import type {FluxAction} from '@nlabs/arkhamjs';
 // };
 
 export class MarkdownActions {
-  static clearExternal(): Promise<FluxAction> {
+  static clearExternal() {
     return Flux.dispatch({type: MarkdownConstants.CLEAR_EXTERNAL});
   }
 
-  static getExternal(url: string): Promise<FluxAction> {
+  static getExternal(url: string) {
     return Promise.resolve(Flux.dispatch({type: MarkdownConstants.GET_EXTERNAL}));
     // const content = Flux.getState(['app', 'external', url]);
 

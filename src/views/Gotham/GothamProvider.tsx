@@ -52,7 +52,7 @@ export interface GothamConfiguration {
   readonly middleware?: FluxMiddlewareType[];
   readonly onInit?: () => void;
   readonly routes?: GothamRouteData[];
-  readonly storageType?: 'local' | 'session';
+  readonly storageType?: 'local' | 'session' | false;
   readonly stores?: unknown[];
   readonly theme?: Record<string, unknown>;
   readonly translations?: Record<string, unknown>;
@@ -155,15 +155,18 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
       const logger: Logger = new Logger({
         debugLevel: env === 'development' ? LoggerDebugLevel.DISPATCH : LoggerDebugLevel.DISABLED
       });
-      const storage: BrowserStorage = new BrowserStorage({type: storageType});
-
-      flux.init({
+      const storage: BrowserStorage | undefined = storageType ? new BrowserStorage({type: storageType}) : undefined;
+      const fluxConfig: FluxOptions = {
         middleware: [logger, ...(middleware || [])],
         name,
-        // state: {app: {title}},
-        storage,
         stores: [gothamApp, ...(stores || [])]
-      });
+      };
+
+      if(storage) {
+        fluxConfig.storage = storage;
+      }
+
+      flux.init(fluxConfig);
 
       flux.on(GothamConstants.SIGN_OUT, signOut(flux));
       flux.on(GothamConstants.UPDATE_SESSION, ({session}) => {

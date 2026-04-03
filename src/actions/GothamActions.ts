@@ -9,7 +9,6 @@ import {Config} from '../config/appConfig.js';
 import {GothamConstants} from '../constants/GothamConstants.js';
 import {GothamConfiguration} from '../views/Gotham/GothamProvider.js';
 
-import type {FluxAction} from '@nlabs/arkhamjs';
 import type {ReactElement} from 'react';
 
 export interface GothamNotifyAction {
@@ -38,26 +37,26 @@ export interface NavParams {
 }
 
 export const GothamActions = {
-  init: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.INITIALIZE}),
-  loading: (isLoading: boolean, content?: string): Promise<FluxAction> =>
+  init: () => Flux.dispatch({type: GothamConstants.INITIALIZE}),
+  loading: (isLoading: boolean, content?: string) =>
     Flux.dispatch({content, isLoading, type: GothamConstants.LOADING}),
-  navBack: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.NAV_BACK}),
-  navForward: (): Promise<FluxAction> => Flux.dispatch({type: GothamConstants.NAV_FORWARD}),
-  navGoto: (path: string, params?: Record<string, unknown>): Promise<FluxAction> =>
+  navBack: () => Flux.dispatch({type: GothamConstants.NAV_BACK}),
+  navForward: () => Flux.dispatch({type: GothamConstants.NAV_FORWARD}),
+  navGoto: (path: string, params?: Record<string, unknown>) =>
     Flux.dispatch({params, path, type: GothamConstants.NAV_GOTO}),
-  navReplace: (path: string, params?: Record<string, unknown>): Promise<FluxAction> =>
+  navReplace: (path: string, params?: Record<string, unknown>) =>
     Flux.dispatch({params, path, type: GothamConstants.NAV_REPLACE}),
-  notify: (params: GothamNotifyParams): Promise<FluxAction> =>
+  notify: (params: GothamNotifyParams) =>
     Flux.dispatch({...params, type: GothamConstants.NOTIFY_OPEN}),
-  notifyClose: (): Promise<FluxAction> =>
+  notifyClose: () =>
     Flux.dispatch({type: GothamConstants.NOTIFY_CLOSE}),
-  setConfig: (config: GothamConfiguration): Promise<FluxAction> =>
+  setConfig: (config: GothamConfiguration) =>
     Flux.dispatch({config, type: GothamConstants.SET_CONFIG}),
-  signOut: (): Promise<FluxAction> =>
+  signOut: () =>
     Flux.dispatch({type: GothamConstants.SIGN_OUT}),
-  updateTitle: (title: string, separator?: string): Promise<FluxAction> => {
-    const appTitle: string = Config.get('app.title', '') as string;
-    const titleSeparator: string = separator || Config.get('app.titleBarSeparator', '::') as string;
+  updateTitle: (title: string, separator?: string) => {
+    const appTitle = Config.get('app.title', '') as string;
+    const titleSeparator = separator || Config.get('app.titleBarSeparator', '::') as string;
 
     if(!isEmpty(title) && appTitle !== title) {
       document.title = [title, titleSeparator, appTitle].join(' ');
