@@ -10,13 +10,12 @@ import {useEffect, useState} from 'react';
 
 import {Avatar} from '../Avatar/Avatar.js';
 import {IChatItemProps} from '../type';
-import {formatRelativeDate} from '../utils/formatRelativeDate.js';
+import {resolveDateValue, useRelativeDateText} from '../utils/formatRelativeDate.js';
 
 import type {FC, Key} from 'react';
 
 export const ChatItem: FC<IChatItemProps> = ({
   avatarFlexible = false,
-  date = new Date(),
   unread = 0,
   statusColorType = 'badge',
   lazyLoadingImage = undefined,
@@ -25,6 +24,8 @@ export const ChatItem: FC<IChatItemProps> = ({
 }) => {
   const [onHoverTool, setOnHoverTool] = useState(false);
   const [onDrag, setOnDrag] = useState(false);
+  const timestamp = resolveDateValue(props.added, props.date);
+  const dateText = useRelativeDateText(timestamp, props.dateString);
 
   useEffect(() => {
     props.setDragStates?.(setOnDrag);
@@ -147,7 +148,7 @@ export const ChatItem: FC<IChatItemProps> = ({
             <div key={'rce-citem-body'} className='rce-citem-body'>
               <div className='rce-citem-body--top'>
                 <div className='rce-citem-body--top-title'>{props.title}</div>
-                <div className='rce-citem-body--top-time'>{date && (props.dateString || formatRelativeDate(date))}</div>
+                <div className='rce-citem-body--top-time'>{dateText}</div>
               </div>
 
               <div className='rce-citem-body--bottom'>

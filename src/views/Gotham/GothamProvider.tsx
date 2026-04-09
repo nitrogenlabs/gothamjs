@@ -106,6 +106,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   } = config;
   const name = config?.app?.name;
   const [session, setSession] = useState({});
+  const [isFluxReady, setIsFluxReady] = useState(Boolean((flux as any)?.isInit));
   const router = useMemo(() => {
     console.log({routes});
     return createBrowserRouter(
@@ -149,24 +150,37 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
 
   useEffect(() => {
     Config.set(config as Record<string, unknown>);
+    let isMounted = true;
 
-    if(flux) {
+    const setupFlux = async () => {
+      if(!flux) {
+        if(isMounted) {
+          setIsFluxReady(true);
+        }
+        return;
+      }
+
       const env: string = Config.get('environment') as string;
       const logger: Logger = new Logger({
         debugLevel: env === 'development' ? LoggerDebugLevel.DISPATCH : LoggerDebugLevel.DISABLED
       });
       const storage: BrowserStorage | undefined = storageType ? new BrowserStorage({type: storageType}) : undefined;
-      const fluxConfig: FluxOptions = {
-        middleware: [logger, ...(middleware || [])],
-        name,
-        stores: [gothamApp, ...(stores || [])]
-      };
+      const fluxMiddleware = [logger, ...(middleware || [])];
+      const fluxStores = [gothamApp, ...(stores || [])];
 
-      if(storage) {
-        fluxConfig.storage = storage;
+      if((flux as any).isInit) {
+        await flux.addStores(fluxStores);
+        flux.addMiddleware(fluxMiddleware);
+      } else {
+        const fluxConfig: FluxOptions = {
+          middleware: fluxMiddleware,
+          name,
+          stores: fluxStores,
+          ...(storage ? {storage} : {})
+        };
+
+        await flux.init(fluxConfig);
       }
-
-      flux.init(fluxConfig);
 
       flux.on(GothamConstants.SIGN_OUT, signOut(flux));
       flux.on(GothamConstants.UPDATE_SESSION, ({session}) => {
@@ -174,14 +188,27 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
       });
 
       registerFlux(flux);
-    }
+      if(isMounted) {
+        setIsFluxReady(true);
+      }
+    };
+
+    void setupFlux();
 
     if(config.googleAnalytics) {
       initializeAnalytics(config.googleAnalytics);
     }
 
     init(config);
+
+    return () => {
+      isMounted = false;
+    };
   }, [flux, config, middleware, name, storageType, stores]);
+
+  if(!isFluxReady) {
+    return null;
+  }
 
   if(i18nInstance) {
     return (

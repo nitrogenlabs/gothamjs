@@ -43,7 +43,8 @@ export interface IChatItemProps {
   alt?: string
   title?: string
   subtitle?: string
-  date?: Date
+  added?: number | string | Date
+  date?: number | string | Date
   dateString?: string
   statusColor?: string
   statusColorType?: string
@@ -165,7 +166,8 @@ export interface IMessage {
   text: string
   title: string
   focus: boolean
-  date: number | Date
+  added?: number | Date | string
+  date?: number | Date | string
   dateString?: string
   avatar?: string
   titleColor: string
@@ -739,6 +741,7 @@ type MeetingListEvent = (item: IMeetingItemProps, index: number, event: React.Mo
 export interface IMeetingItemProps {
   id: string | number
   closable?: boolean
+  added?: number | string | Date
   date?: any
   subject?: string
   subjectLimit?: number

@@ -1,7 +1,7 @@
 import {cn} from '@nlabs/utils';
 import {ChevronRight, House} from 'lucide-react';
 
-import type {AnchorHTMLAttributes, ReactElement, SVGProps} from 'react';
+import type {AnchorHTMLAttributes, ComponentType, ReactElement, SVGProps} from 'react';
 
 export type BreadcrumbsVariant = 'contained' | 'chevrons' | 'full';
 
@@ -15,7 +15,7 @@ export interface BreadcrumbsProps {
   readonly className?: string;
   readonly homeAriaLabel?: string;
   readonly homeHref?: string;
-  readonly homeIcon?: (props: SVGProps<SVGSVGElement>) => ReactElement;
+  readonly homeIcon?: ComponentType<SVGProps<SVGSVGElement>>;
   readonly homeLabel?: string;
   readonly itemClassName?: string;
   readonly items: readonly BreadcrumbItem[];

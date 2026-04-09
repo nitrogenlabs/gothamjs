@@ -1344,9 +1344,6 @@
     --tw-blur: blur(8px);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
-  .filter {
-    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
@@ -5003,7 +5000,6 @@
     position: relative;
     background: white;
     border-radius: 5px;
-    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
     border-top-left-radius: 0px;
     margin-left: 20px;
     margin-right: 5px;
@@ -5117,12 +5113,11 @@
   }
   .rce-mbox-right-notch {
     position: absolute;
-    right: -14px;
-    top: 0px;
-    width: 15px;
-    height: 15px;
+    right: -6px;
+    top: 12px;
+    width: 12px;
+    height: 12px;
     fill: white;
-    filter: drop-shadow(2px 0px 1px rgba(0, 0, 0, 0.2));
   }
   .rce-mbox-right-notch.message-focus {
     animation-iteration-count: 2;
@@ -5141,10 +5136,10 @@
   }
   .rce-mbox-left-notch {
     position: absolute;
-    left: -14px;
-    top: 0px;
-    width: 15px;
-    height: 15px;
+    left: -6px;
+    top: 12px;
+    width: 12px;
+    height: 12px;
     fill: white;
   }
   .rce-mbox-left-notch.message-focus {
@@ -5164,20 +5159,18 @@
   }
   .rce-mbox-title {
     margin: 0;
-    margin-bottom: 8px;
-    font-weight: 500;
-    font-size: 13px;
-    color: #4f81a1;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #242842;
     user-select: none;
-    cursor: pointer;
     display: flex;
     align-items: center;
-  }
-  .rce-mbox-title:hover {
-    text-decoration: underline;
+    gap: 10px;
   }
   .rce-mbox-title--clear {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
   .rce-mbox-status {
     margin-left: 3px;
@@ -5185,7 +5178,11 @@
     height: 15px;
   }
   .rce-mbox-title > .rce-avatar-container {
-    margin-right: 5px;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    margin-right: 0;
+    overflow: hidden;
   }
   .rce-mbox-forwardedMessage {
     position: relative;

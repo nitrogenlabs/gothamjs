@@ -7,7 +7,7 @@ import {
 
 import {Avatar} from '../Avatar/Avatar.js';
 import {IMeetingItemProps} from '../type.js';
-import {formatRelativeDate} from '../utils/formatRelativeDate.js';
+import {resolveDateValue, useRelativeDateText} from '../utils/formatRelativeDate.js';
 
 import type {FC} from 'react';
 
@@ -15,7 +15,6 @@ export const MeetingItem: FC<IMeetingItemProps> = ({
   subjectLimit = 60,
   onClick = () => void 0,
   avatarFlexible = false,
-  date = new Date(),
   lazyLoadingImage = undefined,
   avatarLimit = 5,
   avatars = [],
@@ -28,7 +27,8 @@ export const MeetingItem: FC<IMeetingItemProps> = ({
   const {statusColorType} = props;
   const AVATAR_LIMIT = avatarLimit;
 
-  const dateText = date && (props.dateString || formatRelativeDate(date));
+  const timestamp = resolveDateValue(props.added, props.date);
+  const dateText = useRelativeDateText(timestamp, props.dateString);
 
   const subject =
     props.subject && subjectLimit && props.subject.substring(0, subjectLimit) + (props.subject.length > subjectLimit ? '...' : '');

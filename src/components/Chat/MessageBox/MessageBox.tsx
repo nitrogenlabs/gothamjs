@@ -20,7 +20,7 @@ import {PhotoMessage} from '../PhotoMessage/PhotoMessage.js';
 import {ReplyMessage} from '../ReplyMessage/ReplyMessage.js';
 import {SpotifyMessage} from '../SpotifyMessage/SpotifyMessage.js';
 import {SystemMessage} from '../SystemMessage/SystemMessage.js';
-import {formatRelativeDate} from '../utils/formatRelativeDate.js';
+import {resolveDateValue, useRelativeDateText} from '../utils/formatRelativeDate.js';
 import {VideoMessage} from '../VideoMessage/VideoMessage.js';
 
 import type {FC} from 'react';
@@ -33,7 +33,8 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
   const positionCls = clsx('rce-mbox', {'rce-mbox-right': props.position === 'right'});
   const thatAbsoluteTime =
     !/(text|video|file|meeting|audio)/g.test(props.type || 'text') && !(props.type === 'location' && props.text);
-  const dateText = props.date && (props.dateString || formatRelativeDate(props.date));
+  const timestamp = resolveDateValue(props.added, props.date);
+  const dateText = useRelativeDateText(timestamp, props.dateString);
 
   useEffect(() => {
     if(prevProps.current !== focus && focus === true) {
@@ -185,7 +186,7 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
               )}
               data-text={props.copiableDate ? undefined : dateText}
             >
-              {props.copiableDate && props.date && (props.dateString || formatRelativeDate(props.date))}
+              {props.copiableDate && dateText}
               {props.status && (
                 <span className='rce-mbox-status'>
                   {props.status === 'waiting' && <ClockIcon size={14}  />}
@@ -211,23 +212,14 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
                 <path d='M0 0v20L20 0' />
               </svg>
             ) : (
-              <div>
-                <svg
-                  style={props.notchStyle}
-                  className={clsx('rce-mbox-left-notch', {'message-focus': focus})}
-                  xmlns='http://www.w3.org/2000/svg'
-                  viewBox='0 0 20 20'
-                >
-                  <defs>
-                    <filter id='filter1' x='0' y='0'>
-                      <feOffset result='offOut' in='SourceAlpha' dx='-2' dy='-5' />
-                      <feGaussianBlur result='blurOut' in='offOut' stdDeviation='3' />
-                      <feBlend in='SourceGraphic' in2='blurOut' mode='normal' />
-                    </filter>
-                  </defs>
-                  <path d='M20 0v20L0 0' filter='url(#filter1)' />
-                </svg>
-              </div>
+              <svg
+                style={props.notchStyle}
+                className={clsx('rce-mbox-left-notch', {'message-focus': focus})}
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 20 20'
+              >
+                <path d='M20 0v20L0 0' />
+              </svg>
             ))}
         </div>
       )}
