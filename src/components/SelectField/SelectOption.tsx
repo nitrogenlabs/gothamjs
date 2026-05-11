@@ -3,19 +3,21 @@ import { Check } from 'lucide-react';
 
 import {Svg} from '../Svg/Svg.js';
 
+export type SelectFieldOption = {
+  readonly icon?: string;
+  readonly id?: number | string;
+  readonly image?: string;
+  readonly label: string;
+  readonly value: string | number | boolean;
+};
+
 export type SelectOptionProps = {
-  readonly option: {
-    readonly icon?: string;
-    readonly id?: number;
-    readonly image?: string;
-    readonly label: string;
-    readonly value: string;
-  };
+  readonly option: SelectFieldOption;
 };
 export const SelectOption = ({ option }: SelectOptionProps) => (
   <ListboxOption
     key={option.id || option.label}
-    value={option.value}
+    value={String(option.value)}
     className="group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
   >
     <div className="flex items-center">

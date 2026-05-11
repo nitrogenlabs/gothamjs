@@ -2,7 +2,7 @@
 
 import {Label, Listbox, ListboxButton, ListboxOptions} from '@headlessui/react';
 import {cn} from '@nlabs/utils';
-import {ChevronsUpDown} from 'lucide-react';
+import {ChevronDown} from 'lucide-react';
 import {useEffect, useMemo, useState} from 'react';
 import {useController, useFormContext} from 'react-hook-form';
 
@@ -10,7 +10,7 @@ import {useIsMobile} from '../../hooks/useIsMobile.js';
 import {getBackgroundClasses, getOutlineClasses, getTextClasses} from '../../utils/colorUtils.js';
 import {InputBorderType, getInputBorderClass} from '../InputField/InputField.js';
 import {Svg} from '../Svg/Svg.js';
-import {SelectOption, SelectOptionProps} from './SelectOption.js';
+import {SelectFieldOption, SelectOption} from './SelectOption.js';
 
 import type {FC} from 'react';
 import type {GothamColor} from '../../utils/colorUtils.js';
@@ -26,7 +26,8 @@ export type SelectFieldProps = {
   readonly labelColor?: GothamColor;
   readonly labelClass?: string;
   readonly name: string;
-  readonly options: SelectOptionProps['option'][];
+  readonly options: SelectFieldOption[];
+  readonly showChevron?: boolean;
 };
 
 export const SelectField: FC<SelectFieldProps> = ({
@@ -40,7 +41,8 @@ export const SelectField: FC<SelectFieldProps> = ({
   labelClass,
   labelColor = 'neutral',
   name,
-  options
+  options,
+  showChevron = true
 }) => {
   const isMobile = useIsMobile();
   const {control, trigger} = useFormContext();
@@ -49,12 +51,17 @@ export const SelectField: FC<SelectFieldProps> = ({
     defaultValue,
     name
   });
-  const [selected, setSelected] = useState<SelectOptionProps['option']>(options?.find((option) => option?.value === defaultValue) as SelectOptionProps['option']);
+  const [selected, setSelected] = useState<SelectFieldOption>(options?.find((option) => option?.value === defaultValue) as SelectFieldOption);
   const normalizedFieldValue = field?.value === undefined || field?.value === null ? '' : String(field.value);
   const selectClasses = useMemo(() => cn(
     'flex relative w-full',
     getInputBorderClass(borderType, borderColor, color, 'transparent'), className), [borderType, borderColor, color, className]
   );
+  const nativeSelectClasses = useMemo(() => cn(
+    selectClasses,
+    'appearance-none',
+    {'pr-10': showChevron}
+  ), [selectClasses, showChevron]);
   const labelClasses = useMemo(() => cn(
     labelClass,
     'block text-sm/6 font-medium',
@@ -70,25 +77,34 @@ export const SelectField: FC<SelectFieldProps> = ({
     getTextClasses(color)
   ), [color]);
   useEffect(() => {
-    setSelected(options?.find((option) => String(option?.value) === normalizedFieldValue) as SelectOptionProps['option']);
+    setSelected(options?.find((option) => String(option?.value) === normalizedFieldValue) as SelectFieldOption);
   }, [normalizedFieldValue, options]);
 
   const onChange = (value: string) => {
-    const nextSelected = options?.find((option) => String(option?.value) === String(value)) as SelectOptionProps['option'];
+    const nextSelected = options?.find((option) => String(option?.value) === String(value)) as SelectFieldOption;
     setSelected(nextSelected);
     field.onChange(String(value));
     trigger(name);
   };
 
   return isMobile ? (
-    <select
-      {...field}
-      onChange={(event) => onChange(event.target.value)}
-      value={normalizedFieldValue}>
-      {options.map((option) => (
-        <option key={option.id} value={String(option.value)}>{option.label}</option>
-      ))}
-    </select>
+    <div className="relative w-full">
+      <select
+        {...field}
+        className={nativeSelectClasses}
+        onChange={(event) => onChange(event.target.value)}
+        value={normalizedFieldValue}>
+        {options.map((option) => (
+          <option key={option.id} value={String(option.value)}>{option.label}</option>
+        ))}
+      </select>
+      {showChevron ? (
+        <ChevronDown
+          aria-hidden="true"
+          className={cn('pointer-events-none absolute right-3 top-1/2 size-5 -translate-y-1/2', getTextClasses(color))}
+        />
+      ) : null}
+    </div>
   ) : (
     <div className="flex flex-col w-full">
       <Listbox value={selected} onChange={(value) => onChange(value as unknown as string)}>
@@ -103,10 +119,12 @@ export const SelectField: FC<SelectFieldProps> = ({
               {selected?.icon && <Svg className="size-5 shrink-0 rounded-full" name={selected.icon} />}
               <span className="block truncate">{selected?.label}&nbsp;</span>
             </span>
-            <ChevronsUpDown
-              aria-hidden="true"
-              className={chevronClasses}
-            />
+            {showChevron ? (
+              <ChevronDown
+                aria-hidden="true"
+                className={chevronClasses}
+              />
+            ) : null}
           </ListboxButton>
 
           <ListboxOptions

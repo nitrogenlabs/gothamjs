@@ -146,14 +146,14 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
                   type="button"
                   className={`absolute inset-y-0 flex items-center ${
                     borderType === 'underline' ? 'right-0 pr-3' : 'right-0 pr-3.5'
-                  } text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300`}
+                  } text-neutral-400 hover:text-neutral-600 outline-none focus:outline-none focus-visible:outline-none dark:text-neutral-500 dark:hover:text-neutral-300`}
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5" />
-                  ) : (
                     <Eye className="h-5 w-5" />
+                  ) : (
+                    <EyeOff className="h-5 w-5" />
                   )}
                 </button>
               )}

@@ -37,6 +37,7 @@ export interface NavParams {
 }
 
 export const GothamActions = {
+  getState: (...args: Parameters<typeof Flux.getState>) => Flux.getState(...args),
   init: () => Flux.dispatch({type: GothamConstants.INITIALIZE}),
   loading: (isLoading: boolean, content?: string) =>
     Flux.dispatch({content, isLoading, type: GothamConstants.LOADING}),

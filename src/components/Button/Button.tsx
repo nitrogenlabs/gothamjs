@@ -3,32 +3,34 @@ import {forwardRef} from 'react';
 
 import {useTranslation} from '../../i18n/index.js';
 import {getBackgroundClasses, getBorderClasses, getTextClasses} from '../../utils/colorUtils.js';
+import {renderWithAsChild} from '../ComponentUtils/renderWithAsChild.js';
 
-import type {ReactNode} from 'react';
+import type {ButtonHTMLAttributes, ElementType, ReactNode} from 'react';
 import type {GothamColor} from '../../utils/colorUtils.js';
 import type {GothamSize} from '../../utils/sizeUtils.js';
 
 export type ButtonType = 'button' | 'reset' | 'submit';
 export type ButtonVariant = 'text' | 'contained' | 'outlined';
 
-export interface ButtonProps {
-	readonly children?: ReactNode;
-	readonly className?: string;
-	readonly color?: GothamColor;
-	readonly disabled?: boolean;
-	readonly hasNotification?: boolean;
-	readonly hasShadow?: boolean;
-	readonly icon?: ReactNode;
-	readonly isLoading?: boolean;
-	readonly label?: string;
-	readonly onClick?: (event?: unknown) => void;
-	readonly size?: GothamSize;
-  readonly tabIndex?: number;
+export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'color' | 'onClick' | 'type'> {
+  readonly as?: ElementType;
+  readonly asChild?: boolean;
+  readonly children?: ReactNode;
+  readonly color?: GothamColor;
+  readonly hasNotification?: boolean;
+  readonly hasShadow?: boolean;
+  readonly icon?: ReactNode;
+  readonly isLoading?: boolean;
+  readonly label?: string;
+  readonly onClick?: (event?: unknown) => void;
+  readonly size?: GothamSize;
   readonly type?: ButtonType;
   readonly variant?: ButtonVariant;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
+  as,
+  asChild = false,
   children,
   className,
   color = 'primary',
@@ -42,10 +44,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   size = 'md',
   type = 'button',
   variant,
-  ...restBtnProps
+  ...props
 }, ref) => {
   const {t} = useTranslation();
-  const classes: string[] = [];
+  const classes: string[] = [
+    'disabled:pointer-events-none',
+    'disabled:opacity-50'
+  ];
 
   if(variant) {
     classes.push(...[
@@ -122,7 +127,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   if(isLoading) {
     buttonIcon = (
       <svg className="mr-3 -ml-1 size-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
       </svg>
     );
@@ -139,19 +144,32 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     );
   }
 
-  return (
-    <button
-      className={cn(...classes, className)}
-      data-testid={`button-${label || children}`}
-      disabled={isLoading || disabled}
-      onClick={onClick}
-      ref={ref}
-      type={type}
-      {...restBtnProps}
-    >
+  const buttonContent = asChild ? children : (
+    <>
       {buttonNotification}
       {buttonIcon}
       {children ? children : t(label)}
-    </button>
+    </>
+  );
+
+  return renderWithAsChild(
+    {
+      as: as ?? 'button',
+      asChild,
+      children: buttonContent,
+      className: cn(...classes, className),
+      'data-testid': `button-${label || children}`,
+      disabled: isLoading || disabled,
+      onClick,
+      ref,
+      type,
+      ...props
+    } as never,
+    {
+      'data-slot': 'button',
+      'data-variant': variant
+    }
   );
 });
+
+Button.displayName = 'Button';

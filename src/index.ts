@@ -24,6 +24,7 @@ export * from './utils/useBreakpoint.js';
 export * from './utils/viewUtils.js';
 export * from './views/Gotham/Gotham.js';
 export * from './views/Gotham/GothamProvider.js';
+export * from './views/NotFoundView/NotFoundView.js';
 
 export * from './i18n/index.js';
 
