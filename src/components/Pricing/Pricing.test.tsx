@@ -73,6 +73,42 @@ describe('Pricing', () => {
     expect(screen.getByText('$199')).toBeInTheDocument();
   });
 
+  it('uses readable text colors on default featured grid cards', () => {
+    render(
+      <Pricing
+        cardStyle="default"
+        tiers={[
+          {
+            ctaLabel: 'Buy starter',
+            href: '/starter',
+            id: 'starter',
+            name: 'Starter',
+            price: '$19'
+          },
+          {
+            badge: 'Popular',
+            ctaLabel: 'Buy growth',
+            description: 'For production systems.',
+            featured: true,
+            features: ['Release checks'],
+            href: '/growth',
+            id: 'growth',
+            name: 'Growth',
+            price: '$49'
+          }
+        ]}
+        title="Choose a plan"
+        variant="grid"
+      />
+    );
+
+    expect(screen.getByText('Growth')).toHaveClass('text-gray-900');
+    expect(screen.getByText('$49')).toHaveClass('text-gray-900');
+    expect(screen.getByText('For production systems.')).toHaveClass('text-gray-600');
+    expect(screen.getByText('Release checks').closest('li')).toHaveClass('text-gray-600');
+    expect(screen.getByText('Popular')).toHaveClass('text-primary');
+  });
+
   it('renders the comparison layout with section values', () => {
     render(
       <Pricing

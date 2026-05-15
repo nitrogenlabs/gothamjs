@@ -2,6 +2,7 @@ import {FormProvider, useForm} from 'react-hook-form';
 
 import {RadioField} from './RadioField.js';
 import {gothamColors} from '../../utils/colorUtils.js';
+import {interactWithCanvas} from '../../utils/storyInteractions.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
@@ -105,7 +106,8 @@ export const Default: Story = {
         value: 'green'
       }
     ]
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const WithDefaultValue: Story = {
@@ -114,7 +116,8 @@ export const WithDefaultValue: Story = {
     label: 'Select an Option',
     name: 'radioGroupWithDefault',
     options: defaultOptions
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const WithLongDescriptions: Story = {
@@ -141,5 +144,6 @@ export const WithLongDescriptions: Story = {
         value: 'enterprise'
       }
     ]
-  }
+  },
+  play: interactWithCanvas
 };

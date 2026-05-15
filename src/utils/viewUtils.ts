@@ -4,12 +4,12 @@
  */
 import {qs} from '@nlabs/utils';
 import {useMemo} from 'react';
-import {Location, Navigation, useLocation, useMatches, useNavigation, useParams} from 'react-router';
+import {Location, useLocation, useMatches, useNavigation, useParams} from 'react-router';
 
 export interface AppRouter {
   readonly location: Location;
   readonly matches: unknown[];
-  readonly navigation: Navigation;
+  readonly navigation: ReturnType<typeof useNavigation>;
   readonly params: unknown;
 }
 

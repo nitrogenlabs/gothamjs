@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 
 import {ILocationMessageProps} from '../type';
 
@@ -16,10 +16,10 @@ export const LocationMessage: FC<ILocationMessageProps> = ({markerColor = 'red',
     .replace('ZOOM', zoom)
     .replace('KEY', props.apiKey);
   const className = () => {
-    let _className = clsx('rce-mbox-location', props.className);
+    let _className = cn('rce-mbox-location', props.className);
 
     if(props.text) {
-      _className = clsx(_className, 'rce-mbox-location-has-text');
+      _className = cn(_className, 'rce-mbox-location-has-text');
     }
 
     return _className;

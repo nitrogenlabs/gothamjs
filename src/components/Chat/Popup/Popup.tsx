@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 
 import {Button} from '../Button/Button.js';
 
@@ -8,7 +8,7 @@ import type {IPopupProps} from '../type';
 export const Popup: FC<IPopupProps> = ({...props}) => {
   if(props.popup?.show === true) {
     return (
-      <div className={clsx('rce-popup-wrapper', props.type, props.className)}>
+      <div className={cn('rce-popup-wrapper', props.type, props.className)}>
         <div className='rce-popup'>
           {props.popup?.renderHeader ? (
             <div className='rce-popup-header'>{props.popup?.renderHeader()}</div>

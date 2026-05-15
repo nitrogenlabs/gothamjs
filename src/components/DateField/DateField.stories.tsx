@@ -2,6 +2,7 @@ import {FormProvider, useForm} from 'react-hook-form';
 
 import {DateField} from './DateField.js';
 import {gothamColors} from '../../utils/colorUtils.js';
+import {interactWithCanvas} from '../../utils/storyInteractions.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
@@ -79,7 +80,8 @@ export const Default: Story = {
     label: 'Select Date',
     name: 'date',
     required: true
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const WithDefaultValue: Story = {
@@ -90,7 +92,8 @@ export const WithDefaultValue: Story = {
     error: false,
     label: 'Date with Default Value',
     name: 'dateWithDefault'
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const WithDateRange: Story = {
@@ -102,7 +105,8 @@ export const WithDateRange: Story = {
     maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).getTime(),
     minDate: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).getTime(),
     name: 'dateWithRange'
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const WithError: Story = {
@@ -113,7 +117,8 @@ export const WithError: Story = {
     errorColor: 'error',
     label: 'Date with Error',
     name: 'dateWithError'
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const Disabled: Story = {
@@ -124,5 +129,6 @@ export const Disabled: Story = {
     error: false,
     label: 'Disabled Date Field',
     name: 'disabledDate'
-  }
+  },
+  play: interactWithCanvas
 };

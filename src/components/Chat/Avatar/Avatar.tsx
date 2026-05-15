@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {useEffect} from 'react';
 
 import {IAvatarProps} from '../type';
@@ -58,7 +58,7 @@ export const Avatar: FC<IAvatarProps> = ({type = 'default', size = 'default', la
   };
 
   return (
-    <div className={clsx('rce-avatar-container', type, size, props.className)}>
+    <div className={cn('rce-avatar-container', type, size, props.className)}>
       {props.letterItem ? (
         <div className='rce-avatar-letter-background' style={{backgroundColor: stringToColour(props.letterItem.id)}}>
           <span className='rce-avatar-letter'>{props.letterItem.letter}</span>
@@ -68,7 +68,7 @@ export const Avatar: FC<IAvatarProps> = ({type = 'default', size = 'default', la
           alt={props.alt}
           src={src}
           onError={props.onError}
-          className={clsx('rce-avatar', {'rce-avatar-lazy': isLazyImage})}
+          className={cn('rce-avatar', {'rce-avatar-lazy': isLazyImage})}
         />
       )}
       {props.sideElement}

@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {useState} from 'react';
 
 import {Button} from '../Button/Button.js';
@@ -16,10 +16,10 @@ export const Dropdown: FC<IDropdownProps> = ({animationPosition = 'nortwest', an
   };
 
   return (
-    <div className={clsx('rce-dropdown-container', props.className)} onBlur={onBlur}>
+    <div className={cn('rce-dropdown-container', props.className)} onBlur={onBlur}>
       {<Button {...props.buttonProps} onClick={() => setShow(!show)} />}
       <div
-        className={clsx(
+        className={cn(
           'rce-dropdown',
           animationType,
           `rce-dropdown-open__${animationPosition}`,
@@ -38,7 +38,7 @@ export const Dropdown: FC<IDropdownProps> = ({animationPosition = 'nortwest', an
 
                     <span
                       style={{float: x.icon.float, color: x.icon.color, fontSize: x.icon.size || 12}}
-                      className={clsx('rce-button-icon', x.icon.className)}
+                      className={cn('rce-button-icon', x.icon.className)}
                     >
                       {x.icon.component}
                     </span>

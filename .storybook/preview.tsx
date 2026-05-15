@@ -3,6 +3,7 @@ import '../src/styles/tailwind.css';
 const preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
+    layout: 'fullscreen',
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -25,7 +26,7 @@ const preview = {
   },
   decorators: [
     (Story) => (
-      <div className="p-4">
+      <div className="flex min-h-screen w-screen items-center justify-center p-4">
         <Story />
       </div>
     ),

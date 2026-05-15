@@ -1,4 +1,4 @@
-import {DateTime} from 'luxon';
+import {DateTime} from '@nlabs/utils/date';
 import {useEffect, useMemo, useState} from 'react';
 
 export type DateInput = Date | string | number
@@ -37,10 +37,6 @@ const parseRelativeDateInput = (value: DateInput): DateTime => {
     if(!dateTime.isValid) {
       dateTime = DateTime.fromJSDate(new Date(value));
     }
-  }
-
-  if(!dateTime.isValid) {
-    return dateTime;
   }
 
   return dateTime;

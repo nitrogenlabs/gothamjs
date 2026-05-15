@@ -48,12 +48,12 @@ export const EmptyState = ({
   onAction,
   title
 }: EmptyStateProps) => (
-  <div className={cn('text-center', className)}>
+  <div className={cn('flex flex-col items-center text-center', className)}>
     {icon}
     <h3 className="mt-2 text-sm font-semibold text-gray-900 dark:text-white">{title}</h3>
     <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{description}</p>
     {(action || actionLabel) && (
-      <div className="mt-6">
+      <div className="mt-6 flex justify-center">
         {action || (
           <Button
             className={actionClassName}

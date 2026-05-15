@@ -2,7 +2,6 @@ const config = {
   addons: [
     '@storybook/addon-docs',
     '@storybook/addon-links',
-    '@storybook/addon-postcss',
     {
       name: '@storybook/addon-styling-webpack',
       options: {
@@ -44,20 +43,23 @@ const config = {
         rules: [
           ...(config.module?.rules || []),
           {
-            test: /\.(ts|tsx)$/,
+            test: /\.[jt]sx?$/,
+            exclude: /node_modules/,
             use: [
               {
-                loader: 'babel-loader',
+                loader: 'swc-loader',
                 options: {
-                  presets: [
-                    '@babel/preset-typescript',
-                    [
-                      '@babel/preset-react',
-                      {
+                  jsc: {
+                    parser: {
+                      syntax: 'typescript',
+                      tsx: true
+                    },
+                    transform: {
+                      react: {
                         runtime: 'automatic'
                       }
-                    ]
-                  ]
+                    }
+                  }
                 }
               }
             ]

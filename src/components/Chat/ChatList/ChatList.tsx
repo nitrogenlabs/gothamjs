@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 
 import {ChatItem} from '../ChatItem/ChatItem.js';
 
@@ -45,7 +45,7 @@ export const ChatList: FC<IChatListProps> = (props) => {
   };
 
   return (
-    <div className={clsx('rce-container-clist', props.className)}>
+    <div className={cn('rce-container-clist', props.className)}>
       {props.dataSource.map((x, i: number) => (
         <>
           <ChatItem

@@ -1,10 +1,16 @@
 import {Gotham} from './Gotham.js';
 import {MarkdownView} from '../MarkdownView/MarkdownView.js';
+import {focusCanvas} from '../../utils/storyInteractions.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
 
 const meta: Meta<typeof Gotham> = {
+  argTypes: {
+    config: {
+      control: 'object'
+    }
+  },
   component: Gotham
 };
 
@@ -24,5 +30,6 @@ export const Primary: Story = {
         }
       ]
     }
-  }
+  },
+  play: focusCanvas
 };

@@ -2,6 +2,7 @@ import {FormProvider, useForm} from 'react-hook-form';
 
 import {SelectField} from './SelectField.js';
 import {gothamColors} from '../../utils/colorUtils.js';
+import {interactWithCanvas} from '../../utils/storyInteractions.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
@@ -72,7 +73,8 @@ export const Default: Story = {
     label: 'Select an Option',
     name: 'selectGroup',
     options: defaultOptions
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const WithDefaultValue: Story = {
@@ -81,7 +83,8 @@ export const WithDefaultValue: Story = {
     label: 'Select an Option',
     name: 'selectGroupWithDefault',
     options: defaultOptions
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const WithIcons: Story = {
@@ -108,7 +111,8 @@ export const WithIcons: Story = {
         value: 'shopping'
       }
     ]
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const WithImages: Story = {
@@ -135,7 +139,8 @@ export const WithImages: Story = {
         value: 'ca'
       }
     ]
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const WithLongLabels: Story = {
@@ -159,5 +164,6 @@ export const WithLongLabels: Story = {
         value: 'enterprise'
       }
     ]
-  }
+  },
+  play: interactWithCanvas
 };

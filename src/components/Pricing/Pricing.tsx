@@ -206,6 +206,26 @@ const cardToneClasses: Record<PricingTone, Record<PricingCardStyle, {body: strin
   }
 };
 
+const featuredTextClasses = (tone: PricingTone, cardStyle: PricingCardStyle) => {
+  const lightFeaturedCard =
+    (tone === 'dark' && cardStyle === 'contrast') ||
+    ((tone === 'default' || tone === 'gradient') && (cardStyle === 'default' || cardStyle === 'solid'));
+
+  return lightFeaturedCard
+    ? {
+      badge: 'bg-primary/10 text-primary dark:bg-primary-dark-300/10 dark:text-primary-dark-300',
+      icon: 'text-primary dark:text-primary-dark-300',
+      muted: 'text-gray-600 dark:text-gray-300',
+      title: 'text-gray-900 dark:text-white'
+    }
+    : {
+      badge: 'bg-white/10 text-white dark:bg-primary-dark-300/15 dark:text-primary-dark-300',
+      icon: 'text-primary-dark-300',
+      muted: 'text-gray-300 dark:text-gray-300',
+      title: 'text-white dark:text-white'
+    };
+};
+
 const comparisonPanelToneClasses: Record<PricingTone, string> = {
   dark: 'bg-gray-900/60 border-white/10',
   default: 'bg-white border-border dark:bg-gray-800/50 dark:border-white/10',
@@ -284,7 +304,11 @@ const getPriceSuffixForTier = (
   return frequencies?.find((frequency) => frequency.value === activeFrequency)?.priceSuffix ?? '';
 };
 
-const renderTierList = (tier: PricingTier, featured: boolean) => {
+const renderTierList = (
+  tier: PricingTier,
+  featured: boolean,
+  featuredText: ReturnType<typeof featuredTextClasses>
+) => {
   if (tier.highlights?.length) {
     return (
       <ul className="mt-8 space-y-3 text-sm/6" role="list">
@@ -292,7 +316,7 @@ const renderTierList = (tier: PricingTier, featured: boolean) => {
           <li
             className={cn(
               'group flex items-start gap-3',
-              highlight.disabled ? 'text-gray-400 dark:text-gray-500' : featured ? 'text-gray-300 dark:text-gray-300' : 'text-gray-600 dark:text-gray-300'
+              highlight.disabled ? 'text-gray-400 dark:text-gray-500' : featured ? featuredText.muted : 'text-gray-600 dark:text-gray-300'
             )}
             key={highlight.description}
           >
@@ -300,7 +324,7 @@ const renderTierList = (tier: PricingTier, featured: boolean) => {
               {highlight.disabled ? (
                 <Minus aria-hidden="true" className="size-4 text-gray-400 dark:text-gray-500" />
               ) : (
-                <Plus aria-hidden="true" className={cn('size-4', featured ? 'text-primary-dark-300' : 'text-primary dark:text-primary-dark-300')} />
+                <Plus aria-hidden="true" className={cn('size-4', featured ? featuredText.icon : 'text-primary dark:text-primary-dark-300')} />
               )}
             </span>
             {highlight.description}
@@ -320,11 +344,11 @@ const renderTierList = (tier: PricingTier, featured: boolean) => {
         <li
           className={cn(
             'flex gap-3',
-            featured ? 'text-gray-300 dark:text-gray-300' : 'text-gray-600 dark:text-gray-300'
+            featured ? featuredText.muted : 'text-gray-600 dark:text-gray-300'
           )}
           key={feature}
         >
-          <Check aria-hidden="true" className={cn('mt-0.5 size-4 shrink-0', featured ? 'text-primary-dark-300' : 'text-primary dark:text-primary-dark-300')} />
+          <Check aria-hidden="true" className={cn('mt-0.5 size-4 shrink-0', featured ? featuredText.icon : 'text-primary dark:text-primary-dark-300')} />
           <span>{feature}</span>
         </li>
       ))}
@@ -431,6 +455,7 @@ const GridPricing = ({
       <div className={cn('mx-auto grid max-w-md grid-cols-1 gap-8', gridColsClass)}>
         {tiers.map((tier) => {
           const featured = Boolean(tier.featured);
+          const featuredText = featuredTextClasses(tone, cardStyle);
           const price = getPriceForTier(tier, activeFrequency);
           const suffix = getPriceSuffixForTier(tier, frequencies, activeFrequency);
 
@@ -445,39 +470,39 @@ const GridPricing = ({
             >
               <div>
                 <div className="flex items-center justify-between gap-4">
-                  <h3 className={cn('text-lg/8 font-semibold', featured ? 'text-white dark:text-white' : cardTokens.title)} id={tier.id}>
+                  <h3 className={cn('text-lg/8 font-semibold', featured ? featuredText.title : cardTokens.title)} id={tier.id}>
                     {tier.name}
                   </h3>
                   {tier.badge ? (
                     <span className={cn(
                       'rounded-full px-2.5 py-1 text-xs/5 font-semibold',
-                      featured ? 'bg-white/10 text-white dark:bg-primary-dark-300/15 dark:text-primary-dark-300' : 'bg-primary/10 text-primary dark:bg-primary-dark-300/10 dark:text-primary-dark-300'
+                      featured ? featuredText.badge : 'bg-primary/10 text-primary dark:bg-primary-dark-300/10 dark:text-primary-dark-300'
                     )}>
                       {tier.badge}
                     </span>
                   ) : null}
                 </div>
                 {tier.description ? (
-                  <p className={cn('mt-4 text-sm/6', featured ? 'text-gray-300 dark:text-gray-300' : cardTokens.muted)}>
+                  <p className={cn('mt-4 text-sm/6', featured ? featuredText.muted : cardTokens.muted)}>
                     {tier.description}
                   </p>
                 ) : null}
                 <p className="mt-6 flex items-baseline gap-x-2">
-                  <span className={cn('text-4xl font-semibold tracking-tight', featured ? 'text-white dark:text-white' : cardTokens.title)}>
+                  <span className={cn('text-4xl font-semibold tracking-tight', featured ? featuredText.title : cardTokens.title)}>
                     {price}
                   </span>
                   {suffix ? (
-                    <span className={cn('text-sm/6 font-semibold', featured ? 'text-gray-300 dark:text-gray-300' : cardTokens.muted)}>
+                    <span className={cn('text-sm/6 font-semibold', featured ? featuredText.muted : cardTokens.muted)}>
                       {suffix}
                     </span>
                   ) : null}
                 </p>
                 {tier.priceCaption ? (
-                  <p className={cn('mt-3 text-sm/6', featured ? 'text-gray-300 dark:text-gray-300' : cardTokens.muted)}>
+                  <p className={cn('mt-3 text-sm/6', featured ? featuredText.muted : cardTokens.muted)}>
                     {tier.priceCaption}
                   </p>
                 ) : null}
-                {renderTierList(tier, featured)}
+                {renderTierList(tier, featured, featuredText)}
               </div>
               {tier.href && tier.ctaLabel ? (
                 <a
@@ -492,7 +517,7 @@ const GridPricing = ({
                 </a>
               ) : null}
               {tier.ctaSubtitle ? (
-                <p className={cn('mt-3 text-center text-xs/5', featured ? 'text-gray-300 dark:text-gray-300' : cardTokens.muted)}>
+                <p className={cn('mt-3 text-center text-xs/5', featured ? featuredText.muted : cardTokens.muted)}>
                   {tier.ctaSubtitle}
                 </p>
               ) : null}
@@ -640,6 +665,7 @@ const ComparisonPricing = ({
           <div className={cn('grid grid-cols-1 gap-8', comparisonGridClasses[Math.min(Math.max(tiers.length, 1), 4)])}>
             {tiers.map((tier) => {
               const featured = Boolean(tier.featured);
+              const featuredText = featuredTextClasses(tone, cardStyle);
 
               return (
                 <div className={cn('rounded-4xl p-2 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]', tone === 'dark' ? 'bg-white/5' : 'bg-white/5 dark:bg-white/5')} key={tier.id}>
@@ -674,7 +700,7 @@ const ComparisonPricing = ({
                         {tier.ctaLabel}
                       </a>
                     ) : null}
-                    {renderTierList(tier, featured)}
+                    {renderTierList(tier, featured, featuredText)}
                   </div>
                 </div>
               );

@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 
 import {MeetingItem} from '../MeetingItem/MeetingItem.js';
 
@@ -44,7 +44,7 @@ export const MeetingList: FC<IMeetingListProps> = (props) => {
   };
 
   return (
-    <div ref={props.cmpRef} className={clsx('rce-container-mtlist', props.className)}>
+    <div ref={props.cmpRef} className={cn('rce-container-mtlist', props.className)}>
       {props.dataSource?.map((x, i: number) => (
         <MeetingItem
           key={i as Key}

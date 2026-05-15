@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {
   Clock3 as ClockIcon,
   Trash2 as Delete02Icon,
@@ -30,7 +30,7 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
   const prevProps = useRef(focus);
   const messageRef = useRef<HTMLDivElement>(null);
 
-  const positionCls = clsx('rce-mbox', {'rce-mbox-right': props.position === 'right'});
+  const positionCls = cn('rce-mbox', {'rce-mbox-right': props.position === 'right'});
   const thatAbsoluteTime =
     !/(text|video|file|meeting|audio)/g.test(props.type || 'text') && !(props.type === 'location' && props.text);
   const timestamp = resolveDateValue(props.added, props.date);
@@ -51,14 +51,14 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
   }, [focus, prevProps]);
 
   return (
-    <div ref={messageRef} className={clsx('rce-container-mbox', props.className)} onClick={props.onClick}>
+    <div ref={messageRef} className={cn('rce-container-mbox', props.className)} onClick={props.onClick}>
       {props.renderAddCmp instanceof Function ? props.renderAddCmp() : props.renderAddCmp}
       {props.type === 'system' ? (
         <SystemMessage {...props} focus={focus} notch={notch} />
       ) : (
         <div
           style={styles}
-          className={clsx(
+          className={cn(
             positionCls,
             {'rce-mbox--clear-padding': thatAbsoluteTime},
             {'rce-mbox--clear-notch': !notch},
@@ -68,7 +68,7 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
           <div className='rce-mbox-body' onContextMenu={props.onContextMenu}>
             {!props.retracted && props.forwarded === true && (
               <div
-                className={clsx(
+                className={cn(
                   'rce-mbox-forward',
                   {'rce-mbox-forward-right': props.position === 'left'},
                   {'rce-mbox-forward-left': props.position === 'right'}
@@ -83,12 +83,12 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
               <div
                 className={
                   props.forwarded !== true
-                    ? clsx(
+                    ? cn(
                       'rce-mbox-forward',
                       {'rce-mbox-forward-right': props.position === 'left'},
                       {'rce-mbox-forward-left': props.position === 'right'}
                     )
-                    : clsx(
+                    : cn(
                       'rce-mbox-forward',
                       {'rce-mbox-reply-btn-right': props.position === 'left'},
                       {'rce-mbox-reply-btn-left': props.position === 'right'}
@@ -104,12 +104,12 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
               <div
                 className={
                   props.forwarded === true
-                    ? clsx(
+                    ? cn(
                       'rce-mbox-remove',
                       {'rce-mbox-remove-right': props.position === 'left'},
                       {'rce-mbox-remove-left': props.position === 'right'}
                     )
-                    : clsx(
+                    : cn(
                       'rce-mbox-forward',
                       {'rce-mbox-reply-btn-right': props.position === 'left'},
                       {'rce-mbox-reply-btn-left': props.position === 'right'}
@@ -125,7 +125,7 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
               <div
                 style={{...(props.titleColor && {color: props.titleColor})}}
                 onClick={props.onTitleClick}
-                className={clsx('rce-mbox-title', {
+                className={cn('rce-mbox-title', {
                   'rce-mbox-title--clear': props.type === 'text'
                 })}
               >
@@ -149,7 +149,7 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
 
             {props.type === 'text' && (
               <div
-                className={clsx('rce-mbox-text', {
+                className={cn('rce-mbox-text', {
                   'rce-mbox-text-retracted': props.retracted,
                   left: props.position === 'left',
                   right: props.position === 'right'
@@ -179,7 +179,7 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
 
             <div
               title={props.statusTitle}
-              className={clsx(
+              className={cn(
                 'rce-mbox-time',
                 {'rce-mbox-time-block': thatAbsoluteTime},
                 {'non-copiable': !props.copiableDate}
@@ -205,7 +205,7 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
             (props.position === 'right' ? (
               <svg
                 style={props.notchStyle}
-                className={clsx('rce-mbox-right-notch', {'message-focus': focus})}
+                className={cn('rce-mbox-right-notch', {'message-focus': focus})}
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 20 20'
               >
@@ -214,7 +214,7 @@ export const MessageBox: FC<MessageBoxType> = ({focus = false, notch = true, sty
             ) : (
               <svg
                 style={props.notchStyle}
-                className={clsx('rce-mbox-left-notch', {'message-focus': focus})}
+                className={cn('rce-mbox-left-notch', {'message-focus': focus})}
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 20 20'
               >

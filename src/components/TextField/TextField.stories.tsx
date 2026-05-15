@@ -4,6 +4,7 @@ import {I18nextProvider, initReactI18next} from 'react-i18next';
 import {i18n} from '../../i18n/index.js';
 
 import {gothamColors} from '../../utils/colorUtils.js';
+import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {TextField} from './TextField.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
@@ -125,7 +126,8 @@ export const Default: Story = {
     placeholder: 'Textfield placeholder',
     placeholderColor: 'secondary',
     required: true
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const Multiline: Story = {
@@ -143,7 +145,8 @@ export const Multiline: Story = {
     required: true,
     rows: 1,
     textColor: 'black'
-  }
+  },
+  play: interactWithCanvas
 };
 
 export const WithPattern: Story = {
@@ -153,5 +156,6 @@ export const WithPattern: Story = {
     name: 'email',
     pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$',
     placeholder: 'Enter email address'
-  }
+  },
+  play: interactWithCanvas
 };

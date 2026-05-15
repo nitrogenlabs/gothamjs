@@ -1,19 +1,57 @@
 import {useEffect} from 'react';
+import {Flux} from '@nlabs/arkhamjs';
+import {FluxProvider} from '@nlabs/arkhamjs-utils-react';
 
 import {GothamActions} from '../../actions/GothamActions.js';
+import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {Notify} from './Notify.js';
 import {NotifyExample} from './NotifyExample.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
+import type {GothamNotifyParams} from './Notify.js';
+
+if (!(Flux as any).isInit) {
+  void Flux.init({name: 'gothamjs-storybook'});
+}
+
+const NotifyTrigger = ({notification}: {readonly notification: GothamNotifyParams}) => {
+  useEffect(() => () => {
+    GothamActions.notifyClose();
+  }, []);
+
+  return (
+    <div className="flex min-h-64 items-center justify-center p-8">
+      <button
+        className="cursor-pointer rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        onClick={() => GothamActions.notify(notification)}
+        type="button"
+      >
+        Open
+      </button>
+    </div>
+  );
+};
 
 const meta: Meta<typeof Notify> = {
+  argTypes: {
+    anchorOrigin: {
+      control: 'object'
+    },
+    message: {
+      control: 'text'
+    },
+    severity: {
+      control: 'select',
+      options: ['error', 'info', 'success', 'warning']
+    }
+  },
   component: Notify,
   decorators: [
     (Story) => (
-      <div>
+      <FluxProvider flux={Flux}>
         <Story />
         <Notify />
-      </div>
+      </FluxProvider>
     )
   ],
   parameters: {
@@ -26,116 +64,85 @@ export default meta;
 type Story = StoryObj<typeof Notify>;
 
 export const Basic: Story = {
-  render: () => {
-    useEffect(() => {
-      // Show notification when the story loads
-      GothamActions.notify({
+  play: interactWithCanvas,
+  render: () => (
+    <NotifyTrigger
+      notification={{
         autoHideDuration: 5000,
         message: 'This is a basic notification'
-      });
-
-      return () => {
-        // Clean up when the story changes
-        GothamActions.notifyClose();
-      };
-    }, []);
-
-    return <></>;
-  }
+      }}
+    />
+  )
 };
 
 export const Success: Story = {
-  render: () => {
-    useEffect(() => {
-      GothamActions.notify({
+  play: interactWithCanvas,
+  render: () => (
+    <NotifyTrigger
+      notification={{
         message: 'Operation completed successfully',
         severity: 'success'
-      });
-
-      return () => {
-        GothamActions.notifyClose();
-      };
-    }, []);
-
-    return <></>;
-  }
+      }}
+    />
+  )
 };
 
 export const Error: Story = {
-  render: () => {
-    useEffect(() => {
-      GothamActions.notify({
+  play: interactWithCanvas,
+  render: () => (
+    <NotifyTrigger
+      notification={{
         message: 'An error occurred',
         severity: 'error'
-      });
-
-      return () => {
-        GothamActions.notifyClose();
-      };
-    }, []);
-
-    return <></>;
-  }
+      }}
+    />
+  )
 };
 
 export const Warning: Story = {
-  render: () => {
-    useEffect(() => {
-      GothamActions.notify({
+  play: interactWithCanvas,
+  render: () => (
+    <NotifyTrigger
+      notification={{
         message: 'This is a warning message',
         severity: 'warning'
-      });
-
-      return () => {
-        GothamActions.notifyClose();
-      };
-    }, []);
-
-    return <></>;
-  }
+      }}
+    />
+  )
 };
 
 export const Info: Story = {
-  render: () => {
-    useEffect(() => {
-      GothamActions.notify({
+  play: interactWithCanvas,
+  render: () => (
+    <NotifyTrigger
+      notification={{
         message: 'This is an informational message',
         severity: 'info'
-      });
-
-      return () => {
-        GothamActions.notifyClose();
-      };
-    }, []);
-
-    return <></>;
-  }
+      }}
+    />
+  )
 };
 
 export const TopRight: Story = {
-  render: () => {
-    useEffect(() => {
-      GothamActions.notify({
+  play: interactWithCanvas,
+  render: () => (
+    <NotifyTrigger
+      notification={{
         anchorOrigin: {
           horizontal: 'right',
           vertical: 'top'
         },
         message: 'This appears in the top right'
-      });
-
-      return () => {
-        GothamActions.notifyClose();
-      };
-    }, []);
-
-    return <></>;
-  }
+      }}
+    />
+  )
 };
 
 export const WithActions: Story = {
-  render: () => {
-    useEffect(() => {
-      GothamActions.notify({
+  play: interactWithCanvas,
+  render: () => (
+    <NotifyTrigger
+      notification={{
         actions: [
           {
             label: 'Undo',
@@ -153,17 +160,12 @@ export const WithActions: Story = {
           }
         ],
         message: 'Would you like to undo?'
-      });
-
-      return () => {
-        GothamActions.notifyClose();
-      };
-    }, []);
-
-    return <></>;
-  }
+      }}
+    />
+  )
 };
 
 export const Examples: Story = {
+  play: interactWithCanvas,
   render: () => <NotifyExample />
 };

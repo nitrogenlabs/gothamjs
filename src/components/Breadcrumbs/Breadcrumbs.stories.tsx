@@ -1,4 +1,5 @@
 import {Breadcrumbs as BreadcrumbsComponent} from './Breadcrumbs.js';
+import {interactWithCanvas} from '../../utils/storyInteractions.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
@@ -29,6 +30,7 @@ export const Contained: Story = {
     ],
     variant: 'contained'
   },
+  play: interactWithCanvas,
   render: (args) => (
     <div className="w-full max-w-4xl p-6">
       <BreadcrumbsComponent {...args} />
@@ -45,6 +47,7 @@ export const Full: Story = {
     ],
     variant: 'full'
   },
+  play: interactWithCanvas,
   render: (args) => (
     <div className="w-full max-w-6xl p-6">
       <BreadcrumbsComponent {...args} />
@@ -61,6 +64,7 @@ export const Chevrons: Story = {
     ],
     variant: 'chevrons'
   },
+  play: interactWithCanvas,
   render: (args) => (
     <div className="w-full max-w-4xl p-6">
       <BreadcrumbsComponent {...args} />

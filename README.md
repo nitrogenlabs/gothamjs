@@ -263,7 +263,7 @@ All Lucide React icons support these common properties:
 GothamJS provides optimized form components with automatic validation, accessibility features, and performance optimizations:
 
 ```jsx
-import { Form, TextField, FormButton } from '@nlabs/gothamjs';
+import { Button, Form, TextField } from '@nlabs/gothamjs';
 import { z } from 'zod';
 
 // Define your form schema with Zod
@@ -295,11 +295,13 @@ const LoginForm = () => (
           placeholder="Enter your password"
           required
         />
-        <FormButton
+        <Button
           type="submit"
           variant="contained"
           color="primary"
           label="Sign In"
+          disabled={isSubmitting}
+          isLoading={isSubmitting}
         />
       </>
     )}
@@ -312,7 +314,7 @@ const LoginForm = () => (
 - **Automatic Validation**: Integrated Zod schema validation with react-hook-form
 - **Performance Optimized**: Efficient re-rendering and validation triggering
 - **Accessibility**: Proper ARIA attributes and form structure
-- **Loading States**: Automatic submit button disabling during form submission
+- **Loading States**: Use `Button` with `disabled` and `isLoading` during form submission
 - **Error Handling**: Both field-level and form-level error display
 - **Type Safety**: Full TypeScript support with inferred types
 

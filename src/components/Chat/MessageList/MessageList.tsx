@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {ChevronDown as ArrowDown01Icon} from 'lucide-react';
 import {useEffect, useRef, useState} from 'react';
 
@@ -168,7 +168,7 @@ export const MessageList: FC<IMessageListProps> = ({
   };
 
   return (
-    <div className={clsx(['rce-container-mlist', props.className])} {...props.customProps}>
+    <div className={cn(['rce-container-mlist', props.className])} {...props.customProps}>
       {!!props.children && props.isShowChild && props.children}
       <div ref={referance} onScroll={onScroll} className='rce-mlist'>
         {props.dataSource.map((x, i: number) => (

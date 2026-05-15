@@ -2,7 +2,7 @@
 import {fireEvent, render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 
-import {Avatar, AvatarButton, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage} from './Avatar.js';
+import {Avatar, AvatarBadge, AvatarButton, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage} from './Avatar.js';
 
 describe('Avatar', () => {
   it('renders a Tailwind-style avatar from src and initials', () => {
@@ -58,5 +58,16 @@ describe('Avatar', () => {
     );
 
     expect(screen.getByText('+2')).toBeInTheDocument();
+  });
+
+  it('positions avatar badges on the lower edge', () => {
+    render(
+      <Avatar initials="SK">
+        <AvatarFallback>SK</AvatarFallback>
+        <AvatarBadge data-testid="avatar-badge" />
+      </Avatar>
+    );
+
+    expect(screen.getByTestId('avatar-badge')).toHaveClass('absolute', 'right-0', 'bottom-0', 'translate-x-1/4', 'translate-y-1/4');
   });
 });

@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {
   ChevronDown as ArrowDown01Icon,
   ChevronRight as ArrowRight01Icon,
@@ -106,13 +106,13 @@ export const MeetingMessage: FC<IMeetingMessageProps> = ({
             </div>
           )}
         </div>
-        <div className={clsx('rce-mtmg-toogleContent', {'rce-mtmg-toogleContent--click': toogle === true})}>
+        <div className={cn('rce-mtmg-toogleContent', {'rce-mtmg-toogleContent--click': toogle === true})}>
           {dataSource &&
             dataSource.map((x, i) => (
               <div key={i}>
                 {!x.event && (
                   <div className='rce-mitem'>
-                    <div className={clsx('rce-mitem avatar', {'rce-mitem no-avatar': !x.avatar})}>
+                    <div className={cn('rce-mitem avatar', {'rce-mitem no-avatar': !x.avatar})}>
                       {x.avatar ? <Avatar src={x.avatar} /> : <MessageMultiple01Icon  />}
                     </div>
                     <div className='rce-mitem-body'>

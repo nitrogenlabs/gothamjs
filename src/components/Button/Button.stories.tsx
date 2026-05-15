@@ -2,6 +2,7 @@ import React from 'react';
 import {I18nextProvider, initReactI18next} from 'react-i18next';
 import {i18n} from '../../i18n/index.js';
 import {gothamColors} from '../../utils/colorUtils.js';
+import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {Button as ButtonComponent} from './Button.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
@@ -78,5 +79,6 @@ export const Button: Story = {
     label: 'Button',
     size: 'md',
     variant: 'contained'
-  }
+  },
+  play: interactWithCanvas
 };

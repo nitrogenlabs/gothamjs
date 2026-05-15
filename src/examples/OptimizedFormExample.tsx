@@ -4,7 +4,7 @@
  */
 import {z} from 'zod';
 
-import {Form, FormButton, TextField} from '../components/index.js';
+import {Button, Form, TextField} from '../components/index.js';
 
 // Define a comprehensive form schema
 const userProfileSchema = z.object({
@@ -102,15 +102,17 @@ export const OptimizedFormExample = () => {
             </div>
 
             <div className="flex gap-4">
-              <FormButton
+              <Button
                 type="submit"
                 variant="contained"
                 color="primary"
                 label="Save Profile"
                 className="flex-1"
+                disabled={isSubmitting}
+                isLoading={isSubmitting}
               />
 
-              <FormButton
+              <Button
                 type="button"
                 variant="outlined"
                 color="neutral"

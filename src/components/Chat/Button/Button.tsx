@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 
 import {IButtonProps} from '../type';
 
@@ -8,7 +8,7 @@ export const Button: FC<IButtonProps> = ({disabled = false, backgroundColor = '#
   <button
     ref={props.buttonRef}
     title={props.title}
-    className={clsx('rce-button', props.type, props.className)}
+    className={cn('rce-button', props.type, props.className)}
     style={{
       backgroundColor,
       color,

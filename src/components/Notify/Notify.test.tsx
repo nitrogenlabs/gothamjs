@@ -4,8 +4,13 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {render} from '@nlabs/lex/test-react';
+import {Flux} from '@nlabs/arkhamjs';
+import {FluxProvider} from '@nlabs/arkhamjs-utils-react';
+import {fireEvent, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
+import {vi} from 'vitest';
 
+import {GothamActions} from '../../actions/GothamActions.js';
 import {Notify} from './Notify.js';
 
 describe('Notify', () => {
@@ -21,6 +26,51 @@ describe('Notify', () => {
     expect(queryByRole('alert')).not.toBeInTheDocument();
   });
 
-  // Note: Full functionality testing is covered by Storybook stories
-  // which test the component with Flux integration
+  it('opens notifications dispatched through the Flux provider', async () => {
+    if (!(Flux as any).isInit) {
+      await Flux.init({name: 'gothamjs-test'});
+    }
+
+    render(
+      <FluxProvider flux={Flux}>
+        <button onClick={() => GothamActions.notify({message: 'Preview notification'})} type="button">
+          Open
+        </button>
+        <Notify />
+      </FluxProvider>
+    );
+
+    fireEvent.click(screen.getByRole('button', {name: 'Open'}));
+
+    expect(await screen.findByText('Preview notification')).toBeInTheDocument();
+  });
+
+  it('renders and invokes notification actions', async () => {
+    const onUndo = vi.fn();
+
+    if (!(Flux as any).isInit) {
+      await Flux.init({name: 'gothamjs-test'});
+    }
+
+    render(
+      <FluxProvider flux={Flux}>
+        <button
+          onClick={() => GothamActions.notify({
+            actions: [{label: 'Undo', onClick: onUndo}],
+            message: 'Would you like to undo?'
+          })}
+          type="button"
+        >
+          Open
+        </button>
+        <Notify />
+      </FluxProvider>
+    );
+
+    fireEvent.click(screen.getByRole('button', {name: 'Open'}));
+    fireEvent.click(await screen.findByRole('button', {name: 'Undo'}));
+
+    expect(screen.getByText('Would you like to undo?')).toBeInTheDocument();
+    expect(onUndo).toHaveBeenCalledWith('notification');
+  });
 });

@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {useEffect} from 'react';
 
 
@@ -74,13 +74,13 @@ export const Input: FC<IInputProps> = ({
   };
 
   return (
-    <div className={clsx('rce-container-input', props.className)}>
+    <div className={cn('rce-container-input', props.className)}>
       {props.leftButtons && <div className='rce-input-buttons'>{props.leftButtons}</div>}
       {multiline === false ? (
         <input
           ref={props.referance}
           type={type}
-          className={clsx('rce-input')}
+          className={cn('rce-input')}
           placeholder={props.placeholder}
           defaultValue={props.defaultValue}
           style={props.inputStyle}
@@ -101,7 +101,7 @@ export const Input: FC<IInputProps> = ({
       ) : (
         <textarea
           ref={props.referance}
-          className={clsx('rce-input', 'rce-input-textarea')}
+          className={cn('rce-input', 'rce-input-textarea')}
           placeholder={props.placeholder}
           defaultValue={props.defaultValue}
           style={props.inputStyle}

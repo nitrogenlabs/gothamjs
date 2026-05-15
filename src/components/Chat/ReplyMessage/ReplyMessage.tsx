@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 
 
 import type {FC} from 'react';
@@ -6,7 +6,7 @@ import type {IReplyMessageProps} from '../type';
 
 export const ReplyMessage: FC<IReplyMessageProps> = ({onClick, ...props}) => (
   <div
-    className={clsx('rce-mbox-reply', {
+    className={cn('rce-mbox-reply', {
       'rce-mbox-reply-border': !!props.titleColor
     })}
     style={{...(props.titleColor && {borderColor: props.titleColor})}}

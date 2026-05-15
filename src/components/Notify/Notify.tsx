@@ -120,29 +120,9 @@ export const Notify = () => {
     anchorOrigin = {horizontal: 'left', vertical: 'bottom'},
     ...restProps
   }: GothamNotifyParams) => {
-    let action;
-
-    if(actions.length) {
-      action = (key: string) => (
-        <div className="flex space-x-2">
-          {actions.map(({icon, label, onClick}, index) => (
-            <Fragment key={index}>
-              {icon ? (
-                <IconButton onClick={() => onClick(key)}>
-                  <Svg color="inherit" height={24} name={icon} width={24} />
-                </IconButton>
-              ) : (
-                <Button onClick={() => onClick(key)}>{label}</Button>
-              )}
-            </Fragment>
-          ))}
-        </div>
-      );
-    }
-
     setNotification({
       ...restProps,
-      actions: [action as GothamNotifyAction],
+      actions,
       anchorOrigin,
       autoHideDuration,
       message: severity ? (

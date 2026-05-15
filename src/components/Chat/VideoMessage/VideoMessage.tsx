@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {
   CircleAlert as Alert02Icon,
   CloudDownload as CloudDownloadIcon
@@ -41,7 +41,7 @@ export const VideoMessage: FC<IVideoMessageProps> = (props) => {
 
   return (
     <div
-      className={clsx('rce-mbox-video', {
+      className={cn('rce-mbox-video', {
         'padding-time': !props?.text
       })}
     >

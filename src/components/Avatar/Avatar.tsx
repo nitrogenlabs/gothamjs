@@ -201,7 +201,7 @@ export const AvatarBadge = ({className, ...props}: HTMLAttributes<HTMLSpanElemen
   return (
     <span
       className={cn(
-        'absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground ring-2 ring-white select-none dark:ring-zinc-900',
+        'absolute right-0 bottom-0 z-10 inline-flex translate-x-1/4 translate-y-1/4 items-center justify-center rounded-full bg-primary text-primary-foreground ring-2 ring-white select-none dark:ring-zinc-900',
         badgeClasses[size],
         className
       )}

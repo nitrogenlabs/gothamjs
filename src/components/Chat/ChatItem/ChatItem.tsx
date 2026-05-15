@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {
   ChevronDown as ArrowDown01Icon,
   ChevronUp as ArrowUp01Icon,
@@ -98,7 +98,7 @@ export const ChatItem: FC<IChatItemProps> = ({
     <>
       <div
         key={props.id as Key}
-        className={clsx('rce-container-citem', props.className)}
+        className={cn('rce-container-citem', props.className)}
         onClick={handleOnClick}
         onContextMenu={props.onContextMenu}
       >
@@ -107,7 +107,7 @@ export const ChatItem: FC<IChatItemProps> = ({
           {((onDrag && !props.onDragComponent) || !onDrag) && [
             <div
               key={'avatar'}
-              className={clsx('rce-citem-avatar', {'rce-citem-status-encircle': statusColorType === 'encircle'})}
+              className={cn('rce-citem-avatar', {'rce-citem-status-encircle': statusColorType === 'encircle'})}
             >
               <Avatar
                 src={props.avatar}
@@ -137,7 +137,7 @@ export const ChatItem: FC<IChatItemProps> = ({
                 }
                 onError={onAvatarError}
                 lazyLoadingImage={lazyLoadingImage}
-                type={clsx('circle', {flexible: avatarFlexible})}
+                type={cn('circle', {flexible: avatarFlexible})}
               />
               {props.subList && props.subList.length > 0 && (
                 <button className='rce-citem-expand-button' onClick={(e) => onExpandItem(e, props.id)}>

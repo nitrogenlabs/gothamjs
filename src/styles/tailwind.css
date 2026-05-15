@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "./chat.css";
 @source "../**/*.{js,jsx,ts,tsx}";
@@ -7,8 +7,8 @@
 
 @theme {
   --spacing: 4px;
-  --font-body: Inter, sans-serif;
-  --font-sans: Inter, sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
 
   --color-primary: #4e207a;
   --color-primary-300: #9d90fd;
@@ -110,6 +110,26 @@
   --color-destructive-foreground-dark: #f7f7f7;
   --color-primary-foreground-dark: #f7f7f7;
   --color-secondary-foreground-dark: #f7f7f7;
+}
+
+@layer base {
+  :root,
+  :host {
+    --default-font-family: "Plus Jakarta Sans", sans-serif;
+  }
+
+  html,
+  body,
+  :host {
+    font-family: "Plus Jakarta Sans", sans-serif;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
 }
 
 input:-internal-autofill-selected,

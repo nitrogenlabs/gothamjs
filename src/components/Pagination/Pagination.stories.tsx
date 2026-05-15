@@ -1,6 +1,7 @@
 import {useState} from 'react';
 
 import {Pagination as PaginationComponent} from './Pagination.js';
+import {interactWithCanvas} from '../../utils/storyInteractions.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 import type {ComponentProps} from 'react';
@@ -58,6 +59,7 @@ export const Centered: Story = {
     totalPages: 10,
     variant: 'centered'
   },
+  play: interactWithCanvas,
   render: PaginationStory
 };
 
@@ -69,5 +71,6 @@ export const Simple: Story = {
     totalPages: 10,
     variant: 'simple'
   },
+  play: interactWithCanvas,
   render: PaginationStory
 };

@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import {cn} from '@nlabs/utils';
 import {
   Phone as Call02Icon,
   Link as Link05Icon,
@@ -34,7 +34,7 @@ export const MeetingItem: FC<IMeetingItemProps> = ({
     props.subject && subjectLimit && props.subject.substring(0, subjectLimit) + (props.subject.length > subjectLimit ? '...' : '');
 
   return (
-    <div className={clsx('rce-container-mtitem', props.className)} onClick={onClick} onContextMenu={props.onContextMenu}>
+    <div className={cn('rce-container-mtitem', props.className)} onClick={onClick} onContextMenu={props.onContextMenu}>
       <audio autoPlay loop muted={audioMuted} src={props.audioSource} />
 
       <div className='rce-mtitem'>
@@ -78,7 +78,7 @@ export const MeetingItem: FC<IMeetingItemProps> = ({
                   }
                   onError={onAvatarError}
                   lazyLoadingImage={lazyLoadingImage}
-                  type={clsx('circle', {flexible: avatarFlexible})}
+                  type={cn('circle', {flexible: avatarFlexible})}
                 />
               ))
             }
