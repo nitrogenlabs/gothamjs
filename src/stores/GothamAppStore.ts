@@ -29,7 +29,7 @@ export const gothamApp = {
     loadingContent: '',
     notify: {
       actions: [],
-      autoHideDuration: 5000,
+      autoHideDuration: 15000,
       isOpen: false,
       message: '',
       severity: 'info'
@@ -54,7 +54,7 @@ export const gothamApp = {
             ...(state.notify || {}),
             actions: data.actions || [],
             anchorOrigin: data.anchorOrigin || {horizontal: 'center', vertical: 'bottom'},
-            autoHideDuration: data.autoHideDuration || (state.notify?.autoHideDuration || 5000),
+            autoHideDuration: data.autoHideDuration || (state.notify?.autoHideDuration || 15000),
             isOpen: true,
             key: data.key || new Date().getTime(),
             message: data.message || '',

@@ -5,7 +5,7 @@
 import {Transition} from '@headlessui/react';
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import {cn} from '@nlabs/utils';
-import {Fragment, useEffect, useState} from 'react';
+import {Fragment, useEffect, useRef, useState} from 'react';
 
 import {GothamConstants} from '../../constants/GothamConstants.js';
 import {Svg} from '../Svg/Svg.js';
@@ -94,32 +94,44 @@ const Alert = ({children, severity, onClose}) => {
 
 export const Notify = () => {
   const [isOpen, setOpen] = useState(false);
+  const [isHovered, setHovered] = useState(false);
   const [notification, setNotification] = useState<GothamNotifyParams>({});
+  const remainingDurationRef = useRef<number | undefined>(undefined);
+  const timerStartedAtRef = useRef(0);
 
-  const notifyClose = () => setOpen(false);
+  const notifyClose = () => {
+    remainingDurationRef.current = undefined;
+    timerStartedAtRef.current = 0;
+    setOpen(false);
+  };
 
   useEffect(() => {
-    if(isOpen && notification.autoHideDuration) {
+    if(isOpen && notification.autoHideDuration && !isHovered) {
+      const duration = remainingDurationRef.current ?? notification.autoHideDuration;
+      timerStartedAtRef.current = Date.now();
       const id = setTimeout(() => {
-        setOpen(false);
-      }, notification.autoHideDuration);
+        notifyClose();
+      }, duration);
 
       return () => {
         clearTimeout(id);
+        remainingDurationRef.current = Math.max(0, duration - (Date.now() - timerStartedAtRef.current));
       };
     }
 
     return undefined;
-  }, [isOpen, notification.autoHideDuration]);
+  }, [isHovered, isOpen, notification.autoHideDuration]);
 
   const notifyOpen = ({
     actions = [],
-    autoHideDuration = 3000,
+    autoHideDuration = 15000,
     message,
     severity,
     anchorOrigin = {horizontal: 'left', vertical: 'bottom'},
     ...restProps
   }: GothamNotifyParams) => {
+    remainingDurationRef.current = autoHideDuration;
+    setHovered(false);
     setNotification({
       ...restProps,
       actions,
@@ -174,7 +186,10 @@ export const Notify = () => {
       <div className={cn(
         'fixed z-50 max-w-sm w-full shadow-lg rounded-lg pointer-events-auto overflow-hidden',
         positionClasses
-      )}>
+      )}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      >
         <div className="ring-1 ring-black ring-opacity-5 bg-white">
           {!notification.severity ? (
             <div className="p-4">
