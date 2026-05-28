@@ -1,5 +1,5 @@
 import {cn} from '@nlabs/utils';
-import {forwardRef} from 'react';
+import {forwardRef, useEffect, useState} from 'react';
 
 import {renderWithAsChild} from '../ComponentUtils/renderWithAsChild.js';
 
@@ -15,6 +15,9 @@ export interface NavbarProps extends HTMLAttributes<HTMLElement> {
   readonly as?: ElementType;
   readonly asChild?: boolean;
   readonly children?: ReactNode;
+  readonly isSticky?: boolean;
+  readonly transparentOnScroll?: boolean;
+  readonly transparentScrollThreshold?: number;
 }
 
 export interface NavbarSectionProps extends HTMLAttributes<HTMLDivElement> {
@@ -35,23 +38,50 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(({
   asChild = false,
   children,
   className,
+  isSticky = false,
+  transparentOnScroll = false,
+  transparentScrollThreshold = 12,
   ...props
-}, ref) => renderWithAsChild(
-  {
-    as,
-    asChild,
-    children,
-    className: cn(
-      'flex min-h-14 w-full items-center gap-3 border-b border-border bg-background px-4 text-sm text-foreground sm:px-6',
-      className
-    ),
-    ref,
-    ...props
-  } as never,
-  {
-    'data-slot': 'navbar'
-  }
-));
+}, ref) => {
+  const [isAtTop, setIsAtTop] = useState(true);
+
+  useEffect(() => {
+    if(!transparentOnScroll) return undefined;
+
+    const onScroll = () => setIsAtTop(window.scrollY < transparentScrollThreshold);
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive: true});
+
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [transparentOnScroll, transparentScrollThreshold]);
+
+  return renderWithAsChild(
+    {
+      as,
+      asChild,
+      children,
+      className: cn(
+        'flex min-h-14 w-full items-center gap-3 border-b border-border bg-background px-4 text-sm text-foreground sm:px-6',
+        isSticky && 'sticky top-0 z-40',
+        transparentOnScroll && [
+          'inset-x-0 top-0 z-40 border-transparent bg-transparent text-white transition-[background-color,backdrop-filter,border-color,color] duration-200',
+          isSticky ? 'sticky' : 'fixed',
+          'data-[scroll-state=scrolled]:border-border/70 data-[scroll-state=scrolled]:bg-background/80 data-[scroll-state=scrolled]:text-foreground data-[scroll-state=scrolled]:backdrop-blur-md'
+        ],
+        className
+      ),
+      'data-sticky': isSticky ? 'true' : undefined,
+      'data-scroll-state': transparentOnScroll ? (isAtTop ? 'at-top' : 'scrolled') : undefined,
+      'data-transparent-on-scroll': transparentOnScroll ? 'true' : undefined,
+      ref,
+      ...props
+    } as never,
+    {
+      'data-slot': 'navbar'
+    }
+  );
+});
 
 Navbar.displayName = 'Navbar';
 

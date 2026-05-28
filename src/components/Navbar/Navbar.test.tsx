@@ -25,4 +25,11 @@ describe('Navbar', () => {
     expect(screen.getByRole('link', {name: 'Events'})).toHaveAttribute('href', '/events');
     expect(screen.getByRole('button', {name: 'Search'})).toHaveAttribute('type', 'button');
   });
+
+  it('exposes sticky positioning with isSticky', () => {
+    render(<Navbar aria-label="Primary" isSticky />);
+
+    expect(screen.getByRole('navigation', {name: 'Primary'})).toHaveAttribute('data-sticky', 'true');
+    expect(screen.getByRole('navigation', {name: 'Primary'})).toHaveClass('sticky');
+  });
 });
