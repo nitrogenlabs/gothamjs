@@ -29,6 +29,7 @@ const meta: Meta<typeof Navbar> = {
 
 export const TransparentOnScroll: Story = {
   args: {
+    isSticky: true,
     transparentOnScroll: true
   },
   play: interactWithCanvas,

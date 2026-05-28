@@ -11,6 +11,10 @@ import type {
   ReactNode
 } from 'react';
 
+const getTransparentScrollThreshold = (threshold: number) => (
+  threshold > 1 ? threshold : window.innerHeight * threshold
+);
+
 export interface NavbarProps extends HTMLAttributes<HTMLElement> {
   readonly as?: ElementType;
   readonly asChild?: boolean;
@@ -40,7 +44,7 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(({
   className,
   isSticky = false,
   transparentOnScroll = false,
-  transparentScrollThreshold = 12,
+  transparentScrollThreshold = 0.1,
   ...props
 }, ref) => {
   const [isAtTop, setIsAtTop] = useState(true);
@@ -48,12 +52,20 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(({
   useEffect(() => {
     if(!transparentOnScroll) return undefined;
 
-    const onScroll = () => setIsAtTop(window.scrollY < transparentScrollThreshold);
+    const onScroll = () => {
+      const threshold = getTransparentScrollThreshold(transparentScrollThreshold);
+
+      setIsAtTop(window.scrollY < threshold);
+    };
 
     onScroll();
+    window.addEventListener('resize', onScroll, {passive: true});
     window.addEventListener('scroll', onScroll, {passive: true});
 
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('resize', onScroll);
+      window.removeEventListener('scroll', onScroll);
+    };
   }, [transparentOnScroll, transparentScrollThreshold]);
 
   return renderWithAsChild(
