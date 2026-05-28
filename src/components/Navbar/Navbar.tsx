@@ -1,6 +1,7 @@
 import {cn} from '@nlabs/utils';
 import {Menu, X} from 'lucide-react';
-import {forwardRef, useEffect, useState} from 'react';
+import {forwardRef, useEffect, useId, useState} from 'react';
+import {createPortal} from 'react-dom';
 
 import {renderWithAsChild} from '../ComponentUtils/renderWithAsChild.js';
 
@@ -56,6 +57,7 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(({
 }, ref) => {
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mobileMenuId = useId();
 
   useEffect(() => {
     if(!transparentOnScroll) return undefined;
@@ -79,6 +81,16 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(({
   useEffect(() => {
     if(!isMobileMenuOpen) return undefined;
 
+    const bodyOverflow = document.body.style.overflow;
+    const bodyOverscrollBehavior = document.body.style.overscrollBehavior;
+    const htmlOverflow = document.documentElement.style.overflow;
+    const htmlOverscrollBehavior = document.documentElement.style.overscrollBehavior;
+
+    document.body.style.overflow = 'hidden';
+    document.body.style.overscrollBehavior = 'none';
+    document.documentElement.style.overflow = 'hidden';
+    document.documentElement.style.overscrollBehavior = 'none';
+
     const onKeyDown = (event: KeyboardEvent) => {
       if(event.key === 'Escape') {
         setIsMobileMenuOpen(false);
@@ -86,58 +98,81 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(({
     };
 
     document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = bodyOverflow;
+      document.body.style.overscrollBehavior = bodyOverscrollBehavior;
+      document.documentElement.style.overflow = htmlOverflow;
+      document.documentElement.style.overscrollBehavior = htmlOverscrollBehavior;
+      document.removeEventListener('keydown', onKeyDown);
+    };
   }, [isMobileMenuOpen]);
+
+  const scrollState = transparentOnScroll
+    ? (isMobileMenuOpen ? 'scrolled' : isAtTop ? 'at-top' : 'scrolled')
+    : undefined;
+
+  const mobileMenuPortal = mobileMenu && typeof document !== 'undefined' ? createPortal(
+    <>
+      <div
+        aria-hidden={!isMobileMenuOpen}
+        className={cn(
+          'fixed inset-0 z-30 bg-black/45 opacity-0 backdrop-blur-md transition-opacity duration-200 lg:hidden',
+          isMobileMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none'
+        )}
+        data-slot="navbar-mobile-overlay"
+        onClick={() => setIsMobileMenuOpen(false)}
+        style={{
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)'
+        }}
+      />
+      <aside
+        aria-label="Mobile navigation"
+        className={cn(
+          'fixed inset-y-0 right-0 z-50 grid w-[min(86vw,22rem)] grid-rows-[auto_1fr] gap-4 overflow-hidden overscroll-contain border-l border-white/15 bg-[rgba(16,22,36,.78)] p-5 text-white shadow-2xl backdrop-blur-xl transition-transform duration-200 lg:hidden',
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        )}
+        data-slot="navbar-mobile-menu"
+        id={mobileMenuId}
+        style={{
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)'
+        }}>
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0 text-base font-semibold">{mobileMenuTitle}</div>
+          <button
+            aria-label="Close navigation menu"
+            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-md border border-current/15 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+            data-slot="navbar-mobile-close"
+            onClick={() => setIsMobileMenuOpen(false)}
+            type="button">
+            <X aria-hidden="true" className="size-5" />
+          </button>
+        </div>
+        <div className="min-h-0 overflow-y-auto" onClick={() => setIsMobileMenuOpen(false)}>
+          {mobileMenu}
+        </div>
+      </aside>
+    </>,
+    document.body
+  ) : null;
 
   const renderedChildren = (
     <>
       {children}
       {mobileMenu ? (
-        <>
-          <button
-            aria-controls="gotham-navbar-mobile-menu"
-            aria-expanded={isMobileMenuOpen}
-            aria-label={mobileMenuLabel}
-            className="ml-auto inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-current/15 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current lg:hidden"
-            data-slot="navbar-mobile-trigger"
-            onClick={() => setIsMobileMenuOpen((value) => !value)}
-            type="button">
-            <Menu aria-hidden="true" className="size-5" />
-          </button>
-          <div
-            aria-hidden={!isMobileMenuOpen}
-            className={cn(
-              'fixed inset-0 z-50 bg-black/35 opacity-0 backdrop-blur-sm transition-opacity duration-200 lg:hidden',
-              isMobileMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none'
-            )}
-            data-slot="navbar-mobile-overlay"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-          <aside
-            aria-label="Mobile navigation"
-            className={cn(
-              'fixed inset-y-0 right-0 z-50 grid w-[min(86vw,22rem)] grid-rows-[auto_1fr] gap-4 border-l border-border bg-background p-5 text-foreground shadow-2xl transition-transform duration-200 lg:hidden',
-              isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-            )}
-            data-slot="navbar-mobile-menu"
-            id="gotham-navbar-mobile-menu">
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0 text-base font-semibold">{mobileMenuTitle}</div>
-              <button
-                aria-label="Close navigation menu"
-                className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-md border border-border bg-transparent text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                data-slot="navbar-mobile-close"
-                onClick={() => setIsMobileMenuOpen(false)}
-                type="button">
-                <X aria-hidden="true" className="size-5" />
-              </button>
-            </div>
-            <div className="min-h-0 overflow-y-auto" onClick={() => setIsMobileMenuOpen(false)}>
-              {mobileMenu}
-            </div>
-          </aside>
-        </>
+        <button
+          aria-controls={mobileMenuId}
+          aria-expanded={isMobileMenuOpen}
+          aria-label={mobileMenuLabel}
+          className="ml-auto inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-current/15 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current lg:hidden"
+          data-slot="navbar-mobile-trigger"
+          onClick={() => setIsMobileMenuOpen((value) => !value)}
+          type="button">
+          <Menu aria-hidden="true" className="size-5" />
+        </button>
       ) : null}
+      {mobileMenuPortal}
     </>
   );
 
@@ -148,16 +183,17 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(({
       children: renderedChildren,
       className: cn(
         'flex min-h-14 w-full items-center gap-3 border-b border-border bg-background px-4 text-sm text-foreground sm:px-6',
-        isSticky && 'sticky top-0 z-40',
+        isSticky && !isMobileMenuOpen && 'sticky top-0 z-40',
         transparentOnScroll && [
           'inset-x-0 top-0 z-40 border-transparent bg-transparent text-white transition-[background-color,backdrop-filter,border-color,color] duration-200',
-          isSticky ? 'sticky' : 'fixed',
+          isSticky && !isMobileMenuOpen ? 'sticky' : 'fixed',
           'data-[scroll-state=scrolled]:border-border/70 data-[scroll-state=scrolled]:bg-background/80 data-[scroll-state=scrolled]:text-foreground data-[scroll-state=scrolled]:backdrop-blur-md'
         ],
         className
       ),
       'data-sticky': isSticky ? 'true' : undefined,
-      'data-scroll-state': transparentOnScroll ? (isAtTop ? 'at-top' : 'scrolled') : undefined,
+      'data-mobile-menu-open': isMobileMenuOpen ? 'true' : undefined,
+      'data-scroll-state': scrollState,
       'data-transparent-on-scroll': transparentOnScroll ? 'true' : undefined,
       ref,
       ...props

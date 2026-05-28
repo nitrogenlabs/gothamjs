@@ -80,6 +80,7 @@ describe('Navbar', () => {
     render(
       <Navbar
         aria-label="Primary"
+        transparentOnScroll
         mobileMenu={(
           <nav aria-label="Mobile primary">
             <NavbarItem href="/about">About</NavbarItem>
@@ -94,19 +95,32 @@ describe('Navbar', () => {
 
     const trigger = screen.getByRole('button', {name: 'Open navigation menu'});
     const menu = screen.getByLabelText('Mobile navigation');
+    const navbar = screen.getByRole('navigation', {name: 'Primary'});
 
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    expect(navbar).toHaveAttribute('data-scroll-state', 'at-top');
     expect(menu).toHaveClass('translate-x-full');
 
     fireEvent.click(trigger);
 
     expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    expect(document.body).toHaveStyle({overflow: 'hidden'});
+    expect(document.documentElement).toHaveStyle({overflow: 'hidden'});
+    expect(navbar).toHaveAttribute('data-mobile-menu-open', 'true');
+    expect(navbar).toHaveAttribute('data-scroll-state', 'scrolled');
     expect(menu).toHaveClass('translate-x-0');
+    expect(menu).toHaveClass('bg-[rgba(16,22,36,.78)]');
+    expect(menu).toHaveClass('text-white');
+    expect(document.querySelector('[data-slot="navbar-mobile-overlay"]')).toHaveClass('backdrop-blur-md');
     expect(screen.getByRole('link', {name: 'About'})).toHaveAttribute('href', '/about');
 
     fireEvent.click(screen.getByRole('button', {name: 'Close navigation menu'}));
 
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    expect(document.body.style.overflow).toBe('');
+    expect(document.documentElement.style.overflow).toBe('');
+    expect(navbar).not.toHaveAttribute('data-mobile-menu-open');
+    expect(navbar).toHaveAttribute('data-scroll-state', 'at-top');
     expect(menu).toHaveClass('translate-x-full');
   });
 });
