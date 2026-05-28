@@ -38,4 +38,40 @@ describe('Footer', () => {
 
     expect(screen.getByRole('link', {name: 'Support'})).toHaveAttribute('href', 'mailto:support@gothamjs.io');
   });
+
+  it('renders the large footer variant with grouped links and social links', () => {
+    render(
+      <Footer
+        brand={<span>GothamJS</span>}
+        copyright="Copyright 2026 GothamJS"
+        description="Operational UI components for ambitious apps."
+        linkGroups={[
+          {
+            title: 'Solutions',
+            links: [
+              {href: '/stacks', label: 'Stack Management'}
+            ]
+          },
+          {
+            title: 'Legal',
+            links: [
+              {href: '/privacy', label: 'Privacy policy'}
+            ]
+          }
+        ]}
+        socialLinks={[
+          {href: '/github', label: 'GitHub', icon: <span aria-hidden="true">GH</span>}
+        ]}
+        variant="large"
+      />
+    );
+
+    expect(screen.getByText('GothamJS')).toBeInTheDocument();
+    expect(screen.getByText('Operational UI components for ambitious apps.')).toBeInTheDocument();
+    expect(screen.getByText('Solutions')).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Stack Management'})).toHaveAttribute('href', '/stacks');
+    expect(screen.getByRole('link', {name: 'Privacy policy'})).toHaveAttribute('href', '/privacy');
+    expect(screen.getByRole('link', {name: 'GitHub'})).toHaveAttribute('href', '/github');
+    expect(screen.getByText('Copyright 2026 GothamJS')).toBeInTheDocument();
+  });
 });
