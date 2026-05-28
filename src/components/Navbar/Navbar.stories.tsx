@@ -67,8 +67,23 @@ type Story = StoryObj<typeof Navbar>;
 export const Default: Story = {
   play: interactWithCanvas,
   render: (args) => (
-    <Navbar {...args}>
-      <NavbarSection>
+    <Navbar
+      {...args}
+      mobileMenu={(
+        <nav className="grid gap-2" aria-label="Mobile example navigation">
+          <NavbarItem current href="#overview">
+            <NavbarLabel>Overview</NavbarLabel>
+          </NavbarItem>
+          <NavbarItem href="#components">
+            <NavbarLabel>Components</NavbarLabel>
+          </NavbarItem>
+          <NavbarItem aria-label="Settings">
+            <Settings />
+            <NavbarLabel>Settings</NavbarLabel>
+          </NavbarItem>
+        </nav>
+      )}>
+      <NavbarSection className="hidden lg:flex">
         <NavbarItem current href="#overview">
           <NavbarLabel>Overview</NavbarLabel>
         </NavbarItem>
@@ -78,7 +93,7 @@ export const Default: Story = {
       </NavbarSection>
       <NavbarSpacer />
       <NavbarDivider />
-      <NavbarSection>
+      <NavbarSection className="hidden lg:flex">
         <NavbarItem aria-label="Settings">
           <Settings />
         </NavbarItem>

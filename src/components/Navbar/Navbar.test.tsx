@@ -75,4 +75,38 @@ describe('Navbar', () => {
 
     expect(navbar).toHaveAttribute('data-scroll-state', 'scrolled');
   });
+
+  it('opens and closes mobile navigation content', () => {
+    render(
+      <Navbar
+        aria-label="Primary"
+        mobileMenu={(
+          <nav aria-label="Mobile primary">
+            <NavbarItem href="/about">About</NavbarItem>
+          </nav>
+        )}
+        mobileMenuTitle="Menu">
+        <NavbarSection className="hidden lg:flex">
+          <NavbarItem href="/">Home</NavbarItem>
+        </NavbarSection>
+      </Navbar>
+    );
+
+    const trigger = screen.getByRole('button', {name: 'Open navigation menu'});
+    const menu = screen.getByLabelText('Mobile navigation');
+
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    expect(menu).toHaveClass('translate-x-full');
+
+    fireEvent.click(trigger);
+
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    expect(menu).toHaveClass('translate-x-0');
+    expect(screen.getByRole('link', {name: 'About'})).toHaveAttribute('href', '/about');
+
+    fireEvent.click(screen.getByRole('button', {name: 'Close navigation menu'}));
+
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    expect(menu).toHaveClass('translate-x-full');
+  });
 });
