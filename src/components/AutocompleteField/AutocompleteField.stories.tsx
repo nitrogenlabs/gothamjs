@@ -1,5 +1,4 @@
 import React from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {AutocompleteField} from './AutocompleteField.js';
 
@@ -12,17 +11,13 @@ const suggestions = [
 ];
 
 const AutocompleteStory = (args: ComponentProps<typeof AutocompleteField>) => {
-  const methods = useForm({defaultValues: {[args.name || 'location']: args.defaultValue || ''}});
-
   return (
-    <FormProvider {...methods}>
-      <div className="w-96">
-        <AutocompleteField
-          {...args}
-          getList={async (value: string) => suggestions.filter((suggestion) => suggestion.location.toLowerCase().includes(value.toLowerCase()))}
-        />
-      </div>
-    </FormProvider>
+    <div className="w-96">
+      <AutocompleteField
+        {...args}
+        getList={async (value: string) => suggestions.filter((suggestion) => suggestion.location.toLowerCase().includes(value.toLowerCase()))}
+      />
+    </div>
   );
 };
 

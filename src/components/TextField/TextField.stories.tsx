@@ -1,5 +1,4 @@
 import React from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
 import {I18nextProvider, initReactI18next} from 'react-i18next';
 import {i18n} from '../../i18n/index.js';
 
@@ -64,8 +63,6 @@ const meta: Meta<typeof TextField> = {
   component: TextField,
   decorators: [
     (Story) => {
-      const methods = useForm();
-
       // Initialize i18n for Storybook
       const storyI18n = i18n.createInstance();
       storyI18n
@@ -89,11 +86,9 @@ const meta: Meta<typeof TextField> = {
 
       return (
         <I18nextProvider i18n={storyI18n}>
-          <FormProvider {...methods}>
-            <div className="p-4 max-w-md">
-              <Story />
-            </div>
-          </FormProvider>
+          <div className="p-4 max-w-md">
+            <Story />
+          </div>
         </I18nextProvider>
       );
     }

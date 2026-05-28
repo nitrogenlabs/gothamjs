@@ -1,21 +1,8 @@
 import React from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {Input} from './Input.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
-import type {ComponentProps} from 'react';
-
-const InputStory = (args: ComponentProps<typeof Input>) => {
-  const methods = useForm({defaultValues: {[args.name]: args.defaultValue || ''}});
-
-  return (
-    <FormProvider {...methods}>
-      <Input {...args} />
-    </FormProvider>
-  );
-};
-
 const meta: Meta<typeof Input> = {
   argTypes: {
     defaultValue: {
@@ -50,5 +37,5 @@ export const Default: Story = {
     placeholder: 'Title'
   },
   play: interactWithCanvas,
-  render: InputStory
+  render: (args) => <Input {...args} />
 };

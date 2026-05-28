@@ -1,5 +1,3 @@
-import {FormProvider, useForm} from 'react-hook-form';
-
 import {SelectField} from './SelectField.js';
 import {gothamColors} from '../../utils/colorUtils.js';
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
@@ -33,16 +31,11 @@ const meta: Meta<typeof SelectField> = {
   },
   component: SelectField,
   decorators: [
-    (Story) => {
-      const methods = useForm();
-      return (
-        <FormProvider {...methods}>
-          <div className="flex flex-col items-center justify-center min-h-screen w-full p-4" style={{width: '300px'}}>
-            <Story />
-          </div>
-        </FormProvider>
-      );
-    }
+    (Story) => (
+      <div className="flex flex-col items-center justify-center min-h-screen w-full p-4" style={{width: '300px'}}>
+        <Story />
+      </div>
+    )
   ],
   title: 'Components/SelectField'
 };

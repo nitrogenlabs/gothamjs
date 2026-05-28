@@ -1,10 +1,10 @@
 import {cn} from '@nlabs/utils';
-import {useMemo} from 'react';
-import {Controller, useFormContext} from 'react-hook-form';
+import {useMemo, useState} from 'react';
 
 import {getCheckedClasses} from '../../utils/colorUtils.js';
+import {useGothamFormContext} from '../Form/FormContext.js';
 
-import type {InputHTMLAttributes} from 'react';
+import type {ChangeEvent, InputHTMLAttributes} from 'react';
 
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'className' | 'defaultValue'> {
   color?: 'primary' | 'secondary' | 'error' | 'success' | 'warning';
@@ -31,13 +31,26 @@ export const Checkbox = ({
   id,
   ...props
 }: CheckboxProps) => {
-  const {control, trigger} = useFormContext();
+  const form = useGothamFormContext();
+  const [localChecked, setLocalChecked] = useState(defaultValue);
   const optionClasses = useMemo(
     () => cn(optionClass, getCheckedClasses(color)),
     [color, optionClass]
   );
   const checkboxId = id || name || label.toLowerCase().replace(/\s+/g, '-');
   const descriptionId = description ? `${checkboxId}-description` : undefined;
+  const currentValue = form?.values[name];
+  const checked = typeof props.checked === 'boolean'
+    ? props.checked
+    : typeof currentValue === 'boolean'
+      ? currentValue
+      : localChecked;
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setLocalChecked(event.target.checked);
+    form?.setValue(name, event.target.checked);
+    form?.clearError(name);
+    props.onChange?.(event);
+  };
   const baseCheckboxClasses = `
     col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white
     checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600
@@ -47,69 +60,62 @@ export const Checkbox = ({
     ${error ? 'border-red-300' : ''}
   `.trim().replace(/\s+/g, ' ');
   return (
-    <Controller
-      control={control}
-      defaultValue={defaultValue}
-      name={name}
-      render={({field}) => (
-        <fieldset aria-label={label}>
-          <div className={`flex gap-3 ${containerClass}`}>
-            <div className="flex h-6 shrink-0 items-center">
-              <div className="group grid size-4 grid-cols-1">
-                <input
-                  {...props}
-                  type="checkbox"
-                  id={checkboxId}
-                  aria-describedby={descriptionId}
-                  className={`${baseCheckboxClasses} ${optionClasses}`}
-                  checked={field.value}
-                  onChange={(e) => {
-                    field.onChange(e.target.checked);
-                    trigger(name);
-                  }}
-                />
-                <svg
-                  fill="none"
-                  viewBox="0 0 14 14"
-                  className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
-                >
-                  <path
-                    d="M3 8L6 11L11 3.5"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="opacity-0 group-has-checked:opacity-100"
-                  />
-                  <path
-                    d="M3 7H11"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="opacity-0 group-has-indeterminate:opacity-100"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <div className="text-sm/6">
-              <label
-                htmlFor={checkboxId}
-                className={`font-medium text-gray-900 ${labelClass}`}
-              >
-                {label}
-              </label>
-              {description && (
-                <p id={descriptionId} className="text-gray-500">
-                  {description}
-                </p>
-              )}
-              {error && (
-                <p className="text-red-600 mt-1">{error}</p>
-              )}
-            </div>
+    <fieldset aria-label={label}>
+      <div className={`flex gap-3 ${containerClass}`}>
+        <div className="flex h-6 shrink-0 items-center">
+          <div className="group grid size-4 grid-cols-1">
+            <input
+              {...props}
+              aria-describedby={descriptionId}
+              checked={checked}
+              className={`${baseCheckboxClasses} ${optionClasses}`}
+              defaultChecked={checked === undefined ? Boolean(form?.defaultValues[name] ?? defaultValue) : undefined}
+              id={checkboxId}
+              name={name}
+              onChange={handleChange}
+              type="checkbox"
+              value="true"
+            />
+            <svg
+              fill="none"
+              viewBox="0 0 14 14"
+              className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
+            >
+              <path
+                d="M3 8L6 11L11 3.5"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="opacity-0 group-has-checked:opacity-100"
+              />
+              <path
+                d="M3 7H11"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="opacity-0 group-has-indeterminate:opacity-100"
+              />
+            </svg>
           </div>
-        </fieldset>
-      )}
-    />
+        </div>
+
+        <div className="text-sm/6">
+          <label
+            htmlFor={checkboxId}
+            className={`font-medium text-gray-900 ${labelClass}`}
+          >
+            {label}
+          </label>
+          {description && (
+            <p id={descriptionId} className="text-gray-500">
+              {description}
+            </p>
+          )}
+          {error && (
+            <p className="text-red-600 mt-1">{error}</p>
+          )}
+        </div>
+      </div>
+    </fieldset>
   );
 };

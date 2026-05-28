@@ -2,11 +2,10 @@
  * Copyright (c) 2025-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {Controller, useFormContext} from 'react-hook-form';
-
 import {assignRef} from '../../utils/refUtils.js';
+import {useGothamFormContext} from '../Form/FormContext.js';
 
-import type {InputHTMLAttributes, Ref} from 'react';
+import type {ChangeEvent, InputHTMLAttributes, Ref, TextareaHTMLAttributes} from 'react';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   readonly className?: string;
@@ -21,6 +20,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement | HTMLT
 export const Input = ({
   className,
   defaultValue = '',
+  multiline = false,
   name,
   onBlur: onBlurProp,
   onChange: onChangeProp,
@@ -29,34 +29,44 @@ export const Input = ({
   value,
   ...restInputProps
 }: InputProps) => {
-  const {control} = useFormContext();
+  const form = useGothamFormContext();
+  const fieldValue = value ?? form?.values[name];
+  const resolvedDefaultValue = fieldValue === undefined ? String(form?.defaultValues[name] ?? defaultValue) : undefined;
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    form?.setValue(name, event.currentTarget.value);
+    form?.clearError(name);
+    onChangeProp?.(event);
+  };
+
+  if(multiline) {
+    return (
+      <textarea
+        {...restInputProps as TextareaHTMLAttributes<HTMLTextAreaElement>}
+        className={className}
+        defaultValue={resolvedDefaultValue}
+        id={name}
+        name={name}
+        onBlur={onBlurProp}
+        onChange={handleChange}
+        placeholder={placeholder}
+        ref={(node) => assignRef(ref, node)}
+        value={fieldValue as string | number | readonly string[] | undefined}
+      />
+    );
+  }
 
   return (
-    <Controller
-      control={control}
+    <input
+      {...restInputProps as InputHTMLAttributes<HTMLInputElement>}
+      className={className}
+      defaultValue={resolvedDefaultValue}
+      id={name}
       name={name}
-      defaultValue={defaultValue}
-      render={({field: {onBlur, onChange, ref: fieldRef, value: fieldValue}}) => (
-        <input
-          className={className}
-          id={name}
-          onBlur={(event) => {
-            onBlur();
-            onBlurProp?.(event);
-          }}
-          onChange={(event) => {
-            onChange(event);
-            onChangeProp?.(event);
-          }}
-          placeholder={placeholder}
-          value={value ?? fieldValue}
-          ref={(e) => {
-            fieldRef(e);
-            assignRef(ref, e);
-          }}
-          {...restInputProps}
-        />
-      )}
+      onBlur={onBlurProp}
+      onChange={handleChange}
+      placeholder={placeholder}
+      ref={(node) => assignRef(ref, node)}
+      value={fieldValue as string | number | readonly string[] | undefined}
     />
   );
 };

@@ -8,10 +8,10 @@ Start by installing GothamJS and its peer dependencies:
 
 ```bash
 # Using npm
-npm install @nlabs/gothamjs @nlabs/arkhamjs @nlabs/arkhamjs-middleware-logger @nlabs/arkhamjs-storage-browser @nlabs/arkhamjs-utils-react react-hook-form @hookform/resolvers zod react-i18next i18next
+npm install @nlabs/gothamjs @nlabs/arkhamjs @nlabs/arkhamjs-middleware-logger @nlabs/arkhamjs-storage-browser @nlabs/arkhamjs-utils-react zod react-i18next i18next
 
 # Using yarn
-yarn add @nlabs/gothamjs @nlabs/arkhamjs @nlabs/arkhamjs-middleware-logger @nlabs/arkhamjs-storage-browser @nlabs/arkhamjs-utils-react react-hook-form @hookform/resolvers zod react-i18next i18next
+yarn add @nlabs/gothamjs @nlabs/arkhamjs @nlabs/arkhamjs-middleware-logger @nlabs/arkhamjs-storage-browser @nlabs/arkhamjs-utils-react zod react-i18next i18next
 ```
 
 ## Creating Your First App

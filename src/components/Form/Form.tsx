@@ -2,32 +2,86 @@
  * Copyright (c) 2021-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {zodResolver} from '@hookform/resolvers/zod/dist/zod.js';
-import {useCallback} from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
+import {startTransition, useActionState, useMemo, useRef, useState} from 'react';
 import {z} from 'zod';
 
-import type {BaseSyntheticEvent, ReactNode} from 'react';
+import {GothamFormContext, getFormErrorMessage} from './FormContext.js';
+
+import type {BaseSyntheticEvent, FormEvent, ReactNode} from 'react';
+import type {FormErrors, FormValues} from './FormContext.js';
+
+export interface GothamFormMethods {
+  readonly formState: {
+    readonly errors: FormErrors;
+    readonly isSubmitting: boolean;
+  };
+  readonly getValues: () => FormValues;
+  readonly register: (name: string) => {
+    readonly defaultValue: unknown;
+    readonly name: string;
+  };
+  readonly setError: (field: string, error: {type: string; message: string}) => void;
+  readonly setValue: (name: string, value: unknown) => void;
+}
+
+export interface FormActionState {
+  readonly errors: FormErrors;
+  readonly values: FormValues;
+}
 
 export interface FormProps<T> {
-  readonly children: ReactNode | ((methods: ReturnType<typeof useForm>) => ReactNode);
+  readonly children: ReactNode | ((methods: GothamFormMethods) => ReactNode);
   readonly className?: string;
-  readonly defaultValues?: Record<string, unknown>;
+  readonly defaultValues?: FormValues;
   readonly disabled?: boolean;
-  readonly errors?: Record<string, unknown>;
+  readonly errors?: FormErrors;
   readonly mode?: 'onSubmit' | 'onBlur' | 'onChange' | 'onTouched' | 'all';
   readonly name?: string;
   readonly onChange?: (data: unknown) => void;
   readonly onSubmit: (
     data: T,
     event: BaseSyntheticEvent,
-    setError: (field: string, error: { type: string; message: string }) => void
-  ) => void;
+    setError: (field: string, error: {type: string; message: string}) => void
+  ) => void | Promise<void>;
   readonly schema?: z.ZodSchema<T>;
   readonly showErrors?: boolean;
   readonly validate?: (data: unknown) => void;
   readonly validateOnBlur?: boolean;
 }
+
+const getFormDataValue = (formData: FormData, key: string): unknown => {
+  const values = formData.getAll(key);
+
+  if(values.length > 1) {
+    return values;
+  }
+
+  return values[0] ?? '';
+};
+
+const getValuesFromFormData = (formData: FormData): FormValues => {
+  const values: FormValues = {};
+
+  Array.from(new Set(Array.from(formData.keys()))).forEach((key) => {
+    values[key] = getFormDataValue(formData, key);
+  });
+
+  return values;
+};
+
+const getErrorsFromZod = (error: z.ZodError): FormErrors => Object.fromEntries(
+  error.issues.map((issue) => [
+    issue.path.join('.'),
+    {
+      message: issue.message,
+      type: issue.code
+    }
+  ])
+);
+
+const getErrorMessages = (errorObj: FormErrors): string[] => Object.values(errorObj)
+  .map(getFormErrorMessage)
+  .filter(Boolean) as string[];
 
 export const Form = <T extends Record<string, unknown>>({
   children,
@@ -35,53 +89,122 @@ export const Form = <T extends Record<string, unknown>>({
   defaultValues = {},
   disabled = false,
   errors = {},
-  mode = 'onBlur',
   name = 'default',
   schema,
   showErrors = false,
   onSubmit
 }: FormProps<T>) => {
-  const methods = useForm({
-    defaultValues,
-    mode,
-    resolver: schema ? zodResolver(schema as any) : undefined
-  });
-  const {handleSubmit, setError, formState} = methods;
-  const {errors: formErrors, isSubmitting} = formState;
-  const handleFormSubmit = useCallback(
-    (event: BaseSyntheticEvent) => {
-      if(isSubmitting || disabled) {
-        event.preventDefault();
-        return;
+  const [localErrors, setLocalErrors] = useState<FormErrors>({});
+  const [localValues, setLocalValues] = useState<FormValues>(defaultValues);
+  const submitEventRef = useRef<BaseSyntheticEvent | null>(null);
+  const [state, submitAction, isPending] = useActionState(
+    async (_previousState: FormActionState, formData: FormData): Promise<FormActionState> => {
+      if(disabled) {
+        return {
+          errors: localErrors,
+          values: localValues
+        };
       }
 
-      event.preventDefault();
-      event.stopPropagation();
-      handleSubmit((data, submitEvent) => onSubmit(data, submitEvent as BaseSyntheticEvent, setError))(event);
+      const formValues = {
+        ...defaultValues,
+        ...getValuesFromFormData(formData),
+        ...localValues
+      };
+      const parsed = schema ? schema.safeParse(formValues) : {data: formValues as T, success: true as const};
+
+      if(!parsed.success) {
+        const nextErrors = getErrorsFromZod(parsed.error);
+        setLocalErrors(nextErrors);
+        return {
+          errors: nextErrors,
+          values: formValues
+        };
+      }
+
+      const nextErrors: FormErrors = {};
+      const setError = (field: string, error: {type: string; message: string}) => {
+        nextErrors[field] = error;
+      };
+
+      await onSubmit(parsed.data, submitEventRef.current as BaseSyntheticEvent, setError);
+      setLocalErrors(nextErrors);
+
+      return {
+        errors: nextErrors,
+        values: formValues
+      };
     },
-    [handleSubmit, onSubmit, setError, isSubmitting, disabled]
+    {
+      errors: {},
+      values: defaultValues
+    }
   );
-
-  const allErrors = {...formErrors, ...errors};
-
-  // Extract error messages from various error structures
-  const getErrorMessages = (errorObj: Record<string, unknown>): string[] => Object.values(errorObj).flatMap((error) => {
-    if(typeof error === 'string') {
-      return error;
-    }
-    if(typeof error === 'object' && error && 'message' in error) {
-      return (error as {message: string}).message;
-    }
-    if(typeof error === 'object' && error && 'root' in error && typeof error.root === 'object' && error.root && 'message' in error.root) {
-      return (error.root as {message: string}).message;
-    }
-    return [];
-  }).filter(Boolean);
-
+  const allErrors = {
+    ...state.errors,
+    ...localErrors,
+    ...errors
+  };
+  const values = {
+    ...state.values,
+    ...localValues
+  };
+  const setValue = (fieldName: string, value: unknown) => {
+    setLocalValues((currentValues) => ({
+      ...currentValues,
+      [fieldName]: value
+    }));
+  };
+  const methods: GothamFormMethods = useMemo(() => ({
+    formState: {
+      errors: allErrors,
+      isSubmitting: isPending
+    },
+    getValues: () => values,
+    register: (fieldName: string) => ({
+      defaultValue: values[fieldName] ?? defaultValues[fieldName] ?? '',
+      name: fieldName
+    }),
+    setError: (fieldName: string, error: {type: string; message: string}) => {
+      setLocalErrors((currentErrors) => ({
+        ...currentErrors,
+        [fieldName]: error
+      }));
+    },
+    setValue
+  }), [allErrors, defaultValues, isPending, values]);
+  const contextValue = useMemo(() => ({
+    clearError: (fieldName: string) => {
+      setLocalErrors((currentErrors) => {
+        const nextErrors = {...currentErrors};
+        delete nextErrors[fieldName];
+        return nextErrors;
+      });
+    },
+    defaultValues,
+    errors: allErrors,
+    isSubmitting: isPending,
+    setValue,
+    values
+  }), [allErrors, defaultValues, isPending, values]);
   const errorMessages = getErrorMessages(allErrors);
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if(isPending || disabled) {
+      return;
+    }
+
+    submitEventRef.current = event as unknown as BaseSyntheticEvent;
+    const formData = new FormData(event.currentTarget);
+    startTransition(() => {
+      submitAction(formData);
+    });
+  };
 
   return (
-    <FormProvider {...methods}>
+    <GothamFormContext.Provider value={contextValue}>
       <form
         className={className}
         data-testid={`form-${name}`}
@@ -103,6 +226,6 @@ export const Form = <T extends Record<string, unknown>>({
         )}
         {typeof children === 'function' ? children(methods) : children}
       </form>
-    </FormProvider>
+    </GothamFormContext.Provider>
   );
 };

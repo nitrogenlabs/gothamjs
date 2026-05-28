@@ -97,7 +97,6 @@
   ],
   "dependencies": {
     "@headlessui/react": "^2.2.10",
-    "@hookform/resolvers": "^5.4.0",
     "@nlabs/rip-hunter": "^3.1.0",
     "@nlabs/utils": "^2.10.4",
     "autosuggest-highlight": "^3.3.4",
@@ -110,15 +109,14 @@
     "progressbar.js": "^1.1.1",
     "react-autosuggest": "^10.1.0",
     "react-cropper": "^2.3.3",
-    "react-hook-form": "^7.76.1",
     "react-i18next": "^17.0.8",
-    "yet-another-react-lightbox": "^3.32.0",
     "react-markdown": "^10.1.0",
     "react-router": "^7.15.1",
     "react-spinkit": "^3.0.0",
     "react-tag-autocomplete": "^7.5.1",
     "react-transition-group": "^4.4.5",
     "rehype-react": "^8.0.0",
+    "yet-another-react-lightbox": "^3.32.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

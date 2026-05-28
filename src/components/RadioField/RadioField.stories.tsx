@@ -1,5 +1,3 @@
-import {FormProvider, useForm} from 'react-hook-form';
-
 import {RadioField} from './RadioField.js';
 import {gothamColors} from '../../utils/colorUtils.js';
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
@@ -36,16 +34,11 @@ const meta: Meta<typeof RadioField> = {
   },
   component: RadioField,
   decorators: [
-    (Story) => {
-      const methods = useForm();
-      return (
-        <FormProvider {...methods}>
-          <div className="p-4 max-w-md">
-            <Story />
-          </div>
-        </FormProvider>
-      );
-    }
+    (Story) => (
+      <div className="p-4 max-w-md">
+        <Story />
+      </div>
+    )
   ],
   parameters: {
     backgrounds: {

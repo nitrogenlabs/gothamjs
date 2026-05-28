@@ -1,20 +1,8 @@
 import React from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {Checkbox} from './Checkbox.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
-import type {ComponentProps} from 'react';
-
-const CheckboxStory = (args: ComponentProps<typeof Checkbox>) => {
-  const methods = useForm({defaultValues: {[args.name]: args.defaultValue}});
-
-  return (
-    <FormProvider {...methods}>
-      <Checkbox {...args} />
-    </FormProvider>
-  );
-};
 
 const meta: Meta<typeof Checkbox> = {
   argTypes: {
@@ -55,5 +43,5 @@ export const Default: Story = {
     name: 'subscribe'
   },
   play: interactWithCanvas,
-  render: CheckboxStory
+  render: (args) => <Checkbox {...args} />
 };

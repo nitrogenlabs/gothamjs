@@ -4,10 +4,10 @@ import {Label, Listbox, ListboxButton, ListboxOptions} from '@headlessui/react';
 import {cn} from '@nlabs/utils';
 import {ChevronDown} from 'lucide-react';
 import {useEffect, useMemo, useState} from 'react';
-import {useController, useFormContext} from 'react-hook-form';
 
 import {useIsMobile} from '../../hooks/useIsMobile.js';
 import {getBackgroundClasses, getOutlineClasses, getTextClasses} from '../../utils/colorUtils.js';
+import {useGothamFormContext} from '../Form/FormContext.js';
 import {InputBorderType, getInputBorderClass} from '../InputField/InputField.js';
 import {Svg} from '../Svg/Svg.js';
 import {SelectFieldOption, SelectOption} from './SelectOption.js';
@@ -45,14 +45,11 @@ export const SelectField: FC<SelectFieldProps> = ({
   showChevron = true
 }) => {
   const isMobile = useIsMobile();
-  const {control, trigger} = useFormContext();
-  const {field} = useController({
-    control,
-    defaultValue,
-    name
-  });
+  const form = useGothamFormContext();
+  const [localValue, setLocalValue] = useState(defaultValue ?? '');
   const [selected, setSelected] = useState<SelectFieldOption>(options?.find((option) => option?.value === defaultValue) as SelectFieldOption);
-  const normalizedFieldValue = field?.value === undefined || field?.value === null ? '' : String(field.value);
+  const fieldValue = form?.values[name] ?? localValue;
+  const normalizedFieldValue = fieldValue === undefined || fieldValue === null ? '' : String(fieldValue);
   const selectClasses = useMemo(() => cn(
     'flex relative w-full',
     getInputBorderClass(borderType, borderColor, color, 'transparent'), className), [borderType, borderColor, color, className]
@@ -82,16 +79,17 @@ export const SelectField: FC<SelectFieldProps> = ({
 
   const onChange = (value: string) => {
     const nextSelected = options?.find((option) => String(option?.value) === String(value)) as SelectFieldOption;
+    setLocalValue(String(value));
     setSelected(nextSelected);
-    field.onChange(String(value));
-    trigger(name);
+    form?.setValue(name, String(value));
+    form?.clearError(name);
   };
 
   return isMobile ? (
     <div className="relative w-full">
       <select
-        {...field}
         className={nativeSelectClasses}
+        name={name}
         onChange={(event) => onChange(event.target.value)}
         value={normalizedFieldValue}>
         {options.map((option) => (
@@ -111,7 +109,11 @@ export const SelectField: FC<SelectFieldProps> = ({
         <Label className={labelClasses}>
           {label}
         </Label>
-        <select {...field} hidden onChange={(event) => onChange(event.target.value)} value={normalizedFieldValue} />
+        <select hidden name={name} onChange={(event) => onChange(event.target.value)} value={normalizedFieldValue}>
+          {options.map((option) => (
+            <option key={option.id} value={String(option.value)}>{option.label}</option>
+          ))}
+        </select>
         <div className={cn('flex flex-col relative w-full', {'mt-2': label})}>
           <ListboxButton className={selectClasses}>
             <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">

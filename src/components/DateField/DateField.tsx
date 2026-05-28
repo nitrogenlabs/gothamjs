@@ -3,12 +3,12 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {Controller, useFormContext} from 'react-hook-form';
 
 import {useIsMobile} from '../../hooks/useIsMobile.js';
 import {getOutlineClasses} from '../../utils/colorUtils.js';
 import {assignRef} from '../../utils/refUtils.js';
 import {ErrorMessage} from '../ErrorMessage/ErrorMessage.js';
+import {getFormErrorMessage, useGothamFormContext} from '../Form/FormContext.js';
 import {InputField, type InputFieldProps} from '../InputField/InputField.js';
 import {Label} from '../Label/Label.js';
 import {DatePicker} from './DatePicker.js';
@@ -53,12 +53,15 @@ export const DateField = ({
   ...props
 }: DateFieldProps) => {
   const isMobile = useIsMobile();
-  const {control, formState: {errors}, clearErrors, trigger} = useFormContext();
-  const formError = errors?.[name];
+  const form = useGothamFormContext();
+  const formError = form?.errors?.[name];
   const hasError = !!formError || !!externalError;
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const pickerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const initialValue = ensureDateInRange(value || defaultValue || new Date().getTime());
+  const [localValue, setLocalValue] = useState(initialValue);
+  const currentValue = Number(form?.values[name] ?? value ?? localValue);
   const outlineClasses = useMemo(
     () => getOutlineClasses(hasError ? 'error' : color, {hasFocus: true, hasHover: true}),
     [color, hasError]
@@ -69,33 +72,31 @@ export const DateField = ({
     className
   ].filter(Boolean).join(' ');
 
-  const ensureDateInRange = (timestamp: number): number => {
-    if (!timestamp) return timestamp;
+  function ensureDateInRange(timestamp: number): number {
+    if(!timestamp) {
+      return timestamp;
+    }
 
-    if (minDate && timestamp < minDate) {
+    if(minDate && timestamp < minDate) {
       return minDate;
     }
 
-    if (maxDate && timestamp > maxDate) {
+    if(maxDate && timestamp > maxDate) {
       return maxDate;
     }
 
     return timestamp;
-  };
+  }
 
-  const formatDateForInput = (timestamp: number): string => {
-    return new Date(timestamp).toISOString().split('T')[0];
-  };
+  const formatDateForInput = (timestamp: number): string => new Date(timestamp).toISOString().split('T')[0];
 
-  const parseInputDate = (dateString: string): number => {
-    return new Date(dateString).getTime();
-  };
+  const parseInputDate = (dateString: string): number => new Date(dateString).getTime();
 
   const isDateValid = (timestamp: number): boolean => {
-    if (minDate && timestamp < minDate) {
+    if(minDate && timestamp < minDate) {
       return false;
     }
-    if (maxDate && timestamp > maxDate) {
+    if(maxDate && timestamp > maxDate) {
       return false;
     }
     return true;
@@ -103,7 +104,7 @@ export const DateField = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
+      if(
         pickerRef.current &&
         !pickerRef.current.contains(event.target as Node) &&
         inputRef.current &&
@@ -119,81 +120,64 @@ export const DateField = ({
     };
   }, []);
 
+  const setDateValue = (timestamp: number) => {
+    const nextTimestamp = ensureDateInRange(timestamp);
+    setLocalValue(nextTimestamp);
+    form?.setValue(name, nextTimestamp);
+
+    if(isDateValid(nextTimestamp)) {
+      form?.clearError(name);
+    }
+
+    onChange?.(nextTimestamp);
+  };
+
   return (
-    <Controller
-      control={control}
-      name={name}
-      defaultValue={value || ensureDateInRange(defaultValue || new Date().getTime())}
-      render={({field}) => (
-        <div className="flex flex-col w-full">
-          <Label
-            className={labelClass}
-            color={labelColor}
-            hasError={hasError}
-            label={label}
-            name={name} />
-          <div className="relative">
-            <InputField
-              {...props as Omit<InputFieldProps, 'onChange'>}
-              ref={(node) => {
-                inputRef.current = node as HTMLInputElement | null;
-                assignRef(ref, node as HTMLInputElement | null);
+    <div className="flex flex-col w-full">
+      <Label
+        className={labelClass}
+        color={labelColor}
+        hasError={hasError}
+        label={label}
+        name={name} />
+      <div className="relative">
+        <input name={name} type="hidden" value={currentValue || ''} />
+        <InputField
+          {...props as Omit<InputFieldProps, 'onChange'>}
+          ref={(node) => {
+            inputRef.current = node as HTMLInputElement | null;
+            assignRef(ref, node as HTMLInputElement | null);
+          }}
+          disabled={disabled}
+          value={formatDateForInput(currentValue)}
+          onChange={(changeEvent) => {
+            setDateValue(parseInputDate(changeEvent.target.value));
+          }}
+          onFocus={() => {
+            if(!isMobile) {
+              setIsPickerVisible(true);
+            }
+          }}
+          className={inputClasses}
+          type={isMobile ? 'date' : type}
+          min={minDate ? formatDateForInput(minDate) : undefined}
+          max={maxDate ? formatDateForInput(maxDate) : undefined}
+        />
+        {isPickerVisible && !disabled && !isMobile && (
+          <div ref={pickerRef} className="absolute z-10 mt-1">
+            <DatePicker
+              initialDate={currentValue}
+              minDate={minDate}
+              maxDate={maxDate}
+              onDateSelect={(timestamp) => {
+                setDateValue(timestamp);
+                setIsPickerVisible(false);
               }}
-              disabled={disabled}
-              value={formatDateForInput(field.value)}
-              onChange={(changeEvent) => {
-                const timestamp = parseInputDate(changeEvent.target.value);
-                field.onChange(timestamp);
-
-                if (isDateValid(timestamp)) {
-                  clearErrors(name);
-                  trigger(name);
-                }
-
-                if (onChange) {
-                  onChange(timestamp);
-                }
-              }}
-              onFocus={() => {
-                if (!isMobile) {
-                  setIsPickerVisible(true);
-                }
-              }}
-              onBlur={() => {
-                // Validate on blur
-                trigger(name);
-              }}
-              className={inputClasses}
-              type={isMobile ? 'date' : type}
-              min={minDate ? formatDateForInput(minDate) : undefined}
-              max={maxDate ? formatDateForInput(maxDate) : undefined}
             />
-            {isPickerVisible && !disabled && !isMobile && (
-              <div ref={pickerRef} className="absolute z-10 mt-1">
-                <DatePicker
-                  initialDate={field.value}
-                  minDate={minDate}
-                  maxDate={maxDate}
-                  onDateSelect={(timestamp) => {
-                    field.onChange(timestamp);
-
-                    if (isDateValid(timestamp)) {
-                      clearErrors(name);
-                      trigger(name);
-                    }
-
-                    if (onChange) {
-                      onChange(timestamp);
-                    }
-                    setIsPickerVisible(false);
-                  }}
-                />
-              </div>
-            )}
-            <ErrorMessage message={formError?.message as string} />
           </div>
-        </div>
-      )}
-    />
+        )}
+        <ErrorMessage message={getFormErrorMessage(formError)} />
+      </div>
+    </div>
   );
 };
