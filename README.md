@@ -1,5 +1,9 @@
 # GothamJS: The Complete Front-End UI Framework
 
+<p align="center">
+  <img src="docs/assets/gothamjs-logo.svg" alt="GothamJS logo" width="720">
+</p>
+
 ## Seamlessly integrating components, routing, state management, and transitions
 
 > A comprehensive front-end UI framework that handles everything from component rendering to routing and smooth transitions with minimal configuration.
