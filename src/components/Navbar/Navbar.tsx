@@ -1,6 +1,6 @@
 import {cn} from '@nlabs/utils';
 import {Menu, X} from 'lucide-react';
-import {forwardRef, useEffect, useId, useState} from 'react';
+import {useEffect, useId, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import {renderWithAsChild} from '../ComponentUtils/renderWithAsChild.js';
@@ -10,7 +10,8 @@ import type {
   ButtonHTMLAttributes,
   ElementType,
   HTMLAttributes,
-  ReactNode
+  ReactNode,
+  Ref
 } from 'react';
 
 const getTransparentScrollThreshold = (threshold: number) => (
@@ -25,12 +26,14 @@ export interface NavbarProps extends HTMLAttributes<HTMLElement> {
   readonly mobileMenu?: ReactNode;
   readonly mobileMenuLabel?: string;
   readonly mobileMenuTitle?: ReactNode;
+  readonly ref?: Ref<HTMLElement>;
   readonly transparentOnScroll?: boolean;
   readonly transparentScrollThreshold?: number;
 }
 
 export interface NavbarSectionProps extends HTMLAttributes<HTMLDivElement> {
   readonly children?: ReactNode;
+  readonly ref?: Ref<HTMLDivElement>;
 }
 
 export interface NavbarItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'type'> {
@@ -39,10 +42,11 @@ export interface NavbarItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonEle
   readonly children?: ReactNode;
   readonly current?: boolean;
   readonly href?: AnchorHTMLAttributes<HTMLAnchorElement>['href'];
+  readonly ref?: Ref<HTMLElement>;
   readonly type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
-export const Navbar = forwardRef<HTMLElement, NavbarProps>(({
+export const Navbar = ({
   as = 'nav',
   asChild = false,
   children,
@@ -51,10 +55,11 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(({
   mobileMenu,
   mobileMenuLabel = 'Open navigation menu',
   mobileMenuTitle = 'Navigation',
+  ref,
   transparentOnScroll = false,
   transparentScrollThreshold = 0.1,
   ...props
-}, ref) => {
+}: NavbarProps) => {
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const mobileMenuId = useId();
@@ -202,15 +207,14 @@ export const Navbar = forwardRef<HTMLElement, NavbarProps>(({
       'data-slot': 'navbar'
     }
   );
-});
+};
 
-Navbar.displayName = 'Navbar';
-
-export const NavbarSection = forwardRef<HTMLDivElement, NavbarSectionProps>(({
+export const NavbarSection = ({
   children,
   className,
+  ref,
   ...props
-}, ref) => (
+}: NavbarSectionProps) => (
   <div
     className={cn('flex min-w-0 items-center gap-1.5', className)}
     data-slot="navbar-section"
@@ -219,20 +223,19 @@ export const NavbarSection = forwardRef<HTMLDivElement, NavbarSectionProps>(({
   >
     {children}
   </div>
-));
+);
 
-NavbarSection.displayName = 'NavbarSection';
-
-export const NavbarItem = forwardRef<HTMLElement, NavbarItemProps>(({
+export const NavbarItem = ({
   as,
   asChild = false,
   children,
   className,
   current = false,
   href,
+  ref,
   type = 'button',
   ...props
-}, ref) => {
+}: NavbarItemProps) => {
   const component = as ?? (href ? 'a' : 'button');
 
   return renderWithAsChild(
@@ -256,28 +259,34 @@ export const NavbarItem = forwardRef<HTMLElement, NavbarItemProps>(({
       'data-slot': 'navbar-item'
     }
   );
-});
+};
 
-NavbarItem.displayName = 'NavbarItem';
+export interface NavbarLabelProps extends HTMLAttributes<HTMLSpanElement> {
+  readonly ref?: Ref<HTMLSpanElement>;
+}
 
-export const NavbarLabel = forwardRef<HTMLSpanElement, HTMLAttributes<HTMLSpanElement>>(({
+export const NavbarLabel = ({
   className,
+  ref,
   ...props
-}, ref) => (
+}: NavbarLabelProps) => (
   <span
     className={cn('truncate', className)}
     data-slot="navbar-label"
     ref={ref}
     {...props}
   />
-));
+);
 
-NavbarLabel.displayName = 'NavbarLabel';
+export interface NavbarSpacerProps extends HTMLAttributes<HTMLDivElement> {
+  readonly ref?: Ref<HTMLDivElement>;
+}
 
-export const NavbarSpacer = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({
+export const NavbarSpacer = ({
   className,
+  ref,
   ...props
-}, ref) => (
+}: NavbarSpacerProps) => (
   <div
     aria-hidden="true"
     className={cn('min-w-4 flex-1', className)}
@@ -285,14 +294,17 @@ export const NavbarSpacer = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEle
     ref={ref}
     {...props}
   />
-));
+);
 
-NavbarSpacer.displayName = 'NavbarSpacer';
+export interface NavbarDividerProps extends HTMLAttributes<HTMLDivElement> {
+  readonly ref?: Ref<HTMLDivElement>;
+}
 
-export const NavbarDivider = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({
+export const NavbarDivider = ({
   className,
+  ref,
   ...props
-}, ref) => (
+}: NavbarDividerProps) => (
   <div
     aria-hidden="true"
     className={cn('mx-2 h-6 w-px shrink-0 bg-border', className)}
@@ -300,6 +312,4 @@ export const NavbarDivider = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivEl
     ref={ref}
     {...props}
   />
-));
-
-NavbarDivider.displayName = 'NavbarDivider';
+);

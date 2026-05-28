@@ -2,19 +2,21 @@
  * Copyright (c) 2025-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {forwardRef, useState} from 'react';
+import {useState} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import {useTranslation} from '../../i18n/index.js';
 import {Eye, EyeOff} from '../../icons/index.js';
+import {assignRef} from '../../utils/refUtils.js';
 
 import {ErrorMessage} from '../ErrorMessage/ErrorMessage.js';
 import {InputField} from '../InputField/InputField.js';
 import {Label} from '../Label/Label.js';
 
 import type {GothamColor} from '../../utils/colorUtils.js';
+import type {InputHTMLAttributes, Ref} from 'react';
 import type {InputBorderType} from '../InputField/InputField.js';
 
-export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+export interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   readonly borderColor?: GothamColor;
   readonly borderType?: InputBorderType;
   readonly className?: string;
@@ -32,6 +34,7 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   readonly onValidate?: (isValid: boolean) => void;
   readonly pattern?: string;
   readonly placeholderColor?: GothamColor;
+  readonly ref?: Ref<HTMLInputElement | HTMLTextAreaElement>;
   readonly rows?: number;
   readonly showPasswordToggle?: boolean;
   readonly textFillColor?: string;
@@ -39,7 +42,7 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   readonly type?: string;
 }
 
-export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, TextFieldProps>(({
+export const TextField = ({
   borderColor = 'black',
   borderType,
   className,
@@ -58,6 +61,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   pattern,
   placeholder = '',
   placeholderColor = 'neutral',
+  ref,
   rows,
   showPasswordToggle = false,
   textFillColor,
@@ -65,7 +69,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
   type = 'text',
   value,
   ...restInputProps
-}, ref) => {
+}: TextFieldProps) => {
   const {t} = useTranslation();
   const {control, formState: {errors}, trigger} = useFormContext();
   const formError = errors?.[name];
@@ -135,9 +139,7 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
                 value={value}
                 ref={(e) => {
                   fieldRef(e);
-                  if (ref && typeof ref === 'object') {
-                    ref.current = e;
-                  }
+                  assignRef(ref, e);
                 }}
                 {...restInputProps}
               />
@@ -167,4 +169,4 @@ export const TextField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Text
       }}
     />
   );
-});
+};

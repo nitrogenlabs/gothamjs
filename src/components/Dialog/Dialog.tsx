@@ -5,9 +5,8 @@ import {
   Description
 } from '@headlessui/react';
 import {cn} from '@nlabs/utils';
-import {forwardRef} from 'react';
 
-import type {HTMLAttributes, ReactNode} from 'react';
+import type {HTMLAttributes, ReactNode, Ref} from 'react';
 
 export type DialogSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
 
@@ -58,58 +57,70 @@ export const Dialog = ({
   </HeadlessDialog>
 );
 
-export const DialogTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElement>>(({
+export interface DialogTitleProps extends HTMLAttributes<HTMLHeadingElement> {
+  readonly ref?: Ref<HTMLHeadingElement>;
+}
+
+export const DialogTitle = ({
   className,
+  ref,
   ...props
-}, ref) => (
+}: DialogTitleProps) => (
   <HeadlessDialogTitle
     className={cn('text-lg font-semibold tracking-tight text-zinc-950 dark:text-white', className)}
     data-slot="dialog-title"
     ref={ref}
     {...props}
   />
-));
+);
 
-DialogTitle.displayName = 'DialogTitle';
+export interface DialogDescriptionProps extends HTMLAttributes<HTMLParagraphElement> {
+  readonly ref?: Ref<HTMLParagraphElement>;
+}
 
-export const DialogDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(({
+export const DialogDescription = ({
   className,
+  ref,
   ...props
-}, ref) => (
+}: DialogDescriptionProps) => (
   <Description
     className={cn('mt-2 text-sm/6 text-zinc-600 dark:text-zinc-400', className)}
     data-slot="dialog-description"
     ref={ref}
     {...props}
   />
-));
+);
 
-DialogDescription.displayName = 'DialogDescription';
+export interface DialogBodyProps extends HTMLAttributes<HTMLDivElement> {
+  readonly ref?: Ref<HTMLDivElement>;
+}
 
-export const DialogBody = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({
+export const DialogBody = ({
   className,
+  ref,
   ...props
-}, ref) => (
+}: DialogBodyProps) => (
   <div
     className={cn('mt-6 max-h-[65vh] overflow-y-auto text-sm/6 text-zinc-950 dark:text-white', className)}
     data-slot="dialog-body"
     ref={ref}
     {...props}
   />
-));
+);
 
-DialogBody.displayName = 'DialogBody';
+export interface DialogActionsProps extends HTMLAttributes<HTMLDivElement> {
+  readonly ref?: Ref<HTMLDivElement>;
+}
 
-export const DialogActions = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({
+export const DialogActions = ({
   className,
+  ref,
   ...props
-}, ref) => (
+}: DialogActionsProps) => (
   <div
     className={cn('mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end', className)}
     data-slot="dialog-actions"
     ref={ref}
     {...props}
   />
-));
-
-DialogActions.displayName = 'DialogActions';
+);

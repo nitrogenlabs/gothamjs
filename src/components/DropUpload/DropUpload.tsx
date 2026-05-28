@@ -1,7 +1,6 @@
 import {cn} from '@nlabs/utils';
 import {FileImage, UploadCloud, X} from 'lucide-react';
 import {
-  forwardRef,
   useCallback,
   useEffect,
   useId,
@@ -15,7 +14,8 @@ import type {
   DragEvent,
   HTMLAttributes,
   KeyboardEvent,
-  ReactNode
+  ReactNode,
+  Ref
 } from 'react';
 
 export type DropUploadRejectionReason = 'max-files' | 'max-size' | 'type';
@@ -50,6 +50,7 @@ export interface DropUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'o
   readonly onFilesChange?: (files: File[], items: DropUploadItem[]) => void;
   readonly onReject?: (rejections: DropUploadRejection[]) => void;
   readonly previewClassName?: string;
+  readonly ref?: Ref<HTMLDivElement>;
   readonly showPreviews?: boolean;
   readonly transformImages?: boolean;
 }
@@ -162,7 +163,7 @@ const filesToItems = (files: readonly File[]): DropUploadItem[] => files.map((fi
   previewUrl: createImagePreview(file)
 }));
 
-export const DropUpload = forwardRef<HTMLDivElement, DropUploadProps>(({
+export const DropUpload = ({
   accept,
   browseLabel = 'browse',
   className,
@@ -182,10 +183,11 @@ export const DropUpload = forwardRef<HTMLDivElement, DropUploadProps>(({
   onFilesChange,
   onReject,
   previewClassName,
+  ref,
   showPreviews = true,
   transformImages = true,
   ...props
-}, ref) => {
+}: DropUploadProps) => {
   const inputId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const itemsRef = useRef<DropUploadItem[]>([]);
@@ -413,6 +415,4 @@ export const DropUpload = forwardRef<HTMLDivElement, DropUploadProps>(({
       )}
     </div>
   );
-});
-
-DropUpload.displayName = 'DropUpload';
+};

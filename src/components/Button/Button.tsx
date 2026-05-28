@@ -1,11 +1,10 @@
 import {cn} from '@nlabs/utils';
-import {forwardRef} from 'react';
 
 import {useTranslation} from '../../i18n/index.js';
 import {getBackgroundClasses, getBorderClasses, getTextClasses} from '../../utils/colorUtils.js';
 import {renderWithAsChild} from '../ComponentUtils/renderWithAsChild.js';
 
-import type {ButtonHTMLAttributes, ElementType, ReactNode} from 'react';
+import type {ButtonHTMLAttributes, ElementType, ReactNode, Ref} from 'react';
 import type {GothamColor} from '../../utils/colorUtils.js';
 import type {GothamSize} from '../../utils/sizeUtils.js';
 
@@ -23,12 +22,13 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   readonly isLoading?: boolean;
   readonly label?: string;
   readonly onClick?: (event?: unknown) => void;
+  readonly ref?: Ref<HTMLButtonElement>;
   readonly size?: GothamSize;
   readonly type?: ButtonType;
   readonly variant?: ButtonVariant;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
+export const Button = ({
   as,
   asChild = false,
   children,
@@ -41,11 +41,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   isLoading = false,
   label = '',
   onClick = () => {},
+  ref,
   size = 'md',
   type = 'button',
   variant,
   ...props
-}, ref) => {
+}: ButtonProps) => {
   const {t} = useTranslation();
   const classes: string[] = [
     'disabled:pointer-events-none',
@@ -170,6 +171,4 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
       'data-variant': variant
     }
   );
-});
-
-Button.displayName = 'Button';
+};

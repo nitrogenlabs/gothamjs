@@ -2,19 +2,21 @@
  * Copyright (c) 2025-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {forwardRef, useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 
 import {useIsMobile} from '../../hooks/useIsMobile.js';
 import {getOutlineClasses} from '../../utils/colorUtils.js';
+import {assignRef} from '../../utils/refUtils.js';
 import {ErrorMessage} from '../ErrorMessage/ErrorMessage.js';
 import {InputField, type InputFieldProps} from '../InputField/InputField.js';
 import {Label} from '../Label/Label.js';
 import {DatePicker} from './DatePicker.js';
 
+import type {InputHTMLAttributes, Ref} from 'react';
 import type {GothamColor} from '../../utils/colorUtils.js';
 
-export interface DateFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface DateFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly className?: string;
   readonly color?: GothamColor;
   readonly defaultValue?: number;
@@ -28,10 +30,11 @@ export interface DateFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   readonly maxDate?: number;
   readonly minDate?: number;
   readonly onChange?: (date) => void;
+  readonly ref?: Ref<HTMLInputElement>;
   readonly value?: number;
 }
 
-export const DateField = forwardRef<HTMLInputElement, DateFieldProps>(({
+export const DateField = ({
   className = 'w-full rounded-md outline-1 outline-solid focus:outline-3 px-3.5 py-2 text-black dark:text-white placeholder:text-black/50 dark:placeholder:text-white/50 sm:text-sm sm:leading-6',
   color = 'primary',
   defaultValue,
@@ -44,10 +47,11 @@ export const DateField = forwardRef<HTMLInputElement, DateFieldProps>(({
   minDate,
   name,
   onChange,
+  ref,
   type = 'text',
   value,
   ...props
-}, ref) => {
+}: DateFieldProps) => {
   const isMobile = useIsMobile();
   const {control, formState: {errors}, clearErrors, trigger} = useFormContext();
   const formError = errors?.[name];
@@ -64,12 +68,6 @@ export const DateField = forwardRef<HTMLInputElement, DateFieldProps>(({
     disabled ? 'text-neutral/30 dark:text-neutral-dark/30 outline-neutral/30 dark:outline-neutral-dark/30' : outlineClasses,
     className
   ].filter(Boolean).join(' ');
-
-  useEffect(() => {
-    if (ref && typeof ref === 'object' && inputRef.current) {
-      ref.current = inputRef.current;
-    }
-  }, [ref, inputRef.current]);
 
   const ensureDateInRange = (timestamp: number): number => {
     if (!timestamp) return timestamp;
@@ -127,7 +125,7 @@ export const DateField = forwardRef<HTMLInputElement, DateFieldProps>(({
       name={name}
       defaultValue={value || ensureDateInRange(defaultValue || new Date().getTime())}
       render={({field}) => (
-        <div className="flex flex-col w-full" ref={ref}>
+        <div className="flex flex-col w-full">
           <Label
             className={labelClass}
             color={labelColor}
@@ -137,7 +135,10 @@ export const DateField = forwardRef<HTMLInputElement, DateFieldProps>(({
           <div className="relative">
             <InputField
               {...props as Omit<InputFieldProps, 'onChange'>}
-              ref={inputRef}
+              ref={(node) => {
+                inputRef.current = node as HTMLInputElement | null;
+                assignRef(ref, node as HTMLInputElement | null);
+              }}
               disabled={disabled}
               value={formatDateForInput(field.value)}
               onChange={(changeEvent) => {
@@ -195,4 +196,4 @@ export const DateField = forwardRef<HTMLInputElement, DateFieldProps>(({
       )}
     />
   );
-});
+};

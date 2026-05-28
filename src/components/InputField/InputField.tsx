@@ -3,7 +3,7 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {cn} from '@nlabs/utils';
-import {forwardRef, useMemo} from 'react';
+import {useMemo} from 'react';
 
 import {
   getBorderClasses,
@@ -25,6 +25,7 @@ export interface InputFieldProps extends Omit<InputHTMLAttributes<HTMLInputEleme
   readonly label?: string;
   readonly multiline?: boolean;
   readonly placeholderColor?: GothamColor;
+  readonly ref?: Ref<HTMLInputElement | HTMLTextAreaElement>;
   readonly textFillColor?: string;
   readonly textColor?: GothamColor;
 }
@@ -53,7 +54,7 @@ export const getInputBorderClass = (
   getPlaceholderClasses(placeholderColor, {hasFocus: true, hasHover: true})
 );
 
-export const InputField = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputFieldProps>(({
+export const InputField = ({
   borderColor = 'neutral',
   borderType = 'solid',
   className,
@@ -61,11 +62,12 @@ export const InputField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Inp
   label,
   multiline = false,
   placeholderColor = 'neutral',
+  ref,
   style,
   textFillColor,
   textColor = 'neutral',
   ...inputProps
-}, ref) => {
+}: InputFieldProps) => {
   const borderClasses = useMemo(
     () => getInputBorderClass(borderType, borderColor, textColor, placeholderColor),
     [borderType, borderColor, textColor, placeholderColor]
@@ -110,4 +112,4 @@ export const InputField = forwardRef<HTMLInputElement | HTMLTextAreaElement, Inp
       style={inputStyle}
     />
   );
-});
+};
