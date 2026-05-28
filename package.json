@@ -97,20 +97,20 @@
   ],
   "dependencies": {
     "@headlessui/react": "^2.2.10",
-    "@hookform/resolvers": "^5.2.2",
+    "@hookform/resolvers": "^5.4.0",
     "@nlabs/rip-hunter": "^3.1.0",
-    "@nlabs/utils": "^2.10.1",
+    "@nlabs/utils": "^2.10.4",
     "autosuggest-highlight": "^3.3.4",
     "cropperjs": "^2.1.1",
     "hast-util-sanitize": "5.0.2",
     "highlight.js": "^11.11.1",
     "history": "^5.3.0",
-    "i18next": "^26.2.0",
-    "lucide-react": "^1.16.0",
+    "i18next": "^26.3.0",
+    "lucide-react": "^1.17.0",
     "progressbar.js": "^1.1.1",
     "react-autosuggest": "^10.1.0",
     "react-cropper": "^2.3.3",
-    "react-hook-form": "^7.75.0",
+    "react-hook-form": "^7.76.1",
     "react-i18next": "^17.0.8",
     "yet-another-react-lightbox": "^3.32.0",
     "react-markdown": "^10.1.0",
@@ -129,9 +129,9 @@
     "@nlabs/lex": "1.58.2",
     "@types/history": "^5.0.0",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.8.0",
+    "@types/node": "^25.9.1",
     "@types/progressbar.js": "^1.1.7",
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
@@ -147,16 +147,25 @@
     "react-dom": "^19.0.0"
   },
   "overrides": {
-    "cross-spawn": "^7.0.3",
-    "got": "^13.0.0",
-    "http-proxy-middleware": "^3.0.3",
-    "semver-regex": "^4.0.5",
-    "tmp": "^0.2.1",
+    "cross-spawn": "^7.0.6",
+    "download": {
+      "got": "^13.0.0"
+    },
+    "download-tarball": {
+      "got": "^13.0.0"
+    },
+    "get-npm-registry-package": {
+      "got": "^13.0.0"
+    },
+    "http-proxy-middleware": "^3.0.5",
+    "is-svg": {
+      "fast-xml-parser": "5.7.2"
+    },
     "postcss-url": {
       "minimatch": "3.1.5"
     },
-    "is-svg": {
-      "fast-xml-parser": "5.7.2"
-    }
+    "semver-regex": "^4.0.5",
+    "tmp": "^0.2.7",
+    "uuid": "^11.1.1"
   }
 }
