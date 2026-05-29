@@ -7,5 +7,11 @@ export default [
     rules: {
       'import/no-extraneous-dependencies': 'off'
     }
+  },
+  {
+    files: ['**/*.stories.ts', '**/*.stories.tsx'],
+    rules: {
+      'import/no-extraneous-dependencies': 'off'
+    }
   }
 ];

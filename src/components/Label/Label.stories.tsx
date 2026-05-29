@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {gothamColors} from '../../utils/colorUtils.js';
 import {focusCanvas} from '../../utils/storyInteractions.js';
 import {Label} from './Label.js';
@@ -25,7 +26,7 @@ const meta: Meta<typeof Label> = {
   parameters: {
     layout: 'centered'
   },
-  title: 'Components/Label'
+  title: 'Components/Form/Label'
 };
 
 export default meta;

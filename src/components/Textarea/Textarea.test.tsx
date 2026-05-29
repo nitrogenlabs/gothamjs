@@ -1,6 +1,6 @@
 /* @vitest-environment jsdom */
-import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
+import {render, screen} from '@testing-library/react';
 
 import {Textarea} from './Textarea.js';
 

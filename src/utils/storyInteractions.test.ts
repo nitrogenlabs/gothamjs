@@ -1,7 +1,7 @@
 /* @vitest-environment jsdom */
 import {vi} from 'vitest';
 
-import {interactWithCanvas} from './storyInteractions.js';
+import {focusCanvas, interactWithCanvas} from './storyInteractions.js';
 
 describe('storyInteractions', () => {
   it('clicks anchors without changing the iframe hash', async () => {
@@ -19,6 +19,7 @@ describe('storyInteractions', () => {
 
     expect(onClick).toHaveBeenCalledTimes(1);
     expect(window.location.hash).toBe('');
+    expect(document.activeElement).not.toBe(link);
   });
 
   it('still clicks buttons normally', async () => {
@@ -33,5 +34,21 @@ describe('storyInteractions', () => {
     await interactWithCanvas({canvasElement});
 
     expect(onClick).toHaveBeenCalledTimes(1);
+    expect(document.activeElement).not.toBe(button);
+  });
+
+  it('does not leave the first focusable element active', async () => {
+    const canvasElement = document.createElement('div');
+    const button = document.createElement('button');
+
+    button.textContent = 'Open';
+    canvasElement.append(button);
+    document.body.append(canvasElement);
+
+    await focusCanvas({canvasElement});
+
+    expect(document.activeElement).not.toBe(button);
+
+    canvasElement.remove();
   });
 });

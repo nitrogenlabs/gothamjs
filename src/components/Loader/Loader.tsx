@@ -15,24 +15,24 @@ export interface LoaderProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const sizeClasses: Record<GothamSize, string> = {
-  lg: 'size-10 border-b-3',
-  md: 'size-8 border-b-2',
-  sm: 'size-5 border-b-2'
+  lg: 'size-10 border-3',
+  md: 'size-8 border-2',
+  sm: 'size-5 border-2'
 };
 
 const colorClasses: Record<GothamColor, string> = {
-  black: 'border-black dark:border-white',
-  error: 'border-error dark:border-error-dark',
-  info: 'border-info dark:border-info-dark',
-  link: 'border-link dark:border-link-dark',
-  neutral: 'border-neutral dark:border-neutral-dark',
-  primary: 'border-primary dark:border-primary-dark',
-  secondary: 'border-secondary dark:border-secondary-dark',
-  success: 'border-success dark:border-success-dark',
-  tertiary: 'border-tertiary dark:border-tertiary-dark',
-  transparent: 'border-transparent',
-  warning: 'border-warning dark:border-warning-dark',
-  white: 'border-white dark:border-white-dark'
+  black: 'text-black dark:text-white',
+  error: 'text-error dark:text-error-dark',
+  info: 'text-info dark:text-info-dark',
+  link: 'text-link dark:text-link-dark',
+  neutral: 'text-neutral dark:text-neutral-dark',
+  primary: 'text-primary dark:text-primary-dark',
+  secondary: 'text-secondary dark:text-secondary-dark',
+  success: 'text-success dark:text-success-dark',
+  tertiary: 'text-tertiary dark:text-tertiary-dark',
+  transparent: 'text-transparent',
+  warning: 'text-warning dark:text-warning-dark',
+  white: 'text-white dark:text-white-dark'
 };
 
 export const Loader = ({
@@ -45,7 +45,7 @@ export const Loader = ({
   <div
     aria-label={content}
     className={cn(
-      'inline-block animate-spin rounded-full border-solid border-transparent',
+      'inline-block animate-spin rounded-full border-solid border-current border-t-transparent',
       sizeClasses[size],
       colorClasses[color],
       className

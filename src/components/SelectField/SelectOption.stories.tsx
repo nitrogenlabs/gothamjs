@@ -1,5 +1,6 @@
-import React from 'react';
 import {Listbox} from '@headlessui/react';
+import React from 'react';
+
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {SelectOption} from './SelectOption.js';
 
@@ -15,7 +16,7 @@ const meta: Meta<typeof SelectOption> = {
   parameters: {
     layout: 'centered'
   },
-  title: 'Components/SelectOption'
+  title: 'Components/Form/SelectOption'
 };
 
 export default meta;

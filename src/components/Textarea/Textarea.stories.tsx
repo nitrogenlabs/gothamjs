@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {Textarea} from './Textarea.js';
 
@@ -20,7 +21,7 @@ const meta: Meta<typeof Textarea> = {
   parameters: {
     layout: 'centered'
   },
-  title: 'Components/Textarea'
+  title: 'Components/Form/Textarea'
 };
 
 export default meta;

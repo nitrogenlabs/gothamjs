@@ -1,6 +1,6 @@
-import {SelectField} from './SelectField.js';
 import {gothamColors} from '../../utils/colorUtils.js';
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
+import {SelectField} from './SelectField.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
@@ -37,7 +37,7 @@ const meta: Meta<typeof SelectField> = {
       </div>
     )
   ],
-  title: 'Components/SelectField'
+  title: 'Components/Form/SelectField'
 };
 
 export default meta;

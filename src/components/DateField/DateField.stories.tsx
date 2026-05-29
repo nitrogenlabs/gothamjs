@@ -1,6 +1,6 @@
-import {DateField} from './DateField.js';
 import {gothamColors} from '../../utils/colorUtils.js';
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
+import {DateField} from './DateField.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
@@ -59,7 +59,7 @@ const meta: Meta<typeof DateField> = {
     },
     layout: 'centered'
   },
-  title: 'Components/DateField'
+  title: 'Components/Form/DateField'
 };
 
 export default meta;

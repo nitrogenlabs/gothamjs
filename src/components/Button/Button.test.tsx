@@ -1,6 +1,6 @@
 /* @vitest-environment jsdom */
-import {fireEvent, render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
+import {fireEvent, render, screen} from '@testing-library/react';
 import {vi} from 'vitest';
 
 import {Button} from './Button.js';
@@ -16,6 +16,19 @@ describe('Button', () => {
     render(<Button isLoading>Save</Button>);
 
     expect(screen.getByRole('button', {name: 'Save'})).toBeDisabled();
+  });
+
+  it('keeps content in the layout while loading', () => {
+    render(<Button isLoading>Save</Button>);
+
+    expect(screen.getByText('Save')).toHaveClass('opacity-0');
+    expect(screen.getByRole('button', {name: 'Save'}).querySelector('svg')).toHaveClass('absolute');
+  });
+
+  it('applies shadow styles to non-text buttons', () => {
+    render(<Button hasShadow>Save</Button>);
+
+    expect(screen.getByRole('button', {name: 'Save'})).toHaveClass('shadow-[0_0_12px_rgba(0,0,0,0.12)]');
   });
 
   it('passes native button attributes and click handlers through', () => {

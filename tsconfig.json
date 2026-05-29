@@ -44,9 +44,7 @@
   "exclude": [
     "node_modules",
     "lib",
-    ".storybook",
-    "**/*.stories.ts",
-    "**/*.stories.tsx"
+    ".storybook"
   ],
   "include": [
     "src/**/*",

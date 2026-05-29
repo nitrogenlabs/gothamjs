@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {Checkbox} from './Checkbox.js';
 
@@ -27,7 +28,7 @@ const meta: Meta<typeof Checkbox> = {
   parameters: {
     layout: 'centered'
   },
-  title: 'Components/Checkbox'
+  title: 'Components/Form/Checkbox'
 };
 
 export default meta;

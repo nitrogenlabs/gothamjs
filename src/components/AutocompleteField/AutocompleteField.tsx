@@ -3,8 +3,10 @@
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
 import {useEffect, useRef, useState} from 'react';
-import type {ChangeEvent} from 'react';
+
 import {TextField} from '../TextField/TextField.js';
+
+import type {ChangeEvent} from 'react';
 import type {TextFieldProps} from '../TextField/TextField.js';
 
 export type AutocompleteSuggestion = {

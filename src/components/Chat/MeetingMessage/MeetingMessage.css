@@ -170,7 +170,7 @@
 .rce-mitem-body--bottom-title {
   color: #252525;
   font-size: 13px;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: inherit;
 }
 
 .rce-mitem-body--top-time {

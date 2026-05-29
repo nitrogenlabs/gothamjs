@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {DatePicker} from './DatePicker.js';
 
@@ -22,7 +23,7 @@ const meta: Meta<typeof DatePicker> = {
   parameters: {
     layout: 'centered'
   },
-  title: 'Components/DatePicker'
+  title: 'Components/Form/DatePicker'
 };
 
 export default meta;

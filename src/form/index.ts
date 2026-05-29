@@ -5,7 +5,6 @@ export * from '../components/Checkbox/Checkbox.js';
 export * from '../components/DateField/DateField.js';
 export * from '../components/Form/Form.js';
 export * from '../components/Form/FormContext.js';
-export * from '../components/Input/Input.js';
 export * from '../components/InputField/InputField.js';
 export * from '../components/RadioField/RadioField.js';
 export * from '../components/SelectField/SelectField.js';

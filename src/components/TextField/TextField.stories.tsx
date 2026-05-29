@@ -1,7 +1,7 @@
 import React from 'react';
 import {I18nextProvider, initReactI18next} from 'react-i18next';
-import {i18n} from '../../i18n/index.js';
 
+import {i18n} from '../../i18n/index.js';
 import {gothamColors} from '../../utils/colorUtils.js';
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {TextField} from './TextField.js';
@@ -73,15 +73,15 @@ const meta: Meta<typeof TextField> = {
               translation: {
                 'Textfield placeholder': 'Textfield placeholder',
                 'Enter email address': 'Enter email address',
-                'Description': 'Description'
+                Description: 'Description'
               }
             }
           },
           lng: 'en',
           fallbackLng: 'en',
           interpolation: {
-            escapeValue: false,
-          },
+            escapeValue: false
+          }
         });
 
       return (
@@ -103,7 +103,7 @@ const meta: Meta<typeof TextField> = {
     },
     layout: 'centered'
   },
-  title: 'Components/TextField'
+  title: 'Components/Form/TextField'
 };
 
 export default meta;

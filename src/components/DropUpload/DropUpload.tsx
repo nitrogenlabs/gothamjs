@@ -195,7 +195,7 @@ export const DropUpload = ({
   const [internalItems, setInternalItems] = useState<DropUploadItem[]>(() => filesToItems(defaultFiles));
   const isControlled = Array.isArray(files);
   const items = useMemo(
-    () => isControlled ? filesToItems(files || []) : internalItems,
+    () => (isControlled ? filesToItems(files || []) : internalItems),
     [files, internalItems, isControlled]
   );
 

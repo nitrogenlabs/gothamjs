@@ -3,8 +3,8 @@
  * Copyright (c) 2021-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {z} from 'zod';
 
 import {Form} from './Form.js';

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {DropUpload} from './DropUpload.js';
 
@@ -32,7 +33,7 @@ const meta: Meta<typeof DropUpload> = {
   parameters: {
     layout: 'centered'
   },
-  title: 'Components/DropUpload'
+  title: 'Components/Form/DropUpload'
 };
 
 export default meta;

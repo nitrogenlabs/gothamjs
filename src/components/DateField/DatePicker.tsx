@@ -32,7 +32,7 @@ export const DatePicker: FC<DatePickerProps> = ({
   }, [initialDate]);
 
   const handlePrevMonth = () => {
-    if (currentMonth === 0) {
+    if(currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear(currentYear - 1);
     } else {
@@ -41,7 +41,7 @@ export const DatePicker: FC<DatePickerProps> = ({
   };
 
   const handleNextMonth = () => {
-    if (currentMonth === 11) {
+    if(currentMonth === 11) {
       setCurrentMonth(0);
       setCurrentYear(currentYear + 1);
     } else {
@@ -60,11 +60,11 @@ export const DatePicker: FC<DatePickerProps> = ({
   const isDateInRange = (date: Date): boolean => {
     const dateTimestamp = date.getTime();
 
-    if (minDate && dateTimestamp < minDate) {
+    if(minDate && dateTimestamp < minDate) {
       return false;
     }
 
-    if (maxDate && dateTimestamp > maxDate) {
+    if(maxDate && dateTimestamp > maxDate) {
       return false;
     }
 
@@ -74,13 +74,13 @@ export const DatePicker: FC<DatePickerProps> = ({
   const handleDateSelect = (day: number) => {
     const newDate = new Date(currentYear, currentMonth, day);
 
-    if (!isDateInRange(newDate)) {
+    if(!isDateInRange(newDate)) {
       return;
     }
 
     setSelectedDate(newDate);
 
-    if (onDateSelect) {
+    if(onDateSelect) {
       onDateSelect(newDate.getTime());
     }
   };
@@ -91,25 +91,21 @@ export const DatePicker: FC<DatePickerProps> = ({
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
 
-  const getDaysInMonth = (year: number, month: number) => {
-    return new Date(year, month + 1, 0).getDate();
-  };
+  const getDaysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
 
-  const getFirstDayOfMonth = (year: number, month: number) => {
-    return new Date(year, month, 1).getDay();
-  };
+  const getFirstDayOfMonth = (year: number, month: number) => new Date(year, month, 1).getDay();
 
   // Generate years for dropdown (range based on min/max dates)
   const generateYearOptions = () => {
     let startYear = currentYear - 5;
     let endYear = currentYear + 5;
 
-    if (minDate) {
+    if(minDate) {
       const minYear = new Date(minDate).getFullYear();
       startYear = minYear;
     }
 
-    if (maxDate) {
+    if(maxDate) {
       const maxYear = new Date(maxDate).getFullYear();
       endYear = maxYear;
     }
@@ -126,12 +122,12 @@ export const DatePicker: FC<DatePickerProps> = ({
 
   const days: ReactNode[] = [];
   // Add empty cells for days before the first day of the month
-  for (let i = 0; i < firstDayOfMonth; i++) {
+  for(let i = 0; i < firstDayOfMonth; i++) {
     days.push(<div key={`empty-${i}`} className="h-8 w-8"></div>);
   }
 
   // Add days of the month
-  for (let day = 1; day <= daysInMonth; day++) {
+  for(let day = 1; day <= daysInMonth; day++) {
     const date = new Date(currentYear, currentMonth, day);
     const isSelected =
       selectedDate.getDate() === day &&
@@ -192,7 +188,7 @@ export const DatePicker: FC<DatePickerProps> = ({
                 scrollbarWidth: 'thin'
               }}
             >
-              {yearOptions.map(year => (
+              {yearOptions.map((year) => (
                 <option key={year} value={year} className="text-sm">
                   {year}
                 </option>
@@ -213,7 +209,7 @@ export const DatePicker: FC<DatePickerProps> = ({
         </button>
       </div>
       <div className="grid grid-cols-7 gap-0.5">
-        {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
+        {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
           <div key={day} className="text-center font-medium text-gray-500 text-xs">
             {day}
           </div>

@@ -1,7 +1,7 @@
-import { Loader } from './Loader.js';
 import {focusCanvas} from '../../utils/storyInteractions.js';
+import {Loader} from './Loader.js';
 
-import type { Meta, StoryObj } from '@nlabs/lex/storybook';
+import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
 
 const meta: Meta<typeof Loader> = {
@@ -18,7 +18,11 @@ const meta: Meta<typeof Loader> = {
       options: ['sm', 'md', 'lg']
     }
   },
-  component: Loader
+  component: Loader,
+  parameters: {
+    layout: 'centered'
+  },
+  title: 'Components/Loader'
 };
 
 export default meta;
@@ -34,17 +38,22 @@ export const Primary: Story = {
 };
 
 export const Sizes: Story = {
+  args: {
+    color: 'primary',
+    size: 'sm'
+  },
+  play: focusCanvas,
   render: () => (
     <div className="flex items-center gap-6">
       <Loader size="sm" />
       <Loader size="md" />
       <Loader size="lg" />
     </div>
-  ),
-  play: focusCanvas
+  )
 };
 
 export const Colors: Story = {
+  play: focusCanvas,
   render: () => (
     <div className="flex items-center gap-6">
       <Loader color="primary" />
@@ -53,6 +62,5 @@ export const Colors: Story = {
       <Loader color="error" />
       <Loader color="neutral" />
     </div>
-  ),
-  play: focusCanvas
+  )
 };

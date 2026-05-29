@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {gothamColors} from '../../utils/colorUtils.js';
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {InputField} from './InputField.js';
@@ -37,7 +38,7 @@ const meta: Meta<typeof InputField> = {
   parameters: {
     layout: 'centered'
   },
-  title: 'Components/InputField'
+  title: 'Components/Form/InputField'
 };
 
 export default meta;

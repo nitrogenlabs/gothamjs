@@ -1,5 +1,6 @@
 import React from 'react';
 import {I18nextProvider, initReactI18next} from 'react-i18next';
+
 import {i18n} from '../../i18n/index.js';
 import {gothamColors} from '../../utils/colorUtils.js';
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
@@ -12,6 +13,12 @@ const meta: Meta<typeof ButtonComponent> = {
     color: {
       control: 'select',
       options: gothamColors
+    },
+    hasShadow: {
+      control: 'boolean'
+    },
+    isLoading: {
+      control: 'boolean'
     },
     size: {
       control: 'select',
@@ -30,18 +37,18 @@ const meta: Meta<typeof ButtonComponent> = {
       storyI18n
         .use(initReactI18next)
         .init({
+          fallbackLng: 'en',
+          interpolation: {
+            escapeValue: false
+          },
+          lng: 'en',
           resources: {
             en: {
               translation: {
-                'Button': 'Button'
+                Button: 'Button'
               }
             }
-          },
-          lng: 'en',
-          fallbackLng: 'en',
-          interpolation: {
-            escapeValue: false,
-          },
+          }
         });
 
       return (

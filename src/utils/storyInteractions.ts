@@ -6,7 +6,15 @@ const preventAnchorNavigation = (element: HTMLElement) => {
   const anchor = element.closest('a[href]');
 
   if(anchor instanceof HTMLAnchorElement) {
-    anchor.addEventListener('click', event => event.preventDefault(), {capture: true, once: true});
+    anchor.addEventListener('click', (event) => event.preventDefault(), {capture: true, once: true});
+  }
+};
+
+const clearCanvasFocus = (canvasElement: HTMLElement) => {
+  const {activeElement} = canvasElement.ownerDocument;
+
+  if(activeElement instanceof HTMLElement && canvasElement.contains(activeElement)) {
+    activeElement.blur();
   }
 };
 
@@ -29,6 +37,7 @@ export const interactWithCanvas = async ({canvasElement}: StoryContext) => {
     clickable.focus();
     preventAnchorNavigation(clickable);
     clickable.click();
+    clearCanvasFocus(canvasElement);
   }
 };
 
@@ -37,4 +46,5 @@ export const focusCanvas = async ({canvasElement}: StoryContext) => {
 
   const focusable = canvasElement.querySelector('button, a[href], input, textarea, [tabindex]') as HTMLElement | null;
   focusable?.focus();
+  clearCanvasFocus(canvasElement);
 };

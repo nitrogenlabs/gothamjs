@@ -1,7 +1,8 @@
 import React from 'react';
+
 import {interactWithCanvas} from '../../utils/storyInteractions.js';
 import {Button} from '../Button/Button.js';
-import {Input} from '../Input/Input.js';
+import {TextField} from '../TextField/TextField.js';
 import {Form} from './Form.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
@@ -26,7 +27,7 @@ const meta: Meta<typeof Form> = {
   parameters: {
     layout: 'centered'
   },
-  title: 'Components/Form'
+  title: 'Components/Form/Form'
 };
 
 export default meta;
@@ -50,7 +51,7 @@ export const Default: Story = {
       className="flex w-80 flex-col gap-3"
       onSubmit={() => undefined}
     >
-      <Input className="rounded-md border px-3 py-2" name="email" placeholder="Email address" />
+      <TextField borderType="rounded" name="email" placeholder="Email address" />
       <Button label="Submit" type="submit" />
     </Form>
   )

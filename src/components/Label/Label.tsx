@@ -2,13 +2,13 @@
  * Copyright (c) 2018-Present, Nitrogen Labs, Inc.
  * Copyrights licensed under the MIT License. See the accompanying LICENSE file for terms.
  */
-import {useMemo} from 'react';
 import {cn} from '@nlabs/utils';
+import {useMemo} from 'react';
 
 import {getTextClasses} from '../../utils/colorUtils.js';
 
-import type {GothamColor} from '../../utils/colorUtils.js';
 import type {FC} from 'react';
+import type {GothamColor} from '../../utils/colorUtils.js';
 
 export interface LabelProps {
   readonly className?: string;
@@ -28,7 +28,7 @@ export const Label: FC<LabelProps> = ({
 }) => {
   const labelClasses = useMemo(() => getTextClasses(hasError ? 'error' : color), [color, hasError]);
 
-  if (!label) {
+  if(!label) {
     return null;
   }
 

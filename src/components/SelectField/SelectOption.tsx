@@ -1,5 +1,5 @@
-import { ListboxOption } from '@headlessui/react';
-import { Check } from 'lucide-react';
+import {ListboxOption} from '@headlessui/react';
+import {Check} from 'lucide-react';
 
 import {Svg} from '../Svg/Svg.js';
 
@@ -14,7 +14,7 @@ export type SelectFieldOption = {
 export type SelectOptionProps = {
   readonly option: SelectFieldOption;
 };
-export const SelectOption = ({ option }: SelectOptionProps) => (
+export const SelectOption = ({option}: SelectOptionProps) => (
   <ListboxOption
     key={option.id || option.label}
     value={String(option.value)}
