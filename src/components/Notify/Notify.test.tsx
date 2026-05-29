@@ -6,7 +6,7 @@
 import {render} from '@nlabs/lex/test-react';
 import {Flux} from '@nlabs/arkhamjs';
 import {FluxProvider} from '@nlabs/arkhamjs-utils-react';
-import {fireEvent, screen} from '@testing-library/react';
+import {fireEvent, screen, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import {vi} from 'vitest';
 
@@ -72,5 +72,35 @@ describe('Notify', () => {
 
     expect(screen.getByText('Would you like to undo?')).toBeInTheDocument();
     expect(onUndo).toHaveBeenCalledWith('notification');
+  });
+
+  it('renders severity alerts and dismisses them', async () => {
+    if (!(Flux as any).isInit) {
+      await Flux.init({name: 'gothamjs-test'});
+    }
+
+    render(
+      <FluxProvider flux={Flux}>
+        <button
+          onClick={() => GothamActions.notify({
+            anchorOrigin: {horizontal: 'right', vertical: 'top'},
+            autoHideDuration: 0,
+            message: 'Saved successfully',
+            severity: 'success'
+          })}
+          type="button"
+        >
+          Open
+        </button>
+        <Notify />
+      </FluxProvider>
+    );
+
+    fireEvent.click(screen.getByRole('button', {name: 'Open'}));
+
+    expect(await screen.findByText('Saved successfully')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', {name: 'Dismiss'}));
+
+    await waitFor(() => expect(screen.queryByText('Saved successfully')).not.toBeInTheDocument());
   });
 });

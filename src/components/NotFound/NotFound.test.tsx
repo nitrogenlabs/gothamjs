@@ -3,6 +3,7 @@ import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 
 import {NotFound} from './NotFound.js';
+import {Rss} from 'lucide-react';
 
 describe('NotFound', () => {
   it('renders the simple 404 state by default', () => {
@@ -34,5 +35,34 @@ describe('NotFound', () => {
 
     expect(screen.getByRole('img', {name: 'Lost road'})).toHaveAttribute('src', '/lost-road.jpg');
     expect(screen.getByRole('link', {name: /Go back home/})).toHaveAttribute('href', '/');
+  });
+
+  it('renders split layout footer links and image', () => {
+    render(
+      <NotFound
+        footerLinks={[{href: '/help', label: 'Help'}, {href: '/status', label: 'Status'}]}
+        imageAlt="Desk"
+        imageSrc="/desk.jpg"
+        logo={<span>Logo</span>}
+        variant="split"
+      />
+    );
+
+    expect(screen.getByRole('link', {name: 'Logo'})).toHaveAttribute('href', '/');
+    expect(screen.getByRole('link', {name: 'Help'})).toHaveAttribute('href', '/help');
+    expect(screen.getByRole('img', {name: 'Desk'})).toHaveAttribute('src', '/desk.jpg');
+  });
+
+  it('renders popular footer content and social links', () => {
+    render(
+      <NotFound
+        copyright="Copyright GothamJS"
+        socialLinks={[{href: '/feed', icon: Rss, label: 'RSS'}]}
+        variant="popular"
+      />
+    );
+
+    expect(screen.getByText('Copyright GothamJS')).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'RSS'})).toHaveAttribute('href', '/feed');
   });
 });

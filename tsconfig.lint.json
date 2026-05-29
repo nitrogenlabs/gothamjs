@@ -18,7 +18,8 @@
     "./src/**/*.stories.ts",
     "./src/**/*.stories.tsx",
     "./src/**/*.test.ts",
-    "./src/**/*.test.tsx"
+    "./src/**/*.test.tsx",
+    "./src/types/**/*.d.ts"
   ],
   "exclude": [
     "lib",

@@ -149,6 +149,7 @@ export const DateField = ({
             assignRef(ref, node as HTMLInputElement | null);
           }}
           disabled={disabled}
+          id={name}
           value={formatDateForInput(currentValue)}
           onChange={(changeEvent) => {
             setDateValue(parseInputDate(changeEvent.target.value));

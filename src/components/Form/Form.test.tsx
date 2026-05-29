@@ -61,4 +61,78 @@ describe('Form', () => {
       expect(screen.getByRole('list')).toBeInTheDocument();
     });
   });
+
+  it('submits parsed form values and supports server-side field errors', async () => {
+    const onSubmit = vi.fn(async (_data, _event, setError) => {
+      setError('email', {message: 'Email is already taken', type: 'server'});
+    });
+
+    render(
+      <Form
+        onSubmit={onSubmit}
+        schema={testSchema}
+        showErrors
+      >
+        {(methods) => (
+          <>
+            <input {...methods.register('email')} defaultValue="team@gothamjs.dev" />
+            <input {...methods.register('password')} defaultValue="password123" />
+            <button type="submit">Submit</button>
+          </>
+        )}
+      </Form>
+    );
+
+    fireEvent.click(screen.getByRole('button', {name: 'Submit'}));
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith(
+      {
+        email: 'team@gothamjs.dev',
+        password: 'password123'
+      },
+      expect.any(Object),
+      expect.any(Function)
+    ));
+    expect(await screen.findByText('Email is already taken')).toBeInTheDocument();
+  });
+
+  it('provides default values and ignores disabled submissions', async () => {
+    const onSubmit = vi.fn();
+
+    render(
+      <Form
+        defaultValues={{email: 'team@gothamjs.dev'}}
+        disabled
+        onSubmit={onSubmit}
+      >
+        {(methods) => (
+          <>
+            <input {...methods.register('email')} />
+            <span>{String(methods.getValues().email)}</span>
+            <button type="submit">Submit</button>
+          </>
+        )}
+      </Form>
+    );
+
+    expect(screen.getByText('team@gothamjs.dev')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', {name: 'Submit'}));
+
+    await waitFor(() => expect(onSubmit).not.toHaveBeenCalled());
+  });
+
+  it('renders externally supplied errors', () => {
+    render(
+      <Form
+        errors={{email: {message: 'Email is invalid', type: 'manual'}}}
+        onSubmit={() => {}}
+        showErrors
+      >
+        <button type="submit">Submit</button>
+      </Form>
+    );
+
+    expect(screen.getByText('Email is invalid')).toBeInTheDocument();
+  });
 });

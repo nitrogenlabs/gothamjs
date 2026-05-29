@@ -21,4 +21,29 @@ describe('Tabs', () => {
     expect(screen.getByRole('button', {name: 'Team'})).toHaveAttribute('aria-current', 'page');
     expect(onTabChange).toHaveBeenCalledWith(items[2]);
   });
+
+  it('renders pill links and disabled tabs', () => {
+    render(
+      <Tabs
+        items={[
+          {current: true, href: '/overview', id: 'overview', label: 'Overview'},
+          {disabled: true, id: 'settings', label: 'Settings'}
+        ]}
+        variant="pills"
+      />
+    );
+
+    expect(screen.getByRole('link', {name: 'Overview'})).toHaveAttribute('href', '/overview');
+    expect(screen.getByRole('button', {name: 'Settings'})).toBeDisabled();
+  });
+
+  it('handles mobile select tab changes', () => {
+    const onTabChange = vi.fn();
+
+    render(<Tabs items={items} onTabChange={onTabChange} />);
+
+    fireEvent.change(screen.getByRole('combobox', {name: 'Tabs'}), {target: {value: 'account'}});
+
+    expect(onTabChange).toHaveBeenCalledWith(items[0]);
+  });
 });

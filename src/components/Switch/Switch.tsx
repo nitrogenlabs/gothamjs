@@ -36,9 +36,9 @@ export const Switch: FC<SwitchProps> = ({
     className={cn('relative isolate inline-flex h-6 w-10 rounded-full sm:h-5 sm:w-8', className)}
     data-slot="switch"
   >
-    <input
-      className="peer absolute inset-0 size-full cursor-pointer appearance-none rounded-full disabled:cursor-not-allowed"
-      disabled={disabled}
+      <input
+        className="peer absolute inset-0 size-full cursor-pointer appearance-none rounded-full disabled:cursor-not-allowed"
+        disabled={disabled}
       onChange={(event) => {
         onChange?.(event);
         onCheckedChange?.(event.currentTarget.checked);

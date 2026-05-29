@@ -12,7 +12,7 @@ describe('Text', () => {
       </Text>
     );
 
-    expect(screen.getByText('Read the')).toBeInTheDocument();
+    expect(screen.getByText('docs').closest('p')).toHaveTextContent('Read the docs, please. Use npm test.');
     expect(screen.getByRole('link', {name: 'docs'})).toHaveAttribute('href', '/docs');
     expect(screen.getByText('please')).toBeInTheDocument();
     expect(screen.getByText('npm test')).toBeInTheDocument();

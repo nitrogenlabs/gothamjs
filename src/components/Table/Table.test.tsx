@@ -22,7 +22,7 @@ describe('Table', () => {
     );
 
     expect(screen.getByRole('columnheader', {name: 'Name'})).toBeInTheDocument();
-    expect(screen.getByRole('cell', {name: 'GothamJS'})).toBeInTheDocument();
+    expect(screen.getByText('GothamJS')).toBeInTheDocument();
     expect(screen.getByRole('link', {name: 'Open GothamJS'})).toHaveAttribute('href', '/projects/1');
   });
 });

@@ -49,4 +49,54 @@ describe('Pagination', () => {
 
     expect(container).toBeEmptyDOMElement();
   });
+
+  it('renders centered pagination with ellipses and page buttons', () => {
+    const onPageChange = vi.fn();
+
+    render(
+      <Pagination
+        currentPage={5}
+        onPageChange={onPageChange}
+        totalPages={10}
+        variant="centered"
+      />
+    );
+
+    expect(screen.getAllByText('...')).toHaveLength(2);
+    expect(screen.getByRole('button', {name: '5'})).toHaveAttribute('aria-current', 'page');
+
+    fireEvent.click(screen.getByRole('button', {name: '4'}));
+    fireEvent.click(screen.getByRole('button', {name: 'Next'}));
+
+    expect(onPageChange).toHaveBeenNthCalledWith(1, 4);
+    expect(onPageChange).toHaveBeenNthCalledWith(2, 6);
+  });
+
+  it('supports centered pagination edge ranges and hidden labels', () => {
+    const onPageChange = vi.fn();
+
+    const {rerender} = render(
+      <Pagination
+        currentPage={1}
+        onPageChange={onPageChange}
+        showLabels={false}
+        totalPages={8}
+        variant="centered"
+      />
+    );
+
+    expect(screen.getByRole('button', {name: 'Previous'})).toBeDisabled();
+    expect(screen.getAllByText('...')).toHaveLength(1);
+
+    rerender(
+      <Pagination
+        currentPage={8}
+        onPageChange={onPageChange}
+        totalPages={8}
+        variant="centered"
+      />
+    );
+
+    expect(screen.getByRole('button', {name: 'Next'})).toBeDisabled();
+  });
 });

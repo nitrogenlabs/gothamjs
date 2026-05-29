@@ -56,4 +56,25 @@ describe('Button', () => {
     expect(screen.getByRole('link', {name: 'Docs'})).toHaveClass('custom-button');
     expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
+
+  it('renders label, icon, notification, and outlined styles', () => {
+    render(
+      <Button
+        hasNotification
+        icon={<span data-testid="save-icon" />}
+        label="Save"
+        size="sm"
+        variant="outlined"
+      />
+    );
+
+    expect(screen.getByRole('button', {name: 'Save'})).toHaveClass('border-1', 'rounded', 'text-sm');
+    expect(screen.getByTestId('save-icon')).toBeInTheDocument();
+  });
+
+  it('renders text and large variants', () => {
+    render(<Button label="Cancel" size="lg" variant="text" />);
+
+    expect(screen.getByRole('button', {name: 'Cancel'})).toHaveClass('bg-transparent', 'rounded-lg', 'text-lg');
+  });
 });

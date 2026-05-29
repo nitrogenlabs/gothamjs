@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import {fireEvent, render, screen} from '@testing-library/react';
 import {vi} from 'vitest';
 
-import {Switch} from './Switch.js';
+import {Switch, SwitchGroup} from './Switch.js';
 
 describe('Switch', () => {
   it('toggles checked state', () => {
@@ -12,18 +12,30 @@ describe('Switch', () => {
 
     const control = screen.getByRole('switch', {name: 'Notifications'});
 
-    expect(control).toHaveAttribute('aria-checked', 'false');
+    expect(control).not.toBeChecked();
 
     fireEvent.click(control);
 
-    expect(control).toHaveAttribute('aria-checked', 'true');
+    expect(control).toBeChecked();
     expect(onCheckedChange).toHaveBeenCalledWith(true);
   });
 
-  it('renders a hidden input when named', () => {
+  it('renders a named input', () => {
     render(<Switch aria-label="Marketing" defaultChecked name="marketing" />);
 
-    expect(screen.getByRole('switch', {name: 'Marketing'})).toHaveAttribute('aria-checked', 'true');
+    expect(screen.getByRole('switch', {name: 'Marketing'})).toBeChecked();
     expect(document.querySelector('input[name="marketing"]')).toBeInTheDocument();
+  });
+
+  it('renders grouped switches', () => {
+    render(
+      <SwitchGroup>
+        <Switch aria-label="Primary" color="success" />
+        <Switch aria-label="Secondary" disabled />
+      </SwitchGroup>
+    );
+
+    expect(screen.getByRole('switch', {name: 'Primary'})).toBeInTheDocument();
+    expect(screen.getByRole('switch', {name: 'Secondary'})).toBeDisabled();
   });
 });
