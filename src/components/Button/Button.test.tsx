@@ -68,13 +68,39 @@ describe('Button', () => {
       />
     );
 
-    expect(screen.getByRole('button', {name: 'Save'})).toHaveClass('border-1', 'rounded', 'text-sm');
+    expect(screen.getByRole('button', {name: 'Save'})).toHaveClass('border-1', 'text-sm');
     expect(screen.getByTestId('save-icon')).toBeInTheDocument();
   });
 
   it('renders text and large variants', () => {
     render(<Button label="Cancel" size="lg" variant="text" />);
 
-    expect(screen.getByRole('button', {name: 'Cancel'})).toHaveClass('bg-transparent', 'rounded-lg', 'text-lg');
+    expect(screen.getByRole('button', {name: 'Cancel'})).toHaveClass('bg-transparent', 'text-lg');
+  });
+
+  it('supports the solid and outline variant aliases with separate color props', () => {
+    render(<Button backgroundColor="secondary" label="Build" labelColor="primary" variant="outline" />);
+
+    expect(screen.getByRole('button', {name: 'Build'})).toHaveClass(
+      'bg-secondary',
+      'border-primary',
+      'text-primary'
+    );
+  });
+
+  it('uses the label color as the outline border color when no background is set', () => {
+    render(<Button label="Coding" labelColor="secondary" variant="outline" />);
+
+    expect(screen.getByRole('button', {name: 'Coding'})).toHaveClass(
+      'bg-transparent',
+      'border-secondary',
+      'text-secondary'
+    );
+  });
+
+  it('uses numeric rounded values as inline border radius', () => {
+    render(<Button label="Rounded" rounded={8} />);
+
+    expect(screen.getByRole('button', {name: 'Rounded'})).toHaveStyle({borderRadius: '8px'});
   });
 });

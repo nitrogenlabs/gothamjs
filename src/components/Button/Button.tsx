@@ -4,16 +4,17 @@ import {useTranslation} from '../../i18n/index.js';
 import {getBackgroundClasses, getBorderClasses, getTextClasses} from '../../utils/colorUtils.js';
 import {renderWithAsChild} from '../ComponentUtils/renderWithAsChild.js';
 
-import type {ButtonHTMLAttributes, ElementType, ReactNode, Ref} from 'react';
+import type {ButtonHTMLAttributes, CSSProperties, ElementType, ReactNode, Ref} from 'react';
 import type {GothamColor} from '../../utils/colorUtils.js';
 import type {GothamSize} from '../../utils/sizeUtils.js';
 
 export type ButtonType = 'button' | 'reset' | 'submit';
-export type ButtonVariant = 'text' | 'contained' | 'outlined';
+export type ButtonVariant = 'text' | 'solid' | 'outline' | 'contained' | 'outlined';
 
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'color' | 'onClick' | 'type'> {
   readonly as?: ElementType;
   readonly asChild?: boolean;
+  readonly backgroundColor?: GothamColor;
   readonly children?: ReactNode;
   readonly color?: GothamColor;
   readonly hasNotification?: boolean;
@@ -21,16 +22,26 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   readonly icon?: ReactNode;
   readonly isLoading?: boolean;
   readonly label?: string;
+  readonly labelColor?: GothamColor;
   readonly onClick?: (event?: unknown) => void;
   readonly ref?: Ref<HTMLButtonElement>;
+  readonly rounded?: number;
   readonly size?: GothamSize;
   readonly type?: ButtonType;
   readonly variant?: ButtonVariant;
 }
 
+const getNormalizedVariant = (variant: ButtonVariant): 'text' | 'solid' | 'outline' => {
+  if(variant === 'contained') return 'solid';
+  if(variant === 'outlined') return 'outline';
+
+  return variant;
+};
+
 export const Button = ({
   as,
   asChild = false,
+  backgroundColor,
   children,
   className,
   color = 'primary',
@@ -40,14 +51,21 @@ export const Button = ({
   icon,
   isLoading = false,
   label = '',
+  labelColor,
   onClick = () => {},
   ref,
+  rounded = 0,
   size = 'md',
+  style,
   type = 'button',
-  variant = 'contained',
+  variant = 'solid',
   ...props
 }: ButtonProps) => {
   const {t} = useTranslation();
+  const normalizedVariant = getNormalizedVariant(variant);
+  const resolvedBackgroundColor = backgroundColor ?? (normalizedVariant === 'solid' ? color : 'transparent');
+  const resolvedLabelColor = labelColor ?? (normalizedVariant === 'solid' ? 'white' : color);
+  const resolvedBorderColor = normalizedVariant === 'outline' ? resolvedLabelColor : resolvedBackgroundColor;
   const classes: string[] = [
     'disabled:pointer-events-none',
     'disabled:opacity-50'
@@ -65,32 +83,35 @@ export const Button = ({
       'justify-center',
       'leading-6',
       'relative',
-      'transition'
+      'transition-colors',
+      'duration-300',
+      'ease-out'
     ]);
 
-    switch(variant) {
-      case 'outlined':
+    switch(normalizedVariant) {
+      case 'outline':
         classes.push(
-          'bg-transparent',
+          getBackgroundClasses(resolvedBackgroundColor, {hasFocus: true, hasHover: resolvedBackgroundColor !== 'transparent'}),
           'border-1',
           'font-semibold',
-          getBorderClasses(color, {hasFocus: true, hasHover: true}),
-          getTextClasses(color, {hasFocus: true, hasHover: true})
+          getBorderClasses(resolvedBorderColor, {hasFocus: true, hasHover: true}),
+          getTextClasses(resolvedLabelColor, {hasFocus: true, hasHover: true})
         );
         break;
       case 'text':
         classes.push(
-          'bg-transparent',
+          getBackgroundClasses(resolvedBackgroundColor, {hasFocus: true, hasHover: resolvedBackgroundColor !== 'transparent'}),
           'font-semibold',
-          getTextClasses(color, {hasFocus: true, hasHover: true})
+          getTextClasses(resolvedLabelColor, {hasFocus: true, hasHover: true})
         );
         break;
-      case 'contained':
+      case 'solid':
       default:
         classes.push(
-          getBackgroundClasses(color, {hasFocus: true, hasHover: true}),
+          getBackgroundClasses(resolvedBackgroundColor, {hasFocus: true, hasHover: true}),
+          getBorderClasses(resolvedBackgroundColor, {hasFocus: true, hasHover: true}),
           'font-medium',
-          'text-white'
+          getTextClasses(resolvedLabelColor, {hasFocus: true, hasHover: resolvedLabelColor !== 'white'})
         );
         break;
     }
@@ -104,7 +125,6 @@ export const Button = ({
         classes.push(
           'px-4',
           'py-0.5',
-          'rounded',
           'text-sm'
         );
         break;
@@ -112,7 +132,6 @@ export const Button = ({
         classes.push(
           'px-8',
           'py-4',
-          'rounded-lg',
           'text-lg'
         );
         break;
@@ -121,7 +140,6 @@ export const Button = ({
         classes.push(
           'px-6',
           'py-2',
-          'rounded-md',
           'text-md'
         );
     }
@@ -170,6 +188,10 @@ export const Button = ({
       disabled: isLoading || disabled,
       onClick,
       ref,
+      style: {
+        ...style,
+        borderRadius: rounded
+      } as CSSProperties,
       type,
       ...props
     } as never,

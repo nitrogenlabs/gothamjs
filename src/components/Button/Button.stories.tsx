@@ -14,11 +14,27 @@ const meta: Meta<typeof ButtonComponent> = {
       control: 'select',
       options: gothamColors
     },
+    backgroundColor: {
+      control: 'select',
+      options: [...gothamColors, 'transparent']
+    },
     hasShadow: {
       control: 'boolean'
     },
     isLoading: {
       control: 'boolean'
+    },
+    labelColor: {
+      control: 'select',
+      options: gothamColors
+    },
+    rounded: {
+      control: {
+        max: 32,
+        min: 0,
+        step: 1,
+        type: 'number'
+      }
     },
     size: {
       control: 'select',
@@ -26,7 +42,7 @@ const meta: Meta<typeof ButtonComponent> = {
     },
     variant: {
       control: 'select',
-      options: ['contained', 'outlined', 'text']
+      options: ['solid', 'outline', 'text', 'contained', 'outlined']
     }
   },
   component: ButtonComponent,
@@ -84,8 +100,9 @@ export const Button: Story = {
     hasShadow: false,
     isLoading: false,
     label: 'Button',
+    rounded: 0,
     size: 'md',
-    variant: 'contained'
+    variant: 'solid'
   },
   play: interactWithCanvas
 };
