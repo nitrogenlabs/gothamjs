@@ -71,18 +71,18 @@ const Alert = ({children, severity, onClose}) => {
 
   return (
     <div className={cn(
-      'rounded-md p-4 w-full flex items-center justify-between',
+      'rounded-md p-4 w-full flex items-start justify-between gap-3',
       bgColors[severity] || 'bg-gray-500',
       'text-white'
     )}>
-      <div>{children}</div>
+      <div className="min-w-0 whitespace-normal break-words leading-relaxed [overflow-wrap:anywhere]">{children}</div>
       {onClose && (
         <button
-          className="ml-auto -mx-1.5 -my-1.5 rounded-md p-1.5 inline-flex text-white hover:bg-opacity-20 hover:bg-black focus:outline-none focus:ring-2 focus:ring-white"
+          aria-label="Dismiss"
+          className="-mx-1.5 -my-1.5 inline-flex shrink-0 rounded-md p-1.5 text-white hover:bg-black/20 focus:outline-none focus:ring-2 focus:ring-white"
           onClick={onClose}
           type="button"
         >
-          <span className="sr-only">Dismiss</span>
           <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path clipRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" fillRule="evenodd" />
           </svg>
@@ -184,7 +184,7 @@ export const Notify = () => {
       show={isOpen}
     >
       <div className={cn(
-        'fixed z-50 max-w-sm w-full shadow-lg rounded-lg pointer-events-auto overflow-hidden',
+        'fixed z-50 w-[min(960px,calc(100vw-2rem))] max-w-[min(960px,calc(100vw-2rem))] shadow-lg rounded-lg pointer-events-auto overflow-hidden',
         positionClasses
       )}
       onMouseEnter={() => setHovered(true)}

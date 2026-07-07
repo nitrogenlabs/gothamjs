@@ -99,6 +99,7 @@ describe('Notify', () => {
     fireEvent.click(screen.getByRole('button', {name: 'Open'}));
 
     expect(await screen.findByText('Saved successfully')).toBeInTheDocument();
+    expect(screen.queryByText('Dismiss')).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', {name: 'Dismiss'}));
 
     await waitFor(() => expect(screen.queryByText('Saved successfully')).not.toBeInTheDocument());
