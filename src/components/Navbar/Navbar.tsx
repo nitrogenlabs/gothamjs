@@ -22,6 +22,7 @@ export interface NavbarProps extends HTMLAttributes<HTMLElement> {
   readonly as?: ElementType;
   readonly asChild?: boolean;
   readonly children?: ReactNode;
+  readonly isFloating?: boolean;
   readonly isSticky?: boolean;
   readonly mobileMenu?: ReactNode;
   readonly mobileMenuLabel?: string;
@@ -51,6 +52,7 @@ export const Navbar = ({
   asChild = false,
   children,
   className,
+  isFloating = false,
   isSticky = false,
   mobileMenu,
   mobileMenuLabel = 'Open navigation menu',
@@ -188,14 +190,19 @@ export const Navbar = ({
       children: renderedChildren,
       className: cn(
         'flex min-h-14 w-full items-center gap-3 border-b border-border bg-background px-4 text-sm text-foreground sm:px-6',
-        isSticky && !isMobileMenuOpen && 'sticky top-0 z-40',
+        isFloating && 'mx-auto mt-4 min-h-16 w-[calc(100%-2rem)] max-w-5xl rounded-full !border !border-border/70 !bg-background/80 px-5 backdrop-blur-md sm:px-6',
+        isSticky && !isMobileMenuOpen && (isFloating ? 'sticky top-4 z-40' : 'sticky top-0 z-40'),
         transparentOnScroll && [
-          'inset-x-0 top-0 z-40 border-transparent bg-transparent text-white transition-[background-color,backdrop-filter,border-color,color] duration-200',
+          'inset-x-0 z-40 border-transparent bg-transparent text-white transition-[background-color,backdrop-filter,border-color,color] duration-200',
+          isFloating ? 'top-4' : 'top-0',
           isSticky && !isMobileMenuOpen ? 'sticky' : 'fixed',
-          'data-[scroll-state=scrolled]:border-border/70 data-[scroll-state=scrolled]:bg-background/80 data-[scroll-state=scrolled]:text-foreground data-[scroll-state=scrolled]:backdrop-blur-md'
+          isFloating
+            ? 'data-[scroll-state=scrolled]:!border-border/70 data-[scroll-state=scrolled]:!bg-background/80 data-[scroll-state=scrolled]:text-foreground'
+            : 'data-[scroll-state=scrolled]:border-border/70 data-[scroll-state=scrolled]:bg-background/80 data-[scroll-state=scrolled]:text-foreground data-[scroll-state=scrolled]:backdrop-blur-md'
         ],
         className
       ),
+      'data-floating': isFloating ? 'true' : undefined,
       'data-sticky': isSticky ? 'true' : undefined,
       'data-mobile-menu-open': isMobileMenuOpen ? 'true' : undefined,
       'data-scroll-state': scrollState,

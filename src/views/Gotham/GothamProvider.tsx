@@ -14,7 +14,6 @@ import {GothamActions} from '../../actions/GothamActions.js';
 import {Config} from '../../config/appConfig.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
 import {gothamApp} from '../../stores/GothamAppStore.js';
-import {initializeAnalytics} from '../../utils/analyticsUtils.js';
 import {GothamContext} from '../../utils/GothamContext.js';
 import {registerFlux} from '../../utils/navEventQueue.js';
 import {parseRoutes} from '../../utils/routeUtils.js';
@@ -22,7 +21,7 @@ import {GothamRoot} from './GothamRoot.js';
 import type {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import type {FC, ReactNode} from 'react';
 import type {GothamRouteData} from '../../types/gotham.js';
-import type {GoogleAnalyticsConfig} from '../../utils/analyticsUtils.js';
+import type {AwsRum} from '../../utils/awsRum.js';
 import type {CustomRouteProps} from '../../utils/routeUtils.js';
 
 export interface GothamProviderProps {
@@ -43,11 +42,11 @@ export interface GothamConfiguration {
     readonly titleBarSeparator?: string;
   };
   readonly authRoute?: string;
+  readonly awsRum?: AwsRum;
   readonly baseUrl?: string;
   readonly config?: FluxOptions;
   readonly displayMode?: ThemeDisplayMode;
   readonly flux?: FluxFramework;
-  readonly googleAnalytics?: GoogleAnalyticsConfig;
   readonly isAuth?: () => boolean;
   readonly middleware?: FluxMiddlewareType[];
   readonly onInit?: () => void;
@@ -195,10 +194,6 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
 
     void setupFlux();
 
-    if(config.googleAnalytics) {
-      initializeAnalytics(config.googleAnalytics);
-    }
-
     init(config);
 
     return () => {
@@ -213,7 +208,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   if(i18nInstance) {
     return (
       <I18nextProvider i18n={i18nInstance}>
-        <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
+        <GothamContext.Provider value={{Flux: flux, awsRum: config.awsRum, isAuth, session}}>
           <div>
             <RouterProvider router={router}/>
           </div>
@@ -223,7 +218,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   }
 
   return (
-    <GothamContext.Provider value={{Flux: flux, isAuth, session}}>
+    <GothamContext.Provider value={{Flux: flux, awsRum: config.awsRum, isAuth, session}}>
       <div>
         <RouterProvider router={router}/>
       </div>

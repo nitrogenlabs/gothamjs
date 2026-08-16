@@ -520,38 +520,19 @@ const MyComponent = () => {
 
 ## Analytics
 
-GothamJS includes built-in Google Analytics support for easy tracking:
+GothamJS can emit provider-neutral page views and UI events through an injected `awsRum` client. When paired with MetropolisJS, events are deduplicated, batched, and sent to a shared Reaktor analytics app.
 
-```jsx
-const config = {
-  googleAnalytics: {
-    googleAnalyticsId: 'G-XXXXXXXXXX',
-    anonymizeIp: true,
-    enabled: true
-  }
-};
-```
+```tsx
+import {useAwsRum} from '@nlabs/gothamjs';
 
-Track custom events:
-
-```jsx
-import { trackEvent, trackClick, useAnalytics } from '@nlabs/gothamjs';
-
-// Track custom events
-trackEvent('button_click', { button_name: 'signup' });
-
-// Track clicks
-trackClick('CTA Button', { location: 'header' });
-
-// Use in components
 const MyComponent = () => {
-  const { trackEvent } = useAnalytics();
-  
-  const handleAction = () => {
-    trackEvent('custom_action', { value: 123 });
-  };
-  
-  return <button onClick={handleAction}>Action</button>;
+  const awsRum = useAwsRum();
+
+  return (
+    <button onClick={() => awsRum?.track({name: 'signup', type: 'click'})}>
+      Sign up
+    </button>
+  );
 };
 ```
 

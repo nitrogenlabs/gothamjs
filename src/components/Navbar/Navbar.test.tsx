@@ -40,6 +40,17 @@ describe('Navbar', () => {
     expect(screen.getByRole('navigation', {name: 'Primary'})).toHaveClass('sticky');
   });
 
+  it('renders the floating island surface when isFloating is enabled', () => {
+    render(<Navbar aria-label="Primary" isFloating isSticky />);
+
+    const navbar = screen.getByRole('navigation', {name: 'Primary'});
+
+    expect(navbar).toHaveAttribute('data-floating', 'true');
+    expect(navbar).toHaveClass('rounded-full');
+    expect(navbar).toHaveClass('max-w-5xl');
+    expect(navbar).toHaveClass('top-4');
+  });
+
   it('turns sticky transparent navbars translucent after the default 10% scroll threshold', () => {
     Object.defineProperty(window, 'innerHeight', {
       configurable: true,

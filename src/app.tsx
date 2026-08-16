@@ -5,16 +5,20 @@
 import {createRoot} from 'react-dom/client';
 
 import {Svg} from './components/Svg/Svg.js';
+import {createAwsRumDebugClient} from './utils/awsRum.js';
 import {Gotham} from './views/Gotham/Gotham.js';
 import {HomeView} from './views/HomeView/HomeView.js';
 
 import type {GothamConfiguration} from './views/Gotham/GothamProvider.js';
+
+const awsRum = createAwsRumDebugClient();
 
 const config: GothamConfiguration = {
   app: {
     name: 'gothamjs',
     title: 'GothamJS'
   },
+  awsRum,
   translations: {
     en: {
       translation: {
@@ -107,7 +111,7 @@ const config: GothamConfiguration = {
         }
       ],
       element: <HomeView />,
-      index: true,
+      index: false,
       path: '/',
       props: {
         topBar: {
