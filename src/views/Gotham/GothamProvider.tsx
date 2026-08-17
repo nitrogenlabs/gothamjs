@@ -10,14 +10,17 @@ import i18n from 'i18next';
 import {useEffect, useMemo, useState} from 'react';
 import {I18nextProvider, initReactI18next} from 'react-i18next';
 import {createBrowserRouter, RouterProvider} from 'react-router';
+
 import {GothamActions} from '../../actions/GothamActions.js';
 import {Config} from '../../config/appConfig.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
 import {gothamApp} from '../../stores/GothamAppStore.js';
+import {createAwsRumBrowserClient} from '../../utils/awsRum.js';
 import {GothamContext} from '../../utils/GothamContext.js';
 import {registerFlux} from '../../utils/navEventQueue.js';
 import {parseRoutes} from '../../utils/routeUtils.js';
 import {GothamRoot} from './GothamRoot.js';
+
 import type {FluxFramework, FluxMiddlewareType, FluxOptions} from '@nlabs/arkhamjs';
 import type {FC, ReactNode} from 'react';
 import type {GothamRouteData} from '../../types/gotham.js';
@@ -74,6 +77,8 @@ export const defaultGothamConfig: GothamConfiguration = {
   translations: {translation: {}}
 };
 
+const defaultAwsRum = createAwsRumBrowserClient();
+
 export const init = (config: GothamConfiguration) => (): void => {
   const {onInit} = config;
   GothamActions.init();
@@ -91,7 +96,8 @@ export const signOut = (flux: FluxFramework) => async () => {
   GothamActions.navGoto(authRoute);
 };
 
-export const GothamProvider: FC<GothamProviderProps> = ({children, config: appConfig}) => {
+/* eslint-disable react-hooks/rules-of-hooks -- The compatibility rule does not recognize arrow-function components. */
+export const GothamProvider: FC<GothamProviderProps> = ({config: appConfig}) => {
   const flux = useFlux();
   const config: GothamConfiguration = merge(defaultGothamConfig, appConfig);
   const {
@@ -106,19 +112,16 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   const name = config?.app?.name;
   const [session, setSession] = useState({});
   const [isFluxReady, setIsFluxReady] = useState(Boolean((flux as any)?.isInit));
-  const router = useMemo(() => {
-    console.log({routes});
-    return createBrowserRouter(
-      [
-        {
-          Component: GothamRoot,
-          children: parseRoutes(routes as unknown as CustomRouteProps[]),
-          index: false,
-          path: '/'
-        }
-      ]
-    );
-  }, [routes]);
+  const router = useMemo(() => createBrowserRouter(
+    [
+      {
+        Component: GothamRoot,
+        children: parseRoutes(routes as unknown as CustomRouteProps[]),
+        index: false,
+        path: '/'
+      }
+    ]
+  ), [routes]);
 
   // Initialize i18next if translations are provided but no i18n instance is given
   const i18nInstance = useMemo(() => {
@@ -208,7 +211,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   if(i18nInstance) {
     return (
       <I18nextProvider i18n={i18nInstance}>
-        <GothamContext.Provider value={{Flux: flux, awsRum: config.awsRum, isAuth, session}}>
+        <GothamContext.Provider value={{Flux: flux, awsRum: config.awsRum || defaultAwsRum, isAuth, session}}>
           <div>
             <RouterProvider router={router}/>
           </div>
@@ -218,10 +221,11 @@ export const GothamProvider: FC<GothamProviderProps> = ({children, config: appCo
   }
 
   return (
-    <GothamContext.Provider value={{Flux: flux, awsRum: config.awsRum, isAuth, session}}>
+    <GothamContext.Provider value={{Flux: flux, awsRum: config.awsRum || defaultAwsRum, isAuth, session}}>
       <div>
         <RouterProvider router={router}/>
       </div>
     </GothamContext.Provider>
   );
 };
+/* eslint-enable react-hooks/rules-of-hooks */

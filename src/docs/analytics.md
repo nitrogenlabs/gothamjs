@@ -1,6 +1,6 @@
 # AWS RUM Analytics
 
-GothamJS emits analytics through an injected `awsRum.track()` client. It does not load an analytics SDK or send network requests by itself.
+GothamJS emits analytics through its browser analytics channel by default. When an application is wrapped by both Gotham and Metropolis, Metropolis automatically receives these events and delivers them to Reaktor. Gotham does not load an analytics SDK or send network requests by itself.
 
 For local demos or troubleshooting, use the debug adapter to inspect the exact event passed to the analytics client:
 
@@ -15,28 +15,20 @@ const awsRum = createAwsRumDebugClient({
 
 When enabled, the adapter logs `[GothamJS] awsRum.track` and the event object. If a `target` is supplied, the same object is then forwarded for Metropolis delivery. Omitting `target` is useful for a console-only component demo.
 
-## Configuration
+## Plug-and-play configuration
 
 ```tsx
 import {Gotham} from '@nlabs/gothamjs';
-import {createAction} from '@nlabs/metropolisjs';
+import {Metropolis} from '@nlabs/metropolisjs';
 
-const awsRum = createAction('awsRum', flux, {
-  appId: 'my-app',
-  debounceMs: 250,
-  dedupeMs: 1000,
-  throttleMs: 1000
-});
-
-const config = {
-  awsRum,
-  routes
-};
-
-root.render(<Gotham config={config} />);
+root.render(
+  <Metropolis config={metropolisConfig}>
+    <Gotham config={{routes}} />
+  </Metropolis>
+);
 ```
 
-Metropolis must be configured with the shared Reaktor endpoint:
+Set an application name and the shared Reaktor endpoint in Metropolis. The application name becomes the default analytics `appId`; `app.rum.appId` can override it:
 
 ```ts
 const metropolisConfig = {
@@ -45,15 +37,16 @@ const metropolisConfig = {
       api: {
         rum: 'https://analytics.example.com/public'
       },
+      name: 'my-app',
       rum: {
-        appId: 'my-app'
+        respectPrivacySignals: true
       }
     }
   }
 };
 ```
 
-Every application uses the same endpoint and supplies its own `appId`. This allows a future dashboard to filter the shared log collection by application.
+If `app.api.rum` is omitted, Metropolis uses its configured public endpoint. Every application uses the same endpoint and supplies its own `appId`. This allows a future dashboard to filter the shared log collection by application.
 
 ## Page views
 
@@ -96,4 +89,4 @@ Metropolis:
 - Sends JSON through Rip-Hunter.
 - Dispatches `AWS_RUM_TRACK_QUEUED`, `AWS_RUM_TRACK_SUCCESS`, and `AWS_RUM_TRACK_ERROR` Flux events.
 
-The shared Reaktor mutation stores standalone `rumLogs` documents. Each document contains `appId`; no graph edge is required.
+The shared Reaktor mutation stores standalone `logs` documents. Each document contains `appId`; no graph edge is required.

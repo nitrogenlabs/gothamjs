@@ -1,7 +1,12 @@
 /* @vitest-environment jsdom */
 import {renderHook} from '@testing-library/react';
 
-import {createAwsRumDebugClient, useAwsRum} from './awsRum.js';
+import {
+  createAwsRumBrowserClient,
+  createAwsRumDebugClient,
+  GOTHAM_ANALYTICS_EVENT,
+  useAwsRum
+} from './awsRum.js';
 import {GothamContext} from './GothamContext.js';
 
 import type {ReactNode} from 'react';
@@ -47,5 +52,33 @@ describe('createAwsRumDebugClient', () => {
 
     expect(logger).not.toHaveBeenCalled();
     expect(target.track).toHaveBeenCalledWith(event);
+  });
+});
+
+describe('createAwsRumBrowserClient', () => {
+  it('emits a copied event on the browser analytics channel', async () => {
+    const event = {
+      name: 'page_view',
+      path: '/docs',
+      properties: {title: 'Docs'},
+      type: 'page_view' as const
+    };
+    const listener = vi.fn();
+    const awsRum = createAwsRumBrowserClient();
+    window.addEventListener(GOTHAM_ANALYTICS_EVENT, listener);
+
+    awsRum.track(event);
+    event.properties.title = 'Changed';
+    await new Promise((resolve) => queueMicrotask(resolve));
+
+    expect(listener).toHaveBeenCalledTimes(1);
+    expect((listener.mock.calls[0][0] as CustomEvent).detail).toEqual({
+      name: 'page_view',
+      path: '/docs',
+      properties: {title: 'Docs'},
+      type: 'page_view'
+    });
+
+    window.removeEventListener(GOTHAM_ANALYTICS_EVENT, listener);
   });
 });
