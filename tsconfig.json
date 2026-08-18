@@ -2,7 +2,6 @@
   "allowDefaultProject": true,
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src",
     "declaration": true,
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
@@ -22,7 +21,12 @@
     "noImplicitThis": true,
     "noUncheckedIndexedAccess": false,
     "noUnusedLocals": true,
-    "outDir": "lib",
+    "outDir": "./lib",
+    "paths": {
+      "*": [
+        "./src/*"
+      ]
+    },
     "pretty": true,
     "resolveJsonModule": true,
     "skipLibCheck": false,
