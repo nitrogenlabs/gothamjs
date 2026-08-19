@@ -1,0 +1,159 @@
+<svg width="1600" height="880" viewBox="0 0 1600 880" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">How GothamJS works with a React application</title>
+  <desc id="desc">A clean three-column diagram showing app inputs flowing into the GothamJS presentation framework and producing a complete user experience.</desc>
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8167EE"/>
+      <stop offset="1" stop-color="#2F80ED"/>
+    </linearGradient>
+    <style>
+      .heading { fill: #17151D; font-family: Inter, Arial, sans-serif; font-size: 22px; font-weight: 700; }
+      .label { fill: #24212A; font-family: Inter, Arial, sans-serif; font-size: 20px; font-weight: 600; }
+      .detail { fill: #69707D; font-family: Inter, Arial, sans-serif; font-size: 16px; font-weight: 400; }
+      .service { fill: #34303A; font-family: Inter, Arial, sans-serif; font-size: 18px; font-weight: 500; }
+      .line-icon { fill: none; stroke: #35313B; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .purple-icon { fill: none; stroke: #8167EE; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .teal-icon { fill: none; stroke: #14AFA0; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="880" fill="#FFFFFF"/>
+
+  <text class="heading" x="78" y="76">Your app</text>
+  <text class="heading" x="548" y="76">GothamJS framework</text>
+  <text class="heading" x="1120" y="76">App experience</text>
+
+  <!-- App inputs -->
+  <g transform="translate(78 150)">
+    <rect class="line-icon" x="2" y="2" width="54" height="42" rx="6"/>
+    <path class="line-icon" d="M2 13H56M11 22H27V35H11ZM34 22H48M34 28H48M34 34H44"/>
+    <text class="label" x="92" y="22">Routes &amp; views</text>
+    <text class="detail" x="92" y="48">Screens and navigation</text>
+  </g>
+
+  <g transform="translate(78 294)">
+    <rect class="line-icon" x="9" y="1" width="40" height="52" rx="5"/>
+    <path class="line-icon" d="M17 13H41M17 22H41M17 31H34M23 44H35"/>
+    <text class="label" x="92" y="22">Configuration</text>
+    <text class="detail" x="92" y="48">Theme, auth and settings</text>
+  </g>
+
+  <g transform="translate(78 438)">
+    <path class="line-icon" d="M29 2V10M29 46V54M2 28H10M48 28H56M10 9L16 15M42 41L48 47M48 9L42 15M16 41L10 47"/>
+    <circle class="line-icon" cx="29" cy="28" r="15"/>
+    <path class="line-icon" d="M22 28H36M29 21V35"/>
+    <text class="label" x="92" y="22">Domain logic</text>
+    <text class="detail" x="92" y="48">Product behavior and flows</text>
+  </g>
+
+  <g transform="translate(78 582)">
+    <ellipse class="line-icon" cx="29" cy="10" rx="22" ry="9"/>
+    <path class="line-icon" d="M7 10V45C7 50 17 54 29 54C41 54 51 50 51 45V10M7 27C7 32 17 36 29 36C41 36 51 32 51 27"/>
+    <text class="label" x="92" y="22">API &amp; data</text>
+    <text class="detail" x="92" y="48">Services, content and media</text>
+  </g>
+
+  <!-- App input bracket -->
+  <g fill="none" stroke="#2F80ED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M390 172H396C409 172 416 184 416 204V636C416 656 409 668 396 668H390"/>
+    <path d="M390 316H396C409 316 416 328 416 348"/>
+    <path d="M390 460H396C409 460 416 448 416 428"/>
+    <path d="M390 604H396C409 604 416 592 416 572"/>
+    <path d="M416 420H500M490 410L500 420L490 430"/>
+  </g>
+
+  <!-- GothamJS mark -->
+  <g transform="translate(724 164)">
+    <path d="M0 -63L55 -31V31L0 63L-55 31V-31L0 -63Z" fill="url(#brand)"/>
+    <path d="M-29 -18L0 -35L29 -18V-3H13V-9L0 -17L-13 -9V9L0 17L14 9H2V-7H31V19L0 37L-29 20V-18Z" fill="#FFFFFF"/>
+  </g>
+  <text x="724" y="259" text-anchor="middle" fill="#8167EE" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="35" font-weight="750">GothamJS</text>
+  <text x="724" y="288" text-anchor="middle" fill="#69707D" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="16">The complete presentation layer</text>
+
+  <!-- GothamJS services -->
+  <g transform="translate(550 340)">
+    <g transform="translate(0 0)">
+      <rect class="purple-icon" x="1" y="3" width="31" height="25" rx="4"/>
+      <path class="purple-icon" d="M1 11H32M9 19H16M22 19H26"/>
+      <text class="service" x="58" y="23">Components &amp; layouts</text>
+    </g>
+    <g transform="translate(0 66)">
+      <path class="purple-icon" d="M2 17H31M23 9L31 17L23 25M10 9L2 17L10 25"/>
+      <text class="service" x="58" y="23">Routing &amp; transitions</text>
+    </g>
+    <g transform="translate(0 132)">
+      <ellipse class="purple-icon" cx="17" cy="8" rx="14" ry="6"/>
+      <path class="purple-icon" d="M3 8V27C3 30 9 33 17 33C25 33 31 30 31 27V8M3 18C3 21 9 24 17 24C25 24 31 21 31 18"/>
+      <text class="service" x="58" y="23">State &amp; session</text>
+    </g>
+    <g transform="translate(0 198)">
+      <path class="purple-icon" d="M3 4H31V30H3V4ZM9 11H25M9 18H21M9 25H17"/>
+      <text class="service" x="58" y="23">Forms &amp; feedback</text>
+    </g>
+    <g transform="translate(0 264)">
+      <circle class="purple-icon" cx="17" cy="17" r="13"/>
+      <path class="purple-icon" d="M17 0V7M17 27V34M0 17H7M27 17H34M5 5L10 10M24 24L29 29M29 5L24 10M10 24L5 29"/>
+      <text class="service" x="58" y="23">Theme &amp; responsive UI</text>
+    </g>
+    <g transform="translate(0 330)">
+      <circle class="purple-icon" cx="17" cy="17" r="15"/>
+      <path class="purple-icon" d="M4 17H30M17 2C22 7 24 12 24 17C24 22 22 27 17 32M17 2C12 7 10 12 10 17C10 22 12 27 17 32"/>
+      <text class="service" x="58" y="23">Localization &amp; telemetry</text>
+    </g>
+  </g>
+
+  <!-- Output arrow -->
+  <path d="M930 420H992M982 410L992 420L982 430" fill="none" stroke="#2F80ED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Experience distribution -->
+  <g fill="none" stroke="#14AFA0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M1020 420V178C1020 160 1032 150 1050 150H1098"/>
+    <path d="M1020 290C1020 278 1032 270 1050 270H1098"/>
+    <path d="M1020 420H1098"/>
+    <path d="M1020 550C1020 562 1032 570 1050 570H1098"/>
+    <path d="M1020 420V662C1020 680 1032 690 1050 690H1098"/>
+  </g>
+  <g fill="#14AFA0">
+    <circle cx="1098" cy="150" r="6"/>
+    <circle cx="1098" cy="270" r="6"/>
+    <circle cx="1098" cy="420" r="6"/>
+    <circle cx="1098" cy="570" r="6"/>
+    <circle cx="1098" cy="690" r="6"/>
+  </g>
+
+  <!-- Experience outputs -->
+  <g transform="translate(1140 126)">
+    <rect class="teal-icon" x="1" y="2" width="48" height="35" rx="5"/>
+    <path class="teal-icon" d="M1 12H49M11 22H24M11 28H31M17 37V44M33 37V44M12 44H38"/>
+    <text class="label" x="78" y="22">Responsive screens</text>
+    <text class="detail" x="78" y="48">Mobile-first layouts</text>
+  </g>
+
+  <g transform="translate(1140 246)">
+    <path class="teal-icon" d="M1 3H48V42H1V3ZM1 13H48M11 22H23V33H11ZM30 22H39M30 28H39"/>
+    <text class="label" x="78" y="22">Consistent UI</text>
+    <text class="detail" x="78" y="48">Components and styling</text>
+  </g>
+
+  <g transform="translate(1140 396)">
+    <circle class="teal-icon" cx="24" cy="24" r="22"/>
+    <path class="teal-icon" d="M12 24H36M28 16L36 24L28 32"/>
+    <text class="label" x="78" y="22">Navigation &amp; state</text>
+    <text class="detail" x="78" y="48">Routed, state-aware flows</text>
+  </g>
+
+  <g transform="translate(1140 546)">
+    <path class="teal-icon" d="M4 4H44V35H29L20 44V35H4V4Z"/>
+    <path class="teal-icon" d="M13 15H35M13 23H29"/>
+    <text class="label" x="78" y="22">Feedback</text>
+    <text class="detail" x="78" y="48">Forms, loading and alerts</text>
+  </g>
+
+  <g transform="translate(1140 666)">
+    <path class="teal-icon" d="M4 25C4 13 13 4 25 4C37 4 46 13 46 25C46 37 37 46 25 46H5L11 39C7 35 4 30 4 25Z"/>
+    <path class="teal-icon" d="M13 25H37M25 13C29 17 31 21 31 25C31 29 29 33 25 37M25 13C21 17 19 21 19 25C19 29 21 33 25 37"/>
+    <text class="label" x="78" y="22">Localized &amp; observable</text>
+    <text class="detail" x="78" y="48">i18n and page-view telemetry</text>
+  </g>
+
+</svg>

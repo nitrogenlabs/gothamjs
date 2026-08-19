@@ -17,6 +17,14 @@
 
 GothamJS is an all-inclusive React framework that unifies UI components, navigation, state management, and transitions into one cohesive system. Built by Nitrogen Labs, GothamJS eliminates the need to piece together multiple libraries, providing developers with a consistent, integrated solution for all front-end UI needs.
 
+## How GothamJS fits into your app
+
+Your application keeps ownership of its routes, configuration, domain logic, and data. GothamJS turns those inputs into a cohesive presentation layer with components, navigation, state, forms, responsive styling, localization, and telemetry built in.
+
+<p align="center">
+  <img src="docs/assets/gothamjs-app-architecture.svg" alt="GothamJS architecture showing how a React app flows through the GothamJS presentation layer into a complete user experience">
+</p>
+
 ## Key Features
 
 - **Unified Component Library**: Beautifully designed, fully customizable UI components with consistent styling and behavior
@@ -29,7 +37,7 @@ GothamJS is an all-inclusive React framework that unifies UI components, navigat
 - **Authentication Flows**: Ready-to-use authentication UI components and routing guards
 - **Icon Library**: Complete Lucide React icon set available for use throughout your application
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 # Install GothamJS
