@@ -9,6 +9,7 @@ import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
   ElementType,
+  FC,
   HTMLAttributes,
   ReactNode,
   Ref
@@ -17,6 +18,20 @@ import type {
 const getTransparentScrollThreshold = (threshold: number) => (
   threshold > 1 ? threshold : window.innerHeight * threshold
 );
+
+type NavbarScrollState = 'at-top' | 'scrolled' | undefined;
+
+const getNavbarScrollState = (
+  isAtTop: boolean,
+  isMobileMenuOpen: boolean,
+  transparentOnScroll: boolean
+): NavbarScrollState => {
+  if(!transparentOnScroll) {
+    return undefined;
+  }
+
+  return isMobileMenuOpen || !isAtTop ? 'scrolled' : 'at-top';
+};
 
 export interface NavbarProps extends HTMLAttributes<HTMLElement> {
   readonly as?: ElementType;
@@ -47,7 +62,9 @@ export interface NavbarItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonEle
   readonly type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
 }
 
-export const Navbar = ({
+// The compatibility rule does not recognize arrow-function components that delegate rendering.
+/* eslint-disable react-hooks/rules-of-hooks */
+export const Navbar: FC<NavbarProps> = ({
   as = 'nav',
   asChild = false,
   children,
@@ -58,6 +75,7 @@ export const Navbar = ({
   mobileMenuLabel = 'Open navigation menu',
   mobileMenuTitle = 'Navigation',
   ref,
+  style,
   transparentOnScroll = false,
   transparentScrollThreshold = 0.1,
   ...props
@@ -67,7 +85,9 @@ export const Navbar = ({
   const mobileMenuId = useId();
 
   useEffect(() => {
-    if(!transparentOnScroll) return undefined;
+    if(!transparentOnScroll) {
+      return undefined;
+    }
 
     const onScroll = () => {
       const threshold = getTransparentScrollThreshold(transparentScrollThreshold);
@@ -86,7 +106,9 @@ export const Navbar = ({
   }, [transparentOnScroll, transparentScrollThreshold]);
 
   useEffect(() => {
-    if(!isMobileMenuOpen) return undefined;
+    if(!isMobileMenuOpen) {
+      return undefined;
+    }
 
     const bodyOverflow = document.body.style.overflow;
     const bodyOverscrollBehavior = document.body.style.overscrollBehavior;
@@ -114,9 +136,12 @@ export const Navbar = ({
     };
   }, [isMobileMenuOpen]);
 
-  const scrollState = transparentOnScroll
-    ? (isMobileMenuOpen ? 'scrolled' : isAtTop ? 'at-top' : 'scrolled')
-    : undefined;
+  const scrollState = getNavbarScrollState(isAtTop, isMobileMenuOpen, transparentOnScroll);
+  const navbarStyle = scrollState === 'scrolled' ? {
+    WebkitBackdropFilter: 'blur(12px)',
+    backdropFilter: 'blur(12px)',
+    ...style
+  } : style;
 
   const mobileMenuPortal = mobileMenu && typeof document !== 'undefined' ? createPortal(
     <>
@@ -129,8 +154,8 @@ export const Navbar = ({
         data-slot="navbar-mobile-overlay"
         onClick={() => setIsMobileMenuOpen(false)}
         style={{
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)'
+          WebkitBackdropFilter: 'blur(12px)',
+          backdropFilter: 'blur(12px)'
         }}
       />
       <aside
@@ -142,14 +167,14 @@ export const Navbar = ({
         data-slot="navbar-mobile-menu"
         id={mobileMenuId}
         style={{
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)'
+          WebkitBackdropFilter: 'blur(24px)',
+          backdropFilter: 'blur(24px)'
         }}>
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0 text-base font-semibold">{mobileMenuTitle}</div>
           <button
             aria-label="Close navigation menu"
-            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-md border border-current/15 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-md border border-current/15 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-current"
             data-slot="navbar-mobile-close"
             onClick={() => setIsMobileMenuOpen(false)}
             type="button">
@@ -172,7 +197,7 @@ export const Navbar = ({
           aria-controls={mobileMenuId}
           aria-expanded={isMobileMenuOpen}
           aria-label={mobileMenuLabel}
-          className="ml-auto inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-current/15 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current lg:hidden"
+          className="ml-auto inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-current/15 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-current lg:hidden"
           data-slot="navbar-mobile-trigger"
           onClick={() => setIsMobileMenuOpen((value) => !value)}
           type="button">
@@ -203,18 +228,20 @@ export const Navbar = ({
         className
       ),
       'data-floating': isFloating ? 'true' : undefined,
-      'data-sticky': isSticky ? 'true' : undefined,
       'data-mobile-menu-open': isMobileMenuOpen ? 'true' : undefined,
       'data-scroll-state': scrollState,
+      'data-sticky': isSticky ? 'true' : undefined,
       'data-transparent-on-scroll': transparentOnScroll ? 'true' : undefined,
       ref,
+      style: navbarStyle,
       ...props
-    } as never,
+    },
     {
       'data-slot': 'navbar'
     }
   );
 };
+/* eslint-enable react-hooks/rules-of-hooks */
 
 export const NavbarSection = ({
   children,
@@ -247,6 +274,7 @@ export const NavbarItem = ({
 
   return renderWithAsChild(
     {
+      'aria-current': current ? 'page' : undefined,
       as: component,
       asChild,
       children,
@@ -255,13 +283,12 @@ export const NavbarItem = ({
         current && 'after:absolute after:inset-x-3 after:-bottom-[9px] after:h-0.5 after:rounded-full after:bg-current',
         className
       ),
-      'aria-current': current ? 'page' : undefined,
       'data-current': current ? 'true' : undefined,
       href,
       ref,
       type: href ? undefined : type,
       ...props
-    } as never,
+    },
     {
       'data-slot': 'navbar-item'
     }

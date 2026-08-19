@@ -1,6 +1,6 @@
 import {Children, cloneElement, isValidElement} from 'react';
 
-import type {ElementType, HTMLAttributes, ReactElement, ReactNode} from 'react';
+import type {ElementType, ReactElement, ReactNode} from 'react';
 
 type AsChildProps = {
   readonly as?: ElementType;
@@ -9,20 +9,20 @@ type AsChildProps = {
   readonly className?: string;
 };
 
-export const renderWithAsChild = (
+export const renderWithAsChild = <Props extends AsChildProps>(
   {
     as: Comp = 'div',
     asChild = false,
     children,
     className,
     ...props
-  }: AsChildProps & HTMLAttributes<HTMLElement>,
+  }: Props,
   dataAttributes: Record<string, string | undefined> = {}
 ) => {
-  if (asChild) {
+  if(asChild) {
     const child = Children.only(children);
 
-    if (!isValidElement(child)) {
+    if(!isValidElement(child)) {
       return null;
     }
 

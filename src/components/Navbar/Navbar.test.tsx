@@ -70,6 +70,23 @@ describe('Navbar', () => {
     expect(navbar).toHaveAttribute('data-scroll-state', 'scrolled');
     expect(navbar).toHaveClass('data-[scroll-state=scrolled]:bg-background/80');
     expect(navbar).toHaveClass('data-[scroll-state=scrolled]:backdrop-blur-md');
+    expect(navbar.getAttribute('style')).toContain('backdrop-filter: blur(12px)');
+  });
+
+  it('allows consumers to override the scrolled backdrop filter', () => {
+    setScrollY(100);
+    render(
+      <Navbar
+        aria-label="Primary"
+        style={{backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)'}}
+        transparentOnScroll
+        transparentScrollThreshold={50}
+      />
+    );
+
+    const navbar = screen.getByRole('navigation', {name: 'Primary'});
+
+    expect(navbar.getAttribute('style')).toContain('backdrop-filter: blur(20px)');
   });
 
   it('keeps pixel thresholds for values greater than one', () => {
