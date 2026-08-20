@@ -14,6 +14,11 @@ import type {RouteObject} from 'react-router';
 
 // Define a type for our custom route objects
 export type CustomRouteProps = RouteObject & {
+  readonly analytics?: {
+    readonly route?: string;
+    readonly title?: string;
+    readonly viewId: string;
+  };
   readonly authenticate?: boolean;
   readonly props?: Record<string, unknown>;
   readonly routes?: CustomRouteProps[];
@@ -21,6 +26,7 @@ export type CustomRouteProps = RouteObject & {
 
 export const parseRoutes = (routes: CustomRouteProps[] = [], parentPath = ''): RouteObject[] => routes.map((route) => {
   const {
+    analytics,
     authenticate,
     element,
     props,
@@ -58,7 +64,7 @@ export const parseRoutes = (routes: CustomRouteProps[] = [], parentPath = ''): R
 
   const normalizedChildren = nestedRoutes?.length
     ? nestedRoutes.map((child) => {
-      let childPath = typeof child.path === 'string' ? child.path.replace(/^[\/]*/, '') : child.path;
+      let childPath = typeof child.path === 'string' ? child.path.replace(/^\/*/, '') : child.path;
 
       if(fullPath && typeof childPath === 'string') {
         const prefix = `${fullPath}/`;
@@ -75,24 +81,27 @@ export const parseRoutes = (routes: CustomRouteProps[] = [], parentPath = ''): R
     : undefined;
 
   const loader = (route as any).loader || (authFlag ? makeRequireAuthLoader(authRoute) : undefined);
+  const handle = analytics ? {...(standardRouteProps.handle || {}), analytics} : standardRouteProps.handle;
 
   if(normalizedChildren?.length) {
     return {
       ...standardRouteProps,
-      path: currentPath || standardRouteProps.path,
       authenticate: authFlag,
-      loader,
       children: parseRoutes(normalizedChildren as CustomRouteProps[], fullPath),
-      element: routeElement
+      element: routeElement,
+      handle,
+      loader,
+      path: currentPath || standardRouteProps.path
     } as any;
   }
 
   return {
     ...standardRouteProps,
-    path: currentPath || standardRouteProps.path,
     authenticate: authFlag,
+    element: routeElement,
+    handle,
     loader,
-    element: routeElement
+    path: currentPath || standardRouteProps.path
   } as any;
 });
 
@@ -103,7 +112,7 @@ const makeRequireAuthLoader = (authRoute: string): any => async ({request}: {req
     if(Flux && typeof Flux.getState === 'function') {
       token = Flux.getState(['user', 'session', 'token']) as string || Flux.getState(['session', 'token']) as string || Flux.getState(['user', 'token']) as string;
     }
-  } catch(e) {
+  } catch(_e) {
     // ignore errors accessing Flux
   }
 
@@ -119,4 +128,3 @@ const makeRequireAuthLoader = (authRoute: string): any => async ({request}: {req
 
   return null;
 };
-

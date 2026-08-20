@@ -19,6 +19,7 @@ export * from './utils/colorUtils.js';
 export * from './utils/imageUtils.js';
 export * from './utils/routeUtils.js';
 export * from './utils/useBreakpoint.js';
+export * from './utils/viewPerformance.js';
 export * from './utils/viewUtils.js';
 export * from './views/Gotham/Gotham.js';
 export * from './views/Gotham/GothamProvider.js';

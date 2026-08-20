@@ -1,6 +1,11 @@
 import type {RouteProps} from 'react-router';
 
 export type GothamRouteData = RouteProps & {
+  readonly analytics?: {
+    readonly route?: string;
+    readonly title?: string;
+    readonly viewId: string;
+  };
   readonly authenticate?: boolean;
   // readonly component?: any;
   // readonly container?: 'default' | 'menu';

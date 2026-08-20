@@ -4,7 +4,7 @@
  */
 import {useFluxListener} from '@nlabs/arkhamjs-utils-react';
 import {useContext, useEffect, useRef} from 'react';
-import {Outlet, useLocation, useNavigate} from 'react-router';
+import {Outlet, useLocation, useMatches, useNavigate} from 'react-router';
 
 import {Notify} from '../../components/Notify/Notify.js';
 import {GothamConstants} from '../../constants/GothamConstants.js';
@@ -12,6 +12,12 @@ import {GothamContext} from '../../utils/GothamContext.js';
 import {LoaderView} from '../LoaderView/LoaderView.js';
 
 import type {FC} from 'react';
+
+interface RouteAnalytics {
+  readonly route?: string;
+  readonly title?: string;
+  readonly viewId: string;
+}
 
 export const navBack = (history) => (): void => {
   history.goBack();
@@ -35,6 +41,7 @@ export const GothamRoot: FC = () => {
   const {awsRum} = useContext(GothamContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const matches = useMatches();
   const lastTrackedPath = useRef<string | undefined>(undefined);
 
   useFluxListener(GothamConstants.NAV_BACK, navBack(navigate));
@@ -43,22 +50,28 @@ export const GothamRoot: FC = () => {
   useFluxListener(GothamConstants.NAV_REPLACE, navReplace(navigate));
 
   useEffect(() => {
-    const path = location.pathname;
+    const analytics = [...matches]
+      .reverse()
+      .map((match) => (match.handle as {analytics?: RouteAnalytics} | undefined)?.analytics)
+      .find(Boolean);
+    const path = analytics?.route || location.pathname;
+    const viewId = analytics?.viewId || path;
 
-    if(!awsRum || lastTrackedPath.current === path) {
+    if(!awsRum || lastTrackedPath.current === viewId) {
       return;
     }
 
-    lastTrackedPath.current = path;
+    lastTrackedPath.current = viewId;
     awsRum.track({
       name: 'page_view',
       path,
       properties: {
-        title: document.title
+        title: analytics?.title || document.title,
+        viewId
       },
       type: 'page_view'
     });
-  }, [awsRum, location.pathname]);
+  }, [awsRum, location.pathname, matches]);
 
   return (
     <>

@@ -50,7 +50,32 @@ If `app.api.rum` is omitted, Metropolis uses its configured public endpoint. Eve
 
 ## Page views
 
-Gotham automatically calls `awsRum.track()` once when the sanitized route pathname changes. Query strings, hashes, and route state are not included.
+Gotham automatically calls `awsRum.track()` once when the route changes. Add stable analytics metadata so dynamic identifiers and titles never become dimensions:
+
+```tsx
+const routes = [{
+  analytics: {route: '/stories/:storyId', title: 'Story', viewId: 'story.detail'},
+  element: <StoryView />,
+  path: 'stories/:storyId'
+}];
+```
+
+## View performance
+
+Use one terminal measurement instead of separate start/end beacons. Gotham emits `view_performance` with `durationMs`, `outcome`, and `viewId`; Metropolis handles delivery.
+
+```tsx
+import {useViewPerformance} from '@nlabs/gothamjs';
+
+useViewPerformance({
+  route: '/stories/:storyId',
+  status: error ? 'failure' : loading ? 'pending' : 'success',
+  title: 'Story',
+  viewId: 'story.detail'
+});
+```
+
+For non-React lifecycles, call `startView()` and finish the returned handle with `succeed()`, `fail()`, `timeout()`, or `cancel()`.
 
 ## Clicks and custom events
 

@@ -10,6 +10,7 @@ const location = {
   search: '',
   state: undefined
 };
+let matches: Array<{handle?: Record<string, unknown>}> = [];
 
 vi.mock('@nlabs/arkhamjs-utils-react', () => ({
   useFluxListener: vi.fn()
@@ -18,6 +19,7 @@ vi.mock('@nlabs/arkhamjs-utils-react', () => ({
 vi.mock('react-router', () => ({
   Outlet: () => <div data-testid="outlet" />,
   useLocation: () => location,
+  useMatches: () => matches,
   useNavigate: () => vi.fn()
 }));
 
@@ -40,7 +42,7 @@ describe('GothamRoot analytics', () => {
     expect(awsRum.track).toHaveBeenCalledWith({
       name: 'page_view',
       path: '/home',
-      properties: {title: 'Gotham'},
+      properties: {title: 'Gotham', viewId: '/home'},
       type: 'page_view'
     });
 
@@ -50,6 +52,7 @@ describe('GothamRoot analytics', () => {
         <GothamRoot />
       </GothamContext.Provider>
     );
+
     expect(awsRum.track).toHaveBeenCalledTimes(1);
 
     location.pathname = '/docs';
@@ -58,6 +61,24 @@ describe('GothamRoot analytics', () => {
         <GothamRoot />
       </GothamContext.Provider>
     );
+
     expect(awsRum.track).toHaveBeenLastCalledWith(expect.objectContaining({path: '/docs'}));
+  });
+
+  it('uses stable analytics metadata instead of a dynamic pathname or title', () => {
+    const awsRum = {track: vi.fn()};
+    matches = [{handle: {analytics: {route: '/stories/:storyId', title: 'Story', viewId: 'story.detail'}}}];
+    location.pathname = '/stories/private-story-id';
+
+    render(<GothamContext.Provider value={{Flux: {} as any, awsRum}}><GothamRoot /></GothamContext.Provider>);
+
+    expect(awsRum.track).toHaveBeenCalledWith({
+      name: 'page_view',
+      path: '/stories/:storyId',
+      properties: {title: 'Story', viewId: 'story.detail'},
+      type: 'page_view'
+    });
+
+    matches = [];
   });
 });
