@@ -62,20 +62,111 @@ const routes = [{
 
 ## View performance
 
-Use one terminal measurement instead of separate start/end beacons. Gotham emits `view_performance` with `durationMs`, `outcome`, and `viewId`; Metropolis handles delivery.
+Use one terminal measurement instead of separate start/end beacons. A measurement starts when a view begins loading and finishes with exactly one outcome: `success`, `failure`, `timeout`, or `cancelled`. Gotham emits the resulting `view_performance` event; Metropolis handles delivery.
+
+### React views
+
+Call `useViewPerformance()` inside the view being measured. Keep its status `pending` while required content is loading, then change it to `success` or `failure` when the view reaches a terminal state.
 
 ```tsx
 import {useViewPerformance} from '@nlabs/gothamjs';
 
-useViewPerformance({
-  route: '/stories/:storyId',
-  status: error ? 'failure' : loading ? 'pending' : 'success',
-  title: 'Story',
-  viewId: 'story.detail'
-});
+interface StoryViewProps {
+  readonly error?: Error;
+  readonly loading: boolean;
+}
+
+export const StoryView = ({error, loading}: StoryViewProps) => {
+  useViewPerformance({
+    route: '/stories/:storyId',
+    status: error ? 'failure' : loading ? 'pending' : 'success',
+    title: 'Story',
+    viewId: 'story.detail'
+  });
+
+  if(error) {
+    return <p>Unable to load this story.</p>;
+  }
+
+  if(loading) {
+    return <p>Loading story…</p>;
+  }
+
+  return <article>Story content</article>;
+};
 ```
 
-For non-React lifecycles, call `startView()` and finish the returned handle with `succeed()`, `fail()`, `timeout()`, or `cancel()`.
+Options:
+
+- `viewId` is required. Use a stable product identifier such as `story.detail`, never a database ID or URL.
+- `status` is required and must be `pending`, `success`, or `failure`.
+- `route` should be a stable route template such as `/stories/:storyId`, not the current dynamic pathname.
+- `title` is an optional stable display name for the view.
+- `timeoutMs` defaults to 30 seconds. Set it to `0` or a negative value to disable the automatic timeout.
+
+The hook starts a new measurement when `awsRum`, `route`, `timeoutMs`, `title`, or `viewId` changes. It reports `cancelled` if the view unmounts or one of those values changes before completion. Once a measurement finishes, later status changes cannot emit a second event.
+
+### Non-React lifecycles
+
+`startView()` only measures time; it does not send analytics by itself. Supply an `onComplete` callback and pass the completed measurement to `reportViewPerformance()`:
+
+```ts
+import {
+  createAwsRumBrowserClient,
+  reportViewPerformance,
+  startView
+} from '@nlabs/gothamjs';
+
+const awsRum = createAwsRumBrowserClient();
+
+export const loadStory = async () => {
+  const view = startView({
+    onComplete: (measurement) => reportViewPerformance(awsRum, measurement),
+    route: '/stories/:storyId',
+    timeoutMs: 10_000,
+    title: 'Story',
+    viewId: 'story.detail'
+  });
+
+  try {
+    const story = await loadStoryData();
+    view.succeed();
+    return story;
+  } catch(error) {
+    view.fail();
+    throw error;
+  }
+};
+```
+
+The returned handle provides four terminal methods:
+
+- `succeed()` records `success`.
+- `fail()` records `failure`.
+- `timeout()` records `timeout` immediately; the configured timer does this automatically when it expires.
+- `cancel()` records `cancelled`, typically when navigation abandons unfinished work.
+
+Only the first terminal method has an effect. Later calls are ignored and the timeout is cleared.
+
+### Event payload
+
+Gotham sends the completed measurement in this shape:
+
+```ts
+{
+  name: 'view_performance',
+  path: '/stories/:storyId',
+  properties: {
+    durationMs: 842,
+    outcome: 'success',
+    viewId: 'story.detail',
+    viewTitle: 'Story'
+  },
+  type: 'view_performance'
+}
+```
+
+`path` and `viewTitle` are omitted when `route` and `title` are not supplied. `durationMs` is rounded to a non-negative whole number. Keep all identifiers stable and free of names, account IDs, query strings, or other identifying information.
 
 ## Clicks and custom events
 

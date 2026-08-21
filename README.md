@@ -1,7 +1,7 @@
 # GothamJS: The Complete Front-End UI Framework
 
 <p align="center">
-  <img src="docs/assets/gothamjs-logo.png" alt="GothamJS logo" width="720">
+  <img src="docs/assets/gothamjs-logo.png" alt="GothamJS lowercase g logo" width="240">
 </p>
 
 ## Seamlessly integrating components, routing, state management, and transitions
