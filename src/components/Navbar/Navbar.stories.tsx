@@ -19,6 +19,9 @@ const meta: Meta<typeof Navbar> = {
     transparentOnScroll: {
       control: 'boolean'
     },
+    transparentScrollBackdropFilter: {
+      control: 'text'
+    },
     transparentScrollThreshold: {
       control: 'number'
     }

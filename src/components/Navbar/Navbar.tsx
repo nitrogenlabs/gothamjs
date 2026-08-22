@@ -44,6 +44,7 @@ export interface NavbarProps extends HTMLAttributes<HTMLElement> {
   readonly mobileMenuTitle?: ReactNode;
   readonly ref?: Ref<HTMLElement>;
   readonly transparentOnScroll?: boolean;
+  readonly transparentScrollBackdropFilter?: string;
   readonly transparentScrollThreshold?: number;
 }
 
@@ -77,6 +78,7 @@ export const Navbar: FC<NavbarProps> = ({
   ref,
   style,
   transparentOnScroll = false,
+  transparentScrollBackdropFilter = 'blur(12px)',
   transparentScrollThreshold = 0.1,
   ...props
 }: NavbarProps) => {
@@ -138,8 +140,8 @@ export const Navbar: FC<NavbarProps> = ({
 
   const scrollState = getNavbarScrollState(isAtTop, isMobileMenuOpen, transparentOnScroll);
   const navbarStyle = scrollState === 'scrolled' ? {
-    WebkitBackdropFilter: 'blur(12px)',
-    backdropFilter: 'blur(12px)',
+    WebkitBackdropFilter: transparentScrollBackdropFilter,
+    backdropFilter: transparentScrollBackdropFilter,
     ...style
   } : style;
 

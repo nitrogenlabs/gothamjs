@@ -73,18 +73,23 @@ describe('Navbar', () => {
     expect(navbar.getAttribute('style')).toContain('backdrop-filter: blur(12px)');
   });
 
-  it('allows consumers to override the scrolled backdrop filter', () => {
-    setScrollY(100);
+  it('allows consumers to configure the scrolled backdrop filter without applying it at the top', () => {
+    setScrollY(0);
     render(
       <Navbar
         aria-label="Primary"
-        style={{backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)'}}
         transparentOnScroll
+        transparentScrollBackdropFilter="blur(20px)"
         transparentScrollThreshold={50}
       />
     );
 
     const navbar = screen.getByRole('navigation', {name: 'Primary'});
+
+    expect(navbar).not.toHaveAttribute('style');
+
+    setScrollY(50);
+    fireEvent.scroll(window);
 
     expect(navbar.getAttribute('style')).toContain('backdrop-filter: blur(20px)');
   });
