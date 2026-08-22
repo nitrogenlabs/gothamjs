@@ -174,7 +174,7 @@ export const Navbar: FC<NavbarProps> = ({
           <div className="min-w-0 text-base font-semibold">{mobileMenuTitle}</div>
           <button
             aria-label="Close navigation menu"
-            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-md border border-current/15 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-current"
+            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-current"
             data-slot="navbar-mobile-close"
             onClick={() => setIsMobileMenuOpen(false)}
             type="button">
@@ -197,7 +197,7 @@ export const Navbar: FC<NavbarProps> = ({
           aria-controls={mobileMenuId}
           aria-expanded={isMobileMenuOpen}
           aria-label={mobileMenuLabel}
-          className="ml-auto inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-current/15 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-current lg:hidden"
+          className="ml-auto mr-3 inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-current transition-colors hover:bg-current/10 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-current lg:hidden"
           data-slot="navbar-mobile-trigger"
           onClick={() => setIsMobileMenuOpen((value) => !value)}
           type="button">

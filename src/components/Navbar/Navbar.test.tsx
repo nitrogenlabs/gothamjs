@@ -1,6 +1,6 @@
 /* @vitest-environment jsdom */
-import {fireEvent, render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
+import {fireEvent, render, screen} from '@testing-library/react';
 
 import {Navbar, NavbarDivider, NavbarItem, NavbarLabel, NavbarSection, NavbarSpacer} from './Navbar.js';
 
@@ -126,6 +126,8 @@ describe('Navbar', () => {
     const navbar = screen.getByRole('navigation', {name: 'Primary'});
 
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
+    expect(trigger).toHaveClass('border-0');
+    expect(trigger).toHaveClass('mr-3');
     expect(navbar).toHaveAttribute('data-scroll-state', 'at-top');
     expect(menu).toHaveClass('translate-x-full');
 
@@ -142,7 +144,11 @@ describe('Navbar', () => {
     expect(document.querySelector('[data-slot="navbar-mobile-overlay"]')).toHaveClass('backdrop-blur-md');
     expect(screen.getByRole('link', {name: 'About'})).toHaveAttribute('href', '/about');
 
-    fireEvent.click(screen.getByRole('button', {name: 'Close navigation menu'}));
+    const closeButton = screen.getByRole('button', {name: 'Close navigation menu'});
+
+    expect(closeButton).toHaveClass('border-0');
+
+    fireEvent.click(closeButton);
 
     expect(trigger).toHaveAttribute('aria-expanded', 'false');
     expect(document.body.style.overflow).toBe('');

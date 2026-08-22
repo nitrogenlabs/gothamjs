@@ -587,6 +587,9 @@
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
   }
+  .mr-2\.5 {
+    margin-right: calc(var(--spacing) * 2.5);
+  }
   .mr-3 {
     margin-right: calc(var(--spacing) * 3);
   }
@@ -1421,12 +1424,6 @@
   }
   .border-current {
     border-color: currentcolor;
-  }
-  .border-current\/15 {
-    border-color: currentcolor;
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, currentcolor 15%, transparent);
-    }
   }
   .border-error {
     border-color: var(--color-error);
