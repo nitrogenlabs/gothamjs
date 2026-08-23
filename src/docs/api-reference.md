@@ -174,6 +174,21 @@ Date picker component.
 
 ## UI Components
 
+### `<PaymentMethodPanel>`
+
+Displays an empty or masked saved-payment state and delegates add, replace, and remove workflows to application callbacks. It does not collect or store payment credentials.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `brand` | `string` | `''` | Display-safe payment brand |
+| `isAdding` | `boolean` | `false` | Shows add or replace progress and disables actions |
+| `isRemoving` | `boolean` | `false` | Shows removal progress and disables actions |
+| `last4` | `string` | `''` | Last four display digits |
+| `onAdd` | `() => void` | Required | Starts the provider-owned add or replace flow |
+| `onRemove` | `() => void` | `undefined` | Starts removal and controls whether the remove action is shown |
+
+See [Payment methods](./payments.md) for all props, examples, loading states, and security guidance.
+
 ### `<Button>`
 
 Button component with multiple variants and states.

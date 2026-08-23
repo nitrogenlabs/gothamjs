@@ -368,6 +368,23 @@ const LoginForm = () => (
 );
 ```
 
+### Payment Method Panel
+
+`PaymentMethodPanel` displays an empty or masked saved-payment state while your application owns the provider integration. It never collects or stores card credentials.
+
+```tsx
+import {PaymentMethodPanel} from '@nlabs/gothamjs';
+
+<PaymentMethodPanel
+  brand="Visa"
+  last4="4242"
+  onAdd={openPaymentProvider}
+  onRemove={removePaymentMethod}
+/>
+```
+
+Use `isAdding` and `isRemoving` to represent provider operations. See the [payment-method documentation](./src/docs/payments.md) for empty states, customization, props, and the security boundary.
+
 ### UI Components
 
 ```jsx
