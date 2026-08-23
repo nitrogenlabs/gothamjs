@@ -38,6 +38,7 @@ export * from './Navbar/Navbar.js';
 export * from './NotFound/NotFound.js';
 export * from './Notify/Notify.js';
 export * from './Pagination/Pagination.js';
+export * from './PaymentMethodPanel/PaymentMethodPanel.js';
 export * from './PasswordStrengthMeter/PasswordStrengthMeter.js';
 export * from './Pricing/Pricing.js';
 export * from './ProductGrid/ProductGrid.js';
