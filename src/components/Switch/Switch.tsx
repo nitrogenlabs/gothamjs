@@ -50,7 +50,7 @@ export const Switch: FC<SwitchProps> = ({
     <span
       aria-hidden="true"
       className={cn(
-        'pointer-events-none absolute inset-0 rounded-full bg-muted ring-1 ring-black/5 ring-inset transition-colors peer-checked:ring-transparent peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ring peer-disabled:opacity-50 dark:bg-muted-dark dark:ring-white/15 dark:peer-focus-visible:outline-ring-dark',
+        'pointer-events-none absolute inset-0 rounded-full bg-black/15 ring-1 ring-black/20 ring-inset transition-colors peer-checked:ring-transparent peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ring peer-disabled:opacity-50 dark:bg-white/25 dark:ring-white/25 dark:peer-focus-visible:outline-ring-dark',
         switchBackgroundClasses[color]
       )}
     />

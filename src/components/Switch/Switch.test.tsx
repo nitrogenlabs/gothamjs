@@ -27,6 +27,14 @@ describe('Switch', () => {
     expect(document.querySelector('input[name="marketing"]')).toBeInTheDocument();
   });
 
+  it('keeps the unchecked track visible across consumer themes', () => {
+    render(<Switch aria-label="Environment" />);
+
+    const track = screen.getByRole('switch', {name: 'Environment'}).parentElement?.querySelector('span');
+
+    expect(track).toHaveClass('bg-black/15', 'ring-black/20', 'dark:bg-white/25', 'dark:ring-white/25');
+  });
+
   it('renders grouped switches', () => {
     render(
       <SwitchGroup>
