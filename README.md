@@ -8,8 +8,9 @@
 
 > A comprehensive front-end UI framework that handles everything from component rendering to routing and smooth transitions with minimal configuration.
 
-[![npm version](https://img.shields.io/npm/v/gothamjs.svg?style=flat-square)](https://www.npmjs.com/package/gothamjs)
-[![npm downloads](https://img.shields.io/npm/dm/gothamjs.svg?style=flat-square)](https://www.npmjs.com/package/gothamjs)
+[![npm version](https://img.shields.io/npm/v/@nlabs/gothamjs.svg?style=flat-square)](https://www.npmjs.com/package/@nlabs/gothamjs)
+[![npm downloads](https://img.shields.io/npm/dm/@nlabs/gothamjs.svg?style=flat-square)](https://www.npmjs.com/package/@nlabs/gothamjs)
+[![Documentation](https://img.shields.io/badge/docs-gothamjs.nitrogenx.co-6d28d9?style=flat-square)](https://gothamjs.nitrogenx.co)
 [![Issues](http://img.shields.io/github/issues/nitrogenlabs/gothamjs.svg?style=flat-square)](https://github.com/nitrogenlabs/gothamjs/issues)
 [![TypeScript](https://badges.frapsoft.com/typescript/version/typescript-next.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](http://opensource.org/licenses/MIT)

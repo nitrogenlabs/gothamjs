@@ -1,7 +1,7 @@
 {
   "name": "@nlabs/gothamjs",
   "version": "1.5.0",
-  "description": "Platform",
+  "description": "React 19 UI framework with accessible components, routing, forms, i18n, responsive navigation, and Tailwind CSS v4 theming.",
   "type": "module",
   "license": "MIT",
   "main": "lib/index.js",
@@ -55,13 +55,25 @@
     }
   },
   "keywords": [
+    "accessibility",
     "arkhamjs",
+    "component-library",
+    "design-system",
     "documentation",
     "flux",
+    "forms",
     "gothamjs",
+    "i18n",
     "markdown",
     "nitrogenlabs",
-    "react"
+    "react",
+    "react-19",
+    "responsive",
+    "router",
+    "tailwindcss",
+    "tailwindcss-v4",
+    "typescript",
+    "ui"
   ],
   "author": {
     "name": "Giraldo Rosales",
@@ -70,9 +82,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nitrogenlabs/gothamjs.git"
+    "url": "git+https://github.com/nitrogenlabs/gothamjs.git"
   },
-  "homepage": "http://gothamjs.io",
+  "homepage": "https://gothamjs.nitrogenx.co",
   "bugs": {
     "url": "https://github.com/nitrogenlabs/gothamjs/issues"
   },
