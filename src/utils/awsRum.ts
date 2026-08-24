@@ -6,7 +6,7 @@ import {useContext} from 'react';
 
 import {GothamContext} from './GothamContext.js';
 
-export type AwsRumEventType = 'click' | 'page_view' | (string & {});
+export type AwsRumEventType = 'change' | 'click' | 'edit' | 'page_view' | 'submit' | (string & {});
 
 export interface AwsRumTrackEvent {
   readonly name: string;

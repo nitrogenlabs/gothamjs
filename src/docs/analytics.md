@@ -168,9 +168,32 @@ Gotham sends the completed measurement in this shape:
 
 `path` and `viewTitle` are omitted when `route` and `title` are not supplied. `durationMs` is rounded to a non-negative whole number. Keep all identifiers stable and free of names, account IDs, query strings, or other identifying information.
 
-## Clicks and custom events
+## Automatic interaction tracking
 
-Only explicitly named interactions are tracked:
+Gotham automatically tracks semantic interactive elements rendered anywhere in the document while `GothamProvider` is mounted. This includes links, buttons, form controls, sliders, switches, tabs, menu items, editable regions, and keyboard-only form submissions. Delegated listeners also cover elements rendered later or in portals.
+
+Interaction events contain only the control type, interaction type, and current pathname. Gotham never reads visible text, URLs, query strings, or control values. Give important interactions a stable event name with `data-analytics-name`:
+
+```tsx
+<button data-analytics-name="checkout_started">Checkout</button>
+<input data-analytics-name="volume_changed" type="range" />
+```
+
+Use `data-analytics-track="false"` on a control or container for a private region that must not emit interaction events:
+
+```tsx
+<section data-analytics-track="false">...</section>
+```
+
+Automatic interaction tracking is enabled by default. It can be disabled application-wide when an application provides its own delegated tracker:
+
+```tsx
+<Gotham config={{analytics: {interactions: false}}} />
+```
+
+## Custom events
+
+Use `useAwsRum()` for domain events that need additional stable properties:
 
 ```tsx
 import {useAwsRum} from '@nlabs/gothamjs';

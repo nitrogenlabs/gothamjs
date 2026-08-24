@@ -17,6 +17,7 @@ import {GothamConstants} from '../../constants/GothamConstants.js';
 import {gothamApp} from '../../stores/GothamAppStore.js';
 import {createAwsRumBrowserClient} from '../../utils/awsRum.js';
 import {GothamContext} from '../../utils/GothamContext.js';
+import {registerInteractionAnalytics} from '../../utils/interactionAnalytics.js';
 import {registerFlux} from '../../utils/navEventQueue.js';
 import {parseRoutes} from '../../utils/routeUtils.js';
 import {GothamRoot} from './GothamRoot.js';
@@ -38,6 +39,9 @@ export type GothamStatus = 'default' | 'error' | 'info' | 'success' | 'warning' 
 export type ThemeDisplayMode = 'auto' | 'dark' | 'light';
 
 export interface GothamConfiguration {
+  readonly analytics?: {
+    readonly interactions?: boolean;
+  };
   readonly app?: {
     readonly logo?: string;
     readonly name?: string;
@@ -62,6 +66,9 @@ export interface GothamConfiguration {
 }
 
 export const defaultGothamConfig: GothamConfiguration = {
+  analytics: {
+    interactions: true
+  },
   app: {
     name: 'gotham',
     title: 'GothamJS'
@@ -110,6 +117,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({config: appConfig}) => 
     translations
   } = config;
   const name = config?.app?.name;
+  const awsRum = config.awsRum || defaultAwsRum;
   const [session, setSession] = useState({});
   const [isFluxReady, setIsFluxReady] = useState(Boolean((flux as any)?.isInit));
   const router = useMemo(() => createBrowserRouter(
@@ -204,6 +212,14 @@ export const GothamProvider: FC<GothamProviderProps> = ({config: appConfig}) => 
     };
   }, [flux, config, middleware, name, storageType, stores]);
 
+  useEffect(() => {
+    const unregister = config.analytics?.interactions === false
+      ? undefined
+      : registerInteractionAnalytics(awsRum);
+
+    return () => unregister?.();
+  }, [awsRum, config.analytics?.interactions]);
+
   if(!isFluxReady) {
     return null;
   }
@@ -211,7 +227,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({config: appConfig}) => 
   if(i18nInstance) {
     return (
       <I18nextProvider i18n={i18nInstance}>
-        <GothamContext.Provider value={{Flux: flux, awsRum: config.awsRum || defaultAwsRum, isAuth, session}}>
+        <GothamContext.Provider value={{Flux: flux, awsRum, isAuth, session}}>
           <div>
             <RouterProvider router={router}/>
           </div>
@@ -221,7 +237,7 @@ export const GothamProvider: FC<GothamProviderProps> = ({config: appConfig}) => 
   }
 
   return (
-    <GothamContext.Provider value={{Flux: flux, awsRum: config.awsRum || defaultAwsRum, isAuth, session}}>
+    <GothamContext.Provider value={{Flux: flux, awsRum, isAuth, session}}>
       <div>
         <RouterProvider router={router}/>
       </div>

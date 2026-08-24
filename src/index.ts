@@ -17,6 +17,7 @@ export * as Chat from './components/Chat/index.js';
 export * from './utils/awsRum.js';
 export * from './utils/colorUtils.js';
 export * from './utils/imageUtils.js';
+export * from './utils/interactionAnalytics.js';
 export * from './utils/routeUtils.js';
 export * from './utils/useBreakpoint.js';
 export * from './utils/viewPerformance.js';
