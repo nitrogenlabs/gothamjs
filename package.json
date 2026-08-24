@@ -100,7 +100,7 @@
     "publish:patch": "npm version patch && npm run publish:tags && npm publish",
     "publish:tags": "git push --tags && git push origin HEAD",
     "start": "npm run tailwind:build && npm run sync:tailwind-lib && lex dev -r -o",
-    "test": "lex test",
+    "test": "lex test --config ./vitest.config.mts",
     "update": "lex update --interactive",
     "watch": "lex compile -w",
     "storybook": "npm run tailwind:build && npm run sync:tailwind-lib && lex storybook",
