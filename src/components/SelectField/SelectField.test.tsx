@@ -27,6 +27,7 @@ describe('SelectField', () => {
     expect(screen.getByText('Status')).toBeInTheDocument();
     expect(screen.getAllByText('Draft')).toHaveLength(2);
     expect(container.querySelector('select[name="status"]')).toHaveValue('draft');
+    expect(container.querySelector('[data-headlessui-state] svg')).toHaveClass('mr-3');
   });
 
   it('updates the hidden select value', () => {

@@ -70,7 +70,7 @@ export const SelectField: FC<SelectFieldProps> = ({
     getOutlineClasses(color, {hasFocus: true, hasHover: true})
   ), [backgroundColor, color]);
   const chevronClasses = useMemo(() => cn(
-    'col-start-1 row-start-1 size-5 self-center justify-self-end sm:size-4',
+    'col-start-1 row-start-1 mr-3 size-5 self-center justify-self-end sm:size-4',
     getTextClasses(color)
   ), [color]);
   useEffect(() => {
