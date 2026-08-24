@@ -141,7 +141,7 @@
     "@nlabs/arkhamjs-middleware-logger": "^3.30.11",
     "@nlabs/arkhamjs-storage-browser": "^3.30.11",
     "@nlabs/arkhamjs-utils-react": "^3.32.12",
-    "@nlabs/lex": "2.0.5",
+    "@nlabs/lex": "2.0.6",
     "@types/history": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.2.0",
