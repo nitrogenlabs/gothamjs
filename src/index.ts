@@ -22,12 +22,7 @@ export * from './utils/routeUtils.js';
 export * from './utils/useBreakpoint.js';
 export * from './utils/viewPerformance.js';
 export * from './utils/viewUtils.js';
-export * from './views/AuthSignInView/AuthSignInView.js';
-export * from './views/AuthSignUpView/AuthSignUpView.js';
-export * from './views/AuthView/AuthView.js';
-export * from './views/Gotham/Gotham.js';
-export * from './views/Gotham/GothamProvider.js';
-export * from './views/NotFoundView/NotFoundView.js';
+export * from './views/index.js';
 
 export * from './i18n/index.js';
 

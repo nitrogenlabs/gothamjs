@@ -49,6 +49,44 @@ Provider component that sets up the GothamJS context.
 | `children` | `ReactNode` | - | Child components |
 | `session` | `Record<string, unknown>` | `{}` | Initial session data |
 
+## Public Views
+
+All GothamJS views are public from both `@nlabs/gothamjs` and `@nlabs/gothamjs/views`.
+
+| View | Purpose |
+|------|---------|
+| `AuthSignInView` | Complete sign-in screen built on `AuthView` |
+| `AuthSignUpView` | Complete account-registration screen built on `AuthView` |
+| `AuthView` | Shared authentication layout |
+| `DefaultView` | Responsive application shell with standard navigation |
+| `Gotham` | GothamJS application bootstrap component |
+| `GothamProvider` | Configuration, session, and Flux provider |
+| `GothamRoot` | Root route outlet with notifications, loading state, and analytics |
+| `HomeView` | Responsive home-page shell |
+| `LoaderView` | Flux-connected full-screen loading state |
+| `MarkdownView` | Inline or remote Markdown renderer with template values |
+| `MenuView` | Responsive sidebar application shell |
+| `NotFoundView` | Full-page missing-route view |
+
+### `<MarkdownView>`
+
+```tsx
+import {MarkdownView} from '@nlabs/gothamjs';
+
+<MarkdownView
+  className="prose"
+  content="# Welcome, {{name}}"
+  values={{name: 'Bruce'}}
+/>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | `''` | Additional class names for the Markdown container |
+| `content` | `string` | - | Inline Markdown content |
+| `url` | `string` | - | URL whose response supplies the Markdown content |
+| `values` | `Record<string, unknown>` | `{}` | Values substituted into the Markdown template |
+
 ## Form Components
 
 ### `<Form>`

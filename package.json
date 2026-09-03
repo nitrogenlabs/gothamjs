@@ -16,39 +16,44 @@
   ],
   "exports": {
     ".": {
-      "default": "./lib/index.js",
+      "types": "./lib/index.d.ts",
       "import": "./lib/index.js",
-      "types": "./lib/index.d.ts"
+      "default": "./lib/index.js"
     },
     "./components": {
-      "default": "./lib/components/index.js",
+      "types": "./lib/components/index.d.ts",
       "import": "./lib/components/index.js",
-      "types": "./lib/components/index.d.ts"
+      "default": "./lib/components/index.js"
     },
     "./icons": {
-      "default": "./lib/icons/index.js",
+      "types": "./lib/icons/index.d.ts",
       "import": "./lib/icons/index.js",
-      "types": "./lib/icons/index.d.ts"
+      "default": "./lib/icons/index.js"
     },
     "./i18n": {
-      "default": "./lib/i18n/index.js",
+      "types": "./lib/i18n/index.d.ts",
       "import": "./lib/i18n/index.js",
-      "types": "./lib/i18n/index.d.ts"
+      "default": "./lib/i18n/index.js"
     },
     "./router": {
-      "default": "./lib/router/index.js",
+      "types": "./lib/router/index.d.ts",
       "import": "./lib/router/index.js",
-      "types": "./lib/router/index.d.ts"
+      "default": "./lib/router/index.js"
+    },
+    "./views": {
+      "types": "./lib/views/index.d.ts",
+      "import": "./lib/views/index.js",
+      "default": "./lib/views/index.js"
     },
     "./form": {
-      "default": "./lib/form/index.js",
+      "types": "./lib/form/index.d.ts",
       "import": "./lib/form/index.js",
-      "types": "./lib/form/index.d.ts"
+      "default": "./lib/form/index.js"
     },
     "./chat": {
-      "default": "./lib/components/Chat/index.js",
+      "types": "./lib/components/Chat/index.d.ts",
       "import": "./lib/components/Chat/index.js",
-      "types": "./lib/components/Chat/index.d.ts"
+      "default": "./lib/components/Chat/index.js"
     },
     "./styles/tailwind.css": {
       "default": "./lib/styles/tailwind.css"
@@ -121,20 +126,20 @@
     "hast-util-sanitize": "5.0.2",
     "highlight.js": "^11.12.0",
     "history": "^5.3.0",
-    "i18next": "^26.4.0",
-    "lucide-react": "^1.34.0",
+    "i18next": "^26.4.1",
+    "lucide-react": "^1.39.0",
     "progressbar.js": "^1.1.1",
     "react-autosuggest": "^10.1.0",
     "react-cropper": "^2.3.3",
-    "react-i18next": "^17.0.12",
+    "react-i18next": "^17.0.13",
     "react-markdown": "^10.1.0",
-    "react-router": "^8.3.0",
+    "react-router": "^8.3.1",
     "react-spinkit": "^3.0.0",
     "react-tag-autocomplete": "^7.5.1",
     "react-transition-group": "^4.4.5",
     "rehype-react": "^8.0.0",
     "yet-another-react-lightbox": "^3.32.2",
-    "zod": "^4.4.3"
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@nlabs/arkhamjs": "^3.31.15",
@@ -142,9 +147,13 @@
     "@nlabs/arkhamjs-storage-browser": "^3.30.11",
     "@nlabs/arkhamjs-utils-react": "^3.32.12",
     "@nlabs/lex": "2.0.6",
+    "@storybook/addon-docs": "10.6.0",
+    "@storybook/addon-links": "10.6.0",
+    "@storybook/addon-themes": "10.6.0",
+    "@storybook/react-vite": "10.6.0",
     "@types/history": "^5.0.0",
     "@types/jest": "^30.0.0",
-    "@types/node": "^26.2.0",
+    "@types/node": "^26.4.1",
     "@types/progressbar.js": "^1.1.7",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",

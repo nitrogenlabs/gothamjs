@@ -412,6 +412,26 @@ import { Button, Notify, Loader } from '@nlabs/gothamjs';
 <Loader size="md" />
 ```
 
+### Public Views
+
+Every GothamJS view is part of the public package API. Import views from the package root or from the dedicated `views` entry point:
+
+```tsx
+import {DefaultView, MarkdownView} from '@nlabs/gothamjs';
+// Or: import {DefaultView, MarkdownView} from '@nlabs/gothamjs/views';
+
+const ReleaseNotes = () => (
+  <DefaultView title="Release notes">
+    <MarkdownView
+      content="# GothamJS {{version}}\nAll UI views are publicly exported."
+      values={{version: '1.5.4'}}
+    />
+  </DefaultView>
+);
+```
+
+The public view exports are `AuthSignInView`, `AuthSignUpView`, `AuthView`, `DefaultView`, `Gotham`, `GothamProvider`, `GothamRoot`, `HomeView`, `LoaderView`, `MarkdownView`, `MenuView`, and `NotFoundView`.
+
 ## State Management
 
 GothamJS uses ArkhamJS, a Flux implementation, for state management:

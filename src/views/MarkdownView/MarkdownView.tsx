@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import {fetchJsonFromUrl, parseTemplate} from '../../utils/contentUtils.js';
 
 
-interface MarkdownViewProps {
+export interface MarkdownViewProps {
   className?: string;
   content?: string;
   url?: string;
