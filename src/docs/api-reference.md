@@ -64,28 +64,8 @@ All GothamJS views are public from both `@nlabs/gothamjs` and `@nlabs/gothamjs/v
 | `GothamRoot` | Root route outlet with notifications, loading state, and analytics |
 | `HomeView` | Responsive home-page shell |
 | `LoaderView` | Flux-connected full-screen loading state |
-| `MarkdownView` | Inline or remote Markdown renderer with template values |
 | `MenuView` | Responsive sidebar application shell |
 | `NotFoundView` | Full-page missing-route view |
-
-### `<MarkdownView>`
-
-```tsx
-import {MarkdownView} from '@nlabs/gothamjs';
-
-<MarkdownView
-  className="prose"
-  content="# Welcome, {{name}}"
-  values={{name: 'Bruce'}}
-/>
-```
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | `''` | Additional class names for the Markdown container |
-| `content` | `string` | - | Inline Markdown content |
-| `url` | `string` | - | URL whose response supplies the Markdown content |
-| `values` | `Record<string, unknown>` | `{}` | Values substituted into the Markdown template |
 
 ## Form Components
 
@@ -211,6 +191,27 @@ Date picker component.
 | `value` | `Date` | - | Field value |
 
 ## UI Components
+
+### `<Markdown>`
+
+Renders Markdown through `react-markdown` while providing GothamJS container styling, remote content loading, and template values.
+
+```tsx
+import {Markdown} from '@nlabs/gothamjs';
+
+<Markdown
+  className="prose"
+  content="# Welcome, {{name}}"
+  values={{name: 'Bruce'}}
+/>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | `''` | Additional class names for the Markdown container |
+| `content` | `string` | - | Inline Markdown content |
+| `url` | `string` | - | URL whose response supplies the Markdown content |
+| `values` | `Record<string, unknown>` | `{}` | Values substituted into the Markdown template |
 
 ### `<PaymentMethodPanel>`
 

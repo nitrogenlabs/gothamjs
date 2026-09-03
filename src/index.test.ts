@@ -11,10 +11,14 @@ describe('public UI exports', () => {
     'GothamRoot',
     'HomeView',
     'LoaderView',
-    'MarkdownView',
     'MenuView',
     'NotFoundView'
   ])('exports %s from the package root', (exportName) => {
     expect(Gotham).toHaveProperty(exportName);
+  });
+
+  it('exports Markdown from the package root', () => {
+    expect(Gotham).toHaveProperty('Markdown');
+    expect(Gotham).not.toHaveProperty('MarkdownView');
   });
 });

@@ -7,6 +7,5 @@ export * from './Gotham/GothamProvider.js';
 export {GothamRoot} from './Gotham/GothamRoot.js';
 export * from './HomeView/HomeView.js';
 export * from './LoaderView/LoaderView.js';
-export * from './MarkdownView/MarkdownView.js';
 export * from './MenuView/MenuView.js';
 export * from './NotFoundView/NotFoundView.js';

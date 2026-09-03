@@ -32,6 +32,7 @@ export * from './Link/Link.js';
 export * from './ListContainer/ListContainer.js';
 export * from './Loader/Loader.js';
 export * from './LogoCloud/LogoCloud.js';
+export * from './Markdown/Markdown.js';
 export * from './MediaLightbox/MediaLightbox.js';
 export * from './MediaObject/MediaObject.js';
 export * from './Navbar/Navbar.js';

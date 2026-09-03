@@ -1,13 +1,13 @@
 /* @vitest-environment jsdom */
 import {render} from '@nlabs/lex/test-react';
 
-import {MarkdownView} from './MarkdownView.js';
+import {Markdown} from './Markdown.js';
 
-describe('MarkdownView', () => {
+describe('Markdown', () => {
   it('should render with custom className when provided', () => {
     const customClass = 'custom-class';
     const {container} = render(
-      <MarkdownView className={customClass} content="Some content" />
+      <Markdown className={customClass} content="Some content" />
     );
 
     const markdownContainer = container.firstChild as HTMLElement;
@@ -16,7 +16,7 @@ describe('MarkdownView', () => {
   });
 
   it('should render with default className when no className is provided', () => {
-    const {container} = render(<MarkdownView content="Some content" />);
+    const {container} = render(<Markdown content="Some content" />);
 
     const markdownContainer = container.firstChild as HTMLElement;
 
@@ -24,7 +24,7 @@ describe('MarkdownView', () => {
   });
 
   it('should apply correct default styles', () => {
-    const {container} = render(<MarkdownView content="Some content" />);
+    const {container} = render(<Markdown content="Some content" />);
 
     const markdownContainer = container.firstChild as HTMLElement;
     const styles = markdownContainer.getAttribute('style');

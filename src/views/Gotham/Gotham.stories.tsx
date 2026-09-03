@@ -1,5 +1,5 @@
 import {Gotham} from './Gotham.js';
-import {MarkdownView} from '../MarkdownView/MarkdownView.js';
+import {Markdown} from '../../components/Markdown/Markdown.js';
 import {focusCanvas} from '../../utils/storyInteractions.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
@@ -22,7 +22,7 @@ export const Primary: Story = {
     config: {
       routes: [
         {
-          element: <MarkdownView />,
+          element: <Markdown />,
           path: '/',
           props: {
             content: '# Hello\n**Bold text**\n*Italic text*\n- List item'

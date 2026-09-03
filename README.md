@@ -412,25 +412,35 @@ import { Button, Notify, Loader } from '@nlabs/gothamjs';
 <Loader size="md" />
 ```
 
+### Markdown
+
+`Markdown` is a lightweight wrapper around `react-markdown` for rendering inline or remote Markdown with optional template values:
+
+```tsx
+import {Markdown} from '@nlabs/gothamjs';
+
+<Markdown
+  content="# GothamJS {{version}}\nAll UI components are publicly exported."
+  values={{version: '1.5.4'}}
+/>
+```
+
 ### Public Views
 
 Every GothamJS view is part of the public package API. Import views from the package root or from the dedicated `views` entry point:
 
 ```tsx
-import {DefaultView, MarkdownView} from '@nlabs/gothamjs';
-// Or: import {DefaultView, MarkdownView} from '@nlabs/gothamjs/views';
+import {DefaultView, Markdown} from '@nlabs/gothamjs';
+// Or: import {DefaultView} from '@nlabs/gothamjs/views';
 
 const ReleaseNotes = () => (
   <DefaultView title="Release notes">
-    <MarkdownView
-      content="# GothamJS {{version}}\nAll UI views are publicly exported."
-      values={{version: '1.5.4'}}
-    />
+    <Markdown content="# Release notes" />
   </DefaultView>
 );
 ```
 
-The public view exports are `AuthSignInView`, `AuthSignUpView`, `AuthView`, `DefaultView`, `Gotham`, `GothamProvider`, `GothamRoot`, `HomeView`, `LoaderView`, `MarkdownView`, `MenuView`, and `NotFoundView`.
+The public view exports are `AuthSignInView`, `AuthSignUpView`, `AuthView`, `DefaultView`, `Gotham`, `GothamProvider`, `GothamRoot`, `HomeView`, `LoaderView`, `MenuView`, and `NotFoundView`.
 
 ## State Management
 

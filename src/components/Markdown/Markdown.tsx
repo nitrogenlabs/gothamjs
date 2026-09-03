@@ -3,8 +3,7 @@ import ReactMarkdown from 'react-markdown';
 
 import {fetchJsonFromUrl, parseTemplate} from '../../utils/contentUtils.js';
 
-
-export interface MarkdownViewProps {
+export interface MarkdownProps {
   className?: string;
   content?: string;
   url?: string;
@@ -18,7 +17,7 @@ const defaultStyles: React.CSSProperties = {
   width: '100%'
 };
 
-export const MarkdownView: React.FC<MarkdownViewProps> = ({
+export const Markdown: React.FC<MarkdownProps> = ({
   className = '',
   content,
   url,
@@ -29,13 +28,13 @@ export const MarkdownView: React.FC<MarkdownViewProps> = ({
   useEffect(() => {
     const loadContent = async () => {
       try {
-        if (url) {
+        if(url) {
           const data = await fetchJsonFromUrl(url);
           setMarkdown(parseTemplate(data as string, values));
-        } else if (content) {
+        } else if(content) {
           setMarkdown(parseTemplate(content, values));
         }
-      } catch (error) {
+      } catch(error) {
         console.error('Failed to load markdown content:', error);
         setMarkdown('Error loading content');
       }

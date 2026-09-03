@@ -1,10 +1,9 @@
-import {MarkdownView} from '../../index.js';
+import {Markdown} from '../../index.js';
 import {focusCanvas} from '../../utils/storyInteractions.js';
 
 import type {Meta, StoryObj} from '@nlabs/lex/storybook';
 
-
-const meta: Meta<typeof MarkdownView> = {
+const meta: Meta<typeof Markdown> = {
   argTypes: {
     className: {
       control: 'text'
@@ -13,20 +12,20 @@ const meta: Meta<typeof MarkdownView> = {
       control: 'text'
     }
   },
-  component: MarkdownView,
+  component: Markdown,
   parameters: {
     docs: {
       description: {
-        component: 'Renders inline or remote Markdown content with optional template values. Publicly import it from `@nlabs/gothamjs` or `@nlabs/gothamjs/views`.'
+        component: 'Renders inline or remote Markdown content with optional template values. Publicly import it from `@nlabs/gothamjs` or `@nlabs/gothamjs/components`.'
       }
     }
   },
   tags: ['autodocs'],
-  title: 'Views/MarkdownView'
+  title: 'Components/Markdown'
 };
 
 export default meta;
-type Story = StoryObj<typeof MarkdownView>;
+type Story = StoryObj<typeof Markdown>;
 
 export const Primary: Story = {
   args: {

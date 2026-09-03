@@ -8,7 +8,7 @@
 // import {GothamActions} from '../../actions/GothamActions';
 // import {DefaultView} from '../../views/DefaultView/DefaultView';
 // import {HomeView} from '../../views/HomeView/HomeView';
-// import {MarkdownView} from '../../views/MarkdownView/MarkdownView';
+// import {Markdown} from '../Markdown/Markdown';
 // import MenuView from '../../views/MenuView/MenuView';
 // import {NotFoundView} from '../../views/NotFoundView/NotFoundView';
 // import {Loader} from '../Loader/Loader';
@@ -50,7 +50,7 @@
 //       case 'home':
 //         return <LazyLoad component={HomeView} {...updatedViewProps} />;
 //       case 'markdown':
-//         return <LazyLoad component={MarkdownView} {...updatedViewProps} />;
+//         return <LazyLoad component={Markdown} {...updatedViewProps} />;
 //       case 'menu':
 //         return <LazyLoad component={MenuView} {...updatedViewProps} />;
 //       case 'notfound':
