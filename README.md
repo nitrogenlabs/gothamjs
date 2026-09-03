@@ -1,8 +1,6 @@
 # GothamJS: The Complete Front-End UI Framework
 
-<p align="center">
-  <img src="docs/assets/gothamjs-logo.png" alt="GothamJS lowercase g logo" width="240">
-</p>
+![GothamJS lowercase g logo](docs/assets/gothamjs-logo.png)
 
 ## Seamlessly integrating components, routing, state management, and transitions
 
@@ -22,9 +20,7 @@ GothamJS is an all-inclusive React framework that unifies UI components, navigat
 
 Your application keeps ownership of its routes, configuration, domain logic, and data. GothamJS turns those inputs into a cohesive presentation layer with components, navigation, state, forms, responsive styling, localization, and telemetry built in.
 
-<p align="center">
-  <img src="docs/assets/gothamjs-app-architecture.svg" alt="GothamJS architecture showing how a React app flows through the GothamJS presentation layer into a complete user experience">
-</p>
+![GothamJS architecture showing how a React app flows through the GothamJS presentation layer into a complete user experience](docs/assets/gothamjs-app-architecture.svg)
 
 ## Key Features
 
@@ -126,6 +122,7 @@ GothamJS already includes `@source` for its own components, and your app can add
 For PostCSS, use the Tailwind v4 plugin package (`@tailwindcss/postcss`):
 
 #### Webpack Configuration
+
 ```js
 // webpack.config.js
 module.exports = {
@@ -155,6 +152,7 @@ module.exports = {
 ```
 
 #### Lex Configuration
+
 ```js
 // lex.config.mjs
 export default {
@@ -164,6 +162,7 @@ export default {
 ```
 
 #### Vite Configuration
+
 ```js
 // vite.config.js
 export default {
@@ -322,7 +321,7 @@ const LoginForm = () => (
 );
 ```
 
-#### Key Features:
+#### Optimized Form Features
 
 - **Automatic Validation**: Integrated Zod schema validation with react-hook-form
 - **Performance Optimized**: Efficient re-rendering and validation triggering
@@ -662,7 +661,7 @@ npm install -g @nlabs/lex
 npm install --save-dev @nlabs/lex
 ```
 
-### Lex Configuration
+### Lex Project Configuration
 
 Create a `lex.config.mjs` file in your project root:
 
@@ -719,7 +718,7 @@ Lex optimizes GothamJS builds by:
 
 ### Example Project Structure
 
-```
+```text
 my-gothamjs-app/
 ├── src/
 │   ├── index.tsx
